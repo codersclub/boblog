@@ -1,0 +1,240 @@
+body, div, td, option, input, textarea {
+	font-family: Verdana, Arial, Tahoma;
+	font-size: 9pt;
+	color: #000;
+}
+body {
+	margin: 0px;
+	background-color: #FFF;
+	text-align: center;
+}
+body, div, td a {
+	color: #000;
+	text-decoration: none;
+}
+
+form {
+	display: inline;
+}
+input {
+	font-family: Tahoma, Arial; 
+	font-size: 12px; 
+}
+input {
+	height: 20px;
+	padding: 2px;
+	color: #4D6185; 
+	border: 1px solid #6CA9D5;
+	background: url('images/bgbut.png');
+}
+textarea, select {
+	color: #4D6185; 
+	border: 1px solid #6CA9D5;
+	background: url('images/bgbut2.png') repeat-x;
+	background-color: #D7EEFF;
+}
+
+#adminheader {
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: #fff;
+	height: 29px;
+	background: url('images/bgnav.png') repeat-x;
+}
+
+#adminheaderbar {
+	background: url('images/bgnav.png') repeat-x;
+}
+#adminheaderbar ul {
+	list-style: none;
+	width: auto;
+	margin: 0px;
+	background: url('images/bgnav.png') repeat-x;
+} 
+#adminheaderbar li {
+	display: block;
+	float:left;
+	width:80px;	
+	text-align: center;
+	background: url('images/bgnavitems.png') no-repeat;
+	background-position: 0px 1px;
+}
+#adminheaderbar li a {
+	text-decoration: none; display: block; color: #fff;
+	height: 23px;
+	padding-top: 5px;
+}
+#adminheaderbar li a:hover {
+	background: url('images/bgnavitems.png') no-repeat;
+	background-position: 0% 95%;
+}
+
+#adminoverall {
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: #fff;
+	background: url('images/bglarge.png') repeat-x;
+	text-align: center;
+}
+
+#adminrow {
+	margin-top: -5px;
+	background: url('images/bgheader.png') repeat-x;
+	border-bottom: 1px solid #000;
+	border-top: 1px solid #000;
+	height: 29px; 
+	margin: 0px; 
+}
+#adminrow ul { 
+	list-style:none; width: auto; 
+	margin: 0px; clear: both;
+	background: url('images/bgheader.png') repeat-x;
+} 
+#adminrow li { float:left; width:120px;  text-align: center;}
+#adminrow li a {
+	display: block;
+	text-decoration: none;
+	padding-top: 5px;
+	height: 23px;
+}
+
+
+.highlight {
+	color: #fff;
+	background: url('images/bgheader2.png') repeat-x;
+}
+.highlight a {	color: #fff; display: block;}
+.normal  {
+	color: #fff;
+}
+.normal a { color: #fff; display: block;}
+.normal a:hover { 
+	color: #fff; display: block;
+	background: url('images/bgheader2.png') repeat-x;
+}
+
+#adminmain {
+	clear: both;
+	text-align: center;
+	padding: 10px;
+	margin: auto;
+	margin-top: 6px;
+	border: 1px solid #0A3E3C;
+	background: #F7FBFF;
+	width: 90%;
+}
+
+#admininner {
+	width: 95%;
+	text-align: left;
+	margin: auto;
+	padding: 5px;
+}
+
+#bloginfo {
+	display: none;
+}
+
+#bloginfotext {
+	display: none;
+}
+
+#bloginfoimg {
+	display: none;
+}
+
+.tablewidth {
+	width: 100%;
+}
+
+
+.visibleitem,  .visibleitem a,  .visibleitem td {
+	background-color: #F7FBFF;
+	color: #000;
+}
+
+.hiddenitem, .hiddenitem a,  .hiddenitem td{
+	background-color: #C6E7FF;
+	color: #4D6185;
+}
+
+.admintitle {
+	background-color: #3C4040;
+	font-weight: bold;
+	color: #fff;
+}
+
+.admintitle td{
+	color: #fff;
+}
+
+.sectstart {
+	background: url('images/bgnav.png') repeat-x;
+	color: #fff;
+	font-weight: bold;
+	padding-left: 15px;
+}
+
+.sectend {
+	background: url('images/bgnav.png') repeat-x;
+	color: #fff;
+	text-align: right;
+	padding-right: 10px;
+}
+
+.sect {
+	background-color: #FFF;
+	color: #000;
+	padding-left: 15px;
+	padding-right: 10px;
+	line-height: 150%;
+}
+.sect option {
+	background-color: #fff;
+}
+.sect a:hover, #copyright a:hover {
+	background: url('images/bga.png');
+	color: #4D6185; 
+}
+.sectbar {
+	background-color: #fff;
+	color: #000;
+}
+
+.prefleft {
+	background-color: #F7FBFF;
+	color: #4D6185;
+}
+
+.prefright {
+	background-color: #F7FBFF;
+	color: #000;
+}
+
+.prefsection {
+	background-color: #3C4040;
+	font-weight: bold;
+	color: #fff;
+}
+.prefsection a {
+	color: #fff;
+}
+
+#copyright {
+	background-color: #fff;
+	clear: both;
+	text-align: center;
+	padding: 10px;
+}
+
+#copyright a {
+	color: #000;
+	text-decoration: none;
+}
+
+#uploadrow ul {background-color:#EBEBEB; list-style: none;  width:100%; margin: 0px; padding: 0px; margin-left: 15px;} 
+#uploadrow li { float:left; width: 180px; overflow: hidden; text-align: left; background-color:#EBEBEB;}
+#uploadrow li a {text-decoration: none; display: block; color: #000; background-color:#EBEBEB;}
+#uploadrow li a:hover {background-color: #E3E3E3;}

@@ -1,0 +1,186 @@
+body, div, td, option, input, textarea {
+	font-family: Verdana, Arial, Tahoma;
+	font-size: 9pt;
+	color: #000;
+}
+body {
+	margin: 0px;
+	background-color: #FFF;
+	text-align: center;
+}
+body, div, td a {
+	color: #000;
+	text-decoration: none;
+}
+
+#adminheader {
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 4px;
+	background-color: #fff;
+	height: 20px;
+}
+
+#adminheaderbar {
+	background-color: #fff;
+	line-height: 200% !important;
+	line-height: 180%;
+}
+#adminheaderbar ul {list-style: none;  width: auto; background-color: #fff; margin: 0px;} 
+#adminheaderbar li { float:left; width:80px; text-align: center;}
+#adminheaderbar li a {text-decoration: none; display: block; color: #000;}
+#adminheaderbar li a:hover {background-color: #E3E3E3;}
+
+#adminoverall {
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: #fff;
+}
+
+#adminrow {
+	background-color: #A5A5A5; 
+	border-bottom: 1px solid #000;
+	border-top: 1px solid #646464;
+	height: 25px; line-height: 200%; margin: 0px; 
+}
+#adminrow ul {list-style:none; width: auto; background-color: #fff; margin: 0px; clear: both;} 
+#adminrow li { float:left; width:120px;  text-align: center;}
+#adminrow li a {text-decoration: none;}
+
+
+.highlight {
+	background-color: #EBEBEB;
+	color: #000;
+	border-right: 1px solid #646464;
+}
+.highlight a {color: #000; display: block; line-height: 203%;}
+.normal  {
+	background-color: #A5A5A5;
+	color: #fff;
+}
+.normal a {color: #fff; display: block;}
+
+#adminmain {
+	background-color: #EBEBEB;
+	clear: both;
+	text-align: center;
+	padding: 10px;
+}
+
+#admininner {
+	width: 90%;
+	text-align: left;
+	margin: auto;
+	background-color: #fff; border: 1px solid #A5A5A5;
+	padding: 10px;
+}
+
+#bloginfo {
+	height: 30px;
+	background-image: url(logobg.gif);
+	padding-top: 30px; 
+	text-align:left;
+}
+
+#bloginfotext {
+	font-family: Georgia;
+}
+
+#bloginfoimg {
+	float: right;
+}
+
+.tablewidth {
+	width: 90%;
+}
+
+
+.visibleitem {
+	background-color: #eee;
+}
+
+.hiddenitem {
+	background-color: #ccc;
+}
+.hiddenitem a,  .hiddenitem td{
+	color: #000;
+}
+
+.admintitle {
+	background-color: #A5A5A5;
+}
+
+.admintitle td{
+	color: #fff;
+}
+
+input,textarea {
+	border: 1px solid #ccc;
+	background-color: #fff;
+}
+
+.adminoption {
+	border: 1px solid #A5A5A5;
+	background-color: #eee;
+}
+
+.sectstart {
+	background-color: #646464;
+	color: #fff;
+}
+
+.sectend {
+	background-color: #A5A5A5;
+	color: #fff;
+	text-align: right;
+}
+
+.sect {
+	background-color: #EBEBEB;
+	color: #000;
+}
+.sect option {
+	background-color: #fff;
+}
+
+.sectbar {
+	background-color: #EBEBEB;
+	color: #000;
+}
+
+.prefleft {
+	background-color: #A5A5A5;
+	color: #fff;
+}
+
+.prefright {
+	background-color: #EBEBEB;
+	color: #000;
+}
+
+.prefsection {
+	background-color: #646464;
+	color: #fff;
+}
+.prefsection a {
+	color: #fff;
+}
+
+#copyright {
+	background-color: #EBEBEB;
+	clear: both;
+	text-align: center;
+	padding: 10px;
+}
+
+#copyright a {
+	color: #000;
+	text-decoration: none;
+}
+
+#uploadrow ul {background-color:#EBEBEB; list-style: none;  width:100%; margin: 0px; padding: 0px; margin-left: 15px;} 
+#uploadrow li { float:left; width: 180px; overflow: hidden; text-align: left; background-color:#EBEBEB;}
+#uploadrow li a {text-decoration: none; display: block; color: #000; background-color:#EBEBEB;}
+#uploadrow li a:hover {background-color: #E3E3E3;}
