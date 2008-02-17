@@ -55,7 +55,7 @@ $display_overall.= <<<eot
 </td>
 <td class="sectend">{$lna[442]}</td>
 </tr>
-<tr align=center class="sect"><td align=center colspan=2>{$lna[443]} <input type=text name='gpname' value=''> <input type='submit' value="{$lna[64]}"> <input type='reset' value="{$lna[65]}"></td></tr></table>
+<tr align=center class="sect"><td align=center colspan=2>{$lna[443]} <input type=text name='gpname' value=''> <input type='submit' value="{$lna[64]}" class='formbutton'> <input type='reset' value="{$lna[65]}" class='formbutton'></td></tr></table>
 <br><br></form>
 
 <table class='tablewidth' align=center cellpadding=6 cellspacing=0>
@@ -107,7 +107,7 @@ $pref_result_show
 </table>
 <input type=hidden name='gpnum' value='{$itemid}'>
 <br>
-<div align=center><input type=submit value="{$lna[64]}"> <input type=reset value="{$lna[65]}"></div>
+<div align=center><input type=submit value="{$lna[64]}" class='formbutton'> <input type=reset value="{$lna[65]}" class='formbutton'></div>
 </form>
 eot;
 }
@@ -150,7 +150,7 @@ if ($job=='delgp') {
 	}
 	@header("Content-Type: text/html; charset=utf-8");
 	$t=new template;
-	$t->showtips($lna[454], "<br><form action='admin.php?go=user_dodelgp_{$itemid}' method=post>{$lna[455]}<br><br><select name='togp'>{$gplist}</select> <input type=submit value='{$lna[64]}'></form>");
+	$t->showtips($lna[454], "<br><form action='admin.php?go=user_dodelgp_{$itemid}' method=post>{$lna[455]}<br><br><select name='togp'>{$gplist}</select> <input type=submit value='{$lna[64]}' class='formbutton'></form>");
 	exit();
 }
 
@@ -209,14 +209,14 @@ $display_overall.= <<<eot
 <table cellpadding=3 cellspacing=1 align=center class='tablewidth'>
 <form action="admin.php?go=user_users&ordered={$ordered}" method="post">
 <tr><td colspan=7>
-<select name="usergroup"><option value=''>{$lna[457]}</option>$puttingcates</select> <input type=submit value="{$lna[244]}"> {$lna[458]} <a href="admin.php?go=user_users&usergroup={$usergroup}&ordered=1">{$lna[459]}</a> | <a href="admin.php?go=user_users&usergroup={$usergroup}&ordered=2">{$lna[460]}</a> | <a href="admin.php?go=user_users&usergroup={$usergroup}&ordered=3">{$lna[461]}</a> | <a href="admin.php?go=user_users&usergroup={$usergroup}&ordered=4">{$lna[462]}</a></td></tr></form>
+<select name="usergroup"><option value=''>{$lna[457]}</option>$puttingcates</select> <input type=submit value="{$lna[244]}" class='formbutton'> {$lna[458]} <a href="admin.php?go=user_users&usergroup={$usergroup}&ordered=1">{$lna[459]}</a> | <a href="admin.php?go=user_users&usergroup={$usergroup}&ordered=2">{$lna[460]}</a> | <a href="admin.php?go=user_users&usergroup={$usergroup}&ordered=3">{$lna[461]}</a> | <a href="admin.php?go=user_users&usergroup={$usergroup}&ordered=4">{$lna[462]}</a></td></tr></form>
 <tr><td colspan=7 height=10></td></tr>
 <form action="admin.php?go=user_batchusers" method="post" id='f_s' name='f_s'>
 <tr align=center class="admintitle"><td width=35 align=center>{$lna[245]}</td><td width=80>{$lna[463]}</td><td align=center>{$lna[464]}</td><td width=190 align=center>{$lna[465]}</td><td width=35 align=center>{$lna[78]}</td><td width=35 align=center>{$lna[77]}</td></tr>
 {$tablebody}
 <tr><td colspan=3><a href="#unexist" onclick="checkallbox('f_s', 'checked');">{$lna[247]}</a> | <a href="#unexist" onclick="checkallbox('f_s', '');">{$lna[248]}</a></td><td colspan=3 align=right>$pagebar</td></tr>
 <tr><td colspan=6 height=20></td></tr>
-<tr class="adminoption"><td colspan=7>{$lna[249]}<input type=radio name=opt value='del'>{$lna[78]} <input type=radio name=opt value='newusergroup'>{$lna[466]}<select name="tousergroup">$puttingcates</select> <input type=submit value="{$lna[64]}">
+<tr class="adminoption"><td colspan=7>{$lna[249]}<input type=radio name=opt value='del'>{$lna[78]} <input type=radio name=opt value='newusergroup'>{$lna[466]}<select name="tousergroup">$puttingcates</select> <input type=submit value="{$lna[64]}" class='formbutton'>
 </td></tr>
 </form>
 </table>
@@ -236,7 +236,7 @@ $display_overall.= <<<eot
 <tr><td width=25%>{$lna[469]}</td><td><input type='text' name='detailuser' size='20'></td></tr>
 <tr><td width=25%>{$lna[470]}</td><td><input type='radio' checked=checked name='detailtype' value='username'>{$lna[464]} &nbsp; <input type='radio' name='detailtype' value='userid'>{$lna[471]}</td></tr>
 <tr><td width=25%>{$lna[472]}</td><td><input type='radio' checked=checked name='detailact' value='edituser'>{$lna[77]} &nbsp; <input type='radio' name='detailact' value='deluser'>{$lna[78]}[<b>{$lna[473]}</b>]</td></tr>
-<tr><td colspan=2 align=center><input type=submit value="{$lna[64]}"> <input type=reset value="{$lna[65]}">
+<tr><td colspan=2 align=center><input type=submit value="{$lna[64]}" class='formbutton'> <input type=reset value="{$lna[65]}" class='formbutton'>
 </td></tr></table>
 
 </td></tr></table>
@@ -294,7 +294,7 @@ if ($job=='add' || $job=='edituser') {
 	$formbody.=$t->set('form_eachline', array('text'=>$lna[490], 'formelement'=>"<input type='text' class='text' size='16' name='p[qq]' value='".stripslashes($edituser['qq'])."'/>"));
 	$formbody.=$t->set('form_eachline', array('text'=>'MSN', 'formelement'=>"<input type='text' class='text' size='16' name='p[msn]' value='".stripslashes($edituser['msn'])."'/>"));
 	$formbody.=$t->set('form_eachline', array('text'=>'Skype', 'formelement'=>"<input type='text' class='text' size='16' name='p[skype]' value='".stripslashes($edituser['skype'])."'/>"));
-	$formbody.=$t->set('form_eachline', array('text'=>$lna[492], 'formelement'=>"<input type='text' class='text' size='16' name='p[from]' value='".stripslashes($edituser['from'])."'/>"));
+	$formbody.=$t->set('form_eachline', array('text'=>$lna[492], 'formelement'=>"<input type='text' class='text' size='16' name='p[from]' value='".stripslashes($edituser['fromplace'])."'/>"));
 	$formbody.=$t->set('form_eachline', array('text'=>$lna[493], 'formelement'=>"<textarea cols='30' rows='3' name='p[intro]'>".stripslashes($edituser['intro'])."</textarea>"));
 	$display_overall.=highlightadminitems($light, 'user');
 $display_overall.= <<<eot
@@ -313,7 +313,7 @@ $showword
 <table cellpadding=4 cellspacing=1 align=center class='tablewidth'>
 <form action="admin.php?go=user_{$jobs}" method="post">
 $formbody
-<tr class="adminoption"><td colspan=2 align=center><input type=submit value="{$lna[64]}"> <input type=reset value="{$lna[65]}">
+<tr class="adminoption"><td colspan=2 align=center><input type=submit value="{$lna[64]}" class='formbutton'> <input type=reset value="{$lna[65]}" class='formbutton'>
 </td></tr></table>
 </td></tr></table>
 </td></tr></table>
@@ -348,11 +348,11 @@ if ($job=='savenewuser' || $job=='saveuser') {
 	if ($job=='savenewuser') {
 		$currentuserid=$maxrecord['maxuserid']+1;
 		$imajikan=time();
-		$blog->query("INSERT INTO `{$db_prefix}user` VALUES ('{$currentuserid}', '{$username}', '{$password}', '{$imajikan}', '{$musergroup}', '{$email}', '{$homepage}', '{$qq}', '{$msn}', '{$intro}', '{$gender}', '{$skype}', '{$from}', '0', '{$userdetail['ip']}', '', '', '', '', '', '', '', '')");
+		$blog->query("INSERT INTO `{$db_prefix}user` VALUES ('{$currentuserid}', '{$username}', '{$password}', '{$imajikan}', '{$musergroup}', '{$email}', '{$homepage}', '{$qq}', '{$msn}', '{$intro}', '{$gender}', '{$skype}', '{$from}', '0', '{$userdetail['ip']}', '')");
 		$blog->query("UPDATE `{$db_prefix}maxrec` SET `maxuserid`=`maxuserid`+1");
 		$blog->query("UPDATE `{$db_prefix}counter` SET `users`=`users`+1");
 	} else {
-		$blog->query("UPDATE `{$db_prefix}user` SET {$password} `usergroup`='{$musergroup}', `email`='{$email}', homepage='{$homepage}',  qq='{$qq}', msn='{$msn}', intro='{$intro}', gender='{$gender}', skype='{$skype}', `from`='{$from}' WHERE `userid`='{$p['userid']}'");
+		$blog->query("UPDATE `{$db_prefix}user` SET {$password} `usergroup`='{$musergroup}', `email`='{$email}', homepage='{$homepage}',  qq='{$qq}', msn='{$msn}', intro='{$intro}', gender='{$gender}', skype='{$skype}', `fromplace`='{$from}' WHERE `userid`='{$p['userid']}'");
 		recache_adminlist();
 	}
 	catchsuccess ($finishok2, array($backtouseradmin,$backtoaddnew));

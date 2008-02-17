@@ -1,4 +1,5 @@
 <?PHP
+if (!defined('VALIDADMIN')) die ('Access Denied.');
 $editorjs=<<<eot
 <script type="text/javascript" src="editor/quicktags/js_quicktags.js"></script>
 eot;

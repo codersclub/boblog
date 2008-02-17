@@ -14,14 +14,16 @@ if (!defined('VALIDADMIN')) die ('Access Denied.');
 checkpermission('CP');
 confirmpsw(); //Re-check password
 
-$skinperpage=8;
+$skinperpage=20;
 
 //Define some senteces
 $finishok=$lna[160];
 $finishok2=$lna[751];
 $finishok3=$lna[903];
+$finishok4=$lna[1098];
 $backtoskin="{$lna[27]}|admin.php?go=addon_skin";
 $backtoplugin="{$lna[28]}|admin.php?go=addon_plugin";
+$backtolangspec="{$lna[1099]}|admin.php?go=addon_langspec";
 
 if (!$job) $job='skin';
 
@@ -68,7 +70,7 @@ $display_overall.= <<<eot
 </td>
 </tr>
 <tr class='sect'><td colspan=2 align=center>
-<br>{$lna[173]} template/<input type=text name=newskindir size=20>/ <input type='submit' value='{$lna[64]}'><br>
+<br>{$lna[173]} template/<input type=text name=newskindir size=20>/ <input type='submit' value='{$lna[64]}' class='formbutton'><br>
 </td></tr>
 </form>
 </table>
@@ -83,7 +85,7 @@ $display_overall.= <<<eot
 </td>
 </tr>
 <tr class='sect'><td colspan=2 align=center>
-<input type='submit' value='{$lna[750]}'>
+<input type='submit' value='{$lna[750]}' class='formbutton'>
 </td></tr>
 </form>
 </table>
@@ -163,7 +165,7 @@ if ($job=='plugin') {
 	}
 	if (count($mod_array)==0) $formbody.="<tr class='sect' align=center><td colspan=4> <br> <br>{$lna[909]}<br><br></td></tr>";
 	else {
-		$formbody.="<tr class='sect' align=center><td colspan=4><input type=hidden name=section value='$section'><input type=submit value=\"{$lna[82]}\"> <input type=reset value=\"{$lna[65]}\"> </td></tr>\n";
+		$formbody.="<tr class='sect' align=center><td colspan=4><input type=hidden name=section value='$section'><input type=submit value=\"{$lna[82]}\" class='formbutton'> <input type=reset value=\"{$lna[65]}\" class='formbutton'> </td></tr>\n";
 		$formbody.="<tr class='sect'><td colspan=4>{$lna[910]}</td></tr>\n";
 	}
 
@@ -202,7 +204,7 @@ $formbody
 </tr>
 <tr class='sect'><td colspan=2 align=center>
 <div align=left><b><font color=red>{$lna[923]}</font></b></div>
-<br>{$lna[914]} plugin/<input type=text name=newplugindir size=20>/ <input type='submit' value='{$lna[64]}'><br><br>
+<br>{$lna[914]} plugin/<input type=text name=newplugindir size=20>/ <input type='submit' value='{$lna[64]}' class='formbutton'><br><br>
 </td></tr>
 </table>
 </form>
@@ -260,7 +262,7 @@ $warn
 <br>
 <input type='hidden' name='newplugindir' value='{$newplugindir}'>
 </td>
-<tr class='admintitle'><td align='center'><input type=submit value='{$lna[64]}'> <input type=button onclick='window.location="admin.php?go=addon_plugin";' value='{$lna[138]}'></td></tr>
+<tr class='admintitle'><td align='center'><input type=submit value='{$lna[64]}' class='formbutton'> <input type=button onclick='window.location="admin.php?go=addon_plugin";' value='{$lna[138]}' class='formbutton'></td></tr>
 </form>
 </td></tr></table>
 eot;
@@ -321,6 +323,142 @@ if ($job=='pluginsort') {
 }
 
 
+if ($job=='langspec') {
+	$langstext=$langexist='';
+	$langmodulejs="var jslnc = new Array ();\n";
+	foreach ($lnc as $key => $val) {
+		$langmodulejs.="jslnc[{$key}]='".str_replace("'", "\\'", $val)."';\n";
+		$langstext.="{$key} - ".htmlspecialchars($val)."<br>\n";
+	}
+	$lni=0;
+	if (is_file("data/langspecoverwrite.php")) {
+		include_once("data/langspecoverwrite.php");
+		if (is_array($lncoverwrite)) {
+			foreach ($lncoverwrite as $key=>$val) {
+				$langexist.="<div id='editline{$lni}'><table width=100% cellpadding=0 cellspacing=0><tr class=\"visibleitem\"><td width=15% align=center><input type=text size=4 maxlength=4 name='newlnum[]' id='newlnum{$lni}' onblur='changeldarea({$lni});' value='{$key}'></td><td width=40%><span id='ldarea{$lni}'>{$lnc[$key]}</span></td><td width=40%><input type=text size=52 name='newldesc[]' id='newldesc{$lni}' value='{$val}'></td><td width=5% align=center><input type=button onclick='deleteeditline({$lni});' value='{$lna[1149]}' class='formbutton'></td></tr></table></div>";
+				$lni+=1;
+			}
+		}
+	}
+	$lnni=$lni+1;
+	$display_overall.=highlightadminitems('langspec', 'addon');
+$display_overall.= <<<eot
+<script type="text/javascript">
+$langmodulejs
+var newlcount={$lnni};
+var getnewlnum;
+var getnewldesc;
+var getldarea;
+var skiplcount = new Array ();
+function addneweditline() {
+	var addnewarea=document.getElementById('addnew');
+	var addnewareato='';
+	for (var i={$lnni}; i<=newlcount; i++) {
+		if (skiplcount[i]!=1) {
+			getnewlnum=(document.getElementById('newlnum'+i)) ? document.getElementById('newlnum'+i).value : '';
+			getnewldesc=(document.getElementById('newldesc'+i)) ? document.getElementById('newldesc'+i).value : '';
+			getldarea=(document.getElementById('ldarea'+i)) ? document.getElementById('ldarea'+i).innerHTML : '&nbsp;';
+			addnewareato=addnewareato+"<div id='editline"+i+"'><table width=100% cellpadding=0 cellspacing=0><tr class=visibleitem><td width=15% align=center><input type=text size=4 maxlength=4 name='newlnum[]' id='newlnum"+i+"' onblur='changeldarea("+i+");' value='"+getnewlnum+"'></td><td width=40%><span id='ldarea"+i+"'>"+getldarea+"</span></td><td width=40%><input type=text size=52 name='newldesc[]'  id='newldesc"+i+"' value='"+getnewldesc+"'></td><td width=5% align=center><input type=button onclick='deleteeditline("+i+");' value='{$lna[1149]}' class='formbutton'></td></tr></table></div>";
+		}
+	}
+	addnewarea.innerHTML=addnewareato;
+	newlcount=newlcount+1;
+}
+
+function deleteeditline(lid) {
+	var newarea=document.getElementById('editline'+lid);
+	if (newarea) {
+		newarea.innerHTML='';
+		newarea.style.display='none';
+	}
+	skiplcount[lid]=1;
+}
+
+function changeldarea(lid) {
+	var newarea=document.getElementById('ldarea'+lid);
+	if (newarea) {
+		var areaval=document.getElementById('newlnum'+lid).value;
+		if (areaval!=null && areaval!='' && jslnc[areaval])
+		newarea.innerHTML=jslnc[areaval];
+	}
+}
+
+function saveldata() {
+	var getnewlnums=new Array ();
+	var getnewldescs=new Array ();
+	for (var i=0; i<newlcount; i++) {
+		if (skiplcount[i]!=1) {
+			getnewlnums[i]=(document.getElementById('newlnum'+i)) ? document.getElementById('newlnum'+i).value.replace(/,/g, '&#44;') : '';
+			getnewldescs[i]=(document.getElementById('newldesc'+i)) ? document.getElementById('newldesc'+i).value.replace(/,/g, '&#44;') : '';
+		}
+	}
+	document.getElementById('newlnums').value=getnewlnums;
+	document.getElementById('newldescs').value=getnewldescs;
+	document.getElementById('ldata').submit();
+}
+
+function sresetldata() {
+	if(confirm("{$lna[1100]}")){
+		window.location=location;
+	}
+	else {
+		return;
+	}
+}
+
+</script>
+<table class='tablewidth' align=center cellpadding=4 cellspacing=0>
+<tr>
+<form action="admin.php?go=addon_savelangspec" method="post" id="ldata">
+<td width=160 class="sectstart">
+{$lna[1101]}
+</td>
+<td class="sectend">{$lna[1102]}</td>
+</tr>
+</td>
+</tr>
+</table>
+
+<table width=100% cellpadding=0 cellspacing=0><tr class="admintitle"><td width=15% align=center>{$lna[1103]}</td><td width=40%>{$lna[1104]}</td><td width=40%>{$lna[1105]}</td><td width=5% align=center>&nbsp;</td></tr></table>
+$langexist
+<div id='editline{$lni}'><table width=100% cellpadding=0 cellspacing=0><tr class="visibleitem"><td width=15% align=center><input type=text size=4 maxlength=4 name='newlnum[]' id='newlnum{$lni}' onblur='changeldarea({$lni});'></td><td width=40%><span id='ldarea{$lni}'>&nbsp;</span></td><td width=40%><input type=text size=52 name='newldesc[]' id='newldesc{$lni}'></td><td width=5% align=center><input type=button onclick='deleteeditline({$lni});' value='{$lna[1149]}' class='formbutton'></td></tr></table></div>
+<div id="addnew"></div>
+<input type=hidden name=newlnums id=newlnums>
+<input type=hidden name=newldescs id=newldescs>
+<div align=center><br><input type=button value="{$lna[64]}" class='formbutton' onclick="saveldata();"> <input type=button onclick='addneweditline();' value="{$lna[1150]}" class='formbutton'> <input type=button onclick='sresetldata();' value="{$lna[65]}" class='formbutton'></div>
+</form>
+
+<br><br><br>
+<table class='tablewidth' align=center cellpadding=4 cellspacing=0>
+<tr><td>
+<b>{$lna[1106]}</b>
+<div style="width:100%; border: 1px solid #ccc; height: 210px; overflow: auto;">{$langstext}</div>
+<br><br>
+{$lna[1107]}
+</td></tr></table>
+eot;
+}
+
+if ($job=='savelangspec') {
+	acceptrequest('newlnums,newldescs');
+	if ($newlnums=='' || $newldescs=='') catcherror($lna[241]);
+	$savelnum=@explode(',', $newlnums);
+	$saveldesc=@explode(',', $newldescs);
+	$savedata=$savedata2="<?php\n";
+	for ($i=0; $i<count($savelnum); $i++) {
+		if ($savelnum[$i]=='') continue;
+		$savedata.="\$lnc[{$savelnum[$i]}]='".admin_convert($saveldesc[$i])."';\n";
+		$savedata2.="\$lncoverwrite[{$savelnum[$i]}]='".admin_convert($saveldesc[$i])."';\n";
+	}
+	if (!writetofile ("data/langspec.php", $savedata)) {
+		catcherror ($lna[66]."data/langspec.php");
+	}
+	if (!writetofile ("data/langspecoverwrite.php", $savedata2)) {
+		catcherror ($lna[66]."data/langspecoverwrite.php");
+	}
+	catchsuccess ($finishok4, $backtolangspec);
+}
+
 function skin_convert($str) {
 	$str=str_replace("\r", '', $str);
 	$str=str_replace("\n", '', $str);
@@ -334,7 +472,7 @@ function add_module ($filename) {
 	if (is_file("plugin/{$newplugindir}/{$filename}")) {
 		$filecontent=readfromfile("plugin/{$newplugindir}/{$filename}");
 		eval ($filecontent);
-		$maxmodid=$blog->countbyquery("SELECT MAX(`order`) FROM `{$db_prefix}mods`");
+		$maxmodid=$blog->countbyquery("SELECT MAX(`modorder`) FROM `{$db_prefix}mods`");
 		$maxmodid+=1;
 		$blog->query("INSERT INTO `{$db_prefix}mods` VALUES ('{$info['newitemposition']}', '{$info['name']}', '{$info['intro']}', '{$info['newitemactive']}', '$maxmodid', 'custom')");
 		if ($activate==1) {

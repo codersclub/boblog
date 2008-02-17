@@ -66,6 +66,8 @@ function waitforconfirm() {
 <table class='tablewidth' align=center>
 <tr><td width=160>{$lna[182]}</td>
 <td><input type="text" name="newcatename" value="" size="30"></td></tr>
+<tr><td width=160 valign='top'>{$lna[1117]} <a href="#" title="{$lna[1118]}" onclick="alert('{$lna[1118]}')">[?]</a></td>
+<td><input type="text" name="newcateurlname" value="" size="30" maxlength="70"> {$lna[102]}</td></tr>
 <tr><td width=160 valign=top>{$lna[183]}</td>
 <td><textarea cols=100 rows=4 name="newcatedesc"></textarea></td></tr>
 <tr><td width=160>{$lna[187]}</td>
@@ -87,7 +89,7 @@ $puttingcates_after
 </td></tr>
 <tr>
 <td colspan=4 align=center class="sectbar">
-<input type=submit value="{$lna[64]}"> <input type=reset value="{$lna[65]}">
+<input type=submit value="{$lna[64]}" class='formbutton'> <input type=reset value="{$lna[65]}" class='formbutton'>
 </td></tr>
 </form>
 </table>
@@ -142,15 +144,15 @@ $puttingcates
 <tr>
 <td width=50%>&nbsp;</td>
 <td width=50%>
-<div id="targetdiv3" style="display:none"><input type=submit value="{$lna[64]}"></div>
+<div id="targetdiv3" style="display:none"><input type=submit value="{$lna[64]}" class='formbutton'></div>
 <div id="targetdiv" style="display:none"><b>{$lna[202]}<a href='admin.php?act=entry'>{$lna[203]}</a><br>
-<input type=submit value="{$lna[64]}" onclick="return waitforconfirm();">
+<input type=submit value="{$lna[64]}" onclick="return waitforconfirm();" class='formbutton'>
 </div>
 <div id="targetdiv2" style="display:none">{$lna[204]}
 <select name="targetcate">
 $puttingcates
 </select>
-<input type=submit value="{$lna[64]}" onclick="">
+<input type=submit value="{$lna[64]}" onclick="" class='formbutton'>
 </div>
 </td></tr></td></tr>
 </table>
@@ -218,6 +220,8 @@ function catchusefuldata() {
 <td width=160>{$lna[182]}</td>
 <td><input type="text" name="newcatename" value="{$categories[$sourcecate]['catename']}"></td>
 </tr>
+<tr><td width=160 valign='top'>{$lna[1117]} <a href="#" title="{$lna[1118]}" onclick="alert('{$lna[1118]}')">[?]</a></td>
+<td><input type="text" name="newcateurlname" value="{$categories[$sourcecate]['cateurlname']}" size="30" maxlength="70"> {$lna[102]}</td></tr>
 <tr>
 <td width=160 valign=top>{$lna[183]}</td>
 <td><textarea cols=100 rows=4 name="newcatedesc">{$categories[$sourcecate]['catedesc']}</textarea></td>
@@ -249,12 +253,25 @@ eot;
 
 
 if ($job=='new' || $job=='save') {
-	acceptrequest('newcatename,newcatedesc,newcateproperty,newcatemode,newcateurl,newcateicon,alsochange,ignorepropertychange,targetcate');
+	acceptrequest('newcatename,newcateurlname,newcatedesc,newcateproperty,newcatemode,newcateurl,newcateicon,alsochange,ignorepropertychange,targetcate');
 	if ($newcatename=='' || $newcatedesc=='') {
 		catcherror ($lna[206]);
 	}
-	$newcatename=safe_convert(stripslashes($newcatename));
-	$newcatedesc=safe_convert(stripslashes($newcatedesc), 1);
+	$newcatename=addslashes(safe_convert(stripslashes($newcatename)));
+	
+	$newcateurlname=safe_convert(stripslashes($newcateurlname));
+	if ($newcateurlname) {
+		if (is_numeric($newcateurlname)) catcherror($lna[1168]);
+		$newurlcatename=urlencode($newcateurlname);
+		if (strstr($newcateurlname, '%')) catcherror($lna[1168]);
+		$newcateurlname=addslashes($newcateurlname);
+		if ($job=='save') $queryplus=" AND `cateid`<>'{$itemid}'";
+		$tmpresult=$blog->getbyquery("SELECT * FROM `{$db_prefix}categories` WHERE `cateurlname`='{$newcateurlname}' {$queryplus} LIMIT 1");
+		if ($tmpresult['catename']) catcherror($lna[1169]);
+	}
+	
+
+	$newcatedesc=addslashes(safe_convert(stripslashes($newcatedesc), 1));
 	$newcatedesc=str_replace('<|>', '&lt;|&gt;', $newcatedesc);
 	
 	if ($job=='new') {
@@ -274,10 +291,10 @@ if ($job=='new' || $job=='save') {
 				$result=$blog->query("UPDATE `{$db_prefix}categories` SET `cateorder`=`cateorder`+1 WHERE `cateorder`>={$insertcateorder}");
 			}
 		} else $insertcateorder=$new_cate_id;
-		$result=$blog->query("INSERT INTO `{$db_prefix}categories` VALUES ('{$new_cate_id}', '{$newcatename}', '{$newcatedesc}', '{$newcateproperty}', '{$insertcateorder}', '{$newcatemode}', '{$newcateicon}', '{$newcateurl}', '', '', '')");
+		$result=$blog->query("INSERT INTO `{$db_prefix}categories` VALUES ('{$new_cate_id}', '{$newcatename}', '{$newcatedesc}', '{$newcateproperty}', '{$insertcateorder}', '{$newcatemode}', '{$newcateicon}', '{$newcateurl}', '{$newcateurlname}', '', '')");
 		$result=$blog->query("UPDATE `{$db_prefix}maxrec` SET `maxcateid`='{$new_cate_id}'");
 	} else {
-		$result=$blog->query("UPDATE `{$db_prefix}categories` SET `catename`='{$newcatename}', `catedesc`='{$newcatedesc}', `cateproperty`='{$newcateproperty}', `catemode`='{$newcatemode}', `cateurl`='{$newcateurl}', `cateicon`='{$newcateicon}' WHERE `cateid`='{$itemid}'");
+		$result=$blog->query("UPDATE `{$db_prefix}categories` SET `catename`='{$newcatename}', `catedesc`='{$newcatedesc}', `cateproperty`='{$newcateproperty}', `catemode`='{$newcatemode}', `cateurl`='{$newcateurl}', `cateicon`='{$newcateicon}', `cateurlname`='{$newcateurlname}' WHERE `cateid`='{$itemid}'");
 		if (($alsochange==1 || $alsochange==2) && $ignorepropertychange!=1) {
 			$newblogproperty=($alsochange==1) ? 2 : 0;
 			$newreproperty=($alsochange==1) ? 1 : 0;
@@ -349,8 +366,7 @@ if ($job=='tags') {
 	$tablebody.="</tr>";
 	$display_overall.=highlightadminitems('tags', 'category');
 $display_overall.= <<<eot
-<form action="admin.php?go=category_batchtags" method='post'>
-<table class='tablewidth' align=center cellpadding=4 cellspacing=0>
+<table class='tablewidth' align=center cellpadding=4 cellspacing=0><form action="admin.php?go=category_batchtags" method='post'>
 <tr>
 <td width=160 class="sectstart">
 {$lna[17]}
@@ -366,8 +382,25 @@ $tablebody
 </td></tr>
 <tr class='sect'>
 <td colspan=2 align=center class="sectbar">
-{$lna[211]} <!--<input type=radio name='opt' value='combine'>{$lna[212]}<input type=text size=6 name='newtagname'> &nbsp;&nbsp;--> <input type=radio name='opt' value='del'>{$lna[78]} &nbsp;&nbsp; <input type=submit value="{$lna[64]}">
+{$lna[211]} <!--<input type=radio name='opt' value='combine'>{$lna[212]}<input type=text size=6 name='newtagname'> &nbsp;&nbsp;--> <input type=radio name='opt' value='del'>{$lna[78]} &nbsp;&nbsp; <input type=submit value="{$lna[64]}" class='formbutton'>
+</td></tr></form>
+</table>
+<br>
+<br>
+<br>
+<table class='tablewidth' align=center cellpadding=4 cellspacing=0><form action="admin.php?go=category_counttags" method='post'>
+<tr>
+<td width=160 class="sectstart">
+{$lna[1183]}
+</td>
+<td class="sectend">{$lna[1184]}</td>
+</tr>
+<tr class='sect'>
+<td colspan=2 align=center>
+<br>
+Tag: <input type="text" name="tagname" size="29"> <input type=submit value="{$lna[64]}" class='formbutton'>
 </td></tr>
+</form>
 </table>
 eot;
 }
@@ -384,5 +417,18 @@ if ($job=='batchtags') {
 	recache_taglist();
 	catchsuccess($finishok2, $backtotag);
 }
+
+if ($job=='counttags') {
+	acceptrequest('tagname');
+	if (!$tagname) catcherror ($lna[213]);
+	$all_tagentries=$blog->getarraybyquery("SELECT `tags` FROM `{$db_prefix}blogs` WHERE tags<>'' AND tags<>'>'");
+	$all_tag_lists=@implode('', $all_tagentries['tags']);
+	$all_tag_lists=@explode('>', $all_tag_lists);
+	$counted_list=array_count_values($all_tag_lists);
+	$to_update_value=floor($counted_list[$tagname]);
+	$blog->query("UPDATE `{$db_prefix}tags` SET tagcounter='{$to_update_value}' WHERE `tagname`='{$tagname}'");
+	catchsuccess($finishok2, $backtotag);
+}
+
 
 ?>

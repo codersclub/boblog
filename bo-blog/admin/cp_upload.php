@@ -24,7 +24,7 @@ if (!$useeditor) $useeditor=$mbcon['editortype'];
 if (!$job || $job=="default") {
 	$message="<form enctype='multipart/form-data' action=\"admin.php?go=upload_doattach&useeditor={$useeditor}\" method=\"post\">";
 	$display_allowed="<select><option>".@str_replace(' ', "</option><option>", $permission['AllowedTypes'])."</option></select>";
-	$message.="<table width=86% align=center class=\"adminoption\" ><tr><td width=25% valign=top align=center>{$lna[408]}</td><td width=60%><input type=\"file\" name='newupfile[]'><br><input type=\"file\" name='newupfile[]'><br><input type=\"file\" name='newupfile[]'><br><input type=\"file\" name='newupfile[]'><br><input type=\"file\" name='newupfile[]'><br>{$lna[677]} {$display_allowed}</td><td width=15% valign=bottom><input type='submit' value='{$lna[414]}'></td></tr><tr><td width=25% align=center>{$lna[415]}</td><td width=60%><input type=\"radio\" name='filerename' value='1'>{$lna[416]} <input type=\"radio\" name='filerename' value='0' checked>{$lna[417]} </td><td width=15%><input type='reset' value='{$lna[65]}'></td></tr></table></form>";
+	$message.="<table width=86% align=center class=\"adminoption\" ><tr><td width=25% valign=top align=center>{$lna[408]}</td><td width=60%><input type=\"file\" name='newupfile[]'><br><input type=\"file\" name='newupfile[]'><br><input type=\"file\" name='newupfile[]'><br><input type=\"file\" name='newupfile[]'><br><input type=\"file\" name='newupfile[]'><br>{$lna[677]} {$display_allowed}</td></tr><tr><td colspan=10 align=center><input type='submit' value='{$lna[414]}' class='formbutton'> <input type='reset' value='{$lna[65]}' class='formbutton'></td></tr></table></form>";
 	print_upload ($message);
 }
 
@@ -62,11 +62,11 @@ if ($job=="doattach") {
 		$ext=strtolower(strrchr($newupfile['name'],'.'));
 		$ext=str_replace(".", '', $ext);
 
-		if ($filerename==1) {
-			$upload_filename=urlencode(str_replace('+', ' ', $newupfile['name']));
-			if (file_exists("{$targetfolder}/{$upload_filename}")) print_upload ($lna[419]);
-		}
-		else $upload_filename=time()."_{$i}.".$ext;
+		$upload_filename=urlencode(str_replace('+', ' ', $newupfile['name']));
+
+		//Change name
+		$original_uploadname=$upload_filename;
+		$upload_filename=time().'_'.rand(1000, 9999).substr(md5($original_uploadname), 0, 4).'.'.$ext;
 
 		if (@!in_array($ext, $permission['AllowedTypes'])) {
 			print_upload ("{$lna[420]} .{$ext} ");
@@ -89,71 +89,114 @@ if ($job=="doattach") {
 			} else $watermark_result='';
 		} else $watermark_result='';
 
-		$upload_filename_list[]="{$targetfolder_ym}".str_replace('.', '*', $upload_filename);
+		//DB updating, new function in 2.1.0
+		$blog->query("INSERT INTO `{$db_prefix}upload` (fid,filepath,originalname,uploadtime,uploaduser) VALUES (null, \"attachment/{$targetfolder_ym}{$upload_filename}\", \"{$original_uploadname}\", {$nowtime['timestamp']}, {$userdetail['userid']})");
+		$currentid=db_insert_id();
+
+		$upload_filename_list[]="{$targetfolder_ym}".str_replace('.', '*', $original_uploadname);
+		$upload_filename_list_insert[]="[attach]{$currentid}[/attach]";
 		$upload_filename_watermark[]=$watermark_result;
 	}
 
 	for ($i=0; $i<count($upload_filename_list); $i++) {
-		$upload_parts.=str_replace('*', '.', $upload_filename_list[$i])." <input type='button' value='{$lna[424]}' onclick=\"insertmyUpload('{$upload_filename_list[$i]}');\">{$upload_filename_watermark[$i]}<br>";
+		$upload_parts.=str_replace('*', '.', $upload_filename_list[$i])." <input type='button' value='{$lna[424]}' onclick=\"generateUpload('{$upload_filename_list_insert[$i]}', '{$upload_filename_list[$i]}');\">{$upload_filename_watermark[$i]}<br>";
 	}
 
-	print_upload ("<div align=left>{$lna[422]}<br>{$upload_parts}<br><div align=center><input type='button' value='{$lna[423]}' onclick='window.location=\"admin.php?go=upload\";'><span style='display: none;'><input type='checkbox' id='ifautoaddubb' checked='checked'></span></div></div>");
+	print_upload ("<div align=left>{$lna[422]}<br>{$upload_parts}<br><div align=center><input type='button' value='{$lna[423]}' onclick='window.location=\"admin.php?go=upload&useeditor={$useeditor}\";'><span style='display: none;'><input type='checkbox' id='ifautoaddubb' checked='checked'></span></div></div>");
 }
 
 if ($job=="filedir") {
-	acceptrequest('dir');
-	$showupdir=basename($dir);
-	$targetfolder=($showupdir) ? "attachment/{$showupdir}" : "attachment";
-	$targetfolder_ym=($showupdir) ? "{$showupdir}/" : '';
-	$handle=@opendir($targetfolder);
-	if (!$handle) print_upload ("{$lna[155]} {$targetfolder} {$lna[156]}<ul><li>{$lna[157]}</li><li>{$lna[158]}</li><li>{$lna[159]}</li></ul>");
-	while (false !== ($file=readdir($handle))) {
-		if ($file!="." && $file!="..") {
-			if (is_dir("{$targetfolder}/{$file}")) {
-				$dirshows[$file]="<li><a href=\"admin.php?go=upload_filedir&dir={$file}\">&raquo;{$file}</a></li>";
-			}
-			else {
-				$file2=str_replace('.', '*', $file);
-				$inserttext[$file]="<li><a href=\"javascript: insertmyUpload('{$targetfolder_ym}{$file2}');\">{$file}</a></li>";
-			}
-		}
+	$start_id=($page-1)*51;
+	acceptrequest('uploadmonth,uploadyear');
+	$queryplus=$showysel=$showmsel='';
+	if (!empty($uploadyear) && empty($uploadmonth)) {
+		$starttimestamp=mktime(0, 0, 0, 1, 1, $uploadyear);
+		$finishtimestamp=mktime(23, 59, 59, 12, 31, $uploadyear);
+		$queryplus="WHERE `uploadtime`>={$starttimestamp} AND `uploadtime`<={$finishtimestamp} ";
 	}
-	if (is_array($inserttext)) @ksort($inserttext);
+	if (!empty($uploadmonth) && !empty($uploadyear)) {
+		$starttimestamp=mktime(0, 0, 0, $uploadmonth, 1, $uploadyear);
+		$finishtimestamp=mktime(23, 59, 59, $uploadmonth+1, 0, $uploadyear);
+		$queryplus="WHERE `uploadtime`>={$starttimestamp} AND `uploadtime`<={$finishtimestamp} ";
+	}
+	
+	$detail_array=$blog->getgroupbyquery("SELECT * FROM `{$db_prefix}upload` {$queryplus} ORDER BY `uploadtime` DESC LIMIT {$start_id}, 51");
+	$numenries=$blog->countbyquery("SELECT COUNT(*) FROM `{$db_prefix}upload` {$queryplus}");
 
-	if ($showupdir) $dirshows[]="<li><a href=\"admin.php?go=upload_filedir\">..{$lna[976]}</a></li>";
-	if (is_array($dirshows)) {
-		@ksort($dirshows);
-		$messagedir="<div align=left style=\"margin-left: 15px;\"><b>{$lna[975]}</b></div><div id='uploadrow'><ul>".@implode("\n", $dirshows)."</ul></div><hr style='clear: both;'>";
-	} else $messagedir='';
+	$inserttext=array();
 
-	$message="<b>{$targetfolder}/</b>{$messagedir} <div align=left style=\"margin-left: 15px;\"><b>{$lna[425]}</b> <input type='checkbox' id='ifautoaddubb' checked='checked'>{$lna[426]}</div><div id='uploadrow'><ul>".@implode("\n", $inserttext)."</ul></div>";
+	for ($i=0; $i<count($detail_array); $i++) {
+		$file=$detail_array[$i]['originalname'];
+		$file2=str_replace('.', '*', $file);
+		$inserttext[]="<li><a href=\"javascript: generateUpload('[attach]{$detail_array[$i]['fid']}[/attach]', '{$file2}');\">".urldecode($file)."</a></li>\n";
+	}
+
+
+	$foryears=range(2001,2050);
+	$formonths=range(1,12);
+	$showysel="<select name=uploadyear><option value=0 selected>{$lna[291]}</option><option value={$nowtime['year']}>{$nowtime['year']}</option>";
+	$showmsel="<select name=uploadmonth><option value=0>{$lna[292]}</option>";
+
+	foreach ($foryears as $y) {
+		$showysel.="<option value=$y>$y</option>\n";
+	}
+	foreach ($formonths as $m) {
+		$showmsel.="<option value=$m>$m</option>\n";
+	}
+	$showysel.="</select>\n";
+	$showmsel.="</select>\n";
+
+	$pagebar=gen_page ($page, 5, "admin.php?go=upload_filedir&useeditor={$useeditor}&uploadyear={$uploadyear}&uploadmonth={$uploadmonth}", $numenries, 51);
+
+	$message="<form action='admin.php?go=upload_filedir&useeditor={$useeditor}' method=post><div align=left style=\"margin-left: 15px;\">{$showysel} / {$showmsel} <input type=submit value='{$lna[244]}'> &nbsp; &nbsp; {$pagebar}</div></form><div align=left style=\"margin-left: 15px;\"><b>{$lna[425]}</b> <input type='checkbox' id='ifautoaddubb' checked='checked'>{$lna[426]}</div><div id='uploadrow'><ul>".@implode("\n", $inserttext)."</ul></div>";
 	print_upload ($message, "normal", "highlight", "normal");
 }
 
 if ($job=="gallery") {
 	$all_images=array('.gif','.jpg','.png','.bmp','.jpeg');
-	acceptrequest('dir');
-	$showupdir=basename($dir);
-	$targetfolder=($showupdir) ? "attachment/{$showupdir}" : "attachment";
-	$targetfolder_ym=($showupdir) ? "{$showupdir}/" : '';
-	$handle=@opendir($targetfolder);
-	if (!$handle) print_upload ("{$lna[155]} {$targetfolder} {$lna[156]}<ul><li>{$lna[157]}</li><li>{$lna[158]}</li><li>{$lna[159]}</li></ul>");
-	while (false !== ($file=readdir($handle))) {
-		$ext=strtolower(strrchr($file,'.'));
-		if (in_array($ext, $all_images)) {
-			$inserttext[$file]="<li><a href=\"javascript: picPreview('{$file}');\" onmouseover=\"picPreview('{$targetfolder_ym}{$file}');\">{$file}</a></li>";
-		} elseif ($file!="." && $file!=".." && is_dir("{$targetfolder}/{$file}")) {
-			$dirshows[$file]="<li><a href=\"admin.php?go=upload_gallery&dir={$file}\">&raquo;{$file}</a></li>";
-		}
+	$constr=makeaquery ($all_images, "`originalname` LIKE '%%s%'", 'OR');
+	$start_id=($page-1)*51;
+	acceptrequest('uploadmonth,uploadyear');
+	$queryplus=$showysel=$showmsel='';
+	if (!empty($uploadyear) && empty($uploadmonth)) {
+		$starttimestamp=mktime(0, 0, 0, 1, 1, $uploadyear);
+		$finishtimestamp=mktime(23, 59, 59, 12, 31, $uploadyear);
+		$queryplus="AND `uploadtime`>={$starttimestamp} AND `uploadtime`<={$finishtimestamp} ";
 	}
-	if (is_array($inserttext)) @ksort($inserttext);
-	if ($showupdir) $dirshows[]="<li><a href=\"admin.php?go=upload_gallery\">..{$lna[976]}</a></li>";
-	if (is_array($dirshows)) {
-		@ksort($dirshows);
-		$messagedir=@implode("\n", $dirshows);
-	} else $messagedir='';
+	if (!empty($uploadmonth) && !empty($uploadyear)) {
+		$starttimestamp=mktime(0, 0, 0, $uploadmonth, 1, $uploadyear);
+		$finishtimestamp=mktime(23, 59, 59, $uploadmonth+1, 0, $uploadyear);
+		$queryplus="AND `uploadtime`>={$starttimestamp} AND `uploadtime`<={$finishtimestamp} ";
+	}
+	
+	$detail_array=$blog->getgroupbyquery("SELECT * FROM `{$db_prefix}upload` WHERE {$constr} {$queryplus} ORDER BY `uploadtime` DESC LIMIT {$start_id}, 51");
+	$numenries=$blog->countbyquery("SELECT COUNT(*) FROM `{$db_prefix}upload` WHERE {$constr} {$queryplus}");
 
-	$message="<div><div id='uploadrow'  style=\"width: 210px; float: left; overflow-y: auto; height: 165px;\"><ul>{$messagedir}".@implode("\n", $inserttext)."</ul></div><div id='picp' style='margin-top: 0px;  width: 400px !important; width: 320px; height: 165px;'>{$lna[427]}</div></div>";
+	$inserttext=array();
+
+	for ($i=0; $i<count($detail_array); $i++) {
+		$file=$detail_array[$i]['originalname'];
+		$file2=str_replace('.', '*', $file);
+		$inserttext[]="<li><a href=\"javascript: generateUpload('[attach]{$detail_array[$i]['fid']}[/attach]', '{$file2}');\"  onmouseover=\"picPreview('{$detail_array[$i]['filepath']}', '[attach]{$detail_array[$i]['fid']}[/attach]');\">".urldecode($file)."</a></li>\n";
+	}
+
+	$foryears=range(2001,2050);
+	$formonths=range(1,12);
+	$showysel="<select name=uploadyear><option value=0 selected>{$lna[291]}</option><option value={$nowtime['year']}>{$nowtime['year']}</option>";
+	$showmsel="<select name=uploadmonth><option value=0>{$lna[292]}</option>";
+
+	foreach ($foryears as $y) {
+		$showysel.="<option value=$y>$y</option>\n";
+	}
+	foreach ($formonths as $m) {
+		$showmsel.="<option value=$m>$m</option>\n";
+	}
+	$showysel.="</select>\n";
+	$showmsel.="</select>\n";
+
+	$pagebar=gen_page ($page, 3, "admin.php?go=upload_gallery&useeditor={$useeditor}&uploadyear={$uploadyear}&uploadmonth={$uploadmonth}", $numenries, 51);
+
+	$message="<form action='admin.php?go=upload_gallery&useeditor={$useeditor}' method=post><div align=left style=\"margin-left: 15px;\">{$showysel} / {$showmsel} <input type=submit value='{$lna[244]}'> &nbsp; &nbsp; {$pagebar} &nbsp; &nbsp; <input type='checkbox' id='ifautoaddubb' checked='checked'>{$lna[426]}</div></form><div><div id='uploadrow'  style=\"width: 210px; float: left; overflow-y: auto; height: 165px;\"><ul>".@implode("\n", $inserttext)."</ul></div><div id='picp' style='margin-top: 0px;  width: 400px !important; width: 320px; height: 165px;'>{$lna[427]}</div></div>";
 	print_upload ($message, "normal", "normal", "highlight");
 }
 

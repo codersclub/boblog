@@ -46,11 +46,12 @@ if ($job!='add' && $job!='store' && $job!='sendtb') {
 		}
 		$recordsa=$blog->getgroupbyquery($partialquery);
 		$records=$recordsa[0];
-		if ($records['blogid']=='') {
+		if ($records['blogid']=='' && $ajax!='on') {
 			$cancel=$lna[268];
 		}
-		$records['content']=safe_invert($records['content'], $records['htmlstat']);
-		$records['content']=preg_replace("/\[php\](.+?)\[\/php\]/ise", "phpcode4('\\1')", $records['content']);
+		$records['entrysummary']=safe_invert($records['entrysummary'], $records['htmlstat']);
+		$records['entrysummary']=preg_replace("/\[php\](.+?)\[\/php\]/ise", "phpcode4('\\1')", $records['entrysummary']);
+		$displaysummary=($records['entrysummary']) ? 'block' : 'none';
 	}
 }
 
@@ -61,21 +62,17 @@ if ($job=='edit' && $records['authorid']!=$userdetail['userid'] && $permission['
 catcherror ($cancel);
 
 if ($job=='add' || $job=='edit') { //Initialize public items
-	acceptrequest('ignore,loaddraft');
-	// Draft!
-	if (is_file('data/draftsaved.php') && $ignore!=1) {
-		$saved_draft=substr(readfromfile('data/draftsaved.php'), 13);
-		@list($draftid, $drafttitle, $draftcontent)=@explode('||', $saved_draft);
-		if ($job=='edit' && $draftid!=$id) {
-			$jumptourl=(is_numeric($draftid)) ? "go=edit_edit_{$draftid}" : "go=edit_add";
-		} else $jumptourl=$_SERVER['QUERY_STRING'];
+	acceptrequest('ignore');
+	$findautosaver=$blog->getbyquery("SELECT * FROM `{$db_prefix}blogs` WHERE `blogid`=-1");
+	if ($findautosaver['blogid']=='-1' && $ignore!=1) {
 		@header("Content-Type: text/html; charset=utf-8");
 		$t=new template;
-		$t->showtips($lna[926],"<font color=red>{$lna[927]}</font><br>",array("{$lna[928]}|admin.php?{$jumptourl}&ignore=1&loaddraft=1",  "{$lna[929]}|admin.php?".$_SERVER['QUERY_STRING']."&ignore=1"));
+		$t->showtips($lna[926],"<font color=red>{$lna[927]}</font><br>",array("{$lna[928]}|admin.php?go=edit_edit_-1&ignore=1",  "{$lna[929]}|admin.php?".$_SERVER['QUERY_STRING']."&ignore=1"));
 		exit();
 	}
 
 	$currentjob=basename($_SERVER['QUERY_STRING']);
+	@list($currentjob, $unuse)=@explode('&useeditor=', $currentjob);
 
 	if(is_array($weather)) { //Get Weather List
 		while (@list($wkey, $wvalue)=@each($weather)) {
@@ -83,14 +80,14 @@ if ($job=='add' || $job=='edit') { //Initialize public items
 			$arrayvalue_weather[]=$wkey;
 		}
 	}
-	$arrayoption_property=array($lna[269], $lna[270], $lna[271], $lna[272]);
-	$arrayvalue_property=array(0, 1, 2, 3);
+	$arrayoption_property=array($lna[269], $lna[270], $lna[271], $lna[272], $lna[1111]);
+	$arrayvalue_property=array(0, 1, 2, 3, 4);
 	$arrayoption_sticky=array($lna[273], $lna[274], $lna[275]);
 	$arrayvalue_sticky=array(0, 1, 2);
 	$usergp_1=array_values($usergp);
 	$usergp_2=array_keys($usergp);
-	$arrayoption_editors=array('QuickTags', $lna[568], $lna[1017], $lna[711]);
-	$arrayvalue_editors=array('quicktags', 'ubb', 'tinymce', 'custom');
+	$arrayoption_editors=array('QuickTags', $lna[568], "FCKeditor {$lna[1017]}", "TinyMCE {$lna[1017]}", $lna[711]);
+	$arrayvalue_editors=array('quicktags', 'ubb', 'fckeditor', 'tinymce', 'custom');
 
 	$ismoreon='none';
 	if ($permission['AddTag']==1) {
@@ -109,13 +106,15 @@ if ($job=='add' || $job=='edit') { //Initialize public items
 		$taglist=$lna[277];
 		$tagdisable='disabled';
 	}
+
+	$quickbutton_bottom="<input type=button value=\"{$lna[1123]}\" class=\"formbutton\" onclick=\"savetodraftnow();\";>";
+
 }
 
 if ($job=='edit') { //Initialize Edit only items
 	$selectedid_weather=array_search($records['weather'], $arrayvalue_weather); //selected weather
 	$selectedid_category=array_search($records['category'], $arrayvalue_categories); //selected category
 	$selectedid_sticky=array_search($records['sticky'], $arrayvalue_sticky); //if pinned
-	$records['content']=stripslashes($records['content']);
 	$records['tags']=str_replace('>', ' ', trim($records['tags'],'>'));
 	if ($permission['AddTag']!=1) $taglist.="<input type='hidden' name='tags' value='{$records['tags']}'>";
 	if ($records['permitgp']!=='') {
@@ -126,11 +125,22 @@ if ($job=='edit') { //Initialize Edit only items
 		}
 	}
 	$editwarntime=$lna[278];
-	$hiddenareas="<input type='hidden' name='go' id='go' value='edit_restore_{$records['blogid']}'/>";
+	$hiddenareas=($records['blogid']==-1) ? "<input type='hidden' name='go' id='go' value='edit_store'/>" : "<input type='hidden' name='go' id='go' value='edit_restore_{$records['blogid']}'/>";
 	$hiddenareas.="<input type='hidden' name='idforsave' id='idforsave' value='{$records['blogid']}'/>";
 	$hiddenareas.="<input type='hidden' name='oldgo' id='oldgo' value='{$currentjob}'/>";
-	$resendping="<input type=checkbox name='resend' value=1>{$lna[279]}<br>";
+	$resendping=($records['blogid']==-1) ? '' : "<input type=checkbox name='resend' value=1>{$lna[279]}<br>";
+	if ($records['blogid']==-1) {
+		$records['property']=0;
+		$hiddenareas.="<input type='hidden' name='clearautosaver' id='clearautosaver' value='1'/>";
+	}
 	$records['pub_tmp']=gmdate('Y-n-j-H-i-s', $records['pubtime']+$config['timezone']*3600);
+
+	if ($records['entrysummary']) $entrysummaryplus1=" selected";
+	elseif ($records['frontpage']==1) $entrysummaryplus2=" selected";
+	else $entrysummaryplus0=" selected";
+
+	$quickbutton_bottom=($records['property']>=3) ? "<input type=button value=\"{$lna[340]}\" class=\"formbutton\" onclick=\"publishdraftnow();\";>" : "<input type=button value=\"{$lna[1123]}\" class=\"formbutton\" onclick=\"savetodraftnow();\";>";
+
 }
 
 if ($job=='add') { //Initialize Add only items
@@ -141,6 +151,7 @@ if ($job=='add') { //Initialize Add only items
 	$hiddenareas.="<input type='hidden' name='idforsave' id='idforsave' value=''/>";
 	$hiddenareas.="<input type='hidden' name='oldgo' id='oldgo' value='{$currentjob}'/>";
 	$records['pub_tmp']=gmdate('Y-n-j-H-i-s', time()+$config['timezone']*3600);
+	$displaysummary='none';
 }
 
 if ($job=='add' || $job=='edit') { //Initialize public items
@@ -173,13 +184,11 @@ if ($job=='add' || $job=='edit') { //Initialize public items
 	$puttingpermitgp=autoradio ('checkbox', 'permitgp[]', $usergp_1, $usergp_2, $arraychecked_permitgp);
 	$puttingstarred=autoradio ('checkbox', 'starred', array($lna[1020]), array(1), array($records['starred']%2));
 
-	if ($loaddraft==1) {
-		$saved_draft=substr(readfromfile('data/draftsaved.php'), 13);
-		@list($draftid, $drafttitle, $draftcontent)=@explode('||', $saved_draft);
-		$records['title']=base64_decode($drafttitle);
-		$records['content']=base64_decode($draftcontent);
-	}
-	$editorbody=str_replace("{content}", $records['content'], $editorbody);
+	$hiddenareas.="<input type='hidden' name='forcedraft' id='forcedraft' value='0'/>";
+	if ($disableinvert!=1) $records['content']=safe_invert($records['content'], $records['htmlstat']);
+	$records['content']=preg_replace("/\[php\](.+?)\[\/php\]/ise", "phpcode4('\\1')", $records['content']);
+	$records['content']=stripslashes($records['content']);
+	if ($editorbody!='PHP_INCLUDE') $editorbody=str_replace("{content}", $records['content'], $editorbody);
 
 //Now Begins the main part
 	$display_overall.=highlightadminitems('write', 'entry');
@@ -193,6 +202,17 @@ function chktitle() {
 	}
 	else document.getElementById('realsubmit').click();
 }
+
+function savetodraftnow() {
+	if (document.getElementById('forcedraft')) document.getElementById('forcedraft').value=1;
+	chktitle();
+}
+
+function publishdraftnow() {
+	if (document.getElementById('forcedraft')) document.getElementById('forcedraft').value=2;
+	chktitle();
+}
+
 </script>
 <form name='editentry' id='editentry' action='admin.php' method='post' enctype='multipart/form-data' 	{$submitjs}>{$hiddenareas}
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
@@ -205,12 +225,13 @@ function chktitle() {
 <tr>
 <td colspan=2  class="sect">
 
-<table width=98% cellpadding=4 cellspacing=1 align=center>
-<tr bgcolor="#ffffff" align=left>
-<td width=100 align=center>{$lna[567]}</td><td>{$puttingeditors} <input type=button value="{$lna[64]}" onclick="changeeditor();"></td></tr>
-<tr bgcolor="#ffffff" align=left>
+<table width=100% cellpadding=4 cellspacing=1 align=center>
+<tr bgcolor="#ffffff" align=left class="hiddenitem">
+<td width=100 align=center>{$lna[567]}</td><td>{$puttingeditors} <input type=button value="{$lna[64]}" onclick="changeeditor();"></td>
+</tr>
+<tr bgcolor="#ffffff" align=left class="visibleitem">
 <td width=100 align=center>{$lna[284]}</td><td><input type='text' name='title' id='title' value="{$records['title']}" size='50'  class='formtext'></td></tr>
-<tr bgcolor="#ffffff" align=left>
+<tr bgcolor="#ffffff" align=left class="hiddenitem">
 <td width=100 align=center valign=top>{$lna[285]}</td><td>
 <div id='cateselarea'>{$puttingcates} {$lna[286]}
 
@@ -235,21 +256,49 @@ $puttingcates_after
 	
 </div>
 </td></tr>
-<tr bgcolor="#ffffff" align=left>
+<tr bgcolor="#ffffff" align=left class="visibleitem">
 <td width=100 valign=top align=center>{$lna[287]}<br><div align=left>{$puttinghtml}<br>{$puttingubb}<br>{$puttingemot}<br>{$puttingstarred}</div>
 </td>
 <td>
-$editorbody
+eot;
+
+if ($editorbody=='PHP_INCLUDE') {
+	include_once("editor/{$useeditor}/editorinclude.php");
+} else $display_overall.=$editorbody;
+
+$display_overall.= <<<eot
 </td>
 </tr>
-<tr bgcolor="#ffffff" align=left>
+
+<tr bgcolor="#ffffff" align=left class="hiddenitem">
+<td width=100 valign=top align=center>{$lna[1112]}</td>
+<td><select name='summaryway' id='summaryway' onchange="if (this.options[this.selectedIndex].value=='1') {document.getElementById('entrysummary').style.display='block';} else {document.getElementById('entrysummary').style.display='none';}"><option value="0"{$entrysummaryplus0}>{$lna[1113]}</option><option value="2"{$entrysummaryplus2}>{$lna[1114]}</option><option value="1"{$entrysummaryplus1}>{$lna[1115]}</option></select>
+<div id='entrysummary' style='display: {$displaysummary};'>
+<textarea style="width: 95%; height: 100px" name="entrysummary" id="entrysummary">{$records['entrysummary']}</textarea>
+<br>{$lna[1116]}
+</div>
+</td>
+</tr>
+
+<tr bgcolor="#ffffff" align=left valign=top class="visibleitem">
+<td width=100 align=center>{$lna[1117]}</td><td><input type=text name='blogalias' id='blogalias' value="{$records['blogalias']}" size="50"> {$lna[102]}<br>
+{$lna[1118]}
+</td>
+</tr>
+
+
+<tr bgcolor="#ffffff" align=left valign=top class="hiddenitem">
+<td width=100 align=center>{$lna[1119]}</td><td>{$lna[1120]}: <input type=text name='originsrc' id='originsrc' value="{$records['originsrc']}" size="50">{$lna[1121]} &nbsp;&nbsp; {$lna[1122]}: <input name='comefrom' id='comefrom' type=text value="{$records['comefrom']}" size="20"></td>
+</tr>
+
+<tr bgcolor="#ffffff" align=left class="visibleitem">
 <td width=100 valign=top align=center>{$lna[288]}</td>
 <td><input type=checkbox id='changemytime' name='changemytime' value=1 onclick="timechanger();">{$lna[289]} $editwarntime
 <div style="clear:both; display: none;" id="changetime">{$lna[290]} <input type='text' name='newyear' size='4' value="{$records['pub_year']}" maxlength='4'>{$lna[291]} - <input type='text' name='newmonth' size='2' value="{$records['pub_month']}" maxlength='2'>{$lna[292]} - <input type='text' name='newday' size='2' value="{$records['pub_day']}" maxlength='2'>{$lna[293]} -  <input type='text' name='newhour' size='2' value="{$records['pub_hour']}" maxlength='2'>{$lna[294]} -  <input type='text' name='newmin' size='2' value="{$records['pub_min']}" maxlength='2'>{$lna[295]}  -  <input type='text' name='newsec' size='2' value="{$records['pub_sec']}" maxlength='2'>{$lna[296]}</div>
 </td>
 </tr>
 
-<tr bgcolor="#ffffff" align=left>
+<tr bgcolor="#ffffff" align=left class="hiddenitem">
 <td width=100 valign=top align=center>{$lna[297]}</td>
 <td>
 {$lna[298]} {$puttingproperty} ({$lna[299]})<br>
@@ -257,25 +306,25 @@ $editorbody
 {$lna[301]} {$puttingweather}
 </td>
 </tr>
-<tr bgcolor="#ffffff" align=left>
+<tr bgcolor="#ffffff" align=left class="visibleitem">
 <td width=100 valign=top align=center>{$lna[302]}</td>
 <td>{$lna[303]}<br>
 {$puttingpermitgp}
 </td>
 </tr>
-<tr bgcolor="#ffffff" align=left>
+<tr bgcolor="#ffffff" align=left class="hiddenitem">
 <td width=100 valign=top align=center>Tags</td>
 <td><textarea name='tags' id='tags' rows='2' cols='100' class='formtextarea' {$tagdisable}>{$records['tags']}</textarea>
 <div id="tag_few">{$taglist} [<a href="javascript: showhidediv('tag_all');showhidediv('tag_few');">{$lna[1064]}</a>]</div><div id="tag_all" style='display:none;'>{$taglist_all} [<a href="javascript: showhidediv('tag_few');showhidediv('tag_all');">{$lna[1065]}</a>]</div>{$lna[304]} 
 </td>
 </tr>
-<tr bgcolor="#ffffff" align=left>
+<tr bgcolor="#ffffff" align=left class="visibleitem">
 <td width=100 valign=top align=center>{$lna[305]}</td>
 <td>{$resendping}<textarea name='pinged' id='pinged' rows='2' cols='100' class='formtextarea'>{$records['pinged']}</textarea><br>
 {$lna[306]}
 </td>
 </tr>
-<tr bgcolor="#ffffff" align=left>
+<tr bgcolor="#ffffff" align=left class="hiddenitem">
 <td width=100 align=center valign=top>{$lna[1080]}</td><td><input type='text' name='blogpsw' id='blogpsw' value="{$records['blogpsw']}" size='15' maxlength='18' class='formtext'> {$lna[1081]}</td></tr>
 
 </table>
@@ -284,23 +333,32 @@ $editorbody
 </tr>
 <tr>
 <td colspan=4 align=center class="sectbar">
-<input type=button value="{$lna[64]}" onclick="chktitle();"> <input type=reset value="{$lna[65]}">
+<input type=button value="{$lna[64]}" onclick="chktitle();" class="formbutton"> <input type=reset value="{$lna[65]}" class="formbutton"> 
+$quickbutton_bottom
 </td></tr>
 </table>
-<div style='visibility: hidden'><input type=submit value="{$lna[64]}" id='realsubmit'></div>
+<div style='visibility: hidden'><input type=submit value="{$lna[64]}" id='realsubmit' class='formbutton'></div>
 </form>
 eot;
 }
 
 if ($job=='store' || $job=='restore') {
-	acceptrequest('title,property,category,tags,sticky,html,ubb,emot,sweather,permitgp,pinged,changemytime,resend,autoping,starred,blogpsw,useeditor', 0, 'post');
+	acceptrequest('title,property,category,tags,sticky,html,ubb,emot,sweather,permitgp,pinged,changemytime,resend,autoping,starred,blogpsw,useeditor,summaryway,blogalias,originsrc,comefrom,forcedraft,clearautosaver', 0, 'post');
+
+	if ($ajax=='on') {
+		$itemid=-1;
+		$job='restore';
+	}
+
 	//Get content
 	$content=$_POST['content'];
 	//If magic quotes is on, strip the slashes automatically added
 	if ($mqgpc_status==1) $content=stripslashes($content);
 
-	if ($title=='' || $content=='')  {
+	if ($ajax!='on' && ($title=='' || $content==''))  {
 		$cancel=$lna[307];
+	} else if($title=='') {
+		$title=$lna[1172];
 	}
 	if ($job=='restore' && $records['authorid']!=$userdetail['userid'] && $permission['EditSafeMode']!=1) {
 		$cancel=$lna[308];
@@ -319,8 +377,11 @@ if ($job=='store' || $job=='restore') {
 	$emotstat=@floor($emot);
 	$blogid=@floor($blogid);
 	$starred=@floor($starred);
+	$summaryway=@floor($summaryway);
 
 	if ($categories[$category]['cateproperty']==1) $property=2;
+	if (($forcedraft==1 && $property!=4) || $ajax=='on') $property=3;
+	if ($forcedraft==2 && $ajax!='on') $property=0;
 
 	if ($autobr==0) {
 		$content=str_replace("\r",'',$content);  //Disable auto linebreak in WYSIWYG editors
@@ -338,17 +399,59 @@ if ($job=='store' || $job=='restore') {
 		$content=safe_convert($content, 1, 1);
 	}
 
+	if ($summaryway==1) {
+		//Get content-summary
+		$entrysummary=$_POST['entrysummary'];
+		//If magic quotes is on, strip the slashes automatically added
+		if ($mqgpc_status==1) $entrysummary=stripslashes($entrysummary);
+		if ($autobr==0) {
+			$entrysummary=str_replace("\r",'',$entrysummary);  //Disable auto linebreak in WYSIWYG editors
+		}
+		if ($callaftersubmit) {
+			$entrysummary=call_user_func ($callaftersubmit, $entrysummary);
+		}
+		$entrysummary=preg_replace("/\[php\](.+?)\[\/php\]/ise", "phpcode3('\\1')", $entrysummary);
+		if ($htmlstat!=1 || $permission['Html']!=1) {
+			$entrysummary=preg_replace("/\[code\](.+?)\[\/code\]/ise", "phpcode2('\\1')", $entrysummary);
+			$entrysummary=safe_convert($entrysummary, 0, 1);
+		} else {
+			$entrysummary=preg_replace("/\[code\](.+?)\[\/code\]/ise", "phpcode('\\1')", $entrysummary);
+			$entrysummary=safe_convert($entrysummary, 1, 1);
+		}
+	} else $entrysummary='';
+
+	$frontpage=($summaryway==2) ? 1 : 0;
+
 	$title=safe_convert(stripslashes($title));
 
-	if ($tags) {
-		$tags_array=@explode(' ', mystrtolower(trim($tags)));
-		$tags_array_all=array_unique($tags_array);
-		$tags=@implode(' ', $tags_array_all);
-		$tags=safe_convert($tags);
-		$tags=str_replace('&nbsp;', '', $tags);
-		$tags_array=@explode(' ', $tags);
-		$tags='>'.str_replace(' ', '>', $tags).'>';
-	} else $tags='';
+	if ($comefrom && $originsrc) {
+		$comefrom=safe_convert($comefrom);
+		$originsrc=safe_convert($originsrc);
+	} else {
+		$comefrom=$originsrc='';
+	}
+
+	if ($ajax!='on') {
+		$blogalias=blogalias_convert($blogalias);
+		if ($blogalias=='') {
+			$deletealias=true;
+		} else {
+			if ($job=='restore') $findalias_plus="AND `blogid`<>'{$records['blogid']}'";
+			$findalias=$blog->getgroupbyquery("SELECT * FROM `{$db_prefix}blogs` WHERE `blogalias`='{$blogalias}' {$findalias_plus} LIMIT 1");
+			if ($findalias[0]['blogalias']==$blogalias) $blogalias.='_'.rand(1000,9999);
+			$deletealias=false;
+		}
+
+		if ($tags) {
+			$tags_array=@explode(' ', mystrtolower(trim($tags)));
+			$tags_array_all=array_unique($tags_array);
+			$tags=@implode(' ', $tags_array_all);
+			$tags=safe_convert($tags);
+			$tags=str_replace('&nbsp;', '', $tags);
+			$tags_array=@explode(' ', $tags);
+			$tags='>'.str_replace(' ', '>', $tags).'>';
+		} else $tags='';
+	}
 
 	if ($pinged) $pinged=safe_convert($pinged);
 	if (is_array($permitgp)) {
@@ -364,13 +467,17 @@ if ($job=='store' || $job=='restore') {
 		acceptrequest('newyear,newmonth,newday,newhour,newmin,newsec');
 		$finaltime=gmmktime($newhour,$newmin,$newsec,$newmonth,$newday,$newyear)-$config['timezone']*3600;
 	} elseif ($job=='store') $finaltime=$currenttime;
-	else $finaltime=$records['pubtime'];
+	elseif ($ajax!='on') $finaltime=$records['pubtime'];
+	else $finaltime=$currenttime;
+	if ($finaltime<=$currenttime && $property==4) $property=0; //Already should be published
 
 	$content=plugin_walk('storecontent', $content); //load plugin
 
+	$blog->query("DELETE FROM `{$db_prefix}blogs` WHERE `blogid`=-1");
+
 	if ($job=='store') {
 		$currentid=$maxrecord['maxblogid']+1;
-		$query="INSERT INTO `{$db_prefix}blogs` VALUES ('{$currentid}', '{$title}','{$finaltime}','{$currentuserid}', 0, 0, 0, '{$property}','{$category}','{$tags}','{$sticky}','{$htmlstat}', '{$ubbstat}', '{$emotstat}', '{$content}', '0', '0', '{$sweather}', '0', '{$pinged}', '{$permitgp}', '{$starred}', '{$blogpsw}', '0')";
+		$query="INSERT INTO `{$db_prefix}blogs` VALUES ('{$currentid}', '{$title}','{$finaltime}','{$currentuserid}', 0, 0, 0, '{$property}','{$category}','{$tags}','{$sticky}','{$htmlstat}', '{$ubbstat}', '{$emotstat}', '{$content}', '0', '0', '{$sweather}', '0', '{$pinged}', '{$permitgp}', '{$starred}', '{$blogpsw}', '{$frontpage}', '{$entrysummary}', '{$comefrom}', '{$originsrc}', '{$blogalias}')";
 	} else {
 		$currentid=$itemid;
 		if ($tags || $records['tags']!='') {
@@ -378,9 +485,33 @@ if ($job=='store' || $job=='restore') {
 			$oldtags_query="'".@implode("', '", $oldtags)."'";
 			if ($oldtags_query!="''") $blog->query("UPDATE `{$db_prefix}tags` SET tagentry=replace(tagentry, ',{$currentid},', ','), tagcounter=tagcounter-1 WHERE tagname in({$oldtags_query})"); //Remove all records containing this entry
 		}
-		$query="UPDATE `{$db_prefix}blogs` SET title='{$title}', pubtime='{$finaltime}', property='{$property}', category='{$category}', tags='{$tags}', sticky='{$sticky}', htmlstat='{$htmlstat}', ubbstat='{$ubbstat}', emotstat='{$emotstat}', content='{$content}',  editorid='{$currentuserid}', edittime='{$currenttime}', weather='{$sweather}', pinged='{$pinged}', permitgp='{$permitgp}', starred='{$starred}', blogpsw='{$blogpsw}' WHERE `blogid`='{$id}'";
+		if ($currentid==-1) {
+			$query="INSERT INTO `{$db_prefix}blogs` VALUES ('{$currentid}', '{$title}','{$finaltime}','{$currentuserid}', 0, 0, 0, '{$property}','{$category}','{$tags}','{$sticky}','{$htmlstat}', '{$ubbstat}', '{$emotstat}', '{$content}', '0', '0', '{$sweather}', '0', '{$pinged}', '{$permitgp}', '{$starred}', '{$blogpsw}', '{$frontpage}', '{$entrysummary}', '{$comefrom}', '{$originsrc}', '{$blogalias}')";
+		}
+		else {
+			$query="UPDATE `{$db_prefix}blogs` SET title='{$title}', pubtime='{$finaltime}', property='{$property}', category='{$category}', tags='{$tags}', sticky='{$sticky}', htmlstat='{$htmlstat}', ubbstat='{$ubbstat}', emotstat='{$emotstat}', content='{$content}',  editorid='{$currentuserid}', edittime='{$currenttime}', weather='{$sweather}', pinged='{$pinged}', permitgp='{$permitgp}', starred='{$starred}', blogpsw='{$blogpsw}', frontpage='{$frontpage}', entrysummary='{$entrysummary}', comefrom='{$comefrom}', originsrc='{$originsrc}', blogalias='{$blogalias}' WHERE `blogid`='{$id}'";
+		}
 	}
 	$blog->query($query);
+
+	if ($ajax!='on') {
+		//blog alias & advanced rewrite
+		if ($job=='store') {
+			if (!$deletealias && $config['urlrewritemethod']==1) {
+				$redirect_new="<?php\nchdir('../');\n\$entryid={$currentid};\ninclude('read.php');";
+				writetofile("post/{$blogalias}.php", $redirect_new);
+			}
+		} else {
+			if ($deletealias && $records['blogalias']!='' && $config['urlrewritemethod']==1) {
+				@unlink("post/{$records['blogalias']}.php");
+			}
+			elseif (!$deletealias && $blogalias!=$records['blogalias'] && $config['urlrewritemethod']==1) {
+				if ($records['blogalias']!='') @unlink("post/{$records['blogalias']}.php");
+				$redirect_new="<?php\nchdir('../');\n\$entryid={$id};\ninclude('read.php');";
+				writetofile("post/{$blogalias}.php", $redirect_new);
+			}
+		}
+	}
 
 	if ($tags || $records['tags']!='') {
 		$newtags=@array_diff($tags_array_all, $exist_tags_all);
@@ -413,15 +544,14 @@ if ($job=='store' || $job=='restore') {
 	
 	if ($job=='restore' && $property!=$records['property']) recache_latestreplies();
 
-	//if ($autoping==1) technorati();
-
-	//Clear unsaved draft now
-	@unlink('data/draftsaved.php');
-
+	if ($clearautosaver=='1') $blog->query("DELETE FROM `{$db_prefix}blogs` WHERE `blogid`=-1");
 
 	$backtowhere=($property==3) ? $backtodraft : $partbacktoart;
+	if ($ajax=='on') {
+		catchsuccess('');
+	}
 	if (($job=='store' && !$pinged) || ($job=='restore' && $resend!=1) || ($job=='restore' && !$pinged)) {
-		catchsuccess ($finishok, array("{$backtowhere}|{$config['sulink']}{$currentid}{$config['sulinkext']}", $backtoaddnew));
+		catchsuccess ($finishok, array("{$backtowhere}|".get_entry_url($currentid, $blogalias), $backtoaddnew));
 	}
 	else {
 		if ($htmlstat==1) $excerpt=tb_convert($content);
@@ -431,9 +561,9 @@ if ($job=='store' || $job=='restore') {
 			$ping_urls.="<input type='hidden' name='pingurl[]' value='{$ping_show[$i]}'>";
 		}
 		$ping_url_show=@implode('<br>', $ping_show);
-		$form="<div align=center><form action='admin.php?go=edit_sendtb' method='post'><input type='hidden' name='title' value=\"{$title}\"><input type='hidden' name='excerpt' value=\"{$excerpt}\"><input type='hidden' name='blog_name' value=\"{$config['blogname']}\"><input type='hidden' name='url' value='{$config['blogurl']}/{$config['sulink']}{$currentid}{$config['sulinkext']}'>{$ping_urls}<input type='submit' value='{$lna[310]}'> <input type='button' value='{$lna[311]}' onclick='window.location=(\"{$config['sulink']}{$currentid}{$config['sulinkext']}\");'></form></div>";
+		$form="<div align=center><form action='admin.php?go=edit_sendtb' method='post'><input type='hidden' name='title' value=\"{$title}\"><input type='hidden' name='excerpt' value=\"{$excerpt}\"><input type='hidden' name='blog_name' value=\"{$config['blogname']}\"><input type='hidden' name='url' value='{$config['blogurl']}/".get_entry_url($currentid, $blogalias)."'>{$ping_urls}<input type='submit' value='{$lna[310]}' class='formbutton'> <input type='button' value='{$lna[311]}' onclick='window.location=(\"".get_entry_url($currentid, $blogalias)."\");' class='formbutton'></form></div>";
 		$t=new template;
-		$t->showtips($lna[312],$lna[313].$ping_url_show."<br><br>{$lna[314]}<br><br>".$form, "{$backtowhere}|{$config['sulink']}{$currentid}{$config['sulinkext']}");
+		$t->showtips($lna[312],$lna[313].$ping_url_show."<br><br>{$lna[314]}<br><br>".$form, "{$backtowhere}|".get_entry_url($currentid, $blogalias));
 	}
 }
 
@@ -443,6 +573,7 @@ if ($job=='sendtb') {
 	acceptrequest('title,excerpt,url,blog_name,pingurl');
 	if (!is_array($pingurl)) catcherror($lna[315]);
 	@header("Content-Type: text/html; charset=utf-8");
+	$url=str_replace('{host}', $_SERVER['HTTP_HOST'], $url);
 	foreach ($pingurl as $durl) {
 		$result=sendping ($durl, $title, $excerpt, $url, $blog_name);
 		if (!$result) $showp.="<b>{$lna[316]}</b>{$durl} ; <b>{$lna[317]}</b>{$lna[318]}";
@@ -474,12 +605,14 @@ function autoradio ($type, $name, $arraylabel, $arrayvalue, $arraychecked=array(
 		else $addcheck='';
 		if ($arraydisabled[$i]==1) $disabled="disabled='disabled'";
 		else $disabled='';
+		if ($type=='checkbox') $disabled.=" id='{$name}' ";
 		$formcontent.="<label><input type='{$type}' name='{$name}' value='{$arrayvalue[$i]}' {$addcheck} class='formradiobox' {$disabled}/>{$arraylabel[$i]}</label> ";
 	}
 	return $formcontent;
 }
 
 function sendping ($url, $title, $excerpt, $blog_url, $blog_name) {
+	$blog_url=str_replace('{host}', $_SERVER['HTTP_HOST'], $blog_url);
 	$trackback_url=parse_url($url);
 	$out="POST {$trackback_url['path']}".($trackback_url['query'] ? '?'.$trackback_url['query'] : '')." HTTP/1.0\r\n";
 	$out.="Host: {$trackback_url['host']}\r\n";

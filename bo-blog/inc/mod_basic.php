@@ -12,11 +12,20 @@ In memory of my university life
 
 if (!defined('VALIDREQUEST')) die ('Access Denied.');
 
-$blogitem['index']=array('type'=>'link', 'url'=>'index.php', 'text'=>$lnc[88]);
+$systemitems=array('index', 'customrss', 'login', 'alltags', 'guestbook', 'togglesidebar', 'starred', 'viewlinks', 'category', 'link', 'statistics', 'archive', 'misc', 'entries', 'replies', 'calendar', 'search', 'copyright', 'mii', 'columnbreak');
+$defineditems=array_keys($blogitem);
+$undefineditems=array_diff($systemitems, $defineditems);
+if (count($undefineditems)>0) {
+	foreach ($undefineditems as $undefineditem) {
+		$blogitem[$undefineditem]=array();
+	}
+}
 
-$blogitem['customrss']=array('type'=>'link', 'url'=>'feed.php', 'text'=>'RSS', 'target'=>'_blank');
+$blogitem['index']+=array('type'=>'link', 'url'=>'index.php', 'text'=>$lnc[88]);
 
-$blogitem['login']=array('type'=>'link');
+$blogitem['customrss']+=array('type'=>'link', 'url'=>'feed.php', 'text'=>'RSS', 'target'=>'_blank');
+
+$blogitem['login']+=array('type'=>'link');
 if ($logstat==1) {
 	$blogitem['login']['text']=$lnc[78];
 	$blogitem['login']['url']='login.php?job=logout';
@@ -35,22 +44,22 @@ if ($logstat==1) {
 }
 
 
-$blogitem['alltags']=array('type'=>'link', 'url'=>'tag.php', 'text'=>$lnc[288]);
+$blogitem['alltags']+=array('type'=>'link', 'url'=>'tag.php', 'text'=>$lnc[288]);
 
-$blogitem['guestbook']=array('type'=>'link', 'url'=>'guestbook.php', 'text'=>$lnc[91]);
+$blogitem['guestbook']+=array('type'=>'link', 'url'=>'guestbook.php', 'text'=>$lnc[91]);
 
-if ($plugin_closesidebar!=1) $blogitem['togglesidebar']=array('type'=>'link', 'url'=>'javascript:showHideSidebar();', 'text'=>$lnc[92]);
+if ($plugin_closesidebar!=1) $blogitem['togglesidebar']+=array('type'=>'link', 'url'=>'javascript:showHideSidebar();', 'text'=>$lnc[92]);
 
-$blogitem['starred']=array('type'=>'link', 'url'=>'star.php', 'text'=>$lnc[93]);
+$blogitem['starred']+=array('type'=>'link', 'url'=>'star.php', 'text'=>$lnc[93]);
 
-$blogitem['viewlinks']=array('type'=>'link', 'url'=>'links.php', 'text'=>$lnc[94]);
+$blogitem['viewlinks']+=array('type'=>'link', 'url'=>'links.php', 'text'=>$lnc[94]);
 
 //[Start]category
 if (in_array('category', $allopenmods)) {
 	if ($job=='category') {
 		$categories[$itemid]['catename']="<strong>{$categories[$itemid]['catename']}</strong>";
 	}
-	$categoryshow.="<ul>";
+	$categoryshow=$categoryplainshow="<ul>";
 	if ($categories && is_array($categories)) {
 		foreach ($categories as $catearray) {
 			$catearray['catedesc']=strip_tags($catearray['catedesc']);
@@ -60,7 +69,7 @@ if (in_array('category', $allopenmods)) {
 				$target=' target="_blank"';
 				$catecount='';
 			} else{
-				$cateurl=($config['smarturl']==1 && $config['urlrewrite']==1) ? "category_{$catearray['cateid']}.htm" : "index.php?go=category_{$catearray['cateid']}";
+				$cateurl=getlink_category($catearray['cateid']);
 				$rssurl=" <a href=\"feed.php?go=category_{$catearray['cateid']}\"><img src=\"{$mbcon['images']}/rss.png\" border=\"0\" alt=\"RSS\" title=\"{$lnc[95]}\" /></a>";
 				$target='';
 				if ($mbcon['parentcatenum']=='2' && $catearray['subcates']!='') $catecount='';
@@ -68,10 +77,17 @@ if (in_array('category', $allopenmods)) {
 				
 			}
 			$cateicon=($catearray['cateicon']) ? "<img src=\"{$catearray['cateicon']}\" alt=\"\" style=\"margin:3px 1px -4px 0px;\"/> " : '';
-			if ($catearray['catemode']==0) $categoryshow.="<li>{$cateicon}<a href=\"{$cateurl}\" title=\"{$catearray['catedesc']}\"{$target}>{$catearray['catename']}</a>{$catecount}{$rssurl}</li>";
-			else $categoryshow.="<li class=\"indent\">{$cateicon}<a href=\"{$cateurl}\" title=\"{$catearray['catedesc']}\"{$target}>{$catearray['catename']}</a>{$catecount}{$rssurl}</li>";
+			if ($catearray['catemode']==0) {
+				$categoryshow.="<li>{$cateicon}<a href=\"{$cateurl}\" title=\"{$catearray['catedesc']}\"{$target}>{$catearray['catename']}</a>{$catecount}{$rssurl}</li>";
+				$categoryplainshow.="<li><a href=\"{$cateurl}\" title=\"{$catearray['catedesc']}\"{$target}>{$catearray['catename']}</a></li>";
+			}
+			else {
+				$categoryshow.="<li class=\"indent\">{$cateicon}<a href=\"{$cateurl}\" title=\"{$catearray['catedesc']}\"{$target}>{$catearray['catename']}</a>{$catecount}{$rssurl}</li>";
+				$categoryplainshow.="<li class=\"indent\"><a href=\"{$cateurl}\" title=\"{$catearray['catedesc']}\"{$target}>{$catearray['catename']}</a></li>";
+			}
 		}
 		$categoryshow.="</ul>";
+		$categoryplainshow.="</ul>";
 		if ($job=='category') {
 			$categories[$itemid]['catename']=strip_tags($categories[$itemid]['catename']);
 		}
@@ -79,7 +95,7 @@ if (in_array('category', $allopenmods)) {
 		$categoryshow.="None</ul>";
 	}
 	plugin_runphp('sidebarcategory');
-	$blogitem['category']=array(
+	$blogitem['category']+=array(
 		'type'=>'block',
 		'name'=>'category',
 		'title'=>$lnc[96],
@@ -92,7 +108,7 @@ if (in_array('category', $allopenmods)) {
 //[Start]link
 if (in_array('link', $allopenmods)) {
 	if (file_exists("data/cache_links.php")) include_once ("data/cache_links.php");
-	$blogitem['link']=array(
+	$blogitem['link']+=array(
 		'type'=>'block',
 		'name'=>'link',
 		'title'=>$lnc[94],
@@ -111,9 +127,9 @@ if (in_array('statistics', $allopenmods)) {
 	if ($mbcon['stattb']=='1') $statshow.="<a href=\"view.php?go=tb\">{$lnc[101]} {$statistics['tb']}</a><br/>";
 	if ($mbcon['statmessages']=='1') $statshow.="<a href=\"guestbook.php\">{$lnc[102]} {$statistics['messages']}</a><br/>";
 	if ($mbcon['statusers']=='1') $statshow.="<a href=\"view.php?go=userlist\">{$lnc[103]} {$statistics['users']}</a><br/>";
-	if ($mbcon['statonline']=='1') $statshow.="{$lnc[104]} {$statistics['nowusers']}<br/>";
+	if ($mbcon['statonline']=='1' && !defined('noCounter')) $statshow.="{$lnc[104]} {$statistics['nowusers']}<br/>";
 	plugin_runphp('sidebarstatistics');
-	$blogitem['statistics']=array(
+	$blogitem['statistics']+=array(
 		'type'=>'block',
 		'name'=>'statistics',
 		'title'=>$lnc[105],
@@ -135,14 +151,14 @@ if (in_array('archive', $allopenmods)) {
 			}
 			$archiveformat=($mbcon['archiveformat']=='custom') ? $mbcon['customarchiveformat'] : $mbcon['archiveformat'];
 			$ymshow=zhgmdate($archiveformat, gmmktime(0, 0, 0, $basemonth, 1, $baseyear));
-			$outurl=($config['smarturl']==1 && $config['urlrewrite']==1) ? "archive_{$basemonth}_{$baseyear}.htm" : "index.php?go=archive&amp;cm={$basemonth}&amp;cy={$baseyear}";
-			$archive1[]="<li><a href=\"{$outurl}\">{$ymshow}</a></li>";
+			$outurl=getlink_archive($basemonth, $baseyear);
+			$archive1[]="<li><a href=\"{$outurl}\" rel=\"noindex,nofollow\">{$ymshow}</a></li>";
 			$basemonth-=1;
 		}
 		$archiveshow='<ul>'.implode("\n", $archive1).'</ul>';
 	}
 	plugin_runphp('sidebararchive');
-	$blogitem['archive']=array(
+	$blogitem['archive']+=array(
 		'type'=>'block',
 		'name'=>'archive',
 		'title'=>$lnc[106],
@@ -167,7 +183,7 @@ if (in_array('misc', $allopenmods)) {
 	$misccontent.="{$lnc[285]} <a href='feed.php'>{$lnc[286]}</a> | <a href='feed.php?go=comment'>{$lnc[287]}</a><br/>{$lnc[111]}UTF-8<br/>";
 	$misccontent.="<a href=\"http://validator.w3.org/check?uri=referer\" target=\"_blank\">XHTML 1.0</a>";
 	plugin_runphp('sidebarmisc');
-	$blogitem['misc']=array(
+	$blogitem['misc']+=array(
 		'type'=>'block',
 		'name'=>'misc',
 		'title'=>$lnc[112],
@@ -185,11 +201,11 @@ if (in_array('entries', $allopenmods)) {
 	for ($i=0; $i<count($listentriesitem); $i++) {
 		$addintionalcssclass=($i%2==0) ? 'rowcouple' : 'rowodd';
 		$listentriesitems=$listentriesitem[$i];
-		$entries_list.="<li class='{$addintionalcssclass}'><a href=\"{$config['sulink']}{$listentriesitems['blogid']}{$config['sulinkext']}\" title=\"{$listentriesitems['fulltitle']}\">{$listentriesitems['title']}</a></li>";
+		$entries_list.="<li class='{$addintionalcssclass}'><a href=\"".getlink_entry($listentriesitems['blogid'], $listentriesitems['blogalias'])."\" title=\"{$listentriesitems['fulltitle']}\">{$listentriesitems['title']}</a></li>";
 	}
 	$entries_list.="</ul>";
 	plugin_runphp('sidebarentries');
-	$blogitem['entries']=array(
+	$blogitem['entries']+=array(
 		'type'=>'block',
 		'name'=>'entries',
 		'title'=>$lnc[113],
@@ -201,19 +217,30 @@ if (in_array('entries', $allopenmods)) {
 
 //[Start]replies
 if (in_array('replies', $allopenmods)) {
-	if (file_exists("data/cache_replies.php")) include ("data/cache_replies.php");
+	if (file_exists("data/cache_replies.php")) $tmpreplies=@explode('<||>', readfromfile("data/cache_replies.php"));
+	$tmpreplyarray=$cache_replies_all=$cache_replies_limit=array();
+	if ($tmpreplies[0]) {
+		foreach ($tmpreplies as $tmpsinglereply) {
+			$tmpsinglereplyarray=@explode('<|>', $tmpsinglereply);
+			if (!$tmpsinglereplyarray[1]) break;
+			$replyarrayasigned=array('blogid'=>$tmpsinglereplyarray[2], 'repcontent'=>stripslashes($tmpsinglereplyarray[3]), 'replier'=>$tmpsinglereplyarray[4], 'repid'=>$tmpsinglereplyarray[5], 'title'=>$tmpsinglereplyarray[6], 'blogalias'=>$tmpsinglereplyarray[7]);
+			if ($tmpsinglereplyarray[1]=='limit') $cache_replies_limit[]=$replyarrayasigned;
+			elseif ($tmpsinglereplyarray[1]=='all') $cache_replies_all[]=$replyarrayasigned;
+		}
+	}
+	
 	$listrepliesitem=($permission['SeeHiddenReply']==1) ? $cache_replies_all : $cache_replies_limit;
 	if ($listrepliesitem) {
 		$replies_list="<ul>";
 		for ($i=0; $i<count($listrepliesitem); $i++) {
 			$addintionalcssclass=($i%2==0) ? 'rowcouple' : 'rowodd';
 			$listrepliesitems=$listrepliesitem[$i];
-			$replies_list.="<li class='{$addintionalcssclass}'><a href=\"{$config['sulink']}{$listrepliesitems['blogid']}{$config['sulinkext']}#topreply\" title=\"[{$listrepliesitems['replier']}] - {$listrepliesitems['title']}\">{$listrepliesitems['repcontent']}</a></li>";
+			$replies_list.="<li class='{$addintionalcssclass}'><a href=\"".getlink_entry($listrepliesitems['blogid'], $listrepliesitems['blogalias'])."#blogcomment{$listrepliesitems['repid']}\" title=\"[{$listrepliesitems['replier']}] - {$listrepliesitems['title']}\">{$listrepliesitems['repcontent']}</a></li>";
 		}
 		$replies_list.="</ul>";
 	}
 	plugin_runphp('sidebarreplies');
-	$blogitem['replies']=array(
+	$blogitem['replies']+=array(
 		'type'=>'block',
 		'name'=>'replies',
 		'title'=>$lnc[114],
@@ -254,30 +281,32 @@ if (in_array('calendar', $allopenmods)) {
 		}
 		else $lunarstream='';
 		$calendarbody=makecalendar ($cm, $cy, $month_calendar, $lunarstream);
-		if ($config['smarturl']==1 && $config['urlrewrite']==1) {
-			$nextmonthurl=($cm==12) ? ("archive_1_".($cy+1).'.htm') : ("archive_".($cm+1)."_{$cy}.htm");
-			$lastmonthurl=($cm==1) ? ("archive_12_".($cy-1).'.htm') : ("archive_".($cm-1)."_{$cy}.htm");
-			$nextyearurl="archive_{$cm}_".($cy+1).'.htm';
-			$lastyearurl="archive_{$cm}_".($cy-1).'.htm';
-			$thismonthurl="archive_{$cm}_{$cy}.htm";
-		} else {
-			$nextmonthurl=($cm==12) ? ("index.php?go=archive&amp;cm=1&amp;cy=".($cy+1)) : ("index.php?go=archive&amp;cm=".($cm+1)."&amp;cy={$cy}");
-			$lastmonthurl=($cm==1) ? ("index.php?go=archive&amp;cm=12&amp;cy=".($cy-1)) : ("index.php?go=archive&amp;cm=".($cm-1)."&amp;cy={$cy}");
-			$nextyearurl="index.php?go=archive&amp;cm={$cm}&amp;cy=".($cy+1);
-			$lastyearurl="index.php?go=archive&amp;cm={$cm}&amp;cy=".($cy-1);
-			$thismonthurl="index.php?go=archive&amp;cm={$cm}&amp;cy={$cy}";
-		}
+
+
+		$nextmonth=($cm==12) ? 1 : $cm+1;
+		$lastmonth=($cm==1) ? 12 : $cm-1;
+		$yearofnextmonth=($cm==12) ? $cy+1 : $cy;
+		$yearoflastmonth=($cm==1) ? $cy-1 : $cy;
+		$nextyear=$cy+1;
+		$lastyear=$cy-1;
+
+		$nextmonthurl=getlink_archive($nextmonth, $yearofnextmonth);
+		$lastmonthurl=getlink_archive($lastmonth, $yearoflastmonth);
+		$nextyearurl=getlink_archive($cm, $nextyear);
+		$lastyearurl=getlink_archive($cm, $lastyear);
+		$thismonthurl=getlink_archive($cm, $cy);
+
 		$thisyearurl="archive.php";
 		$cal_body=<<<eot
 <table id="calendar" cellspacing="1" width="100%">
 <tbody><tr><td colspan="7" class="calendar-top">
-<a href="{$lastyearurl}">&lt;</a>
-<a href="{$thisyearurl}"><span class="calendar-year">{$cy}</span></a>
-<a href="{$nextyearurl}">&gt;</a>
+<a href="{$lastyearurl}" rel="noindex,nofollow">&lt;</a>
+<a href="{$thisyearurl}" rel="noindex,nofollow"><span class="calendar-year">{$cy}</span></a>
+<a href="{$nextyearurl}" rel="noindex,nofollow">&gt;</a>
 	&nbsp;&nbsp;
-<a href="{$lastmonthurl}">&lt;</a>
-<a href="{$thismonthurl}"><span class="calendar-month">{$cm}</span></a>
-<a href="{$nextmonthurl}">&gt;</a>{$lunarym}
+<a href="{$lastmonthurl}" rel="noindex,nofollow">&lt;</a>
+<a href="{$thismonthurl}" rel="noindex,nofollow"><span class="calendar-month">{$cm}</span></a>
+<a href="{$nextmonthurl}" rel="noindex,nofollow">&gt;</a>{$lunarym}
 </td></tr>
 <tr class="calendar-weekdays">
 	<td class="calendar-weekday-cell">{$lnc[115]}</td>
@@ -292,7 +321,7 @@ if (in_array('calendar', $allopenmods)) {
 </tbody></table>
 eot;
 	}
-	$blogitem['calendar']=array(
+	$blogitem['calendar']+=array(
 		'type'=>'block',
 		'name'=>'calendar',
 		'title'=>$lnc[122],
@@ -312,7 +341,7 @@ if ($mbcon['searchon']==1) {
 	<input value="{$lnc[128]}" class="button" type="submit"/>
 	</form>
 eot;
-	$blogitem['search']=array(
+	$blogitem['search']+=array(
 		'type'=>'block',
 		'name'=>'search',
 		'title'=>$lnc[128],
@@ -322,6 +351,7 @@ eot;
 }
 //[End]Search
 
-$blogitem['copyright']=array('type'=>'html', 'code'=>" Powered by <a href=\"http://www.bo-blog.com\" target=\"_blank\">Bo-Blog {$blogversion}</a><span id=\"footer-security\"><a href=\"http://www.cnbct.org\" target=\"_blank\" title=\"Code detection by Bug.Center.Team\"><img src=\"images/others/detect.gif\" alt=\"Code detection by Bug.Center.Team\" border=\"0\" /></a></span>");
-$blogitem['mii']=array('type'=>'link', 'url'=>'http://www.miibeian.gov.cn', 'text'=>'<br/>'.$mbcon['miinum'], 'target'=>'_blank');
+$blogitem['copyright']+=array('type'=>'html', 'code'=>" Powered by <a href=\"http://www.bo-blog.com\" target=\"_blank\">Bo-Blog {$blogversion}</a><span id=\"footer-security\"><a href=\"http://www.cnbct.org\" target=\"_blank\" title=\"Code detection by Bug.Center.Team\"><img src=\"images/others/detect.gif\" alt=\"Code detection by Bug.Center.Team\" border=\"0\" /></a></span>");
+$blogitem['mii']+=array('type'=>'link', 'url'=>'http://www.miibeian.gov.cn', 'text'=>'<br/>'.$mbcon['miinum'], 'target'=>'_blank');
 
+$blogitem['columnbreak']+=array('type'=>'block', 'name'=>'columnbreak', 'title'=>'1', 'content'=>'1', 'extend'=>1);

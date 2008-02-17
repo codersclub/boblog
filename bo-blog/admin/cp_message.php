@@ -121,7 +121,7 @@ $titlem
 {$tablebody}
 <tr><td colspan=3><a href="#unexist" onclick="checkallbox('f_s', 'checked');">{$lna[247]}</a> | <a href="#unexist" onclick="checkallbox('f_s', '');">{$lna[248]}</a></td><td colspan=3 align=right>{$pagebar}</td></tr>
 <tr><td colspan=6 height=20></td></tr>
-<tr class="adminoption"><td colspan=7>{$lna[249]}<input type=radio name='job' value='delreply'>{$lna[78]} <input type=radio name='job' value='{$address}'>{$titles}  <input type=submit value="{$lna[64]}">{$censorclearall}
+<tr class="adminoption"><td colspan=7>{$lna[249]}<input type=radio name='job' value='delreply'>{$lna[78]} <input type=radio name='job' value='{$address}'>{$titles}  <input type=submit value="{$lna[64]}" class='formbutton'>{$censorclearall}
 </td></tr>
 </form>
 </table>

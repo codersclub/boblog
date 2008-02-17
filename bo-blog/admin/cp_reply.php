@@ -144,7 +144,7 @@ if ($job=='censor' || $job=='default') {
 	for ($i=0; $i<count($detail_array); $i++) {
 		$tmp_tm=gmdate('Y/m/d H:i', $detail_array[$i]['reptime']+3600*$config['timezone']);
 		$detail_array[$i]['repcontent']=msubstr($detail_array[$i]['repcontent'], 0, 120);
-		$tablebody.="<tr class='visibleitem'><td align='center'><input type='checkbox' name='selid[]' id='selid[]' value='{$detail_array[$i]['repid']}-{$detail_array[$i]['blogid']}'></td><td>{$detail_array[$i]['replier']}</td><td>{$tmp_tm}</td><td align='left' width=50%><a href='{$config['sulink']}{$detail_array[$i]['blogid']}{$config['sulinkext']}' target='_blank' title='{$lna[356]}'>{$detail_array[$i]['repcontent']}</a></td><td align='center'><a href='javascript: ensuredel(\"{$detail_array[$i]['repid']}-{$detail_array[$i]['blogid']}\", \"2\");'><img src='admin/theme/{$themename}/del.gif' alt='{$lna[78]}' title='{$lna[78]}' border='0'></a></td><td align='center'><a href='admin.php?go=reply_{$address}_{$detail_array[$i]['repid']}-{$detail_array[$i]['blogid']}'><img src='admin/theme/{$themename}/{$picture}.gif' alt='$titles' title='$titles' border='0'></a></td></tr>";
+		$tablebody.="<tr class='visibleitem'><td align='center'><input type='checkbox' name='selid[]' id='selid[]' value='{$detail_array[$i]['repid']}-{$detail_array[$i]['blogid']}'></td><td>{$detail_array[$i]['replier']}</td><td>{$tmp_tm}</td><td align='left' width=50%><a href='".getlink_entry($detail_array[$i]['blogid'], '')."' target='_blank' title='{$lna[356]}'>{$detail_array[$i]['repcontent']}</a></td><td align='center'><a href='javascript: ensuredel(\"{$detail_array[$i]['repid']}-{$detail_array[$i]['blogid']}\", \"2\");'><img src='admin/theme/{$themename}/del.gif' alt='{$lna[78]}' title='{$lna[78]}' border='0'></a></td><td align='center'><a href='admin.php?go=reply_{$address}_{$detail_array[$i]['repid']}-{$detail_array[$i]['blogid']}'><img src='admin/theme/{$themename}/{$picture}.gif' alt='$titles' title='$titles' border='0'></a></td></tr>";
 	}
 	$pagebar=gen_page ($page, 5, "admin.php?go=reply_{$job}", $totalvolume, $adminitemperpage);
 	$display_overall.=highlightadminitems($job, 'reply');
@@ -164,7 +164,7 @@ $titlem
 {$tablebody}
 <tr><td colspan=3><a href="#unexist" onclick="checkallbox('f_s', 'checked');">{$lna[247]}</a> | <a href="#unexist" onclick="checkallbox('f_s', '');">{$lna[248]}</a></td><td colspan=3 align=right>{$pagebar}</td></tr>
 <tr><td colspan=6 height=20></td></tr>
-<tr class="adminoption"><td colspan=7>{$lna[249]}<input type=radio name='job' value='delreply'>{$lna[78]} <input type=radio name='job' value='{$address}'>{$titles}  <input type=submit value="{$lna[64]}">{$censorclearall}
+<tr class="adminoption"><td colspan=7>{$lna[249]}<input type=radio name='job' value='delreply'>{$lna[78]} <input type=radio name='job' value='{$address}'>{$titles}  <input type=submit value="{$lna[64]}" class='formbutton'>{$censorclearall}
 </td></tr>
 </table>
 </form>
@@ -179,7 +179,7 @@ if ($job=='tb' || $job=='tbcensor') {
 	for ($i=0; $i<count($detail_array); $i++) {
 		$tmp_tm=gmdate('Y/m/d H:i', $detail_array[$i]['reptime']+3600*$config['timezone']);
 		$detail_array[$i]['repcontent']=msubstr($detail_array[$i]['repcontent'], 0, 120);
-		$tablebody.="<tr class='visibleitem'><td align='center'><input type='checkbox' name='selid[]' id='selid[]' value='{$detail_array[$i]['repid']}-{$detail_array[$i]['blogid']}'></td><td><a href='{$detail_array[$i]['repurl']}' target='_blank' title='{$lna[358]}'>{$detail_array[$i]['replier']}</a><br>{$detail_array[$i]['repip']}</td><td>{$tmp_tm}</td><td align='left' width=50%><a href='{$config['sulink']}{$detail_array[$i]['blogid']}{$config['sulinkext']}' target='_blank' title='{$lna[356]}'>{$detail_array[$i]['repcontent']}</a></td><td align='center'><a href='javascript: redirectcomfirm(\"admin.php?go=reply_{$tbactdel}_{$detail_array[$i]['repid']}-{$detail_array[$i]['blogid']}\");'><img src='admin/theme/{$themename}/del.gif' alt='{$lna[78]}' title='{$lna[78]}' border='0'></a></td>";
+		$tablebody.="<tr class='visibleitem'><td align='center'><input type='checkbox' name='selid[]' id='selid[]' value='{$detail_array[$i]['repid']}-{$detail_array[$i]['blogid']}'></td><td><a href='{$detail_array[$i]['repurl']}' target='_blank' title='{$lna[358]}'>{$detail_array[$i]['replier']}</a><br>{$detail_array[$i]['repip']}</td><td>{$tmp_tm}</td><td align='left' width=50%><a href='".getlink_entry($detail_array[$i]['blogid'], '')."' target='_blank' title='{$lna[356]}'>{$detail_array[$i]['repcontent']}</a></td><td align='center'><a href='javascript: redirectcomfirm(\"admin.php?go=reply_{$tbactdel}_{$detail_array[$i]['repid']}-{$detail_array[$i]['blogid']}\");'><img src='admin/theme/{$themename}/del.gif' alt='{$lna[78]}' title='{$lna[78]}' border='0'></a></td>";
 		if ($job=='tbcensor') $tablebody.="<td align='center'><a href='admin.php?go=reply_tbpass_{$detail_array[$i]['repid']}-{$detail_array[$i]['blogid']}'><img src='admin/theme/{$themename}/yes.gif' alt='{$lna[259]}' title='{$lna[259]}' border='0'></a></td>";
 		$tablebody.="</tr>";
 	}
@@ -221,7 +221,7 @@ $display_overall.= <<<eot
 {$tablebody}
 <tr><td colspan=3><a href="#unexist" onclick="checkallbox('f_s', 'checked');">{$lna[247]}</a> | <a href="#unexist" onclick="checkallbox('f_s', '');">{$lna[248]}</a></td><td colspan=3 align=right>{$pagebar}</td></tr>
 <tr><td colspan=6 height=20></td></tr>
-<tr class="adminoption"><td colspan=7>{$lna[249]}<input type=radio name='job' value='{$tbactdel}'>{$lna[78]} {$censorplus2}  <input type=submit value="{$lna[64]}">{$censorclearall}
+<tr class="adminoption"><td colspan=7>{$lna[249]}<input type=radio name='job' value='{$tbactdel}'>{$lna[78]} {$censorplus2}  <input type=submit value="{$lna[64]}" class='formbutton'>{$censorclearall}
 </td></tr>
 </table>
 </form>

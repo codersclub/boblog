@@ -41,7 +41,7 @@ if ($v=='start') {
 	}
 
 	$copytxt=readfromfile("licence.txt");
-	template("<div class='log'>{$lang[3]}</div><div class='mes'><div align='center'><textarea style=\"width: 90%; height: 200px;\">{$copytxt}</textarea></div><br/><div align='center'><input type='button' value='{$lang[4]}' onclick='window.location=\"install.php?v=1&newinstall={$newinstall}\";' class='inbut'> <input type='button' value='{$lang[5]}' onclick='window.location=\"install.php?v=cancel\";' class='inbut'></div></div>");
+	template("<div class='log'>{$lang[3]}</div><div class='mes'><div align='center'><form action=\"install.php?v=1&newinstall={$newinstall}\" method='post'><textarea style=\"width: 90%; height: 200px;\">{$copytxt}</textarea></div><br/><div align='center'><input type='submit' value='{$lang[4]}' class='inbut'> <input type='button' value='{$lang[5]}' onclick='window.location=\"install.php?v=cancel\";' class='inbut'></form></div></div>");
 }
 
 if ($v=='cancel') {
@@ -49,10 +49,13 @@ if ($v=='cancel') {
 }
 
 if ($v=='1') {
+	$linkfrom=@parse_url($_SERVER['HTTP_REFERER']);
+	$port=($linkfrom['port']) ? ":{$linkfrom['port']}" : '';
+	$blogurlpath=$linkfrom['scheme'].'://'.$linkfrom['host'].$port.str_replace('/install/install.php', '', $linkfrom['path']);
 	if ($newinstall==1) { // not repair
 		$overwritesel="{$lang[65]}<br><input type='radio' value='1' name='db_overwrite' onclick=\"alert('{$lang[68]}');\">{$lang[66]} <input type='radio' value='0' name='db_overwrite' checked>{$lang[67]}<br><br>";
 	}
-	template("<div class='log'>{$lang[8]}</div><div class='mes'><form action='install.php?v=2' method='post'>{$lang[9]}<br><input type='text' size='20' value='localhost' name='db_server'><br><br>{$lang[10]}<br><input type='text' size='20' value='' name='db_username'><br><br>{$lang[11]}<br><input type='password' size='20' value='' name='db_password'><br><br>{$lang[12]}<br><input type='text' size='20' value='' name='db_name'><br> {$lang[13]}<br><br>{$lang[14]}<br><input type='text' size='20' value='boblog_' name='db_prefix'><br> {$lang[15]}<br><br>{$lang[82]}<br><input type='text' size='20' value='http://' name='blogurlpath'>/index.php<br> {$lang[83]}<br><br>{$overwritesel}{$lang[16]} <a href='javascript:showlayer(\"what1\");'>[{$lang[17]}]</a><br><input type='radio' value='0' name='db_410'>{$lang[18]} <input type='radio' value='1' name='db_410'>{$lang[19]} <div id='what1' style='display: none;'><br>{$lang[20]}</div><div align='center'><br><input type='hidden' name='newinstall' value='{$newinstall}'><input type='submit' value='{$lang[21]}' class='inbut'> <input type='reset' value='{$lang[22]}'  class='inbut'></div></form></div>");
+	template("<div class='log'>{$lang[8]}</div><div class='mes'><form action='install.php?v=2' method='post'>{$lang[9]}<br><input type='text' size='20' value='localhost' name='db_server'><br><br>{$lang[10]}<br><input type='text' size='20' value='' name='db_username'><br><br>{$lang[11]}<br><input type='password' size='20' value='' name='db_password'><br><br>{$lang[12]}<br><input type='text' size='20' value='' name='db_name'><br> {$lang[13]}<br><br>{$lang[14]}<br><input type='text' size='20' value='boblog_' name='db_prefix'><br> {$lang[15]}<br><br>{$lang[82]}<br><input type='text' size='20' value='{$blogurlpath}' name='blogurlpath'>/index.php<br> {$lang[83]}<br><br>{$overwritesel}{$lang[16]} <a href='javascript:showlayer(\"what1\");'>[{$lang[17]}]</a><br><input type='radio' value='0' name='db_410'>{$lang[18]} <input type='radio' value='1' name='db_410'>{$lang[19]} <div id='what1' style='display: none;'><br>{$lang[20]}</div><div align='center'><br><input type='hidden' name='newinstall' value='{$newinstall}'><input type='submit' value='{$lang[21]}' class='inbut'> <input type='reset' value='{$lang[22]}'  class='inbut'></div></form></div>");
 }
 
 if ($v=='2') {
@@ -94,7 +97,7 @@ if ($v=='3') {
 	}
 
 	if ($db_overwrite==1) {
-		db_query("DROP TABLE IF EXISTS `{$db_prefix}blogs`, `{$db_prefix}calendar`, `{$db_prefix}categories`, `{$db_prefix}counter`, `{$db_prefix}forbidden`, `{$db_prefix}history`, `{$db_prefix}linkgroup`, `{$db_prefix}links`, `{$db_prefix}maxrec`, `{$db_prefix}messages`, `{$db_prefix}replies`, `{$db_prefix}user`, `{$db_prefix}mods`, `{$db_prefix}tags`, `{$db_prefix}plugins`");
+		db_query("DROP TABLE IF EXISTS `{$db_prefix}blogs`, `{$db_prefix}calendar`, `{$db_prefix}categories`, `{$db_prefix}counter`, `{$db_prefix}forbidden`, `{$db_prefix}history`, `{$db_prefix}linkgroup`, `{$db_prefix}links`, `{$db_prefix}maxrec`, `{$db_prefix}messages`, `{$db_prefix}replies`, `{$db_prefix}user`, `{$db_prefix}pages`, `{$db_prefix}mods`, `{$db_prefix}tags`, `{$db_prefix}plugins`, `{$db_prefix}upload`");
 	}
 
 	//Creating Tables
@@ -124,6 +127,10 @@ if ($v=='3') {
 	  `starred` INT( 5 ) NOT NULL DEFAULT '0',
 	  `blogpsw` TINYTEXT NULL,
 	  `frontpage` TINYINT( 1 ) NOT NULL DEFAULT '0',
+	 `entrysummary` TEXT NULL ,
+	 `comefrom` VARCHAR( 255 ) NULL ,
+	 `originsrc` VARCHAR( 255 ) NULL ,
+	 `blogalias` VARCHAR( 100 ) NULL,
 	  KEY `blogid` (`blogid`),
 	  KEY `pubtime` (`pubtime`),
 	  KEY `views` (`views`),
@@ -132,7 +139,7 @@ if ($v=='3') {
 	$result=db_query($setup_query);
 	if (!$result) template("<div class='log'>{$lang[1]}</div><div class='mes'>{$errmsg}</div>");
 
-	$setup_query="INSERT INTO `{$db_prefix}blogs` VALUES ('0', '{$lang[30]}', '{$ts}', '1', '0', '0', '0', '0', '0', '', '0', '0', '1', '1', '{$lang[31]}', '0', '0', 'sunny', '0', '', '', '0', '', '0')";
+	$setup_query="INSERT INTO `{$db_prefix}blogs` VALUES ('0', '{$lang[30]}', '{$ts}', '1', '0', '0', '0', '0', '0', '', '0', '0', '1', '1', '{$lang[31]}', '0', '0', 'sunny', '0', '', '', '0', '', '0', '', '', '', '')";
 	$result=db_query($setup_query);
 	if (!$result) template("<div class='log'>{$lang[1]}</div><div class='mes'>{$errmsg}</div>");
 
@@ -156,7 +163,7 @@ if ($v=='3') {
 	  `catemode` int(1) NOT NULL default '0',
 	  `cateicon` tinytext NULL,
 	  `cateurl` text NULL,
-	  `empty1` text NULL,
+	  `cateurlname` VARCHAR(100) NULL,
 	  `empty2` text NULL,
 	  `empty3` text NULL,
 	  KEY `cateorder` (`cateorder`)
@@ -183,7 +190,7 @@ if ($v=='3') {
 	) TYPE=MyISAM{$sqlcharset}";
 	$result=db_query($setup_query);
 	if (!$result) template("<div class='log'>{$lang[1]}</div><div class='mes'>{$errmsg}</div>");
-	$setup_query="INSERT INTO `{$db_prefix}counter` VALUES (0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0)";
+	$setup_query="INSERT INTO `{$db_prefix}counter` VALUES (0, 0, 0, 1, 0, 0, 0, 0, {$ts}, 0, 0)";
 	$result=db_query($setup_query);
 	if (!$result) template("<div class='log'>{$lang[1]}</div><div class='mes'>{$errmsg}</div>");
 
@@ -367,23 +374,34 @@ if ($v=='3') {
 	  `intro` text NULL,
 	  `gender` int(1) NOT NULL default '0',
 	  `skype` text NULL,
-	  `from` text NULL,
+	  `fromplace` text NULL,
 	  `birthday` int(11) NOT NULL default '0',
 	  `regip` text NULL,
 	  `avatar` text NULL,
-	  `empty2` text NULL,
-	  `empty3` text NULL,
-	  `empty4` text NULL,
-	  `empty5` text NULL,
-	  `empty6` text NULL,
-	  `empty7` text NULL,
-	  `empty8` text NULL,
 	  KEY `userid` (`userid`),
 	  KEY `usergroup` (`usergroup`)
 	) TYPE=MyISAM{$sqlcharset}";
 	$result=db_query($setup_query);
 	if (!$result) template("<div class='log'>{$lang[1]}</div><div class='mes'>{$errmsg}</div>");
-	$setup_query="INSERT INTO `{$db_prefix}user` VALUES (1, '{$username}', '{$password}', {$ts}, 2, 'admin@yourname.com', 'http://www.yourname.com', 0, '', '', 0, '', '', 0, '{$ip}', '', '', '', '', '', '', '', '')";
+	$setup_query="INSERT INTO `{$db_prefix}user` VALUES (1, '{$username}', '{$password}', {$ts}, 2, 'admin@yourname.com', 'http://www.yourname.com', 0, '', '', 0, '', '', 0, '{$ip}', '')";
+	$result=db_query($setup_query);
+	if (!$result) template("<div class='log'>{$lang[1]}</div><div class='mes'>{$errmsg}</div>");
+
+	$setup_query="
+	CREATE TABLE `{$db_prefix}pages` (
+	`pageid` INT( 5 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+	`pagetitle` VARCHAR( 255 ) NULL ,
+	`pagecontent` TEXT NULL ,
+	`pageauthor` INT( 8 ) NOT NULL DEFAULT '0',
+	`pagetime` INT( 11 ) NOT NULL DEFAULT '0',
+	`pageedittime` INT( 11 ) NOT NULL DEFAULT '0',
+	`closesidebar` TINYINT( 1 ) NOT NULL DEFAULT '0',
+	`htmlstat` TINYINT( 1 ) NOT NULL DEFAULT '0',
+	`ubbstat` TINYINT( 1 ) NOT NULL DEFAULT '0',
+	`emotstat` TINYINT( 1 ) NOT NULL DEFAULT '0',
+	`pagealias` VARCHAR( 255 ) NULL,
+	INDEX ( `pageauthor` )
+	) TYPE=MyISAM{$sqlcharset}";
 	$result=db_query($setup_query);
 	if (!$result) template("<div class='log'>{$lang[1]}</div><div class='mes'>{$errmsg}</div>");
 
@@ -393,7 +411,7 @@ if ($v=='3') {
 	`name` TEXT NULL ,
 	`desc` TEXT NULL ,
 	`active` INT( 1 ) DEFAULT '1' NOT NULL ,
-	`order` INT( 5 ) NOT NULL ,
+	`modorder` INT( 5 ) NOT NULL ,
 	`func` TEXT NULL
 	) TYPE = MYISAM{$sqlcharset}";
 	$result=db_query($setup_query);
@@ -401,7 +419,7 @@ if ($v=='3') {
 	$setup_query="INSERT INTO `{$db_prefix}mods` VALUES ('header', 'index', '{$lang[35]}', '1', '1', 'system'), ('header', 'customrss', '{$lang[36]}', '0', '2', 'system'), ('header', 'login', '{$lang[37]}', '0', '3', 'system'), ('header', 'modpro', '{$lang[38]}', '0', '4', 'system'), ('header', 'alltags', '{$lang[39]}', '1', '5', 'system'), ('header', 'guestbook', '{$lang[40]}', '1', '6', 'system'), ('header', 'togglesidebar', '{$lang[41]}', '1', '7', 'system'), ('header', 'starred', '{$lang[42]}', '1', '20', 'system')";
 	$result=db_query($setup_query);
 	if (!$result) template("<div class='log'>{$lang[1]}</div><div class='mes'>{$errmsg}</div>");
-	$setup_query="INSERT INTO `{$db_prefix}mods` VALUES ('sidebar', 'category', '{$lang[43]}', '1', '8', 'system'), ('sidebar', 'calendar', '{$lang[44]}', '1', '9', 'system'), ('sidebar', 'statistics', '{$lang[45]}', '1', '10', 'system'), ('sidebar', 'entries', '{$lang[46]}', '1', '11', 'system'), ('sidebar', 'replies', '{$lang[47]}', '1', '12', 'system'), ('sidebar', 'link', '{$lang[48]}', '1', '13', 'system'), ('sidebar', 'archive', '{$lang[49]}', '1', '14', 'system'), ('sidebar', 'misc', '{$lang[50]}', '1', '15', 'system'), ('footer', 'copyright', '{$lang[51]}', '1', '16', 'system'), ('footer', 'mii', '{$lang[52]}', '0', '17', 'system'), ('sidebar', 'announcement', '{$lang[53]}', '0', '0', 'custom'), ('header', 'viewlinks', '{$lang[54]}', '1', '7', 'system'), ('sidebar', 'search', '{$lang[55]}', '1', '10', 'system'), ('header', 'archivelink', '{$lang[84]}', '1', '11', 'custom')";
+	$setup_query="INSERT INTO `{$db_prefix}mods` VALUES ('sidebar', 'category', '{$lang[43]}', '1', '8', 'system'), ('sidebar', 'calendar', '{$lang[44]}', '1', '9', 'system'), ('sidebar', 'statistics', '{$lang[45]}', '1', '10', 'system'), ('sidebar', 'entries', '{$lang[46]}', '1', '11', 'system'), ('sidebar', 'replies', '{$lang[47]}', '1', '12', 'system'),  ('sidebar', 'columnbreak', '{$lang[85]}', '1', '12', 'system'), ('sidebar', 'link', '{$lang[48]}', '1', '13', 'system'), ('sidebar', 'archive', '{$lang[49]}', '1', '14', 'system'), ('sidebar', 'misc', '{$lang[50]}', '1', '15', 'system'), ('footer', 'copyright', '{$lang[51]}', '1', '16', 'system'), ('footer', 'mii', '{$lang[52]}', '0', '17', 'system'), ('sidebar', 'announcement', '{$lang[53]}', '0', '0', 'custom'), ('header', 'viewlinks', '{$lang[54]}', '1', '7', 'system'), ('sidebar', 'search', '{$lang[55]}', '1', '10', 'system'), ('header', 'archivelink', '{$lang[84]}', '1', '11', 'custom')";
 	$result=db_query($setup_query);
 	if (!$result) template("<div class='log'>{$lang[1]}</div><div class='mes'>{$errmsg}</div>");
 
@@ -426,6 +444,19 @@ if ($v=='3') {
 	$result=db_query($setup_query);
 	if (!$result) template("<div class='log'>{$lang[1]}</div><div class='mes'>{$errmsg}</div>");
 
+	$setup_query="
+	CREATE TABLE `{$db_prefix}upload` (
+	  `fid` int(6) NOT NULL auto_increment,
+	  `filepath` varchar(255) default NULL,
+	  `originalname` VARCHAR( 255 ) NULL,
+	  `dltime` int(8) NOT NULL default '0',
+	  `uploadtime` int(11) default NULL,
+	  `uploaduser` int(6) NOT NULL default '0',
+	  PRIMARY KEY  (`fid`)
+	) TYPE=MyISAM";
+	$result=db_query($setup_query);
+	if (!$result) template("<div class='log'>{$lang[1]}</div><div class='mes'>{$errmsg}</div>");
+	
 	template("<div class='log'>{$lang[56]}</div><div class='mes'><form action='install.php?v=4' method='post' id='frm1'>{$lang[57]}<br>{$lang[58]}<br><input type='hidden' value='{$db_server}' name='db_server'><input type='hidden' value='{$db_username}' name='db_username'><input type='hidden' value='{$db_password}' name='db_password'><input type='hidden' value='{$db_name}' name='db_name'><input type='hidden' value='{$db_prefix}' name='db_prefix'><input type='hidden' name='blogurlpath' value='{$blogurlpath}'><input type='hidden' value='{$db_410}' name='db_410'><input type='hidden' value='{$username}' name='username'><input type='hidden' value='{$password}' name='password'><input type='hidden' value='{$blogname}' name='blogname'><input type='hidden' value='".addslashes($blogdesc)."' name='blogdesc'><br><br><div align='center'><input type='hidden' value='{$newinstall}' name='newinstall'><input type='button' id='btn1' value='{$lang[21]}' onclick='submitit();' class='inbut'> <input type='reset' value='{$lang[22]}'  class='inbut'></div></form></div>");
 }
 
@@ -457,8 +488,7 @@ if ($v=='4') {
 \$config['applylinkvalidation']='0';
 \$config['noadminsession']='1';
 \$config['gzip']='0';
-\$config['smarturl']='0';
-\$config['urlrewrite']='0';
+\$config['urlrewritemethod']='0';
 \$config['updatesrc']='http://www.bo-blog.com';
 ";
 	writetofile('../data/config.php', $config_data);
@@ -493,10 +523,9 @@ if ($v=='4') {
 
 	writetofile('../data/plugin_enabled.php', "<?PHP\n");
 
-	writetofile('../data/downloadcounter.php', '');
-
-
-	$copylangorigin=array('{langcopy0}','{langcopy1}','{langcopy2}','{langcopy3}','{langcopy4}','{langcopy5}','{langcopy6}','{langcopy7}','{langcopy8}','{langcopy9}','{langcopy10}','{langcopy11}','{langcopy12}','{langcopy13}','{langcopy14}','{langcopy15}');
+	$copylangorigin=array('{langcopy0}','{langcopy1}','{langcopy2}','{langcopy3}','{langcopy4}','{langcopy5}','{langcopy6}','{langcopy7}','{langcopy8}','{langcopy9}','{langcopy10}','{langcopy11}','{langcopy12}','{langcopy13}','{langcopy14}','{langcopy15}','{langcopy16}');
+	$linkfrom=@parse_url($blogurlpath);
+	$langcopy[16]=$linkfrom['host'];
 	$file_list=@file('filelist.txt');
 	for ($i=0; $i<count($file_list); $i++) {
 		$file_s=trim($file_list[$i]);

@@ -34,26 +34,77 @@ function savedraft() {
 	var content = blogencode(document.getElementById('content').value);
 	var idforsave = blogencode(document.getElementById('idforsave').value);
 	var title = blogencode(document.getElementById('title').value);
-	var gourl="admin/cp_autosaver.php";
-	var postData = "unuse=unuse&title="+title+"&content="+content+"&idforsave="+idforsave;
+	var category=document.getElementById('category').options[document.getElementById('category').selectedIndex].value;	
+//	var tags = blogencode(document.getElementById('tags').value);
+ 	var html = document.getElementById('html').checked ? 1 : 0;
+	var ubb = document.getElementById('ubb').checked ? 1 : 0;
+	var emot = document.getElementById('emot').checked ? 1 : 0;
+	var property = document.getElementById('property').checked ? 1 : 0;
+	var starred = document.getElementById('starred').checked ? 1 : 0;
+	var sweather=document.getElementById('sweather').options[document.getElementById('sweather').selectedIndex].value;	
+//	var blogalias = blogencode(document.getElementById('blogalias').value);
+	var originsrc = blogencode(document.getElementById('originsrc').value);
+	var comefrom = blogencode(document.getElementById('comefrom').value);
+	var entrysummary = blogencode(document.getElementById('entrysummary').value);
+	var summaryway=document.getElementById('summaryway').options[document.getElementById('summaryway').selectedIndex].value;	
+	var thego = blogencode(document.getElementById('go').value);
+	var useeditor = blogencode(document.getElementById('useeditor').options[document.getElementById('useeditor').selectedIndex].value);
+
+	var gourl="admin.php";
+	var postData = "unuse=unuse&go="+thego+"&ajax=on&useeditor="+useeditor+"&title="+title+"&content="+content+"&idforsave="+idforsave+"&category="+category+"&html="+html+"&ubb="+ubb+"&emot="+emot+"&property="+property+"&sweather="+sweather+"&originsrc="+originsrc+"&comefrom="+comefrom+"&summaryway="+summaryway+"&entrysummary="+entrysummary;
 	makeRequest(gourl, 'savemydraft', 'POST', postData);
+}
+
+function cleardraft() {
+	var gourl="admin.php";
+	var postData = "unuse=unuse&go=entry_deletedraft_-1&ajax=on";
+	makeRequest(gourl, 'clearmydraft', 'POST', postData);
 }
 
 function savemydraft() {
 	var timemsg2=document.getElementById('timemsg2');
 	if (http_request.readyState == 4) {
 		if (http_request.status == 200) {
-			if (http_request.responseText=='ok') {
+			var messagereturn = http_request.responseText;
+			if (messagereturn.indexOf("<boblog_ajax::error>")!=-1) {
+				messagereturn=messagereturn.replace("<boblog_ajax::error>", '');
+				alert(jslang[74]+jslang[75]+messagereturn);
+				stopautosaver();
+			} else if (messagereturn.indexOf("<boblog_ajax::success>")!=-1) {
+				messagereturn=messagereturn.replace("<boblog_ajax::success>", '');
 				timemsg2.innerHTML = jslang[65];
 				savetime=-1000;
 			} else {
-				alert('Auto save failed.');
+				alert(jslang[74]+jslang[75]+messagereturn);
+				stopautosaver();
 			}
 		}  else {
-			alert('Auto save failed.');
+			alert(jslang[74]);
+			stopautosaver();
 		}
 	}
 }
+
+function clearmydraft() {
+	var timemsg2=document.getElementById('timemsg2');
+	if (http_request.readyState == 4) {
+		if (http_request.status == 200) {
+			var messagereturn = http_request.responseText;
+			if (messagereturn.indexOf("<boblog_ajax::error>")!=-1) {
+				alert(jslang[77]+jslang[75]+messagereturn);
+				stopautosaver();
+			} else if (messagereturn.indexOf("<boblog_ajax::success>")!=-1) {
+			} else {
+				alert(jslang[77]+jslang[75]+messagereturn);
+				stopautosaver();
+			}
+		}  else {
+			alert(jslang[77]);
+			stopautosaver();
+		}
+	}
+}
+
 
 function stopautosaver () {
 	clearTimeout(savertimer);
@@ -71,5 +122,14 @@ function stopforever() {
 	dateObjexp.setFullYear(2010); 
 	setCookie('autosaveroff', 1,dateObjexp, null, null, false);
 	stopautosaver();
-	document.getElementById('timemsg').innerHTML='Autosaver disabled.';
+	document.getElementById('timemsg').innerHTML=jslang[73];
+}
+
+function switchtodraft() {
+	if(confirm(jslang[76])){
+		window.location="admin.php?go=edit_edit_-1&ignore=1";
+	}
+	else {
+		return;
+	}
 }

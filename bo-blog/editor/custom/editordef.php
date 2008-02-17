@@ -1,4 +1,5 @@
 <?PHP
+if (!defined('VALIDADMIN')) die ('Access Denied.');
 $editorbody=<<<eot
 {$lna[876]}
 <br>

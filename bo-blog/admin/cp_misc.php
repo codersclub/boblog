@@ -54,7 +54,7 @@ $display_overall.= <<<eot
 $formbody
 </table>
 <br>
-<div align=center><input type=submit value="{$lna[64]}"> <input type=reset value="{$lna[65]}"></div>
+<div align=center><input type=submit value="{$lna[64]}" class='formbutton'> <input type=reset value="{$lna[65]}" class='formbutton'></div>
 </form>
 <br>
 <table class='tablewidth' cellpadding=4 cellspacing=1 align=center>
@@ -65,7 +65,7 @@ $formbody
 <tr><td class='prefleft'>{$lna[366]}</td><td class='prefright'><input type=text size=40 name='icon' value=''> </td></tr>
 </table>
 <br>
-<div align=center><input type=submit value="{$lna[64]}"> <input type=reset value="{$lna[65]}"></div>
+<div align=center><input type=submit value="{$lna[64]}" class='formbutton'> <input type=reset value="{$lna[65]}" class='formbutton'></div>
 </form>
 eot;
 }
@@ -82,7 +82,7 @@ if ($job=='weathersave') {
 	}
 	$wholeout="<?PHP\n{$conout}";
 	if (writetofile("data/weather.php", $wholeout)) {
-		catchsuccess ($finishok, array($backtoemot,$backtoubb,$backtoforbidden,$backtoweather,$backtoava));
+		catchsuccess ($finishok, array($backtoemot,$backtoforbidden,$backtoweather,$backtoava));
 	} else {
 		catcherror ($lna[66]."data/weather.php");
 	}
@@ -97,7 +97,7 @@ if ($job=='weatheradd') {
 	$conout.="\$weather['".safe_convert($variable)."']['image']='".safe_convert($icon)."';\n";
 	$conout.="\$weather['".safe_convert($variable)."']['text']='".safe_convert($desc)."';\n";
 	if (writetofile("data/weather.php", $conout)) {
-		catchsuccess ($finishok, array($backtoemot,$backtoubb,$backtoforbidden,$backtoweather,$backtoava));
+		catchsuccess ($finishok, array($backtoemot,$backtoforbidden,$backtoweather,$backtoava));
 	} else {
 		catcherror ($lna[66]."data/weather.php");
 	}
@@ -119,7 +119,7 @@ if ($job=='weatherdel') {
 	}
 	$wholeout="<?PHP\n{$conout}";
 	if (writetofile("data/weather.php", $wholeout)) {
-		catchsuccess ($finishok, array($backtoemot,$backtoubb,$backtoforbidden,$backtoweather,$backtoava));
+		catchsuccess ($finishok, array($backtoemot,$backtoforbidden,$backtoweather,$backtoava));
 	} else {
 		catcherror ($lna[66]."data/weather.php");
 	}
@@ -175,7 +175,7 @@ if ($job=='avatarrefresh') {
 	}
 	$saveall="<?PHP\n\$avatars=array(\n".$savetext.");\n?>";
 	if (writetofile ("data/cache_avatars.php", $saveall)) {
-		catchsuccess ($finishok, array($backtoemot,$backtoubb,$backtoforbidden,$backtoweather,$backtoava));
+		catchsuccess ($finishok, array($backtoemot,$backtoforbidden,$backtoweather,$backtoava));
 	} else {
 		catcherror ($lna[66]."data/cache_avatars.php");
 	}
@@ -222,7 +222,7 @@ $formbody
 </tr>
 </table>
 <br>
-<div align=center><input type=submit value="{$lna[64]}"> <input type=reset value="{$lna[65]}"></div>
+<div align=center><input type=submit value="{$lna[64]}" class='formbutton'> <input type=reset value="{$lna[65]}" class='formbutton'></div>
 </form>
 eot;
 }
@@ -244,7 +244,7 @@ if ($job=='emotsave') {
 	if (writetofile("data/cache_emot.php", $wholeout)) {
 		include_once("data/cache_emot.php");
 		recache_emotselection();
-		catchsuccess ($finishok, array($backtoemot,$backtoubb,$backtoforbidden,$backtoweather,$backtoava));
+		catchsuccess ($finishok, array($backtoemot,$backtoforbidden,$backtoweather,$backtoava));
 	} else {
 		catcherror ($lna[66]."data/cache_emot.php");
 	}
@@ -274,7 +274,7 @@ $display_overall.= <<<eot
 </table>
 $selbody_all
 <table cellpadding=3 cellspacing=1 align=center class='tablewidth'>
-<tr><td class='sect' align=center><input type=submit value="{$lna[404]}"> <input type=reset value="{$lna[405]}">
+<tr><td class='sect' align=center><input type=submit value="{$lna[404]}" class='formbutton'> <input type=reset value="{$lna[405]}" class='formbutton'>
 </td></tr></form></table>
 <br><br>
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
@@ -290,7 +290,7 @@ $selbody_all
 <table cellpadding=3 cellspacing=1 align=center width=80%>
 <tr><td width=25% align=right>{$lna[408]}</td><td width=5%>&nbsp;</td><td width=70%><input type=file name="importfile"><br>{$lna[409]}</td></tr>
 <tr><td width=25% align=right>{$lna[410]}</td><td width=5%>&nbsp;</td><td width=70%><select name="destination">{$option_all}</select></td></tr>
-<tr><td class='sect' align=center colspan=3><input type=submit value="{$lna[64]}"> <input type=reset value="{$lna[65]}">
+<tr><td class='sect' align=center colspan=3><input type=submit value="{$lna[64]}" class='formbutton'> <input type=reset value="{$lna[65]}" class='formbutton'>
 </td></tr></table>
 
 </td></tr></table>
@@ -313,7 +313,7 @@ if ($job=='forbiddensave') {
 	}
 	$update_query_all=@implode(', ', $update_query);
 	$blog->query("UPDATE `{$db_prefix}forbidden` SET {$update_query_all}");
-	catchsuccess ($finishok, array($backtoemot,$backtoubb,$backtoforbidden,$backtoweather,$backtoava));
+	catchsuccess ($finishok, array($backtoemot,$backtoforbidden,$backtoweather,$backtoava));
 }
 
 if ($job=='importforbidden') {
@@ -336,7 +336,7 @@ if ($job=='importforbidden') {
 	$item=str_replace(",,", ',', $item);
 	$blog->query("UPDATE `{$db_prefix}forbidden` SET `{$destination}`='{$item}'");
 	@unlink("{$db_tmpdir}/{$upload_filename}");
-	catchsuccess ($finishok, array($backtoemot,$backtoubb,$backtoforbidden,$backtoweather,$backtoava));
+	catchsuccess ($finishok, array($backtoemot,$backtoforbidden,$backtoweather,$backtoava));
 }
 
 if ($job=='sessiondir') {
@@ -359,7 +359,7 @@ $display_overall.= <<<eot
 <tr><td width=25% align=right valign=top>{$lna[978]}</td><td><input type=text name="newdirname">/<br>{$lna[979]}</td></tr>
 <tr><td width=25% align=right valign=top>{$lna[824]}</td><td><input type=checkbox value=1 name="usedefaultsess" {$checked}>{$lna[1000]}<br>{$lna[1001]}</td></tr>
 
-<tr><td class='sect' align=center colspan=2><input type=submit value="{$lna[64]}"> <input type=reset value="{$lna[65]}">
+<tr><td class='sect' align=center colspan=2><input type=submit value="{$lna[64]}" class='formbutton'> <input type=reset value="{$lna[65]}" class='formbutton'>
 </td></tr></table>
 
 </td></tr></table>
@@ -430,7 +430,7 @@ if ($job=='changesessiondir') {
 
 	unset ($config);
 	include('data/config.php');
-	$savetext="<?PHP\n\$db_server='{$db_server}';\n\$db_username='{$db_username}';\n\$db_password='{$db_password}';\n\$db_name='{$db_name}';\n\$db_prefix='{$db_prefix}';\n\$db_410='{$db_410}';\n";
+	$savetext="<?PHP\n\$db_server='{$db_server}';\n\$db_username='{$db_username}';\n\$db_password='{$db_password}';\n\$db_name='{$db_name}';\n\$db_prefix='{$db_prefix}';\n\$db_410='{$db_410}';\n{$partwrite}";
 	while (@list ($key, $val) = @each ($config)) {
 		$savetext.="\$config['{$key}']='".admin_convert(stripslashes($val))."';\n";
 	}
@@ -442,9 +442,17 @@ if ($job=='changesessiondir') {
 }
 
 if ($job=='urlrewrite') {
-	if ($config['smarturl']==0) $checksta1='checked';
-	elseif ($config['urlrewrite']==0) $checksta2='checked';
-	else $checksta3='checked';
+	if ($config['urlrewritemethod']==0) $checksta1='checked';
+	elseif ($config['urlrewritemethod']==1) $checksta2='checked';
+	elseif ($config['urlrewritemethod']==2) $checksta4='checked';
+	@include_once('data/cache_latest.php');
+	$getId=$cache_latest_all[0]['blogid'];
+	$config['blogurl']=str_replace('{host}', $_SERVER['HTTP_HOST'], $config['blogurl']);
+	$possibleroot=parse_url($config['blogurl']);
+	$serverroot=$possibleroot['path'].'/';
+	$ruletemplate=nl2br(htmlspecialchars(readfromfile("images/others/rule_apache.txt")));
+	$ruletemplate=str_replace('&lt;ROOTHERE&gt;', $serverroot, $ruletemplate);
+
 	$display_overall.=highlightadminitems('urlrewrite', 'misc');
 $display_overall.= <<<eot
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
@@ -455,26 +463,47 @@ $display_overall.= <<<eot
 <td class="sectend">{$lna[528]}</td>
 <tr><td colspan=2 class='sect'>
 <form action="admin.php?go=misc_urlrewritesave" method="post">
-{$lna[1084]}<br>
-<input type=radio value='0' name="urlrewritesta" {$checksta1}> {$lna[511]}<br>
-<input type=radio value='1' name="urlrewritesta" {$checksta2}> {$lna[938]}<br>
-<input type=radio value='2' name="urlrewritesta" {$checksta3}> {$lna[940]}<br>
-<div align=center><input type=submit value="{$lna[64]}"> <input type=reset value="{$lna[65]}"></div></form>
-</td></tr></table>
-<br><br>
-<table class='tablewidth' align=center cellpadding=4 cellspacing=0>
-<tr>
-<td width=160 class="sectstart">
-{$lna[529]}
-</td>
-<td class="sectend">{$lna[530]}</td>
-<tr><td colspan=2 class='sect' align=center>
-<br><form action="admin.php?go=misc_urlrewriteguide" method="post">
-<div align=center><input type=submit value="{$lna[529]}"></div><br><br>
-</form>
+<!-- {$lna[1084]}<br> --><br>
+<input type=radio value='0' name="urlrewritesta" {$checksta1} onclick="document.getElementById('urloptmessagearea').innerHTML=document.getElementById('urloptmessage0').value; document.getElementById('apachearea').style.display='none'"> {$lna[511]}<br>
+<input type=radio value='1' name="urlrewritesta" {$checksta2} onclick="document.getElementById('urloptmessagearea').innerHTML=document.getElementById('urloptmessage1').value; document.getElementById('apachearea').style.display='none'"> {$lna[938]} ({$lna[1139]})<br>
+<input type=radio value='2' name="urlrewritesta" {$checksta4} onclick="document.getElementById('urloptmessagearea').innerHTML=document.getElementById('urloptmessage3').value; document.getElementById('apachearea').style.display='block'"> {$lna[1138]}<br>
+
+<input type="hidden" id="urloptmessage0" value="<b>{$lna[1161]}</b> {$config['blogurl']}/read.php?{$getId} <a href='{$config['blogurl']}/read.php?{$getId}' target=_blank>[{$lna[939]}]</a>">
+<input type="hidden" id="urloptmessage1" value="<b>{$lna[1161]}</b> {$config['blogurl']}/read.php/{$getId}.htm <a href='{$config['blogurl']}/read.php/{$getId}.htm' target=_blank>[{$lna[939]}]</a><br><b>{$lna[1163]}</b> {$config['blogurl']}/post/your-customized-name.php<br>{$lna[1137]}">
+<input type="hidden" id="urloptmessage3" value="<b>{$lna[1161]}</b> {$config['blogurl']}/post/{$getId}/  <a href='{$config['blogurl']}/post/{$getId}/' target=_blank>[{$lna[939]}]</a><br><b>{$lna[1163]}</b> {$config['blogurl']}/your-customized-name/<br><b>{$lna[1162]}</b><br>">
+<br>
+<div id='urloptmessagearea'>
+</div>
+<div id='apachearea' style="display:none;">
+<hr>
+$ruletemplate
+<hr>
+</div>
+<br>
+<div align=center><input type=submit value="{$lna[64]}" class='formbutton'> <input type=reset value="{$lna[65]}" class='formbutton'></div></form>
 </td></tr></table>
 eot;
 }
+
+if ($job=='urlrewritesave') {
+	acceptrequest('urlrewritesta');
+	$urlrewritesta=floor($urlrewritesta);
+	$savetext="<?PHP\n\$db_server='{$db_server}';\n\$db_username='{$db_username}';\n\$db_password='{$db_password}';\n\$db_name='{$db_name}';\n\$db_prefix='{$db_prefix}';\n\$db_410='{$db_410}';\n\$db_tmpdir='{$db_tmpdir}';\n\$db_defaultsessdir='{$db_defaultsessdir}';\n";
+	while (@list ($key, $val) = @each ($config)) {
+		if ($key=='urlrewritemethod') {
+			$savetext.="\$config['{$key}']='{$urlrewritesta}';\n";
+			$saved=1;
+		}
+		else $savetext.="\$config['{$key}']='".admin_convert(stripslashes($val))."';\n";
+	}
+	if ($saved!=1) $savetext.="\$config['urlrewritemethod']='{$urlrewritesta}';\n";
+	if (writetofile ("data/config.php", $savetext)) {
+		catchsuccess ($lna[1094], "{$lna[39]}|admin.php");
+	} else {
+		catcherror ($lna[66]."data/config.php");
+	}
+}
+
 
 if ($job=='urlrewriteguide') {
 	acceptrequest('servertype,serverroot');
@@ -500,7 +529,7 @@ if ($job=='urlrewriteguide') {
 <input type=radio value='2' name="servertype" {$IIScheck}> IIS<br><br>
 {$lna[1086]}<br>
 <input type=text value='$possibleroot' name="serverroot"><br><br>
-<div align=center><input type=submit value="{$lna[64]}"></div><br><br>
+<div align=center><input type=submit value="{$lna[64]}" class='formbutton'></div><br><br>
 </form>
 </td></tr></table>
 eot;
@@ -567,36 +596,3 @@ if ($job=='urlrewriteguide2') {
 eot;
 }
 
-if ($job=='urlrewritesave') {
-	acceptrequest('urlrewritesta');
-	$urlrewritesta=floor($urlrewritesta);
-	if ($urlrewritesta==2) {
-		$destinesmarturl=1;
-		$destineurlrewrite=1;
-	} elseif ($urlrewritesta==1) {
-		$destinesmarturl=1;
-		$destineurlrewrite=0;
-	} else {
-		$destinesmarturl=0;
-		$destineurlrewrite=0;
-	}
-	$savetext="<?PHP\n\$db_server='{$db_server}';\n\$db_username='{$db_username}';\n\$db_password='{$db_password}';\n\$db_name='{$db_name}';\n\$db_prefix='{$db_prefix}';\n\$db_410='{$db_410}';\n\$db_tmpdir='{$db_tmpdir}';\n\$db_defaultsessdir='{$db_defaultsessdir}';\n";
-	while (@list ($key, $val) = @each ($config)) {
-		if ($key=='smarturl') {
-			$savetext.="\$config['{$key}']='{$destinesmarturl}';\n";
-			$saved1=1;
-		}
-		elseif ($key=='urlrewrite') {
-			$savetext.="\$config['{$key}']='{$destineurlrewrite}';\n";
-			$saved2=1;
-		}
-		else $savetext.="\$config['{$key}']='".admin_convert(stripslashes($val))."';\n";
-	}
-	if ($saved1!=1) $savetext.="\$config['smarturl']='{$destinesmarturl}';\n";
-	if ($saved2!=1) $savetext.="\$config['urlrewrite']='{$destinesmarturl}';\n";
-	if (writetofile ("data/config.php", $savetext)) {
-		catchsuccess ($lna[1094], "{$lna[39]}|admin.php");
-	} else {
-		catcherror ($lna[66]."data/config.php");
-	}
-}

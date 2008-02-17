@@ -40,7 +40,7 @@ foreach ($email_admin as $single_email) {
 
 switch ($job) {
 	case 'category':
-		$query="SELECT * FROM `{$db_prefix}blogs` WHERE `property`<>'2' AND `property`<>'3' AND `permitgp`='' AND `category`='{$itemid}' ORDER BY `pubtime` DESC LIMIT 0, {$mbcon['maxrssitem']}";
+		$query="SELECT * FROM `{$db_prefix}blogs` WHERE `property`<'2' AND `permitgp`='' AND `category`='{$itemid}' ORDER BY `pubtime` DESC LIMIT 0, {$mbcon['maxrssitem']}";
 		break;
 	case 'entry':
 		$query="SELECT t1.*, t2.* FROM `{$db_prefix}blogs` t1 LEFT JOIN `{$db_prefix}replies` t2 ON t1.blogid=t2.blogid WHERE t1.blogid={$itemid} AND t1.property<>'2' AND t1.property<>'3' ORDER BY t2.reptime {$order}  LIMIT 0, {$mbcon['maxrssitem']}";
@@ -49,7 +49,7 @@ switch ($job) {
 		$query="SELECT t1.*, t2.* FROM `{$db_prefix}replies` t1 LEFT JOIN `{$db_prefix}blogs` t2 ON t1.blogid=t2.blogid WHERE t1.reproperty='0' ORDER BY t1.reptime DESC LIMIT 0, {$mbcon['maxrssitem']}";
 		break;
 	default:
-		$query="SELECT * FROM `{$db_prefix}blogs` WHERE `property`<>'2' AND `property`<>'3' AND `permitgp`='' ORDER BY `pubtime` DESC LIMIT 0, {$mbcon['maxrssitem']}";
+		$query="SELECT * FROM `{$db_prefix}blogs` WHERE `property`<'2' AND `permitgp`='' ORDER BY `pubtime` DESC LIMIT 0, {$mbcon['maxrssitem']}";
 		break;
 }
 

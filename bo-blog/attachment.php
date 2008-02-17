@@ -9,35 +9,115 @@ Offical site: http://www.bo-blog.com
 Copyright (c) Bob Shen 中国－上海
 In memory of my university life
 ------------------------------------------------------- */
+define ("noCounter", 1);
+define ("allowCache", 1);
 
 require_once ("global.php");
+$fid=floor($_REQUEST['fid']);
 
-$filedownload="data/downloadcounter.php";
-$attachment=$_GET['f'];
-if (!$attachment || !strstr($attachment, '.')) {
-	die ("File does not exist.");
-} else {
+
+$attachfind=$blog->getbyquery("SELECT * FROM `{$db_prefix}upload` WHERE `fid`='{$fid}' LIMIT 1");
+if ($attachfind['fid']!=$fid) die ("File does not exist.");
+
+$check_ok=($mbcon['antileech']=='0') ? true : false;
+if ($mbcon['antileech']!='0') {
+	$allowedlinkdomain=@explode(' ', $mbcon['alloweddomain']);
+	$linkfrom=@parse_url($_SERVER['HTTP_REFERER']);
+	$linkdomain=$linkfrom['host'];
+	if (@in_array($linkdomain, $allowedlinkdomain)) $check_ok=true;
+}
+
+if (!$check_ok) {
+	generate_leech_error();
+}
+else {
 	$exitcount=0;
-	$md5_file=md5($attachment);
 	$dl=$_COOKIE['filedownloaded'];
 	if ($dl) {
 		$all_dl=@explode(',', $dl);
-		if (@in_array($md5_file, $all_dl)) $exitcount=1;
+		if (@in_array($fid, $all_dl)) $exitcount=1;
 	}
 	if ($exitcount!=1) {
-		$allcounts=readfromfile($filedownload);
-		if (strstr($allcounts, "{$md5_file}|")) {
-			$compare_str="/{$md5_file}\|([0-9]+?)>/ise";
-			$allcounts=preg_replace($compare_str, "addcount('{$md5_file}', \\1)", $allcounts);
-		} else $allcounts.="{$md5_file}|1>";
-		writetofile ($filedownload, $allcounts);
-		setcookie ('filedownloaded', $dl.','.$md5_file, time()+7200);
+		$blog->query("UPDATE `{$db_prefix}upload` SET `dltime`=`dltime`+1 WHERE `fid`='{$fid}'");
+		setcookie('filedownloaded', $dl.','.$fid, time()+7200);
 	}
-	header ("Location: $attachment");
 }
 
 
-function addcount ($md5_file, $time) {
-	return ("{$md5_file}|".($time+1).">");
+if ($mbcon['antileech']=='0' || $mbcon['antileech']=='1') {
+	@header("Location: {$attachfind['filepath']}");
+	exit();
+}
+else {
+	$sfilename=basename($attachfind['originalname']);
+	$browser=browserdetection();
+	if (in_array($browser, array('Firefox', 'Mozilla', 'Opera'))) $sfilename=urldecode($sfilename);
+	$sfileext=strtolower(strrchr($sfilename,'.'));
+	$sfileext=str_replace(".", '', $sfileext);
+
+
+	if (in_array($sfileext, array('gif', 'jpg', 'png', 'bmp', 'jpeg'))) {
+		$headerposition='inline';
+	}
+	else {
+		$headerposition='attachment';
+	}
+
+	include_once ("inc/mimetype.php");
+	$contenttype=(array_key_exists($sfileext, $MIMETypes)) ? $MIMETypes[$sfileext] : 'application/octet-stream';
+	$sfilesize=filesize($attachfind['filepath']);
+
+	@header("Content-Disposition: {$headerposition}; filename=\"{$sfilename}\"");
+    @header("Content-Type: {$contenttype}");
+	@header('Content-Length: '.$sfilesize);
+    echo readfromfile($attachfind['filepath']);
+	exit();
+}
+
+function generate_leech_error(){
+	@header("Content-Disposition: inline; filename=\"no_leech.gif\"");
+    @header("Content-Type: image/gif");
+	$sfilesize=filesize('images/others/no_leech.gif');
+    echo readfromfile('images/others/no_leech.gif');
+	exit();
+}
+
+function browserdetection() {
+	if ( strpos($_SERVER['HTTP_USER_AGENT'], 'Gecko')!==false )
+	{
+	   if ( strpos($_SERVER['HTTP_USER_AGENT'], 'Netscape') )
+	   {
+		 $browser = 'Netscape';
+	   }
+	   else if ( strpos($_SERVER['HTTP_USER_AGENT'], 'Firefox')!==false )
+	   {
+		 $browser = 'Firefox';
+	   }
+	   else
+	   {
+		 $browser = 'Mozilla';
+	   }
+	}
+	else if ( strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE')!==false )
+	{
+	   if ( strpos($_SERVER['HTTP_USER_AGENT'], 'Opera')!==false )
+	   {
+		 $browser = 'Opera'; //Opera 8.0
+	   }
+	   else
+	   {
+		 $browser = 'IE';
+	   }
+	}
+	else if (strpos($_SERVER['HTTP_USER_AGENT'], 'Opera')!==false)
+	{
+	   $browser = 'Opera';  //Opera 9.0
+	}
+	else
+	{
+	   $browser = 'Other';
+	}
+
+	return $browser;
 }
 

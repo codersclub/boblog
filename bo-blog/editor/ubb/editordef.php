@@ -9,6 +9,20 @@ $srcHTML="data/cache_emsel.php";
 $emots=str_replace("<br/>", ' ', $emots);
 $emots=str_replace("</a>", '</a> ', $emots);
 
+
+if ($act=='edit') {
+	$editoreditmodeonly=<<<eot
+<a href="JavaScript: void(0); "><IMG border=0 onclick="AddText('[separator]')" title="{$lna[701]}" src="editor/ubb/images/separator.gif" ></a>
+<a href="JavaScript: void(0); "><IMG border=0 onclick="AddText('[newpage]')" title="{$lna[702]}" src="editor/ubb/images/newpage.gif" ></a>
+eot;
+	$editoreditmodeonly2=<<<eot
+<br><span id="timemsg">{$lna[1179]}</span>&nbsp; &nbsp;<span id="timemsg2"></span>
+ <script type='text/javascript' src='editor/ubb/autosaver.js'>
+</script>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[<a href="javascript: stopautosaver();">{$lna[1176]}</a>] | [<a href="javascript: restartautosaver();">{$lna[1175]}</a>] | [<a href="javascript: stopforever();">{$lna[1177]}</a>] | [<a href="javascript: switchtodraft();">{$lna[1173]}</a>] | [<a href="javascript: savedraft();">{$lna[1178]}</a>] | [<a href="javascript: cleardraft();">{$lna[1180]}</a>]
+eot;
+}
+
 $editorjs=<<<eot
 <script type="text/javascript" src="editor/ubb/ubbeditor.js"></script>
 <script type="text/javascript">
@@ -49,8 +63,7 @@ $editorbody=<<<eot
 <a href="JavaScript: void(0); "><IMG border=0 onclick="addfile();" title="{$lna[698]}" src="editor/ubb/images/file.gif" ></a>
 <a href="JavaScript: void(0); "><IMG border=0 onclick="addsfile();" title="{$lna[699]}" src="editor/ubb/images/sfile.gif" ></a>
 <a href="JavaScript: void(0); "><IMG border=0 onclick="showemot()" title="{$lna[700]}" src="editor/ubb/images/insertsmile.gif" ></a>
-<a href="JavaScript: void(0); "><IMG border=0 onclick="AddText('[separator]')" title="{$lna[701]}" src="editor/ubb/images/separator.gif" ></a>
-<a href="JavaScript: void(0); "><IMG border=0 onclick="AddText('[newpage]')" title="{$lna[702]}" src="editor/ubb/images/newpage.gif" ></a>
+$editoreditmodeonly
 <script type="text/javascript">
 if (is_firefox) {
 	document.write("<a href='JavaScript: void(0); '><IMG border=0 onclick='undo_fx();' title='{$lna[703]}' src='editor/ubb/images/undo.gif' ></a>");
@@ -122,21 +135,18 @@ if (is_firefox) {
 [<a href="javascript: showhidediv('FrameUpload');" title="{$lna[741]}" class="thickbox">{$lna[741]}</a>]
 
 <div id="FrameUpload" style="display: none;"><iframe width=90% frameborder=0 height=200 frameborder=0 src='admin.php?act=upload&useeditor={$useeditor}'></iframe></div>
-<textarea name='content' id='content' rows='20' cols='100' class='formtextarea'>{content}</textarea>
-<br><span id="timemsg">Autosaver disabled.</span>&nbsp; &nbsp;<span id="timemsg2"></span>
- <script type='text/javascript' src='editor/ubb/autosaver.js'>
-</script>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[<a href="javascript: stopautosaver();">Stop</a>] | [<a href="javascript: restartautosaver();">Start</a>] | [<a href="javascript: stopforever();">Disable</a>]
+<textarea name='content' id='content' rows='30' cols='140' class='formtextarea'>{content}</textarea>
+$editoreditmodeonly2
 
 <input type=hidden id='content_old' value=''>
-<br><ul>
+<!-- <br><ul>
 <script type="text/javascript">
 if (is_firefox) {
 	document.write("{$lna[742]}");
 }
 </script>
 <li>{$lna[743]}</li>
-<li>{$lna[744]}</li></ul>
+<li>{$lna[744]}</li></ul> -->
 eot;
 
 $initialjs="<script type='text/javascript' src=\"editor/ubb/uploader.js\"></script>";

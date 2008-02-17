@@ -21,19 +21,24 @@ $itemid=floor($itemid);
 $m_b=new getblogs;
 $order=($mbcon['replyorder']=='0') ? "DESC" : "ASC";
 $start_id=($page-1)*$mbcon['replyperpage'];
+
+$querycondition=($use_blogalias) ? "`blogalias`='{$blogaliasp}'" : "`blogid`='{$itemid}'";
 if ($permission['SeeHiddenEntry']!=1) {
-	$partialquery="SELECT * FROM `{$db_prefix}blogs` WHERE `blogid`='{$itemid}' AND `property`<>'2' AND `property`<>'3' LIMIT 0, 1";
-	$partialquery2="WHERE `property`<>'2' AND `property`<>'3'";
+	$partialquery="SELECT * FROM `{$db_prefix}blogs` WHERE {$querycondition} AND `property`<'2' LIMIT 0, 1";
+	$partialquery2="WHERE `property`<'2'";
 } else {
-	$partialquery="SELECT * FROM `{$db_prefix}blogs` WHERE `blogid`='{$itemid}' AND `property`<>'3' LIMIT 0, 1";
-	$partialquery2=" WHERE property<>'3'";
+	$partialquery="SELECT * FROM `{$db_prefix}blogs` WHERE {$querycondition} AND `property`<'3' LIMIT 0, 1";
+	$partialquery2=" WHERE property<'3'";
 }
 $records=$m_b->single_record($partialquery, $partialquery2);
 if (is_array($records)) {
-	$records[0]['blogid']=$itemid;
+	$itemid=$records[0]['blogid'];
 	if ($is_save && $mbcon['txtdown']=='1') $m_b->save_a_text($records[0]);
 	else $section_body_main=$m_b->make_viewentry($records[0]);
-} else catcherror($lnc[186]);
+} else {
+	@header ("HTTP/1.1 404 Not Found");
+	catcherror($lnc[186]);
+}
 
 //Load plugins
 $section_body_main[0]=plugin_get('entrybegin').$section_body_main[0];
@@ -49,13 +54,8 @@ if ($records[0]['replies']!=0 || $records[0]['tbs']!=0)  {
 	}
 	if ($replyarray[0]['repid']!='') {
 		$section_body_main[]=$m_b->make_replies($replyarray);
-		if ($config['smarturl']==1 && $config['urlrewrite']==1) {
-			$outurl="{$config['blogurl']}/post/{$itemid}_%s.htm";
-			$pageway=1;
-		} else {
-			$outurl="{$config['sulink']}{$itemid}{$config['sulinkext']}";
-			$pageway=0;
-		}
+		$outurl=getlink_entry($itemid, $records[0]['blogalias'], '%s', $part);
+		$pageway=1;
 		$innerpages=$m_b->make_pagebar ($page, $mbcon['pagebaritems'], $outurl, $records[0]['replies']+$records[0]['tbs'], $mbcon['replyperpage'], $pageway);
 	}
 }

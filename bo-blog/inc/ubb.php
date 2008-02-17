@@ -13,7 +13,13 @@ In memory of my university life
 if (!defined('VALIDREQUEST')) die ('Access Denied.');
 
 function convert_ubb ($str, $advanced=0, $inrss=0) {
-	global $logstat, $template, $mbcon, $lnc;
+	global $logstat, $template, $mbcon, $lnc, $config;
+	if ($logstat!=1) {
+		$str=preg_replace("/\[hide\](.+?)\[\/hide\]/is", "<div class=\"quote hidebox\"><div class=\"quote-title\">{$lnc[311]}</div><div class=\"quote-content\">{$lnc[312]}  <a href=\"{$config['blogurl']}/login.php?job=register\">{$lnc[79]}</a> {$lnc[235]} <a href=\"{$config['blogurl']}/login.php\">{$lnc[89]}</a> </div></div>", $str);
+	} else {
+		$str=str_replace(array('[hide]','[/hide]'), '', $str);
+	}
+	$str=str_replace(array('{','}'), array('&#123;', '&#125;'), $str);
 	$str=plugin_walk('ubbanalyse', $str);
 	$basicubb_search=array('[hr]', '<br>');
 	$basicubb_replace=array('<hr/>', '<br/>');
@@ -21,13 +27,16 @@ function convert_ubb ($str, $advanced=0, $inrss=0) {
 
 	//[IMG]
 	if ($advanced==1) {
+		$str=preg_replace("/\[url=([^\[]*)\]\[img( align=L| align=M| align=R)?( width=[0-9]+)?( height=[0-9]+)?\]\s*(\S+?)\s*\[\/img\]\[\/url\]/ise","makeimgwithurl('\\1', '\\2', '\\3', '\\4', '\\5', {$inrss})",$str);
 		$str=preg_replace("/\[img( align=L| align=M| align=R)?( width=[0-9]+)?( height=[0-9]+)?\]\s*(\S+?)\s*\[\/img\]/ise","makeimg('\\1', '\\2', '\\3', '\\4', {$inrss})",$str);
 	} else {
 		$str=preg_replace("/\[img( align=L| align=M| align=R)?( width=[0-9]+)?( height=[0-9]+)?\]\s*(\S+?)\s*\[\/img\]/ise","makeimginrss('\\4')",$str);
 	}
 
-	$str=preg_replace("/\[sfile\]\s*(\S+?)\s*\[\/sfile\]/ise", "makedownload('\\1', 1, $inrss)", $str);
-	$str=preg_replace("/\[file\]\s*(\S+?)\s*\[\/file\]/ise", "makedownload('\\1', 0, $inrss)", $str);
+	if ($mbcon['countdownload']=='1' && $inrss==0) $str=preg_replace(array("/\[sfile\]\s*\[attach\]([0-9]+)\[\/attach\]\s*\[\/sfile\]/ise", "/\[file\]\s*\[attach\]([0-9]+)\[\/attach\]\s*\[\/file\]/ise"), array("makedownload('\\1', 1, 0, true)", "makedownload('\\1', 0, 0, true)"), $str);
+	$str=preg_replace("/\[attach\]([0-9]+)\[\/attach\]/is", "attachment.php?fid=\\1", $str);
+	$str=preg_replace("/\[sfile\]\s*(\S+?)\s*\[\/sfile\]/ise", "makedownload('\\1', 1, $inrss, false)", $str);
+	$str=preg_replace("/\[file\]\s*(\S+?)\s*\[\/file\]/ise", "makedownload('\\1', 0, $inrss, false)", $str);
 
 	//Auto add url link
 	if ($mbcon['autoaddlink']==1) $str=preg_replace("/(?<=[^\]a-z0-9-=\"'\\/])((https?|ftp|gopher|news|telnet|rtsp|mms|callto|ed2k):\/\/|www\.)([a-z0-9\/\-_+=.~!%@?#%&;:$\\()|]+)/i", "[url]\\1\\3[/url]", $str);
@@ -44,8 +53,8 @@ function convert_ubb ($str, $advanced=0, $inrss=0) {
 				"/\[url=([^\[]*)\](.+?)\[\/url\]/is",
 				"/\[email\]([^\[]*)\[\/email\]/is",
 				"/\[acronym=([^\[]*)\](.+?)\[\/acronym\]/is",
-				"/\[color=([^\[\<]+?)\](.+?)\[\/color\]/i",
-				"/\[font=([^\[\<]+?)\](.+?)\[\/font\]/i",
+				"/\[color=([a-zA-Z0-9#]+?)\](.+?)\[\/color\]/i",
+				"/\[font=([^\[\<:;\(\)=&#\.\+\*\/]+?)\](.+?)\[\/font\]/i",
 				"/\[p align=([^\[\<]+?)\](.+?)\[\/p\]/i",
 				"/\[b\](.+?)\[\/b\]/i",
 				"/\[i\](.+?)\[\/i\]/i",
@@ -85,6 +94,7 @@ function convert_ubb ($str, $advanced=0, $inrss=0) {
 		$str=plugin_walk('ubbanalyseadvance', $str);
 	}
 	return $str;
+
 }
 
 function makeurl($url) {
@@ -111,7 +121,7 @@ function makemedia ($mediatype, $url, $width, $height) {
 	$typedesc=array('wmp'=>'Windows Media Player', 'swf'=>'Flash Player', 'real'=>'Real Player', 'flv'=>'Flash Video Player');
 	$mediapic=array('wmp'=>'wmp.gif', 'swf'=>'swf.gif', 'real'=>'real.gif', 'flv'=>'swf.gif');
 	$url=($mediatype=='flv') ? urlconvert ($url, $config['blogurl'].'/') : $url;
-	$str="<div class=\"quote\"><div class=\"quote-title\"><img src=\"{$template['images']}/{$mediapic[$mediatype]}\" alt=\"\"/>{$typedesc[$mediatype]}{$lnc[268]}</div><div class=\"quote-content\"><a href=\"javascript: playmedia('player{$id}', '{$mediatype}', '{$url}', '{$width}', '{$height}');\">{$lnc[269]}</a><div id='player{$id}' style='display:none;'></div></div></div>";
+	$str="<div class=\"quote mediabox\"><div class=\"quote-title\"><img src=\"{$template['images']}/{$mediapic[$mediatype]}\" alt=\"\"/>{$typedesc[$mediatype]}{$lnc[268]}</div><div class=\"quote-content\"><a href=\"javascript: playmedia('player{$id}', '{$mediatype}', '{$url}', '{$width}', '{$height}');\">{$lnc[269]}</a><div id='player{$id}' style='display:none;'></div></div></div>";
 	return $str;
 }
 
@@ -135,6 +145,23 @@ function makeimg ($aligncode, $widthcode, $heightcode, $src, $inrss=0) {
 	return $code;
 }
 
+function makeimgwithurl ($url, $aligncode, $widthcode, $heightcode, $src, $inrss=0) {
+	global $lnc, $mbcon, $config;
+	$align=str_replace(' align=', '', strtolower($aligncode));
+	if ($align=='l') $show=' align="left"';
+	elseif ($align=='r') $show=' align="right"';
+	else $alignshow='';
+	$width=str_replace(' width=', '', strtolower($widthcode));
+	if (!empty($width)) $show.=" width=\"{$width}\"";
+	$height=str_replace(' height=', '', strtolower($heightcode));
+	if (!empty($height)) $show.=" height=\"{$height}\"";
+	if ($inrss==1) $src=(substr(strtolower($src), 0, 4) == 'http') ? $src : $config['blogurl'].'/'.$src;
+	$onloadact=($inrss==0 && !empty($mbcon['autoresizeimg'])) ? " onload=\"if(this.width>{$mbcon['autoresizeimg']}) {this.resized=true; this.width={$mbcon['autoresizeimg']};}\"" : '';
+	$code="<a href=\"{$url}\" target=\"_blank\"><img src=\"{$src}\" class=\"insertimage\" alt=\"{$lnc[231]}\" title=\"{$lnc[231]}\" border=\"0\"{$onloadact}{$show}/></a>";
+	return $code;
+}
+
+
 function makeimginrss($src) {
 	global $config, $lnc, $template;
 	$src=(substr(strtolower($src), 0, 4) == 'http') ? $src : $config['blogurl'].'/'.$src;
@@ -152,30 +179,22 @@ function xhtmlHighlightString($str) {
 	return "<div class=\"code\" style=\"overflow: auto;\">$ret;</div>";
 }
 
-function makedownload ($url, $sfile, $inrss) {
-	global $logstat, $template, $lnc, $mbcon;
-	if ($mbcon['countdownload']=='1') $downloadtime=" ({$lnc[280]} ".getdownloadtime(md5($url))." {$lnc[281]})";
-	else $downloadtime='';
-	$url=($mbcon['countdownload']=='1') ? "attachment.php?f=".urlencode($url) : $url;
+function makedownload ($url, $sfile, $inrss, $isattached=false) {
+	global $logstat, $template, $lnc, $mbcon, $dlstat;
+	if ($isattached) {
+		$downloadtime=" ({$lnc[280]} <!--global:{dlstat_{$url}}--> {$lnc[281]})";
+		$downloadtime2=": <!--global:{dlfname_{$url}}-->";
+		$dlstat[]=$url;
+		$url="attachment.php?fid={$url}";
+	}
 	if ($inrss==0) {
-		if ($logstat==1 || $sfile!=1) $str="<div class=\"quote\"><div class=\"quote-title\"><img src=\"{$template['images']}/download.gif\" alt=\"\"/>{$lnc[232]}{$downloadtime}</div><div class=\"quote-content\"><a href=\"{$url}\">{$lnc[233]}</a></div></div>";
-		else  $str="<div class=\"quote\"><div class=\"quote-title\"><img src=\"{$template['images']}/download.gif\" alt=\"\"/>{$lnc[232]}{$downloadtime}</div><div class=\"quote-content\">{$lnc[234]} <a href=\"login.php?job=register\">{$lnc[79]}</a> {$lnc[235]} <a href=\"login.php\">{$lnc[89]}</a> </div></div>";
+		if ($logstat==1 || $sfile!=1) $str="<div class=\"quote downloadbox\"><div class=\"quote-title\"><img src=\"{$template['images']}/download.gif\" alt=\"\"/>{$lnc[232]} {$downloadtime}</div><div class=\"quote-content\"><a href=\"{$url}\">{$lnc[233]}{$downloadtime2}</a></div></div>";
+		else  $str="<div class=\"quote\"><div class=\"quote-title\"><img src=\"{$template['images']}/download.gif\" alt=\"\"/>{$lnc[232]}{$downloadtime}</div><div class=\"quote-content\">{$lnc[234]} <a href=\"{$config['blogurl']}/login.php?job=register\">{$lnc[79]}</a> {$lnc[235]} <a href=\"{$config['blogurl']}/login.php\">{$lnc[89]}</a> </div></div>";
 	} else {
-		if ($sfile==1) $str="{$lnc[234]} <a href=\"login.php?job=register\">{$lnc[79]}</a> {$lnc[235]} <a href=\"login.php\">{$lnc[89]}</a>";
+		if ($sfile==1) $str="{$lnc[234]} <a href=\"{$config['blogurl']}/login.php?job=register\">{$lnc[79]}</a> {$lnc[235]} <a href=\"{$config['blogurl']}/login.php\">{$lnc[89]}</a>";
 		else $str="<a href=\"{$url}\">{$lnc[233]}</a>";
 	}
 	return $str;
-}
-
-function getdownloadtime($urlmd5) {
-	$filedownload="data/downloadcounter.php";
-	$allcounts=readfromfile($filedownload);
-	if (!strstr($allcounts, "{$urlmd5}|")) return 0;
-	else {
-		$compare_str="/({$urlmd5})\|([0-9]+?)>/ise";
-		preg_match($compare_str, $allcounts, $fs);
-		return ($fs[2]);
-	}
 }
 
 function maketable ($tablebody, $widthcode, $ifpercentage, $bgcolorcode, $bordercolorcode) {

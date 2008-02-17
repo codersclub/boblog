@@ -37,12 +37,14 @@ function chkDelItem(index) {if(confirm(jslanfp[3])){delItem(index.parentNode.par
 function delItem(index) { dyn_t.deleteRow(index);}
 function setPref(objSet,prefName,pref){return objSet.setAttribute(prefName,pref);}
 function add_Cell(myRow,name,value,size){return "<input type=\"text\" name=\""+name+"\" value=\""+value+"\" size=\""+size+"\" />";}
-function add_fpRow(identifier,title,creator,location,info,image,album,meta){
+function add_fpRow(inum,identifier,title,creator,location,info,image,album,meta){
 	var setOut;
+	var re = /^\d+$/;
 	var ntime=new Date();
+	if(inum=="inum"){inum = document.getElementById("inum").value;if (inum!="" && !re.test(inum)) {inum=-1;}}
 	if(identifier=="")identifier=ntime.getTime();
 	name="fmp[" + identifier + "]";
-	myRow = dyn_t.insertRow(-1);
+	myRow = dyn_t.insertRow(inum);
 	setOut = jslanfp[4]+":"+ identifier + "<br/>"+
 	"<a href=\"JavaScript://\" onclick=\"moveItem('up',this)\">["+jslanfp[5]+"]</a>"+
 	"<a href=\"JavaScript://\" onclick=\"moveItem('down',this)\">["+jslanfp[6]+"]</a>"+

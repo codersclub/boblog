@@ -19,11 +19,17 @@ if (!$job) $job='recache';
 $finishok=$lna[753];
 $finishok3=$lna[754];
 $finishok4=$lna[893];
+$finishok5=$lna[1108];
 $delok=$lna[755];
 $optimizeok=$lna[756];
 $backtocache="{$lna[757]}|admin.php?go=carecenter_recache";
 $backtoupload="{$lna[758]}|admin.php?go=carecenter_adminattach";
 $backtomysql="{$lna[759]}|admin.php?go=carecenter_mysql";
+
+if ($job=='cleartmpandreturn') {
+	$job='cleartmp';
+	$backtocache="{$lna[344]}|admin.php";
+}
 
 if ($job=='recache') {
 		$display_overall.=highlightadminitems('recache', 'carecenter');
@@ -55,7 +61,7 @@ $display_overall.= <<<eot
 <tr>
 <td width=25%><input type=checkbox name='selid[]' value='taglist'>{$lna[771]}</td>
 <td width=25%><input type=checkbox name='selid[]' value='plugins'>{$lna[954]}</td>
-<td width=50% colspan=2>&nbsp;</td>
+<td width=50% colspan=2></td>
 </tr>
 <tr>
 <td colspan=4><a href="#unexist" onclick="checkallbox('f_s', 'checked');">{$lna[247]}</a> | <a href="#unexist" onclick="checkallbox('f_s', '');">{$lna[248]}</a></td>
@@ -63,7 +69,7 @@ $display_overall.= <<<eot
 </table>
 
 </td><tr>
-<tr><td colspan=2 class="sectbar" align=center><input type=submit value="{$lna[64]}"> <input type=reset value="{$lna[65]}">
+<tr><td colspan=2 class="sectbar" align=center><input type=submit value="{$lna[64]}" class='formbutton'> <input type=reset value="{$lna[65]}" class='formbutton'>
 </td></tr>
 </form>
 </table>
@@ -96,7 +102,7 @@ $display_overall.= <<<eot
 </tr>
 </table>
 </td><tr>
-<tr><td colspan=2 class="sectbar" align=center><input type=submit value="{$lna[64]}"> <input type=reset value="{$lna[65]}">
+<tr><td colspan=2 class="sectbar" align=center><input type=submit value="{$lna[64]}" class='formbutton'> <input type=reset value="{$lna[65]}" class='formbutton'>
 </td></tr>
 </form>
 </table>
@@ -112,7 +118,8 @@ $display_overall.= <<<eot
 <tr class='sect'><td colspan=2>
 <ul>
 <li><b>{$lna[772]}</b> <a href="admin.php?go=carecenter_cleartmp">[{$lna[896]}]</a><br>{$lna[897]}<br><br></li>
-<li><b>{$lna[898]}</b> <a href="admin.php?go=carecenter_rebuildcalendar">[{$lna[896]}]</a><br>{$lna[899]}<br></li>
+<li><b>{$lna[898]}</b> <a href="admin.php?go=carecenter_rebuildcalendar">[{$lna[896]}]</a><br>{$lna[899]}<br><br></li>
+<li><b>{$lna[1109]}</b> <a href="admin.php?go=carecenter_rebuildrewritefiles">[{$lna[896]}]</a><br>{$lna[1110]}<br></li>
 </ul>
 </td></tr>
 </table>
@@ -171,6 +178,7 @@ if ($job=='refreshcounter') {
 
 if ($job=='cleartmp') {
 	recache_cleartemp ();
+	$blog->query("UPDATE `{$db_prefix}counter` SET `empty1`={$nowtime['timestamp']}");
 	catchsuccess ($finishok4, $backtocache);
 }
 
@@ -192,63 +200,68 @@ if ($job=='rebuildcalendar') {
 	catchsuccess ($finishok4, $backtocache);
 }
 
+if ($job=='rebuildrewritefiles') {
+	$all=$blog->getgroupbyquery("SELECT `blogid`,`blogalias` FROM `{$db_prefix}blogs` WHERE `blogalias`<>''");
 
-if ($job=='adminattach') {
-	acceptrequest('specext,specext2,ordered,dir');
-	$showupdir=basename($dir);
-	$targetfolder=($showupdir) ? "attachment/{$showupdir}" : "attachment";
-	$targetfolder_ym=($showupdir) ? "{$showupdir}/" : '';
-
-	if ($specext!=='') {
-		$useext=1;
-		$specext=@explode(' ', $specext);
-	} elseif ($specext2!=='') {
-		$useext=1;
-		$specext=@explode(' ', $specext2);
-	}
-
-	$handle=@opendir($targetfolder);
-
-	if (!$handle) catcherror ("{$lna[155]} {$targetfolder} {$lna[156]}<ul><li>{$lna[157]}</li><li>{$lna[158]}</li><li>{$lna[159]}</li></ul>");
-	$dirshows="<select name='dir'><option value=''>attachment/</option>";
-	while (false !== ($file=readdir($handle))) {
-		if ($file!="." && $file!="..") {
-			if (is_dir("{$targetfolder}/{$file}")) {
-				$dirshows.="<option value='{$file}'>attachment/{$file}</option>";
-			}
-			else {
-				$file_ext=strtolower(strrchr($file,'.'));
-				$file_ext=str_replace('.', '', $file_ext);
-				if ($useext==1 && @!in_array($file_ext, $specext)) continue;
-				$time_t=date('Y-n-j', @filemtime("{$targetfolder}/{$file}"));
-				$inserttext[$file]="<tr class='visibleitem'><td width=35 align=center><input type=checkbox name='selid[]' value='{$file}'></td><td align=center width=50%>{$file}</td><td align=center>{$time_t}</td><td width=35 align=center><a href=\"javascript: redirectcomfirm('admin.php?go=carecenter_delupload&filename={$file}&dir={$showupdir}');\"><img src='admin/theme/{$themename}/del.gif' alt='{$lna[78]}' title='{$lna[78]}' border='0'></a></td><td width=35 align=center><a href=\"{$targetfolder}/{$file}\" target='_blank'><img src='admin/theme/{$themename}/edit.gif' alt='{$lna[782]}' title='{$lna[782]}' border='0'></a></td></tr>";
-			}
+	if (is_array($all)) foreach ($all as $item) {
+		$blogalias=blogalias_convert($item['blogalias']);
+		if ($blogalias) {
+			$redirect_new="<?php\nchdir('../');\n\$entryid={$item['blogid']};\ninclude('read.php');";
+			writetofile("post/{$blogalias}.php", $redirect_new);
 		}
 	}
-	$dirshows.="</select>";
-	if (is_array($inserttext)) {
-		@ksort($inserttext);
+	catchsuccess ($finishok5, $backtocache);
+}
+
+
+
+if ($job=='adminattach') {
+
+	$start_id=($page-1)*$adminitemperpage;
+	acceptrequest('uploadmonth,uploadyear');
+
+	if (!empty($uploadyear) && empty($uploadmonth)) {
+		$starttimestamp=mktime(0, 0, 0, 1, 1, $uploadyear);
+		$finishtimestamp=mktime(23, 59, 59, 12, 31, $uploadyear);
+		$queryplus="WHERE `uploadtime`>={$starttimestamp} AND `uploadtime`<={$finishtimestamp} ";
 	}
-	$tablebody=@implode($inserttext);
+	if (!empty($uploadmonth) && !empty($uploadyear)) {
+		$starttimestamp=mktime(0, 0, 0, $uploadmonth, 1, $uploadyear);
+		$finishtimestamp=mktime(23, 59, 59, $uploadmonth+1, 0, $uploadyear);
+		$queryplus="WHERE `uploadtime`>={$starttimestamp} AND `uploadtime`<={$finishtimestamp} ";
+	}
+	
+	$detail_array=$blog->getgroupbyquery("SELECT * FROM `{$db_prefix}upload` {$queryplus} ORDER BY `uploadtime` DESC LIMIT {$start_id}, 51");
+	$numenries=$blog->countbyquery("SELECT COUNT(*) FROM `{$db_prefix}upload` {$queryplus}");
+
+	if (count($detail_array)!=0) {
+		foreach ($detail_array as $dafile) {
+			$time_t=date('Y-n-j', $dafile['uploadtime']);
+			$dataoriginalname=urldecode($dafile['originalname']);
+			$tablebody.="<tr class='visibleitem'><td width=35 align=center><input type=checkbox name='selid[]' value='{$dafile['fid']}'></td><td align=center width=50%>{$dataoriginalname}</td><td align=center>{$time_t}</td><td width=35 align=center><a href=\"javascript: redirectcomfirm('admin.php?go=carecenter_delupload&filename={$dafile['fid']}');\"><img src='admin/theme/{$themename}/del.gif' alt='{$lna[78]}' title='{$lna[78]}' border='0'></a></td><td width=35 align=center><a href=\"{$dafile['filepath']}\" target='_blank'><img src='admin/theme/{$themename}/edit.gif' alt='{$lna[782]}' title='{$lna[782]}' border='0'></a></td></tr>";
+		}
+	}
+
+
+	$foryears=range(2001,2050);
+	$formonths=range(1,12);
+	$showysel="<select name=uploadyear><option value=0 selected>{$lna[291]}</option><option value={$nowtime['year']}>{$nowtime['year']}</option>";
+	$showmsel="<select name=uploadmonth><option value=0>{$lna[292]}</option>";
+
+	foreach ($foryears as $y) {
+		$showysel.="<option value=$y>$y</option>\n";
+	}
+	foreach ($formonths as $m) {
+		$showmsel.="<option value=$m>$m</option>\n";
+	}
+	$showysel.="</select>\n";
+	$showmsel.="</select>\n";
+
+	$pagebar=gen_page ($page, 5, "admin.php?go=carecenter_adminattach&uploadyear={$uploadyear}&uploadmonth={$uploadmonth}", $numenries, $adminitemperpage);
+
+
 	$display_overall.=highlightadminitems('adminattach', 'carecenter');
 $display_overall.= <<<eot
-<table class='tablewidth' align=center cellpadding=4 cellspacing=0>
-<form action="admin.php?go=carecenter_adminattach" method="post">
-<tr>
-<td width=160 class="sectstart">
-{$lna[36]}
-</td>
-<td class="sectend">{$lna[982]}</td>
-</tr>
-<tr>
-<td colspan=2 class="sect" align=center>
-{$lna[982]} &nbsp; &nbsp; {$dirshows} <input type=submit value="{$lna[64]}">
-</td></tr>
-</form>
-</table>
-
-<br><br>
-
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
 <td width=160 class="sectstart">
@@ -260,14 +273,19 @@ $display_overall.= <<<eot
 <table cellpadding=3 cellspacing=1 align=center class='tablewidth'>
 <form action="admin.php?go=carecenter_adminattach" method="post">
 <tr><td colspan=7>
-{$lna[784]} <select name="specext2"><option value=''>{$lna[785]}</option><option value='gif jpg png bmp jpeg'>{$lna[786]}</option><option value='rar zip bz2 gz tar ace 7z'>{$lna[787]}</option><option value='txt doc htm html wps xsl ppt'>{$lna[788]}</option><option value='mp3 wma wmv rm ra rmvb wav asf swf'>{$lna[789]}</option></select> {$lna[790]} <input type=text name=specext size=9> {$lna[791]} <input type=submit value="{$lna[64]}"></td></tr></form>
+<!--
+{$lna[784]} <select name="specext2"><option value=''>{$lna[785]}</option><option value='gif jpg png bmp jpeg'>{$lna[786]}</option><option value='rar zip bz2 gz tar ace 7z'>{$lna[787]}</option><option value='txt doc htm html wps xsl ppt'>{$lna[788]}</option><option value='mp3 wma wmv rm ra rmvb wav asf swf'>{$lna[789]}</option></select> {$lna[790]} <input type=text name=specext size=9> {$lna[791]} <input type=submit value="{$lna[64]}" class='formbutton'>
+-->
+{$showysel} / {$showmsel} <input type=submit value='{$lna[244]}' class='formbutton'>
+</td></tr>
+</form>
 <tr><td colspan=7 height=10></td></tr>
 <form action="admin.php?go=carecenter_delupload" method="post" id='f_s' name='f_s'>
 <tr align=center class="admintitle"><td width=35 align=center>{$lna[245]}</td><td align=center>{$lna[792]}</td><td align=center width=260>{$lna[793]}</td><td align=center>{$lna[78]}</td><td align=center>{$lna[794]}</td></tr>
 {$tablebody}
-<tr><td colspan=7><a href="#unexist" onclick="checkallbox('f_s', 'checked');">{$lna[247]}</a> | <a href="#unexist" onclick="checkallbox('f_s', '');">{$lna[248]}</a></td></tr>
+<tr><td colspan=7><a href="#unexist" onclick="checkallbox('f_s', 'checked');">{$lna[247]}</a> | <a href="#unexist" onclick="checkallbox('f_s', '');">{$lna[248]}</a><br>{$pagebar}</td></tr>
 <tr><td colspan=7 height=20></td></tr>
-<tr class="adminoption"><td colspan=7 align=center><input type=checkbox name=opt value='del'>{$lna[795]}<input type=hidden name='dir' value="{$showupdir}"><input type=submit value="{$lna[64]}">
+<tr class="adminoption"><td colspan=7 align=center><input type=checkbox name=opt value='del'>{$lna[795]}<input type=submit value="{$lna[64]}" class='formbutton'>
 </td></tr>
 </form>
 </table>
@@ -275,14 +293,17 @@ eot;
 }
 
 if ($job=='delupload') {
-	acceptrequest('selid,filename,opt,dir');
-	$dir=basename($dir);
-	if ($dir)  $rdir=$dir.'/';
-	else $rdir=$dir;
+	acceptrequest('selid,filename,opt');
 	if ($filename!=='') {
-		$filename=basename($filename);
-		$result=@unlink ("attachment/{$rdir}{$filename}");
-		if ($result) 	catchsuccess ($delok, "{$lna[758]}|admin.php?go=carecenter_adminattach&dir={$dir}");
+		$filename=floor($filename);
+		$detail_array=$blog->getbyquery("SELECT * FROM `{$db_prefix}upload` WHERE `fid`='{$filename}' LIMIT 1");
+
+		if (file_exists($detail_array['filepath'])) $result=@unlink ($detail_array['filepath']);
+		else $result=true;
+		if ($result) 	{
+			$blog->query("DELETE FROM `{$db_prefix}upload` WHERE `fid`='{$filename}'");
+			catchsuccess ($delok, "{$lna[758]}|admin.php?go=carecenter_adminattach&dir={$dir}");
+		}
 		else catcherror ($lna[796]);
 	}
 	if ($opt!="del") {
@@ -291,16 +312,24 @@ if ($job=='delupload') {
 	}
 	if (!is_array($selid)) catcherror ($lna[797]);
 	else {
+		$files=array();
 		foreach ($selid as $filename) {
-			$filename=basename($filename);
-			@unlink ("attachment/{$rdir}{$filename}");
+			$files[]=floor($filename);
 		}
 	}
-	catchsuccess ($delok, "{$lna[758]}|admin.php?go=carecenter_adminattach&dir={$dir}");
+	if (count($files)>0) {
+		$delfiles=@implode(',', $files);
+		$detail_array=$blog->getarraybyquery("SELECT * FROM `{$db_prefix}upload` WHERE `fid` in ({$delfiles}) ");
+		foreach ($detail_array['filepath'] as $filesingle) {
+			@unlink($filesingle);
+		}
+		$blog->query("DELETE FROM `{$db_prefix}upload` WHERE `fid` in ({$delfiles}) ");
+	}
+	catchsuccess ($delok, "{$lna[758]}|admin.php?go=carecenter_adminattach");
 }
 
 if ($job=='mysql') {
-	$all_tables=array("{$db_prefix}blogs", "{$db_prefix}calendar", "{$db_prefix}categories", "{$db_prefix}counter", "{$db_prefix}forbidden", "{$db_prefix}history", "{$db_prefix}linkgroup", "{$db_prefix}links", "{$db_prefix}maxrec", "{$db_prefix}messages", "{$db_prefix}mods", "{$db_prefix}replies", "{$db_prefix}tags", "{$db_prefix}user", "{$db_prefix}plugins");
+	$all_tables=array("{$db_prefix}blogs", "{$db_prefix}calendar", "{$db_prefix}categories", "{$db_prefix}counter", "{$db_prefix}forbidden", "{$db_prefix}history", "{$db_prefix}linkgroup", "{$db_prefix}links", "{$db_prefix}maxrec", "{$db_prefix}messages", "{$db_prefix}mods", "{$db_prefix}replies", "{$db_prefix}tags", "{$db_prefix}user", "{$db_prefix}plugins", "{$db_prefix}pages", "{$db_prefix}upload");
 	$tablebody.="<tr>";
 	for ($i=0; $i<count($all_tables); $i++) {
 		$tablebody.="<td><input type=checkbox name='selid[]' value='{$all_tables[$i]}' checked> {$all_tables[$i]}</td>";
@@ -323,7 +352,7 @@ MySQL
 <font color=red>{$lna[801]}</font><br>
 <textarea rows="10" cols="80" name=sqlinput></textarea>
 <br>{$lna[802]}<br>
-<input type='submit' value='{$lna[64]}'> <input type='reset' value='{$lna[65]}'>
+<input type='submit' value='{$lna[64]}' class='formbutton'> <input type='reset' value='{$lna[65]}' class='formbutton'>
 <br><br>
 </td></tr>
 </form>
@@ -344,7 +373,7 @@ MySQL
 {$tablebody}
 </table>
 <br>
-<div align=center><input type='submit' value='{$lna[64]}'> <input type='reset' value='{$lna[65]}'></div>
+<div align=center><input type='submit' value='{$lna[64]}' class='formbutton'> <input type='reset' value='{$lna[65]}' class='formbutton'></div>
 </td></tr>
 </form>
 </table>
@@ -358,23 +387,19 @@ if ($job=='mysqlquery') {
 	$sqlinput=str_replace('&#96;', '`', $sqlinput);
 	if (!$sqlinput) catcherror ($lna[806]);
 	$sqlinput=str_replace('[db]', $db_prefix, $sqlinput);
-	$qinput=@explode(";", $sqlinput);
-	$count=count($qinput);
-	for($i = 0;$i < $count;$i++) {
-		$result=db_query($qinput[$i]);
-		if (@db_num_rows($result)>0) {
-			$table_infos.="<table width=\"100%\"><tr><td><b>SQL: {$qinput[$i]}</b></td></tr></table><table width=\"100%\">";            	
-			$columns=mysql_num_fields($result);
-			$table_infos.="<tr class='admintitle'><td>";
-			for ($s = 0; $s < $columns; $s++) {
-				$table_infos .= mysql_field_name($result, $s) . "</td><td>\n";
-			} 
-			$table_infos .= "</td></tr>";
-			while (false !== ($tmpline = db_fetch_array($result))) {
-				$table_infos .= "<tr><td class='visibleitem'>". implode("</td><td class='visibleitem'>", $tmpline) ."</td></tr>";
-			}
-			$table_infos .= "</table>";
+	$result=db_query($sqlinput);
+	if (@db_num_rows($result)>0) {
+		$table_infos.="<table width=\"100%\"><tr><td><b>SQL: {$qinput[$i]}</b></td></tr></table><table width=\"100%\">";            	
+		$columns=mysql_num_fields($result);
+		$table_infos.="<tr class='admintitle'><td>";
+		for ($s = 0; $s < $columns; $s++) {
+			$table_infos .= mysql_field_name($result, $s) . "</td><td>\n";
+		} 
+		$table_infos .= "</td></tr>";
+		while (false !== ($tmpline = db_fetch_array($result))) {
+			$table_infos .= "<tr><td class='visibleitem'>". implode("</td><td class='visibleitem'>", $tmpline) ."</td></tr>";
 		}
+		$table_infos .= "</table>";
 	}
 	$display_overall.=highlightadminitems('mysql', 'carecenter');
 $display_overall.= <<<eot
@@ -388,13 +413,14 @@ MySQL
 </table>
 <table class='tablewidth' align=center cellpadding=0 cellspacing=0>
 <tr><td>
-<div class='sect' style="overflow-x: auto; height: auto; width: 100%;">
+<center><b>{$lna[1151]}</b></center>
+<div class='sect' style="overflow-x: auto; height: auto; width: 90%;">
 $table_infos
 </div>
 </td></tr>
 </table>
 <br><br>
-<div align=center><input type=button onclick="window.location='admin.php?go=carecenter_mysql';" value="{$lna[138]}"></div>
+<div align=center><input type=button onclick="window.location='admin.php?go=carecenter_mysql';" value="{$lna[344]}"></div>
 eot;
 }
 
@@ -410,7 +436,7 @@ if ($job=='optimize') {
 }
 
 if ($job=='export') {
-	$all_tables=array("blogs"=>$lna[807], "categories"=>$lna[809], "forbidden"=>$lna[810], "history"=>$lna[811], "linkgroup"=>$lna[812], "links"=>$lna[763], "messages"=>$lna[813], "mods"=>$lna[814], "replies"=>$lna[815], "tags"=>'Tags', "user"=>$lna[816], "plugins"=>$lna[954], "textfile"=>$lna[1027]);
+	$all_tables=array("blogs"=>$lna[807], "categories"=>$lna[809], "forbidden"=>$lna[810], "history"=>$lna[811], "linkgroup"=>$lna[812], "links"=>$lna[763], "messages"=>$lna[813], "mods"=>$lna[814], "replies"=>$lna[815], "tags"=>'Tags', "user"=>$lna[816], "plugins"=>$lna[954], "pages"=>$lna[1164], "upload"=>$lna[1165], "textfile"=>$lna[1027]);
 	$tablebody.="<tr>";
 	$i=0;
 	foreach ($all_tables as $key=>$val) {
@@ -509,7 +535,7 @@ $tablebody
 
 </table>
 <br><br>
-<div align=center><input type=submit value="{$lna[64]}"> <input type=reset value="{$lna[65]}"></div>
+<div align=center><input type=submit value="{$lna[64]}" class='formbutton'> <input type=reset value="{$lna[65]}" class='formbutton'></div>
 eot;
 }
 
@@ -813,7 +839,7 @@ setCookie ('nonstop','',null,null, null, false);
 
 </table>
 <br><br>
-<div align=center><input type=submit value="{$lna[64]}"> <input type=reset value="{$lna[65]}"></div>
+<div align=center><input type=submit value="{$lna[64]}" class='formbutton'> <input type=reset value="{$lna[65]}" class='formbutton'></div>
 eot;
 }
 
@@ -1149,6 +1175,12 @@ function rollback_xml($data_array) {
 			break;
 		case 'plugins':
 			$uniquekey="plid";
+			break;
+		case 'pages':
+			$uniquekey="pageid";
+			break;
+		case 'upload':
+			$uniquekey="fid";
 			break;
 		default:
 			$uniquekey='';

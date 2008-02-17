@@ -71,3 +71,5 @@ jslang[67]='Sorry, the answer is wrong!';
 jslang[68]='Warn: You are about to change the editor. All unsaved changes to the entry will be discarded. Continue?';
 jslang[69]='Type in a password for this post.\nYou need to input the password next time when you want to see the reply from the admins.';
 jslang[70]='Maximum password length is 12 characters.';
+jslang[71]='Copy';
+jslang[72]='Copied to clipboard!';

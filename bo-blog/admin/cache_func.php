@@ -45,8 +45,10 @@ function recache_links () {
 function recache_emotselection () {
 	global $mbcon;
 	include("data/cache_emot.php");
-	$perline=$mbcon['emotperline'];
+	$perline=floor($mbcon['emotperline']);
+	$perpage=floor($mbcon['emotperpage']);
 	if ($perline<=0) $perline=5;
+	if ($perpage<=0) $perpage=100;
 	if (is_array($myemots)) {
 		$i=0;
 		while (@list($emotcode, $emott)=@each($myemots)) {
@@ -54,6 +56,7 @@ function recache_emotselection () {
 			$selbody.="<a href=\"javascript: insertemot('$emotcode');\"><img src=\"images/emot/{$emotthumb}\" alt='emot' border='0'/></a>";
 			$i+=1;
 			if ($i%$perline==0) $selbody.="<br/>";
+			if ($i%$perpage==0) $selbody.="<!-- EmotPage -->";
 			unset ($emotcode, $emotthumb);
 		}
 	$write="<?PHP\n\$emots=<<<eot\n{$selbody}\neot;\n?>";
@@ -63,7 +66,7 @@ function recache_emotselection () {
 
 function recache_mods () {
 	global $blog, $db_prefix, $lna;
-	$allmods_active=$blog->getgroupbyquery("SELECT * FROM `{$db_prefix}mods` WHERE `active`=1 ORDER BY  `order`");
+	$allmods_active=$blog->getgroupbyquery("SELECT * FROM `{$db_prefix}mods` WHERE `active`=1 ORDER BY  `modorder`");
 	if (is_array($allmods_active)) {
 		for ($i=0; $i<count($allmods_active); $i++) {
 			$isection=$allmods_active[$i]['position'];
@@ -78,7 +81,7 @@ function recache_mods () {
 			$writeout.="addbar('{$key}', array({$body_sec}));\n";
 		}
 	}
-	if (!writetofile ("data/mods.php", "<?PHP\n{$writeout}")) {
+	if (!writetofile ("data/mods.php", "<?PHP\nif (!defined('VALIDREQUEST')) die ('Access Denied.');\n{$writeout}")) {
 		catcherror ($lna[66]."data/mods.php");
 	}
 
@@ -121,13 +124,11 @@ function recache_categories () {
 	while ($row=db_fetch_array($result2)) {
 		$result3[$row['category']]=$row['COUNT(*)'];
  	}
-	//print_r($result3);
-	//die();
 	$previousid=-1;
 	while ($row=db_fetch_array($result)) {
 		$i=$row['cateid'];
 		$row['parentcate']=($row['catemode']==1) ? $previousid : -1;
-		$writeout.="<?PHP exit;?><|>{$row['cateid']}<|>".stripslashes($row['catename'])."<|>".stripslashes($row['catedesc'])."<|>{$row['cateproperty']}<|>{$row['cateorder']}<|>{$row['catemode']}<|>{$row['cateurl']}<|>{$row['cateicon']}<|>{$result3[$i]}<|>{$row['parentcate']}<|>\n";
+		$writeout.="<?PHP exit;?><|>{$row['cateid']}<|>".stripslashes($row['catename'])."<|>".stripslashes($row['catedesc'])."<|>{$row['cateproperty']}<|>{$row['cateorder']}<|>{$row['catemode']}<|>{$row['cateurl']}<|>{$row['cateicon']}<|>{$result3[$i]}<|>{$row['parentcate']}<|>{$row['cateurlname']}<|>\n";
 		if ($row['catemode']==0) $previousid=$row['cateid']; //Change parent id now
 	}
 	if (!writetofile ("data/cache_categories.php", $writeout)) catcherror ($lna[66]."data/cache_categories.php");
@@ -136,20 +137,20 @@ function recache_categories () {
 function recache_latestentries () {
 	global $blog, $db_prefix, $mbcon, $lna;
 	$mbcon['entrylength']=($mbcon['entrylength']==0) ? 9999 : $mbcon['entrylength'];
-	$result_limit=$blog->getgroupbyquery("SELECT * FROM `{$db_prefix}blogs` WHERE `property`<>'2'  AND `property`<>'3' ORDER BY `pubtime` DESC LIMIT 0, {$mbcon['entrynum']}");
-	$result_all=$blog->getgroupbyquery("SELECT * FROM `{$db_prefix}blogs` WHERE `property`<>'3' ORDER BY `pubtime` DESC LIMIT 0, {$mbcon['entrynum']}");
+	$result_limit=$blog->getgroupbyquery("SELECT * FROM `{$db_prefix}blogs` WHERE `property`<2 ORDER BY `pubtime` DESC LIMIT 0, {$mbcon['entrynum']}");
+	$result_all=$blog->getgroupbyquery("SELECT * FROM `{$db_prefix}blogs` WHERE `property`<3 ORDER BY `pubtime` DESC LIMIT 0, {$mbcon['entrynum']}");
 	if (is_array($result_limit)) {
 		foreach ($result_limit as $result_limit_detail) {
 			$title=msubstr($result_limit_detail['title'], 0, $mbcon['entrylength']);
 			if ($title!=$result_limit_detail['title']) $title.='...';
-			$outcache_limit.="\$cache_latest_limit[]=array(\"blogid\"=>{$result_limit_detail['blogid']}, \"title\"=>\"{$title}\", \"category\"=>{$result_limit_detail['category']}, \"fulltitle\"=>\"{$result_limit_detail['title']}\");\n";
+			$outcache_limit.="\$cache_latest_limit[]=array(\"blogid\"=>{$result_limit_detail['blogid']}, \"title\"=>'{$title}', \"category\"=>{$result_limit_detail['category']}, \"fulltitle\"=>'{$result_limit_detail['title']}', \"blogalias\"=>'{$result_limit_detail['blogalias']}');\n";
 		}
 	}
 	if (is_array($result_all)) {
 		foreach ($result_all as $result_all_detail) {
 			$title=msubstr($result_all_detail['title'], 0, $mbcon['entrylength']);
 			if ($title!=$result_all_detail['title']) $title.='...';
-			$outcache_limit.="\$cache_latest_all[]=array(\"blogid\"=>{$result_all_detail['blogid']}, \"title\"=>\"{$title}\", \"category\"=>{$result_all_detail['category']}, \"fulltitle\"=>\"{$result_all_detail['title']}\");\n";
+			$outcache_limit.="\$cache_latest_all[]=array(\"blogid\"=>{$result_all_detail['blogid']}, \"title\"=>'{$title}', \"category\"=>{$result_all_detail['category']}, \"fulltitle\"=>'{$result_all_detail['title']}', \"blogalias\"=>'{$result_all_detail['blogalias']}');\n";
 		}
 	}
 	if (!writetofile ("data/cache_latest.php", "<?PHP\n".$outcache_limit."?>")) catcherror ($lna[66]."data/cache_latest.php");
@@ -158,16 +159,16 @@ function recache_latestentries () {
 function recache_latestreplies () {
 	global $blog, $db_prefix, $mbcon, $lna;
 	$mbcon['replylength']=($mbcon['replylength']==0) ? 9999 : $mbcon['replylength'];
-	$result_limit=$blog->getgroupbyquery("SELECT t1.*, t2.title FROM `{$db_prefix}replies` t1 INNER JOIN `{$db_prefix}blogs` t2 ON t2.blogid=t1.blogid WHERE (t1.reproperty='0' OR t1.reproperty='4') AND t2.property<2 ORDER BY t1.reptime DESC LIMIT 0, {$mbcon['replynum']}");
-	$result_all=$blog->getgroupbyquery("SELECT t1.*, t2.title FROM `{$db_prefix}replies` t1 INNER JOIN `{$db_prefix}blogs` t2 ON t2.blogid=t1.blogid WHERE t1.reproperty<>'2'  AND t1.reproperty<>'3' AND t1.reproperty<>'5' AND t2.property<>3 ORDER BY t1.reptime DESC LIMIT 0, {$mbcon['replynum']}");
+	$result_limit=$blog->getgroupbyquery("SELECT t1.*, t2.title, t2.blogalias FROM `{$db_prefix}replies` t1 INNER JOIN `{$db_prefix}blogs` t2 ON t2.blogid=t1.blogid WHERE (t1.reproperty='0' OR t1.reproperty='4') AND t2.property<2 ORDER BY t1.reptime DESC LIMIT 0, {$mbcon['replynum']}");
+	$result_all=$blog->getgroupbyquery("SELECT t1.*, t2.title, t2.blogalias FROM `{$db_prefix}replies` t1 INNER JOIN `{$db_prefix}blogs` t2 ON t2.blogid=t1.blogid WHERE t1.reproperty<>'2'  AND t1.reproperty<>'3' AND t1.reproperty<>'5' AND t2.property<3 ORDER BY t1.reptime DESC LIMIT 0, {$mbcon['replynum']}");
 	if (is_array($result_limit)) {
 		foreach ($result_limit as $result_limit_detail) {
 			$result_limit_detail['repcontent']=strip_tags($result_limit_detail['repcontent']);
 			$result_limit_detail['repcontent']=strip_ubbs($result_limit_detail['repcontent']);
-			$result_limit_detail['repcontent']=str_replace("\\", "\\\\", $result_limit_detail['repcontent']);
 			$title=msubstr($result_limit_detail['repcontent'], 0, $mbcon['replylength']);
 			if ($title!=$result_limit_detail['repcontent']) $title.='...';
-			$outcache_limit.="\$cache_replies_limit[]=array(\"blogid\"=>{$result_limit_detail['blogid']}, \"repcontent\"=>\"{$title}\", \"replier\"=>\"{$result_limit_detail['replier']}\",  \"title\"=>\"{$result_limit_detail['title']}\");\n";
+			$outcache_limit.="<?php die();?><|>limit<|>{$result_limit_detail['blogid']}<|>{$title}<|>{$result_limit_detail['replier']}<|>{$result_limit_detail['repid']}<|>{$result_limit_detail['title']}<|>{$result_limit_detail['blogalias']}<||>";
+			//$outcache_limit.="\$cache_replies_limit[]=array(\"blogid\"=>{$result_limit_detail['blogid']}, \"repcontent\"=>\"{$title}\", \"replier\"=>\"{$result_limit_detail['replier']}\",  \"repid\"=>'{$result_limit_detail['repid']}', \"title\"=>\"{$result_limit_detail['title']}\", \"blogalias\"=>'{$result_limit_detail['blogalias']}');\n";
 		}
 	}
 	if (is_array($result_all)) {
@@ -175,12 +176,14 @@ function recache_latestreplies () {
 			$result_all_detail['repcontent']=strip_tags($result_all_detail['repcontent']);
 			$result_all_detail['repcontent']=strip_ubbs($result_all_detail['repcontent']);
 			$result_all_detail['repcontent']=str_replace("\\", "\\\\", $result_all_detail['repcontent']);
+			$result_all_detail['repcontent']=str_replace('$', "\\\$", $result_all_detail['repcontent']);
 			$title=msubstr($result_all_detail['repcontent'], 0, $mbcon['replylength']);
 			if ($title!=$result_all_detail['repcontent']) $title.='...';
-			$outcache_limit.="\$cache_replies_all[]=array(\"blogid\"=>{$result_all_detail['blogid']}, \"repcontent\"=>\"{$title}\", \"replier\"=>\"{$result_all_detail['replier']}\",  \"title\"=>\"{$result_all_detail['title']}\");\n";
+			$outcache_limit.="<?php die();?><|>all<|>{$result_all_detail['blogid']}<|>{$title}<|>{$result_all_detail['replier']}<|>{$result_all_detail['repid']}<|>{$result_all_detail['title']}<|>{$result_all_detail['blogalias']}<||>";
+			//$outcache_limit.="\$cache_replies_all[]=array(\"blogid\"=>{$result_all_detail['blogid']}, \"repcontent\"=>\"{$title}\", \"replier\"=>\"{$result_all_detail['replier']}\",  \"repid\"=>'{$result_all_detail['repid']}', \"title\"=>\"{$result_all_detail['title']}\", \"blogalias\"=>'{$result_all_detail['blogalias']}');\n";
 		}
 	}
-	if (!writetofile ("data/cache_replies.php", "<?PHP\n".$outcache_limit."?>")) catcherror ($lna[66]."data/cache_replies.php");
+	if (!writetofile ("data/cache_replies.php", $outcache_limit)) catcherror ($lna[66]."data/cache_replies.php");
 }
 
 function recache_currentmonthentries () {
@@ -195,30 +198,29 @@ function recache_currentmonthentries () {
 	}
 	else $lunarstream='';
 	$calendarbody=makecalendar ($cm, $cy, $month_calendar, $lunarstream);
-	if ($config['smarturl']==1 && $config['urlrewrite']==1) {
-		$nextmonthurl=($cm==12) ? ("archive_1_".($cy+1).'.htm') : ("archive_".($cm+1)."_{$cy}.htm");
-		$lastmonthurl=($cm==1) ? ("archive_12_".($cy-1).'.htm') : ("archive_".($cm-1)."_{$cy}.htm");
-		$nextyearurl="archive_{$cm}_".($cy+1).'.htm';
-		$lastyearurl="archive_{$cm}_".($cy-1).'.htm';
-		$thismonthurl="archive_{$cm}_{$cy}.htm";
-	} else {
-		$nextmonthurl=($cm==12) ? ("index.php?go=archive&amp;cm=1&amp;cy=".($cy+1)) : ("index.php?go=archive&amp;cm=".($cm+1)."&amp;cy={$cy}");
-		$lastmonthurl=($cm==1) ? ("index.php?go=archive&amp;cm=12&amp;cy=".($cy-1)) : ("index.php?go=archive&amp;cm=".($cm-1)."&amp;cy={$cy}");
-		$nextyearurl="index.php?go=archive&amp;cm={$cm}&amp;cy=".($cy+1);
-		$lastyearurl="index.php?go=archive&amp;cm={$cm}&amp;cy=".($cy-1);
-		$thismonthurl="index.php?go=archive&amp;cm={$cm}&amp;cy={$cy}";
-	}
+	$nextmonth=($cm==12) ? 1 : $cm+1;
+	$lastmonth=($cm==1) ? 12 : $cm-1;
+	$yearofnextmonth=($cm==12) ? $cy+1 : $cy;
+	$yearoflastmonth=($cm==1) ? $cy-1 : $cy;
+	$nextyear=$cy+1;
+	$lastyear=$cy-1;
+
+	$nextmonthurl=getlink_archive($nextmonth, $yearofnextmonth);
+	$lastmonthurl=getlink_archive($lastmonth, $yearoflastmonth);
+	$nextyearurl=getlink_archive($cm, $nextyear);
+	$lastyearurl=getlink_archive($cm, $lastyear);
+	$thismonthurl=getlink_archive($cm, $cy);
 	$thisyearurl="archive.php";
 	$out=<<<eot
 <table id="calendar" cellspacing="1" width="100%">
 <tbody><tr><td colspan="7" class="calendar-top">
-<a href="{$lastyearurl}">&lt;</a>
-<a href="{$thisyearurl}"><span class="calendar-year">{$cy}</span></a>
-<a href="{$nextyearurl}">&gt;</a>
+<a href="{$lastyearurl}" rel="noindex,nofollow">&lt;</a>
+<a href="{$thisyearurl}" rel="noindex,nofollow"><span class="calendar-year">{$cy}</span></a>
+<a href="{$nextyearurl}" rel="noindex,nofollow">&gt;</a>
 	&nbsp;&nbsp;
-<a href="{$lastmonthurl}">&lt;</a>
-<a href="{$thismonthurl}"><span class="calendar-month">{$cm}</span></a>
-<a href="{$nextmonthurl}">&gt;</a>{$lunarym}
+<a href="{$lastmonthurl}" rel="noindex,nofollow">&lt;</a>
+<a href="{$thismonthurl}" rel="noindex,nofollow"><span class="calendar-month">{$cm}</span></a>
+<a href="{$nextmonthurl}" rel="noindex,nofollow">&gt;</a>{$lunarym}
 </td></tr>
 <tr class="calendar-weekdays">
 	<td class="calendar-weekday-cell">{$lnc[115]}</td>

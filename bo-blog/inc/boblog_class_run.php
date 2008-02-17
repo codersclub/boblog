@@ -80,6 +80,17 @@ class template {
 			if (!file_exists(elementfile)) die ("Cannot find template. You may need to reinstall the program.");
 			include_once(elementfile);
 			if (!$template['moreimages']) $template['moreimages']="images";
+			if (!$template['sysver']) {
+				$template['sysver']='5.1';
+			}
+			else {
+				$template['sysver']=basename($template['sysver']);
+			}
+			if (is_file("inc/tpltune/{$template['sysver']}.php")) include_once("inc/tpltune/{$template['sysver']}.php");
+			if (is_file("inc/tpltune/{$template['sysver']}.css")) {
+				global $csslocation;
+				$csslocation.="<link rel=\"stylesheet\" rev=\"stylesheet\" href=\"inc/tpltune/{$template['sysver']}.css\" type=\"text/css\" media=\"all\" />\n";
+			}
 			$tptvalue=array();
 		}
 	}
@@ -115,7 +126,7 @@ class template {
 		else return $content;
 	}
 
-	function showtips($title, $tips, $links='') {
+	function showtips($title, $tips, $links='', $enableautojump=false) {
 		global $config, $permission, $template, $lnc, $baseurl, $logstat, $langname;
 		$previouspage=($_SERVER['HTTP_REFERER']=='') ? "javascript: history.back(1);" : $_SERVER['HTTP_REFERER'];
 		if ($permission['CP']==1 && !defined('isLogout')) {
@@ -125,21 +136,29 @@ class template {
 			$admin_plus=" | <a href=\"login.php\">{$lnc[89]}</a>";
 		}
 		if ($links) {
-			$tips.="<ul>";
+			if ($enableautojump) $tips.="<br/>{$lnc[310]}<ul>";
+			else $tips.="<ul>";
 			if (is_array($links)) {
+				$isfirstlink=true;
 				foreach ($links as $onelink) {
 					$current_link=@explode('|', $onelink);
 					if ($current_link[1]=='<') $current_link[1]=$previouspage;
 					$tips.="<li><a href=\"{$current_link[1]}\">{$current_link[0]}</a></li>";
+					if ($isfirstlink) {
+						$autojump="<meta http-equiv=\"refresh\" content=\"3; url={$current_link[1]}\" />";
+						$isfirstlink=false;
+					}
 				}
 			} else {
 				$current_link=@explode('|', $links);
 				if ($current_link[1]=='<') $current_link[1]=$previouspage;
 				$tips.="<li><a href=\"{$current_link[1]}\">{$current_link[0]}</a></li>";
+				$autojump="<meta http-equiv=\"refresh\" content=\"3; url={$current_link[1]}\" />";
 			}
 			$tips.="</ul>";
 		}
 		$csslocation.=$baseurl;
+		if ($enableautojump) $csslocation.=$autojump;
 		for ($i=0; $i<count($template['css']); $i++) {
 			$csslocation.="<link rel=\"stylesheet\" rev=\"stylesheet\" href=\"{$template['css'][$i]}\" type=\"text/css\" media=\"all\" />\n";
 		}
@@ -172,12 +191,17 @@ class getblogs extends boblog {
 		$result=$this->getgroupbyquery($partialquery);
 		if (!$result) return false;
 		if ($partialquery2) {
-			$previousresult=$this->getbyquery("SELECT `blogid`,`title` FROM `{$db_prefix}blogs` {$partialquery2} AND `pubtime`<'{$result[0]['pubtime']}' ORDER BY `pubtime` DESC LIMIT 0,1");
-			$nextresult=$this->getbyquery("SELECT `blogid`,`title` FROM `{$db_prefix}blogs` {$partialquery2} AND `pubtime`>'{$result[0]['pubtime']}' ORDER BY `pubtime` ASC LIMIT 0,1");
+			if ($mbcon['prevnextshowsamecate']=='1') {
+				$setcateplus=" AND `category`='".floor($result[0]['category'])."'";
+			} else $setcateplus='';
+			$previousresult=$this->getbyquery("SELECT `blogid`,`title`,`blogalias` FROM `{$db_prefix}blogs` {$partialquery2} AND `pubtime`<'{$result[0]['pubtime']}' {$setcateplus} ORDER BY `pubtime` DESC LIMIT 1");
+			$nextresult=$this->getbyquery("SELECT `blogid`,`title`,`blogalias` FROM `{$db_prefix}blogs` {$partialquery2} AND `pubtime`>'{$result[0]['pubtime']}' {$setcateplus} ORDER BY `pubtime` ASC LIMIT 1");
 			$result[0]['previoustitle']=($mbcon['linklength']==0)? $previousresult['title'] : msubstr($previousresult['title'], 0, $mbcon['linklength']);
 			$result[0]['previousid']=$previousresult['blogid'];
 			$result[0]['nexttitle']=($mbcon['linklength']==0)? $nextresult['title'] : msubstr($nextresult['title'], 0, $mbcon['linklength']);
 			$result[0]['nextid']=$nextresult['blogid'];
+			$result[0]['previousblogalias']=$previousresult['blogalias'];
+			$result[0]['nextblogalias']=$nextresult['blogalias'];
 		}
 		return $result;
 	}
@@ -260,7 +284,7 @@ class getblogs extends boblog {
 				}
 			}
 			else {
-				$replier="<a href=\"view.php?go=user_{$eachreply['replierid']}\" target=\"_blank\" title=\"{$lnc[17]}\">{$eachreply['replier']}</a>";
+				$replier="<a href=\"".getlink_user($eachreply['replierid'])."\" target=\"_blank\" title=\"{$lnc[17]}\">{$eachreply['replier']}</a>";
 				//Avatars for users
 				$avatardetail=@explode('|', $eachreply['avatar']);
 				if ($avatardetail[0]=='1' && $mbcon['usergravatar']=='1') {
@@ -287,23 +311,22 @@ class getblogs extends boblog {
 			} else {
 				$replycontent=$this->getcontent($eachreply['repcontent'],  $eachreply['html'], $eachreply['ubb'], $eachreply['emot']);
 			}
-			if ($userdetail['ip']==$eachreply['repip'] && ($nowtime['timestamp']-$eachreply['reptime']<$mbcon['editcomment']) && $eachreply['reppsw']=='') { //Allow edit
+			if ($userdetail['ip']==$eachreply['repip'] && ($nowtime['timestamp']-$eachreply['reptime']<$mbcon['editcomment']) && $eachreply['reppsw']=='' && empty($eachreply['adminreptime'])) { 			//Allow edit
 				$rawreplycontent=safe_invert($eachreply['repcontent']);
 				$expirereplytime=zhgmdate("{$mbcon['timeformat']} H:i", ($eachreply['reptime']+3600*$config['timezone']+$mbcon['editcomment'])); 
 				$replycontent.="<br/><div class=\"commentbox-label\">{$lnc[300]} {$expirereplytime} {$lnc[301]} "."[<a href=\"javascript: showhidediv('editcomment{$eachreply['repid']}');\">{$lnc[302]}</a>]</div>";
-				$replycontent.="<div id=\"editcomment{$eachreply['repid']}\" style='display: none;'><form action=\"javascript: ajax_editcomment({$eachreply['repid']}, 'reply', {$i});\"><textarea cols='55' rows='4'  id=\"editcomcontent{$eachreply['repid']}\">{$rawreplycontent}</textarea><br/><input type='button' value='{$lnc[25]}' onclick=\"ajax_editcomment({$eachreply['repid']}, 'reply', {$i});\" class='button' /> <input type='reset' value='{$lnc[26]}' class='button' /></form></div>";
+				$replycontent.="<div id=\"editcomment{$eachreply['repid']}\" style='display: none;'><form action=\"javascript: ajax_editcomment({$eachreply['repid']}, 'reply', {$i});\" method=\"post\" id=\"formeditcomment{$eachreply['repid']}\"><textarea cols='55' rows='4'  id=\"editcomcontent{$eachreply['repid']}\" name='v_contentc'>{$rawreplycontent}</textarea><br/><input type='button' value='{$lnc[25]}' onclick=\"ajax_editcomment({$eachreply['repid']}, 'reply', {$i});\" class='button' /> <input type='reset' value='{$lnc[26]}' class='button' /></form></div>";
 			}
 			if (!empty($avataraddress)) { //Make avatar
 				$avatarposition=($mbcon['leftavatar']=='1') ? "left" : "right";
 				$avatarposition2=($mbcon['leftavatar']=='1') ? "right" : "left";
-				$replycontent="<img src=\"{$avataraddress}\" alt=\"\" width=\"{$mbcon['avatarwidth']}\" height=\"{$mbcon['avatarheight']}\" style=\"float: {$avatarposition}; padding-{$avatarposition2}: 5px;\"/>{$replycontent}<div style=\"clear:both; height: 0px; padding: 0px; font-size: 1px;\"></div>";
+				$replycontent="<img src=\"{$avataraddress}\" alt=\"\" style=\"float: {$avatarposition}; padding-{$avatarposition2}: 5px; width: {$mbcon['avatarwidth']}px; height: {$mbcon['avatarheight']}px; \"/><div>{$replycontent}</div><div style=\"clear:both;\"></div>";
 			}
-
 			if ($eachreply['adminreptime'] && ($eachreply['reproperty']!=1 || $permission['SeeHiddenReply']==1 || $eachreply['reppsw']=='')) {
 				$ifadminreplied="block";
-				$adminreplier="<a href=\"view.php?go=user_{$eachreply['adminrepid']}\" target=\"_blank\" title=\"{$lnc[17]}\">{$eachreply['adminreplier']}</a>";
+				$adminreplier="<a href=\"".getlink_user($eachreply['adminrepid'])."\" target=\"_blank\" title=\"{$lnc[17]}\">{$eachreply['adminreplier']}</a>";
 				$adminreptime=zhgmdate("{$mbcon['timeformat']} H:i", ($eachreply['adminreptime']+3600*$config['timezone']));
-				$adminreplybody="<form action='admin.php?go=reply_editadminreply_{$eachreply['repid']}' method='post'>";
+				$adminreplybody="<form action='admin.php?go=reply_editadminreply_{$eachreply['repid']}' id='formadminreply{$eachreply['repid']}' method='post'>";
 				$adminreplybody.="{$lnc[24]} <br/><textarea cols='66' rows='3' name='adminreplycontent' id='adminreplycontent{$eachreply['repid']}'>".safe_invert($eachreply['adminrepcontent'])."</textarea><br/>";
 				$adminreplybody.="<input type='button' value='{$lnc[25]}' onclick=\"ajax_adminreply_edit('{$eachreply['repid']}', 'reply'); return false;\" class='button'/> <input type='reset' value='{$lnc[26]}'  class='button'/> <input type='button' value='{$lnc[27]}' onclick=\"showhidediv('com_{$eachreply['repid']}');\" class='button'/></form>";
 				if ($permission['ReplyReply']==1 && ADMIN_LOGIN==1) $addadminreply="<a href=\"javascript: showhidediv('com_{$eachreply['repid']}');\">[{$lnc[20]}]</a>";
@@ -346,7 +369,7 @@ class getblogs extends boblog {
 	}
 
 	function single_message ($eachreply, $i=0) {
-		global $mbcon, $section_body, $permission, $adminlist, $userdetail, $config, $categories, $weather, $t, $section_bodys, $lnc;
+		global $mbcon, $section_body, $permission, $adminlist, $userdetail, $config, $categories, $weather, $t, $section_bodys, $lnc, $nowtime;
 		if (!@is_a($t, 'template')) {
 			$t=new template;
 		}
@@ -358,7 +381,7 @@ class getblogs extends boblog {
 			}
 		}
 		else {
-			$replier="<a href=\"view.php?go=user_{$eachreply['replierid']}\" target=\"_blank\" title=\"{$lnc[17]}\">{$eachreply['replier']}</a>";
+			$replier="<a href=\"".getlink_user($eachreply['replierid'])."\" target=\"_blank\" title=\"{$lnc[17]}\">{$eachreply['replier']}</a>";
 			//Avatars for users
 			$avatardetail=@explode('|', $eachreply['avatar']);
 			if ($avatardetail[0]=='1' && $mbcon['usergravatar']=='1') {
@@ -385,20 +408,20 @@ class getblogs extends boblog {
 		} else {
 			$replycontent=$this->getcontent($eachreply['repcontent'],  $eachreply['html'], $eachreply['ubb'], $eachreply['emot']);
 		}
-		if ($userdetail['ip']==$eachreply['repip'] && ($nowtime['timestamp']-$eachreply['reptime']<$mbcon['editcomment']) && $eachreply['reppsw']=='') { //Allow edit
+		if ($userdetail['ip']==$eachreply['repip'] && ($nowtime['timestamp']-$eachreply['reptime']<$mbcon['editcomment']) && $eachreply['reppsw']=='' && empty($eachreply['adminreptime'])) { //Allow edit
 			$rawreplycontent=safe_invert($eachreply['repcontent']);
 			$expirereplytime=zhgmdate("{$mbcon['timeformat']} H:i", ($eachreply['reptime']+3600*$config['timezone']+$mbcon['editcomment'])); 
 			$replycontent.="<br/><div class=\"commentbox-label\">{$lnc[300]} {$expirereplytime} {$lnc[301]} "."[<a href=\"javascript: showhidediv('editcomment{$eachreply['repid']}');\">{$lnc[302]}</a>]</div>";
-			$replycontent.="<div id=\"editcomment{$eachreply['repid']}\" style='display: none;'><form action=\"javascript: ajax_editcomment({$eachreply['repid']}, 'message', {$i});\"><textarea cols='55' rows='4'  id=\"editcomcontent{$eachreply['repid']}\">{$rawreplycontent}</textarea><br/><input type='button' value='{$lnc[25]}' onclick=\"ajax_editcomment({$eachreply['repid']}, 'message', {$i});\"  class='button' /> <input type='reset' value='{$lnc[26]}'  class='button' /></form></div>";
+			$replycontent.="<div id=\"editcomment{$eachreply['repid']}\" style='display: none;'><form action=\"javascript: ajax_editcomment({$eachreply['repid']}, 'message', {$i});\" method=\"post\" id=\"formeditcomment{$eachreply['repid']}\"><textarea cols='55' rows='4'  id=\"editcomcontent{$eachreply['repid']}\" name='v_contentc'>{$rawreplycontent}</textarea><br/><input type='button' value='{$lnc[25]}' onclick=\"ajax_editcomment({$eachreply['repid']}, 'message', {$i});\"  class='button' /> <input type='reset' value='{$lnc[26]}'  class='button' /></form></div>";
 		}
 		if (!empty($avataraddress)) { //Make avatar
 			$avatarposition=($mbcon['leftavatar']=='1') ? "left" : "right";
 			$avatarposition2=($mbcon['leftavatar']=='1') ? "right" : "left";
-			$replycontent="<img src=\"{$avataraddress}\" alt=\"\" width=\"{$mbcon['avatarwidth']}\" height=\"{$mbcon['avatarheight']}\" style=\"float: {$avatarposition}; padding-{$avatarposition2}: 5px;\"/>{$replycontent}<div style=\"clear:both;  height: 0px; padding: 0px; font-size: 1px;\"></div>";
+			$replycontent="<img src=\"{$avataraddress}\" alt=\"\" style=\"float: {$avatarposition}; padding-{$avatarposition2}: 5px; width: {$mbcon['avatarwidth']}px; height: {$mbcon['avatarheight']}px; \"/><div style=\"float:{$avatarposition2}\">{$replycontent}</div><div style=\"clear:both;\"></div>";
 		}
 		if ($eachreply['adminreptime'] && ($eachreply['reproperty']!=1 || $permission['SeeHiddenReply']==1 || $eachreply['reppsw']=='')) {
 			$ifadminreplied="block";
-			$adminreplier="<a href=\"view.php?go=user_{$eachreply['adminrepid']}\" target=\"_blank\" title=\"{$lnc[17]}\">{$eachreply['adminreplier']}</a>";
+			$adminreplier="<a href=\"".getlink_user($eachreply['adminrepid'])."\" target=\"_blank\" title=\"{$lnc[17]}\">{$eachreply['adminreplier']}</a>";
 			$adminreptime=zhgmdate("{$mbcon['timeformat']} H:i", ($eachreply['adminreptime']+3600*$config['timezone']));
 			$adminreplybody="<form action='admin.php?go=message_editadminreply_{$eachreply['repid']}' method='post'>";
 			$adminreplybody.="{$lnc[24]} <br/><textarea cols='66' rows='3' name='adminreplycontent' id='adminreplycontent{$eachreply['repid']}'>".safe_invert($eachreply['adminrepcontent'])."</textarea><br/>";
@@ -420,11 +443,11 @@ class getblogs extends boblog {
 	}
 
 	function output ($entry, $way='excerpt', $contentonly=false) {
-		global $mbcon, $section_body, $permission, $adminlist, $userdetail, $config, $categories, $weather, $t, $section_bodys, $part, $template, $lnc;
+		global $mbcon, $section_body, $permission, $adminlist, $userdetail, $config, $categories, $weather, $t, $section_bodys, $part, $page, $template, $lnc, $tptvalue;
 		if (!@is_a($t, 'template')) {
 			$t=new template;
 		}
-		$entrytitle="<a href=\"{$config['sulink']}{$entry['blogid']}{$config['sulinkext']}\">{$entry['title']}</a>";
+		$entrytitle="<a href=\"".getlink_entry($entry['blogid'], $entry['blogalias'])."\">{$entry['title']}</a>";
 		if ($entry['sticky']==1 || $entry['sticky']==2) $entrytitle="[{$lnc[33]}] ".$entrytitle;
 		$entrydate=zhgmdate("{$mbcon['timeformat']}", ($entry['pubtime']+3600*$config['timezone'])); 
 		$entrytime=gmdate('H:i', ($entry['pubtime']+3600*$config['timezone'])); 
@@ -433,36 +456,37 @@ class getblogs extends boblog {
 		$entrydatemnameshort=gmdate('M', ($entry['pubtime']+3600*$config['timezone']));
 		$tmp=$entry['authorid'];
 		$entryauthor=$adminlist[$tmp];
-		$entryauthor="<a href=\"view.php?go=user_{$tmp}\" target=\"_blank\">{$entryauthor}</a>";
+		$entryauthor="<a href=\"".getlink_user($tmp)."\" target=\"_blank\">{$entryauthor}</a>";
 		if ($entry['tags'] && $entry['tags']!='>') {
 			$entry['tags']=trim($entry['tags'],'>');
 			$taginfo=@explode('>', $entry['tags']);
 			foreach ($taginfo as $eachtag) {
-				$eachtag_encoded=urlencode($eachtag);
+				$eachtag_encoded=urlencode(urlencode($eachtag));
 				if ($mbcon['tagunderlinetospace']==1) 	$eachtag=str_replace('_', ' ', $eachtag);
-				$urlref="tag.php?tag={$eachtag_encoded}";
+				$urlref=getlink_tags($eachtag_encoded);
 				$taginfos[]="<a href=\"{$urlref}\" title=\"Tags:  {$eachtag}\" rel=\"tag\">{$eachtag}</a>";
 			}
 			$alltags=@implode(' , ', $taginfos);
+			if ($way=='viewentry') $tptvalue['additionalkeywords']=strip_tags(@implode(',', $taginfos)).',';
 			$iftags="block";
 			$tags="Tags: ";
 		} else $iftags="none";
 		$tmp=$entry['category'];
 		if ($mbcon['extendcategory']==1 && $categories[$tmp]['parentcate']!=-1) {
 			$tmp_parent=$categories[$tmp]['parentcate'];
-			$outurl=($config['smarturl']==1 && $config['urlrewrite']==1) ? "category_{$tmp_parent}.htm" : PATHADJUST."category_{$tmp_parent}";
+			$outurl=getlink_category($tmp_parent);
 			$entrycate="<a href=\"{$outurl}\" title=\"{$lnc[34]} {$categories[$tmp_parent]['catename']}\">{$categories[$tmp_parent]['catename']}</a> &raquo; ";
 		} else {
 			$tmp_parent='';
 			$entrycate='';
 		}
-		$outurl=($config['smarturl']==1 && $config['urlrewrite']==1) ? "category_{$entry['category']}.htm" : PATHADJUST."category_{$entry['category']}";
+		$outurl=getlink_category($entry['category']);
 		$entrycate.="<a href=\"{$outurl}\" title=\"{$lnc[34]} {$categories[$tmp]['catename']}\">{$categories[$tmp]['catename']}</a>";
 		$entrycateicon=($categories[$tmp]['cateicon']) ? "<img src=\"{$categories[$tmp]['cateicon']}\" alt=\"\" style=\"margin:3px 1px -4px 0px;\"/> " : '';
-		$entryviews="<a href=\"{$config['sulink']}{$entry['blogid']}{$config['sulinkext']}\">{$lnc[35]}({$entry['views']})</a>";
+		$entryviews="<a href=\"".getlink_entry($entry['blogid'], $entry['blogalias'])."\">{$lnc[35]}({$entry['views']})</a>";
 		if ($entry['property']==1) {//Locked
 			$entrycomment="{$lnc[36]}({$entry['replies']})";
-		} else $entrycomment="<a href=\"{$config['sulink']}{$entry['blogid']}{$config['sulinkext']}#reply\" title=\"{$lnc[37]}\">{$lnc[38]}({$entry['replies']})</a>";
+		} else $entrycomment="<a href=\"".getlink_entry($entry['blogid'], $entry['blogalias'])."#reply\" title=\"{$lnc[37]}\">{$lnc[38]}({$entry['replies']})</a>";
 		if ($entry['weather']) {
 			$tmp=$entry['weather'];
 			$entryicon="<img src=\"{$weather[$tmp]['image']}\" alt=\"{$weather[$tmp]['text']}\" title=\"{$weather[$tmp]['text']}\"/>";
@@ -474,6 +498,7 @@ class getblogs extends boblog {
 		else {
 			$adminbar="<div id=\"admin{$entry['blogid']}\" style=\"display: none;\" class=\"textbox-adminbar\"><br/><strong>{$lnc[41]}</strong><a href=\"admin.php?go=edit_edit_{$entry['blogid']}\">{$lnc[42]}</a> | <a href=\"javascript: showdelblog('{$entry['blogid']}');\">{$lnc[43]}</a> | <a href=\"javascript: comfirmurl('admin.php?go=entry_ae_noreply&amp;tid={$entry['blogid']}');\">{$lnc[44]}</a> | <a href=\"javascript: comfirmurl('admin.php?go=entry_ae_notb&amp;tid={$entry['blogid']}');\">{$lnc[45]}</a><br/><strong>{$lnc[46]}</strong><a href=\"admin.php?go=entry_ae_lock&amp;tid={$entry['blogid']}\">{$lnc[47]}</a> | <a href=\"admin.php?go=entry_ae_unlock&amp;tid={$entry['blogid']}\">{$lnc[48]}</a> | <a href=\"admin.php?go=entry_ae_sticky1&amp;tid={$entry['blogid']}\">{$lnc[49]}</a> | <a href=\"admin.php?go=entry_ae_sticky2&amp;tid={$entry['blogid']}\">{$lnc[50]}</a> | <a href=\"admin.php?go=entry_ae_sticky0&amp;tid={$entry['blogid']}\">{$lnc[51]}</a><br/><strong>{$lnc[52]}</strong><a href=\"javascript: comfirmurl('admin.php?go=entry_ae_noread&amp;tid={$entry['blogid']}');\">{$lnc[53]}</a> | <a href=\"admin.php?go=entry_ae_recountrep&amp;tid={$entry['blogid']}\">{$lnc[54]}</a> | <a href=\"admin.php?go=entry_ae_recounttb&amp;tid={$entry['blogid']}\">{$lnc[55]}</a></div>";
 			$ifadmin=" | <a href='javascript: showhidediv(\"admin{$entry['blogid']}\");'>{$lnc[56]}</a>";
+			$adminlink="<a href='javascript: showhidediv(\"admin{$entry['blogid']}\");'>{$lnc[56]}</a>";
 		}
 		$tbauthentic=tbcertificate($entry['blogid'], $entry['pubtime']);
 		if ($mbcon['allowtrackback']==1) {
@@ -489,30 +514,36 @@ class getblogs extends boblog {
 			$tbonclick="showhidediv(\"tb{$entry['blogid']}\");";
 		}
 		$entrytb="<a href='javascript: void(0);' title=\"{$lnc[59]}\" onclick='{$tbonclick}'>{$lnc[60]}({$entry['tbs']})</a>";
+		$entrytbnumwithlink="<a href='javascript: void(0);' title=\"{$lnc[59]}\" onclick='{$tbonclick}'>{$entry['tbs']}</a>";
 		if ($way=='excerpt' || $way=='viewentry') {
-			if ($entry['blogpsw'] && $permission['SeeAllProtectedEntry']!=1 && $userdetail['userid']!=$entry['authorid'] && !$contentonly) { //Password protected entry
+			if ($entry['blogpsw'] && $permission['SeeAllProtectedEntry']!=1 && $userdetail['userid']!=$entry['authorid'] && !$contentonly &&  $_COOKIE["entrypassword{$entry['blogid']}"]!=$entry['blogpsw']) { //Password protected entry
 				$entry['content']="<div id='protectedentry{$entry['blogid']}'><div class=\"quote\"><div class=\"quote-title\">{$lnc[294]}</div><div class=\"quote-content\"><form action=\"javascript: getprotectedblog({$entry['blogid']}, '{$way}');\" method='post'>{$lnc[296]}<br/>{$lnc[133]} <input type='password' name='entrypsw' id='entrypsw{$entry['blogid']}'  class='text' /> <input type='submit' value='{$lnc[25]}'  class='button'/></form></div></div></div>";
 				$aprotectedone=1;
 			} else {
-				//Multi-Page
-				if ($way=='excerpt') $entry['content']=str_replace('[newpage]', '[separator]', $entry['content']);
-				if ($way=='excerpt' && strstr($entry['content'], '[separator]')) {
-					@list($entry['content'])=@explode('[separator]', $entry['content']);
-					$notfinish=1;
+				if ($way=='excerpt') {
+					if ($entry['entrysummary']) {
+						$entry['content']=$entry['entrysummary'];
+						$notfinish=1;
+					}
+					else {
+						$entry['content']=str_replace('[newpage]', '[separator]', $entry['content']);
+						if (strstr($entry['content'], '[separator]'))  {
+							@list($entry['content'])=@explode('[separator]', $entry['content']);
+							$notfinish=1;
+						}
+					}
 				}
-				else $entry['content']=@str_replace('[separator]', '', $entry['content']);
+				else {
+					$entry['content']=preg_replace("/\[separator\]/", "<a name=\"entrymore\"></a>", $entry['content'], 1);
+					$entry['content']=@str_replace('[separator]', '', $entry['content']);
+				}
 				if ($way=='viewentry' && strstr($entry['content'], '[newpage]')) {
 					$entrycontent_tmp=@explode('[newpage]', $entry['content']);
 					$entry['content']=$entrycontent_tmp[$part-1];
 					$totalvolume=count($entrycontent_tmp);
-					if ($config['smarturl']==1 && $config['urlrewrite']==1) {
-						global $page;
-						$outurl="{$config['blogurl']}/post/{$entry['blogid']}_{$page}_%s.htm";
-						$pageway=1;
-					} else {
-						$outurl="{$config['blogurl']}/read.php?{$entry['blogid']}";
-						$pageway=0;
-					}
+
+					$outurl=getlink_entry($entry['blogid'], $entry['blogalias'], $page, '%s');
+					$pageway=1;
 					$innerpage=$this->make_innerpagebar ($part, $outurl, $totalvolume, $pageway);
 					$entry['content'].=$t->set('entryadditional', array('readmore'=>$innerpage));
 				}
@@ -525,7 +556,7 @@ class getblogs extends boblog {
 			$entrycontent=$this->getcontent($entry['content'],  $entry['htmlstat'], $entry['ubbstat'], $entry['emotstat'], 1);
 			$entrycontent=$this->keep_htmlcode_matches($entrycontent);
 			if ($notfinish==1) {
-				$entrycontent.=$t->set('entryadditional', array('readmore'=>"<a href=\"{$config['sulink']}{$entry['blogid']}{$config['sulinkext']}\" title=\"{$lnc[67]}\">{$lnc[68]}</a>"));
+				$entrycontent.=$t->set('entryadditional', array('readmore'=>"<a href=\"".get_entry_url($entry['blogid'], $entry['blogalias'])."#entrymore\" title=\"{$lnc[67]}\">{$lnc[68]}</a>"));
 			}
 			if ($way=='viewentry') { //Load plugin: entryend
 				$entrycontent.=plugin_get('entrycontentend');
@@ -539,14 +570,14 @@ class getblogs extends boblog {
 			if ($entry['previousid']!='') {
 				$previousentryexist='inline';
 				$previousentrytitle=$entry['previoustitle'];
-				$previousentryurl="{$config['sulink']}{$entry['previousid']}{$config['sulinkext']}";
-				$previous="<a href=\"{$config['sulink']}{$entry['previousid']}{$config['sulinkext']}\" title=\"{$lnc[69]} {$entry['previoustitle']}\"><img src=\"{$mbcon['images']}/toolbar_previous.gif\" alt='' border='0'/>{$entry['previoustitle']}</a>";
+				$previousentryurl=getlink_entry($entry['previousid'], $entry['previousblogalias']);
+				$previous="<a href=\"{$previousentryurl}\" title=\"{$lnc[69]} {$entry['previoustitle']}\"><img src=\"{$mbcon['images']}/toolbar_previous.gif\" alt='' border='0'/>{$entry['previoustitle']}</a>";
 			} else $previousentryexist='none';
 			if ($entry['nextid']!='') {
 				$nextentryexist='inline';
 				$nextentrytitle=$entry['nextid'];
-				$nextentryurl="{$config['sulink']}{$entry['nextid']}{$config['sulinkext']}";
-				$next="<a href=\"{$config['sulink']}{$entry['nextid']}{$config['sulinkext']}\" title=\"{$lnc[70]} {$entry['nexttitle']}\"><img src=\"{$mbcon['images']}/toolbar_next.gif\" alt='' border='0'/>{$entry['nexttitle']}</a>";
+				$nextentryurl=getlink_entry($entry['nextid'], $entry['nextblogalias']);
+				$next="<a href=\"{$nextentryurl}\" title=\"{$lnc[70]} {$entry['nexttitle']}\"><img src=\"{$mbcon['images']}/toolbar_next.gif\" alt='' border='0'/>{$entry['nexttitle']}</a>";
 			} else $nextentryexist='none';
 			if ($entry['editorid'] && $mbcon['showeditor']=='1') {
 				$tmp=$entry['editorid'];
@@ -558,12 +589,22 @@ class getblogs extends boblog {
 			$way='excerptontop';
 			$topid="top_{$entry['blogid']}";
 		}
+
+		//Source
+		if ($entry['comefrom'] && $entry['originsrc']) {
+			$entrysourcewithlink="<a href=\"{$entry['originsrc']}\" target=\"_blank\">{$entry['comefrom']}</a>";
+		}
+		else {
+			$entrysourcewithlink=$entrysource=$lnc[307];
+			$entrysourcelink='#';
+		}
+
 		//Start Template
-		$section_bodys[]=$t->set($way, array('entryicon'=>$entryicon, 'entrytitle'=>$entrytitle, 'entrydate'=>$entrydate,  'entrytime'=>$entrytime, 'entryauthor'=>$entryauthor, 'entrycontent'=>$entrycontent, 'iftags'=>$iftags, 'tags'=>$tags, 'alltags'=>$alltags, 'entrycate'=>$entrycate, 'entrycateicon'=>$entrycateicon, 'entrycomment'=>$entrycomment, 'entrytb'=>$entrytb, 'entryviews'=>$entryviews, 'ifadmin'=>$ifadmin, 'adminbar'=>$adminbar, 'tbbar'=>$tbbar, 'previous'=>$previous, 'next'=>$next, 'ifedited'=>$editby, 'toolbar'=>$toolbar, 'topid'=>$topid, 'entrystar'=>$entrystar, 'entrytitletext'=>$entry['title'], 'entryrelurl'=>"{$config['sulink']}{$entry['blogid']}{$config['sulinkext']}", 'entryabsurl'=>"{$config['blogurl']}/{$config['sulink']}{$entry['blogid']}{$config['sulinkext']}", 'entrydatey'=>$entrydatey, 'entrydatem'=>$entrydatem, 'entrydated'=>$entrydated, 'entrycommentnum'=>$entry['replies'], 'entrytbnum'=>$entry['tbs'], 'entryviewsnum'=>$entry['views'], 'entrytburl'=>$entrytburl, 'previousentryexist'=>$previousentryexist, 'previousentrytitle'=>$previousentrytitle, 'previousentryurl'=>$previousentryurl, 'nextentryexist'=>$nextentryexist, 'nextentrytitle'=>$nextentrytitle, 'nextentryurl'=>$nextentryurl, 'entrydatemnamefull'=>$entrydatemnamefull, 'entrydatemnameshort'=>$entrydatemnameshort));
+		$section_bodys[]=$t->set($way, array('entryid'=>$entry['blogid'], 'entryicon'=>$entryicon, 'entrytitle'=>$entrytitle, 'entrydate'=>$entrydate,  'entrytime'=>$entrytime, 'entryauthor'=>$entryauthor, 'entrycontent'=>$entrycontent, 'iftags'=>$iftags, 'tags'=>$tags, 'alltags'=>$alltags, 'entrycate'=>$entrycate, 'entrycateicon'=>$entrycateicon, 'entrycomment'=>$entrycomment, 'entrytb'=>$entrytb, 'entryviews'=>$entryviews, 'ifadmin'=>$ifadmin, 'adminbar'=>$adminbar, 'tbbar'=>$tbbar, 'previous'=>$previous, 'next'=>$next, 'ifedited'=>$editby, 'toolbar'=>$toolbar, 'topid'=>$topid, 'entrystar'=>$entrystar, 'entrytitletext'=>$entry['title'], 'entryrelurl'=>get_entry_url($entry['blogid'], $entry['blogalias']), 'entryabsurl'=>"{$config['blogurl']}/".get_entry_url($entry['blogid'], $entry['blogalias']), 'entrydatey'=>$entrydatey, 'entrydatem'=>$entrydatem, 'entrydated'=>$entrydated, 'entrycommentnum'=>$entry['replies'], 'entrytbnum'=>$entry['tbs'], 'entryviewsnum'=>$entry['views'], 'entrytbnumwithlink'=>$entrytbnumwithlink, 'entrytburl'=>$entrytburl, 'previousentryexist'=>$previousentryexist, 'previousentrytitle'=>$previousentrytitle, 'previousentryurl'=>$previousentryurl, 'nextentryexist'=>$nextentryexist, 'nextentrytitle'=>$nextentrytitle, 'nextentryurl'=>$nextentryurl, 'entrydatemnamefull'=>$entrydatemnamefull, 'entrydatemnameshort'=>$entrydatemnameshort, 'entrysourcewithlink'=>$entrysourcewithlink, 'entrysource'=>$entry['comefrom'], 'entrysourcelink'=>$entry['originsrc'], 'adminlink'=>$adminlink));
 	}
 
 	function save_a_text ($entry) {
-		global $mbcon, $adminlist, $blogversion, $config, $lnc, $permission, $userdetail;
+		global $mbcon, $adminlist, $blogversion, $config, $lnc, $permission, $userdetail, $logstat;
 		if ($entry['property']>=2 && $permission['SeeHiddenEntry']!=1) catcherror($lnc[272]);
 		if ($entry['blogpsw'] && $permission['SeeAllProtectedEntry']!=1 && $userdetail['userid']!=$entry['authorid']) catcherror($lnc[272]);
 		$entrytitle=$entry['title'];
@@ -572,13 +613,16 @@ class getblogs extends boblog {
 		$entryauthor=$adminlist[$tmp];
 		$entry['content']=@str_replace('[separator]', '', $entry['content']);
 		$entry['content']=@str_replace('[newpage]', '', $entry['content']);
+		if ($logstat!=1) {
+			$entry['content']=preg_replace("/\[hide\](.+?)\[\/hide\]/is", "<br/>{$lnc[312]}  {$lnc[79]} {$lnc[235]} {$lnc[89]}<br/>", $entry['content']);
+		} else {
+			$entry['content']=str_replace(array('[hide]','[/hide]'), '', $entry['content']);
+		}
 		$entrycontent=$this->getrsscontent($entry['content'],  0, $entry['ubbstat'], 0);
-		$entrycontent=str_replace('<br/>', "\r\n", $entrycontent);
-		$entrycontent=str_replace('</p>', "\r\n", $entrycontent);
-		$entrycontent=str_replace('</div>', "\r\n", $entrycontent);
+		$entrycontent=str_replace(array('<br/>', '</p>', '</div>', '&#123;', '&#125;', '&nbsp;'), array("\r\n", "\r\n", "\r\n", '{', '}', ' '), $entrycontent);
 		$entrycontent=strip_tags($entrycontent);
 		$entrycontent=html_entity_decode($entrycontent, ENT_QUOTES);
-		$entryurl="{$config['blogurl']}/{$config['sulink']}{$entry['blogid']}{$config['sulinkext']}";
+		$entryurl="{$config['blogurl']}/".getlink_entry($entry['blogid'], $entry['blogalias']);
 		@header('Content-type: text/plain');
 		@header('Content-Disposition: attachment; filename="'.date('Ymd-His').'.txt"');
 		$UTF8BOM=chr(239).chr(187).chr(191);
@@ -602,12 +646,17 @@ class getblogs extends boblog {
 		$entrycate=$categories[$tmp]['catename'];
 		if ($entry['blogpsw']) $entrycontent=$lnc[295];
 		else {
-			$entry['content']=@str_replace('[newpage]', '[separator]', $entry['content']);
-			if ($mbcon['wholerss']!=1 && strstr($entry['content'], '[separator]')) {
-				@list($entry['content'])=@explode('[separator]', $entry['content']);
+			if ($entry['entrysummary']) {
+				$entry['content']=$entry['entrysummary'];
 				$notfinish=1;
+			} else {
+				$entry['content']=@str_replace('[newpage]', '[separator]', $entry['content']);
+				if ($mbcon['wholerss']!=1 && strstr($entry['content'], '[separator]')) {
+					@list($entry['content'])=@explode('[separator]', $entry['content']);
+					$notfinish=1;
+				}
+				else $entry['content']=@str_replace('[separator]', '', $entry['content']);
 			}
-			else $entry['content']=@str_replace('[separator]', '', $entry['content']);
 			$entrycontent=$this->getrsscontent($entry['content'],  $entry['htmlstat'], $entry['ubbstat'], $entry['emotstat']);
 			if ($notfinish==1) $entrycontent.="<br/>............<br/>";
 		}
@@ -615,16 +664,16 @@ class getblogs extends boblog {
 			$entry['tags']=trim($entry['tags'],'>');
 			$taginfo=@explode('>', $entry['tags']);
 			foreach ($taginfo as $eachtag) {
-				$eachtag_encoded=urlencode($eachtag);
+				$eachtag_encoded=urlencode(urlencode($eachtag));
 				if ($mbcon['tagunderlinetospace']==1) 	$eachtag=str_replace('_', ' ', $eachtag);
-				$urlref="tag.php?tag={$eachtag_encoded}";
-				$taginfos[]="<a href=\"{$urlref}\" rel=\"tag\">{$eachtag}</a>";
+				$urlref=getlink_tags($eachtag_encoded);
+				$taginfos[]="<a href=\"{$config['blogurl']}/{$urlref}\" rel=\"tag\">{$eachtag}</a>";
 			}
 			$alltags=@implode(' , ', $taginfos);
 			$tags="<br/>Tags - ".$alltags;
 		} else $tags='';
 		$entrycontent.=$tags;
-		$entryurl="{$config['blogurl']}/read.php?{$entry['blogid']}";
+		$entryurl="{$config['blogurl']}/".getlink_entry($entry['blogid'], $entry['blogalias']);
 		//Start Template
 		$section=$t->set('rss', array('entrytitle'=>$entrytitle, 'entrytime'=>$entrytime, 'entryauthor'=>$entryauthor, 'entrycontent'=>$entrycontent, 'entryurl'=>$entryurl, 'entrycate'=>$entrycate, 'entryid'=>$entry['blogid'], 'entryemail'=>$entryemail));
 		return $section;
@@ -701,6 +750,7 @@ class getblogs extends boblog {
 		if ($id==='') $jobnow='addmessage';
 		else $jobnow='addreply';
 		$ubbcode="<script type=\"text/javascript\" src=\"editor/ubb/ubbeditor_tiny.js\"></script><div style=\"margin: 4px 0px 4px 0px;\"><img src=\"editor/ubb/images/bar.gif\" alt=''/> &nbsp;<a href=\"javascript: bold();\"><img border='0' title=\"{$lnc[80]}\" src=\"editor/ubb/images/bold.gif\" alt=''/></a> &nbsp;<a href=\"javascript: italicize();\"><img border='0' title=\"{$lnc[81]}\" src=\"editor/ubb/images/italic.gif\" alt=''/></a> &nbsp;<a href=\"javascript: underline();\"><img border='0' title=\"{$lnc[82]}\" src=\"editor/ubb/images/underline.gif\"  alt=''/></a> &nbsp;<img src=\"editor/ubb/images/bar.gif\" alt=''/> &nbsp;<a href=\"javascript: image();\"><img border='0' title=\"{$lnc[83]}\" src=\"editor/ubb/images/insertimage.gif\" alt=''/></a> &nbsp;<a href=\"javascript: hyperlink();\"><img border='0' title=\"{$lnc[84]}\" src=\"editor/ubb/images/url.gif\" alt=''/></a> &nbsp;<a href=\"javascript: email();\"><img border='0' title=\"{$lnc[85]}\" src=\"editor/ubb/images/email.gif\"  alt=''/></a> &nbsp;<a href=\"javascript: quoteme();\"><img border='0' title=\"{$lnc[86]}\" src=\"editor/ubb/images/quote.gif\" alt=''/></a></div>";
+		$emots=generate_emots_panel($emots);
 		$out=$t->set("form_reply", array('actionurl'=>$actionurl, 'formtitle'=>$formtitle, 'emots'=>$emots, 'disable_html'=>$disable_html, 'disable_ubb'=>$disable_ubb, 'disable_emot'=>$disable_emot, 'replier'=>$replier, 'disable_replier'=>$disable_replier, 'password'=>$password, 'disable_password'=>$disable_password, 'additional'=>$additional, 'repurl'=>$repurl, 'repemail'=>$repemail, 'hidden_areas'=>$hidden_areas, 'if_securitycode_begin'=>$if_securitycode_begin, 'if_securitycode_end'=>$if_securitycode_end, 'jobnow'=>$jobnow, 'if_neednopsw_begin'=>$if_neednopsw_begin, 'if_neednopsw_end'=>$if_neednopsw_end, 'if_neednopsw_rawend'=>$if_neednopsw_rawend, 'checked_rememberme'=>$checked_rememberme, 'ubbcode'=>$ubbcode, 'rand'=>rand(1000,9999)));
 		return $out;
 	}
@@ -754,7 +804,7 @@ class getblogs extends boblog {
 			if ($i!=$page) $turningpages.=" <a href=\"".sprintf($urlpattern, $i)."\">{$i}</a> ";
 			else $turningpages.=" <span class=\"pagelink-current\">{$i}</span> ";
 		}
-		$pagebar.=$turningpages;
+		$pagebar.="<span class=\"pagebar-selections\">".$turningpages."</span>";
 		if ($page!=$this->total_pages) {
 			$nextpageurl=sprintf($urlpattern, ($page+1));
 			$pagebar.=" <a href=\"{$nextpageurl}\"><img src=\"{$template['moreimages']}/arrows/singleright.gif\" alt=\"{$lnc[11]}\" title=\"{$lnc[11]}\" border=\"0\"/></a> ";
@@ -762,6 +812,8 @@ class getblogs extends boblog {
 		} else $nextpageexists='none';
 		$pagebar.=" <a href=\"".sprintf($urlpattern, ($this->total_pages))."\"><img src=\"{$template['moreimages']}/arrows/doubleright.gif\" alt=\"{$lnc[12]}\" title=\"{$lnc[12]}\" border=\"0\"/></a> ";
 		$pageitems=array('currentpage'=>$page, 'previouspageurl'=>$previouspageurl, 'nextpageurl'=>$nextpageurl, 'turningpages'=>$turningpages, 'totalpages'=>($this->total_pages), 'previouspageexists'=>$previouspageexists, 'nextpageexists'=>$nextpageexists);
+		$pagebar="<span class=\"pagebar-mainbody\">{$pagebar}</span>";
+		$pagebar.=plugin_get('afterpagebar');
 		return $pagebar;
 	}
 
@@ -788,10 +840,38 @@ class getblogs extends boblog {
 		return $t->set('login', array('lvstart'=>$lvstart, 'lvend'=>$lvend, 'rand'=>$rand));
 	}
 
+
+	function output_page ($entry) {
+		global $mbcon, $section_body, $permission, $adminlist, $userdetail, $config, $categories, $weather, $t, $section_bodys, $part, $template, $lnc;
+		if (!@is_a($t, 'template')) {
+			$t=new template;
+		}
+		$entrytitle=$entry['pagetitle'];
+		$entrydate=zhgmdate("{$mbcon['timeformat']}", ($entry['pagetime']+3600*$config['timezone'])); 
+		$entrytime=gmdate('H:i', ($entry['pagetime']+3600*$config['timezone'])); 
+		list($entrydatey, $entrydatem, $entrydated)=explode('/', gmdate('Y/n/j', ($entry['pagetime']+3600*$config['timezone'])));
+		$entrydatemnamefull=gmdate('F', ($entry['pagetime']+3600*$config['timezone']));
+		$entrydatemnameshort=gmdate('M', ($entry['pagetime']+3600*$config['timezone']));
+		$tmp=$entry['pageauthor'];
+		$entryauthor=$adminlist[$tmp];
+		$entryauthor="<a href=\"".getlink_user($tmp)."\" target=\"_blank\">{$entryauthor}</a>";
+		$iftags="none";
+		$entry['pagecontent']=@str_replace('[separator]', '', $entry['pagecontent']);
+		$entrycontent=$this->getcontent($entry['pagecontent'],  $entry['htmlstat'], $entry['ubbstat'], $entry['emotstat'], 1);
+		$entrycontent=$this->keep_htmlcode_matches($entrycontent);
+
+		//Start Template
+		$section_bodys[]=$t->set('viewpage', array('entrytitle'=>$entrytitle, 'entrydate'=>$entrydate,  'entrytime'=>$entrytime, 'entryauthor'=>$entryauthor, 'entrycontent'=>$entrycontent, 'entrytitletext'=>$entry['pagetitle'],'entrydatey'=>$entrydatey, 'entrydatem'=>$entrydatem, 'entrydated'=>$entrydated));
+		return $section_bodys;
+	}
+
+
 	function keep_htmlcode_matches($str) {
 		/* HTML code tidy 
 			by Bob Shen 2007-2-21
 		*/
+		global $mbcon;
+		if ($mbcon['tidyhtml']!='1') return $str;
 		$outhtml='';
 		$htmltagstart=array('li'=>0, 'ul'=>0, 'ol'=>0, 'dd'=>0, 'dt'=>0, 'dl'=>0, 'td'=>0, 'tr'=>0, 'tbody'=>0, 'table'=>0);
 		$htmltagend=array();

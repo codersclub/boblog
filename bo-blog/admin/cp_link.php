@@ -83,7 +83,7 @@ function waitforconfirm() {
 </table></td></tr>
 <tr>
 <td colspan=4 align=center class="sectbar">
-<input type=submit value="{$lna[64]}"> <input type=reset value="{$lna[65]}">
+<input type=submit value="{$lna[64]}" class='formbutton'> <input type=reset value="{$lna[65]}" class='formbutton'>
 </td></tr>
 </form>
 </table>
@@ -137,17 +137,17 @@ $puttinggp
 <tr>
 <td width=50%>&nbsp;</td>
 <td width=50%>
-<div id="targetdiv3" style="display:none"><input type=submit value="{$lna[64]}"></div>
+<div id="targetdiv3" style="display:none"><input type=submit value="{$lna[64]}" class='formbutton'></div>
 <div id="targetdiv" style="display:none">{$lna[228]}<select name="targetlinkgp2">
 $puttinggp2
 </select>
-<input type=submit value="{$lna[64]}" onclick="return waitforconfirm();">
+<input type=submit value="{$lna[64]}" onclick="return waitforconfirm();" class='formbutton'>
 </div>
 <div id="targetdiv2" style="display:none">{$lna[204]}
 <select name="targetlinkgp">
 $puttinggp
 </select>
-<input type=submit value="{$lna[64]}" onclick="">
+<input type=submit value="{$lna[64]}" onclick="" class='formbutton'>
 </div>
 </td></tr></td></tr>
 </table>
@@ -209,7 +209,7 @@ $display_overall.= <<<eot
 <tr>
 <td colspan=4 align=center class="sectbar">
 <input type=hidden name=go value="link_savegp_{$sourcelinkgp}">
-<input type=submit value="{$lna[64]}"> <input type=reset value="{$lna[65]}">
+<input type=submit value="{$lna[64]}" class='formbutton'> <input type=reset value="{$lna[65]}" class='formbutton'>
 </td></tr>
 </table>
 </form>
@@ -332,7 +332,7 @@ $display_overall.= <<<eot
 </td>
 </tr>
 <tr><td colspan=4 align=center class="sectbar">
-<input type=submit value="{$lna[64]}"> <input type=reset value="{$lna[65]}">
+<input type=submit value="{$lna[64]}" class='formbutton'> <input type=reset value="{$lna[65]}" class='formbutton'>
 </td>
 </tr></table>
 </form>
@@ -412,14 +412,14 @@ $display_overall.= <<<eot
 <table cellpadding=3 cellspacing=1 align=center class='tablewidth'>
 <form action="admin.php?go=link_detail" method="post">
 <tr><td colspan=7>
-<select name="linkgptoid"><option value=''>{$lna[243]}</option>$puttinggp</select> <input type=submit value="{$lna[244]}"></td></tr></form>
+<select name="linkgptoid"><option value=''>{$lna[243]}</option>$puttinggp</select> <input type=submit value="{$lna[244]}" class='formbutton'></td></tr></form>
 <tr><td colspan=7 height=10></td></tr>
 <form action="admin.php?go=link_batch" method="post" id='f_s' name='f_s'>
 <tr align=center class="admintitle"><td width=35>{$lna[245]}</td><td width=95>Logo</td><td width=220>{$lna[233]}</td><td width=250>{$lna[234]}</td><td width=80>{$lna[237]}</td><td width=35>{$lna[246]}</td><td width=35>{$lna[77]}</td></tr>
 {$tablebody}
 <tr><td colspan=7><a href="#unexist" onclick="checkallbox('f_s', 'checked');">{$lna[247]}</a> | <a href="#unexist" onclick="checkallbox('f_s', '');">{$lna[248]}</a></td></tr>
 <tr><td colspan=7 height=20></td></tr>
-<tr class="adminoption"><td colspan=7>{$lna[249]} <input type=radio name=opt value='del'>{$lna[78]} <input type=radio name=opt value='move'>{$lna[250]}<select name="newlinkgptoid">$puttinggp</select>  <input type=radio name=opt value='ppt'>{$lna[238]}<select name="newproperty"><option value=1>{$lna[239]}</option><option value=0>{$lna[240]}</option></select>  <input type=submit value="{$lna[64]}"><br><br>
+<tr class="adminoption"><td colspan=7>{$lna[249]} <input type=radio name=opt value='del'>{$lna[78]} <input type=radio name=opt value='move'>{$lna[250]}<select name="newlinkgptoid">$puttinggp</select>  <input type=radio name=opt value='ppt'>{$lna[238]}<select name="newproperty"><option value=1>{$lna[239]}</option><option value=0>{$lna[240]}</option></select>  <input type=submit value="{$lna[64]}" class='formbutton'><br><br>
 $pagebar
 </td></tr>
 </form>
@@ -466,7 +466,7 @@ $puttinggp
 </td>
 <tr>
 <td align=center>
-<input type=submit value="{$lna[64]}">
+<input type=submit value="{$lna[64]}" class='formbutton'>
 </td></tr></td></tr>
 </table>
 </table>
@@ -571,7 +571,7 @@ eot;
 	<input type=radio name=opt value='del'>{$lna[78]}<br>
 	<input type=radio name=opt value='accept'>{$lna[261]}<select name="newlinkgptoid">$puttinggp</select><br>
 	<input type=radio name=opt value='textonly'>{$lna[262]}<select name="newlinkgptoid2">$puttinggp</select><br>
-	<div align=center> <input type=submit value="{$lna[64]}"> </div>
+	<div align=center> <input type=submit value="{$lna[64]}" class='formbutton'> </div>
 </td></tr>
 eot;
 	$display_overall.="</table>";

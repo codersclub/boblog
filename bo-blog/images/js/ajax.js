@@ -87,6 +87,8 @@ function quickreply () {
 				onetimecounter+=1;
 				refreshsecuritycode('securityimagearea', 'v_security');
 				window.location.hash="topreply";
+			} else {
+				alert(messagereturn);
 			}
 		}  else {
 			alert('There was a problem with the request.');
@@ -198,6 +200,7 @@ function quickgetprotectedblog () {
 			} else if (messagereturn.indexOf("<boblog_ajax::success>")!=-1) {
 				messagereturn=messagereturn.replace("<boblog_ajax::success>", '');
 				document.getElementById('protectedentry'+currentblogid).innerHTML=messagereturn;
+
 			}
 		}  else {
 			alert('There was a problem with the request.');

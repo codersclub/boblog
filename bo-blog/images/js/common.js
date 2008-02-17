@@ -18,9 +18,10 @@ var currentcommentid;
 var switchcomandmes;
 var securitycodejs=null;
 var onetimecounter=1;
+var smdiv = new Array();
 
 //Get absolute path, fix bug of IE when base path is set
-var gotourl = location.href;
+/*var gotourl = location.href;
 var absbaseurl;
 var abspath;
 var r_identifier=gotourl.lastIndexOf("/read.php/");
@@ -41,9 +42,9 @@ if (r_identifier!=-1) {
 	absbaseurl='';
 	abspath=null;
 }
+*/
 //Is Ajax supported?
-if ((is_ie & !is_ie4) || is_moz || is_saf || is_opera) var shutajax=0;
-else var shutajax=1;
+var shutajax=((is_ie && !is_ie4) || is_moz || is_saf || is_opera) ? 0 : 1;
 
 //For firefox, tell Firefox not to display the content you input in last session
 if (is_moz) {
@@ -102,7 +103,7 @@ function hideadminreply (divid) {
 }
 
 function showdelblog(blogid) {
-	var urldel=absbaseurl+"admin.php?go=entry_deleteblog_"+blogid+'';
+	var urldel=absbaseurl+"admin.php?go=entry_deleteblog_"+blogid+'&returnurl='+escape(location.href);
 	if(confirm(jslang[4])){
 		window.location=urldel;
 	}
@@ -256,6 +257,7 @@ function ajax_submit (job) {
 		var gourl=absbaseurl+"visit.php?ajax=on&job="+job;
 		makeRequest(gourl, 'quickreply', 'POST', postData);
 	} else {
+		document.getElementById('visitorinput').action=absbaseurl+"visit.php?job="+job;
 		document.getElementById('visitorinput').submit();
 	}
 }
@@ -288,13 +290,19 @@ function ajax_adminreply_edit (commentid, rptype) {
 }
 
 function ajax_editcomment(repid, submitaction, onetimecounter) {
-	var admid='editcomcontent'+repid;
-	var v_content = blogencode(document.getElementById(admid).value);
 	var editjob=(submitaction=='reply') ? 'editreply' : 'editmessage';
-	var postData = "unuse=unuse&onetimecounter="+onetimecounter+"&v_content="+v_content;
-	var gourl=absbaseurl+"visit.php?ajax=on&go="+editjob+"&repid="+repid;
-	currentcommentid=repid;
-	makeRequest(gourl, 'quickeditcomment', 'POST', postData);
+	if (shutajax==0) {
+		var admid='editcomcontent'+repid;
+		var v_content = blogencode(document.getElementById(admid).value);
+		var postData = "unuse=unuse&onetimecounter="+onetimecounter+"&v_content="+v_content;
+		var gourl=absbaseurl+"visit.php?ajax=on&go="+editjob+"&repid="+repid;
+		currentcommentid=repid;
+		makeRequest(gourl, 'quickeditcomment', 'POST', postData);
+	} else {
+		var admid='formeditcomment'+repid;
+		document.getElementById(admid).action=absbaseurl+"visit.php?go="+editjob+"&repid="+repid;
+		document.getElementById(admid).submit();
+	}
 }
 
 
@@ -398,7 +406,7 @@ function makemedia (strType,strURL,intWidth,intHeight,strID) {
 			strHtml="<object classid='clsid:D27CDB6E-AE6D-11cf-96B8-444553540000' width='"+intWidth+"' height='"+intHeight+"'><param name='movie' value='"+strURL+"'/><param name='quality' value='high' /><embed src='"+strURL+"' quality='high' type='application/x-shockwave-flash' width='"+intWidth+"' height='"+intHeight+"'></embed></object>";
 			break;
 		case 'flv':
-			var FU = {movie:"images/others/mediaplayer.swf",width:intWidth,height:+intHeight,majorversion:"8",build:"0",bgcolor:"#FFFFFF",allowfullscreen:"true",flashvars:"file="+strURL+"&fullscreenpage=images/others/fullscreen.html&fsreturnpage="+location.href};UFO.create(FU, strID);
+			strHtml="<object classid='clsid:D27CDB6E-AE6D-11cf-96B8-444553540000' width='"+intWidth+"' height='"+intHeight+"'><param name='movie' value='images/others/mediaplayer.swf?file="+strURL+"&bufferlength=10'/><param name='quality' value='high' /><embed src='images/others/mediaplayer.swf?file="+strURL+"&bufferlength=10' quality='high' type='application/x-shockwave-flash' width='"+intWidth+"' height='"+intHeight+"'></embed></object>";
 			break;
 		case 'real':
 			strHtml="<object classid='clsid:CFCDAA03-8BE4-11cf-B84B-0020AFBBCCFA' width='"+intWidth+"' height='"+intHeight+"'><param name='src' value='"+absbaseurl+"inc/realplay.php?link="+strURL+"' /><param name='controls' value='Imagewindow' /><param name='console' value='clip1' /><param name='autostart' value='true' /><embed src='"+absbaseurl+"inc/realplay.php?link="+strURL+"' type='audio/x-pn-realaudio-plugin' autostart='true' console='clip1' controls='Imagewindow' width='"+intWidth+"' height='"+intHeight+"'></embed></object><br/><object classid='clsid:CFCDAA03-8BE4-11cf-B84B-0020AFBBCCFA' width='"+intWidth+"' height='44'><param name='src' value='"+absbaseurl+"inc/realplay.php?link="+strURL+"' /><param name='controls' value='ControlPanel' /><param name='console' value='clip1' /><param name='autostart' value='true' /><embed src='"+absbaseurl+"inc/realplay.php?link="+strURL+"' type='audio/x-pn-realaudio-plugin' autostart='true' console='clip1' controls='ControlPanel' width='"+intWidth+"' height='44'></embed></object>";
@@ -514,12 +522,14 @@ function decodetburl (str, ishidden, uniqueid) {
 		resultstr="<span id=\"showtbq"+uniqueid+"\">"+jslang[66]+" <span id=\"qa"+uniqueid+"\">"+randomnumber1+"</span> <strong>+</strong> <span id=\"qb"+uniqueid+"\">"+randomnumber2+"</span> <strong>=</strong> <input type='text' id='ans"+uniqueid+"' maxlength='2' size='2'/> <input type='button' onclick='submithiddentbanswer(\""+uniqueid+"\");' value='"+jslang[1]+"'/><span id=\"answertb"+uniqueid+"\" style=\"display: none;\">"+str+"</span></span>";
 	}
 	else {
+		resultstr="<span id=\"showtbfinal"+uniqueid+"\">"
 		var codestr;
 		codestr=str.split('%');
 		var seed=codestr[0];
 		for (var i=1; i<codestr.length; i++) {
 			resultstr+=String.fromCharCode(codestr[i]-seed);
 		}
+		resultstr+="</span> <span onclick=\"CopyText('showtbfinal"+uniqueid+"');\" style=\"cursor: pointer;\">["+jslang[71]+"]</span>";
 	}
 	return resultstr;
 }
@@ -575,3 +585,97 @@ function getprotectedreply (repid, way, onetimecounter) {
 		makeRequest(gourl, 'quickeditcomment', 'POST', postData);
 	}
 }
+
+
+function turnsmileygroup (id) {
+	if (document.getElementById('smileygroup')) document.getElementById('smileygroup').innerHTML=emotgroup[id];
+}
+
+function smileypreview(ctrl) {
+
+}
+
+
+//===============================Copy to clipboard=================================//
+
+function CopyText(id) { 
+	//copyToClipboard(document.getElementById(id).value); 
+	if (document.getElementById(id)) 	{
+		var tocopy=document.getElementById(id).innerHTML;
+		tocopy=tocopy.replace(/&amp;/g, "&"); 
+		copy(tocopy);
+	}
+}
+
+function copy(text2copy) {
+	if (window.clipboardData) { 
+		window.clipboardData.setData("Text",text2copy); 
+	} else {
+		var flashcopier = 'flashcopier'; 
+		if(!document.getElementById(flashcopier)) { 
+			var divholder = document.createElement('div'); divholder.id = flashcopier; 
+			document.body.appendChild(divholder); 
+		} 
+		document.getElementById(flashcopier).innerHTML = ''; 
+		var divinfo = '<embed src="'+absbaseurl+'images/others/_clipboard.swf" FlashVars="clipboard='+escape(text2copy)+'" width="0" height="0" type="application/x-shockwave-flash"></embed>'; 
+		document.getElementById(flashcopier).innerHTML = divinfo;
+		alert(jslang[72]);
+	} 
+}
+
+
+function copyToClipboard(meintext)
+{
+     if (window.clipboardData) 
+       {
+       alert("ie");
+       // the IE-manier
+       window.clipboardData.setData("Text", meintext);
+       
+       // waarschijnlijk niet de beste manier om Moz/NS te detecteren;
+       // het is mij echter onbekend vanaf welke versie dit precies werkt:
+       }
+       else if (window.netscape) 
+       { 
+       
+       // dit is belangrijk maar staat nergens duidelijk vermeld:
+       // you have to sign the code to enable this, or see notes below 
+       netscape.security.PrivilegeManager.enablePrivilege('UniversalXPConnect');
+       
+       // maak een interface naar het clipboard
+       var clip = Components.classes['@mozilla.org/widget/clipboard;1'].createInstance(Components.interfaces.nsIClipboard);
+       if (!clip) return;
+       alert("mozilla");
+       // maak een transferable
+       var trans = Components.classes['@mozilla.org/widget/transferable;1']
+                      .createInstance(Components.interfaces.nsITransferable);
+       if (!trans) return;
+       
+       // specificeer wat voor soort data we op willen halen; text in dit geval
+       trans.addDataFlavor('text/unicode');
+       
+       // om de data uit de transferable te halen hebben we 2 nieuwe objecten 
+       // nodig om het in op te slaan
+       var str = new Object();
+       var len = new Object();
+       
+       var str = Components.classes["@mozilla.org/supports-string;1"]
+                    .createInstance(Components.interfaces.nsISupportsString);
+       
+       var copytext=meintext;
+       
+       str.data=copytext;
+       
+       trans.setTransferData("text/unicode",str,copytext.length*2);
+       
+       var clipid=Components.interfaces.nsIClipboard;
+       
+       if (!clip) return false;
+       
+       clip.setData(trans,null,clipid.kGlobalClipboard);
+       
+       }
+       alert("Following info was copied to your clipboard:\n\n" + meintext);
+       return false;
+}
+

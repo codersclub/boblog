@@ -1,4 +1,5 @@
 <?PHP
+if (!defined('VALIDADMIN')) die ('Access Denied.');
 
 /*$srcHTML="data/cache_emsel.php";
 
@@ -20,8 +21,8 @@ tinyMCE.init({
 	mode : "textareas",
 	language : "{$langeditor}",
 	editor_selector : "mceEditor",
-	height : "340",
-	plugins : "emotions,insertdatetime,preview,searchreplace,table,inlinepopups,multimedia,quoteubb,addmore,uploader,filedownload",
+	height : "420",
+	plugins : "emotions,insertdatetime,preview,searchreplace,table,multimedia,quoteubb,addmore,uploader,filedownload",
 	force_br_newlines : true,
 	force_p_newlines : false,
 	convert_fonts_to_spans : true,

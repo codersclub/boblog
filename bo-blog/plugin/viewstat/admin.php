@@ -54,6 +54,10 @@ for ($i=0; $i<$thesedays; $i++) {
 	$putgraph.="<tr><td width=\"120\">".$day_his[$i]."</td><td>".statgraphic($vis_his[$i], $ruler)."</td></tr>";
 }
 
+$afilename="data/online.php"; 
+$onlineusers=$nowonline=array();
+$online_all=@file($afilename);
+$nowonline=$online_all;
 $nowonline=array_slice($nowonline,0,50);
 $theseonline=min(sizeof($nowonline), 50);
 for ($i=0; $i<$theseonline; $i++) {

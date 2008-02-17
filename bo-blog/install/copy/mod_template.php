@@ -1,10 +1,12 @@
 <?PHP
-$template['id']="FOXSTYLE-LIVING-20070213";
-$template['name']="living";
-$template['author']="Celin.Fox";
-$template['intro']="Default skin of Bo-blog 2.0.3.";
-$template['dirname']="living";
+$template['id']="60A13BBE-C069-47A1-B210-C69C40CAAA00";
+$template['sysver']='5.2';
+$template['name']="Default";
+$template['author']="Bob Shen";
+$template['intro']="Default skin of Bo-blog 2.1.0.";
+$template['dirname']="default";
 $template['thumbnail']="thumb.jpg";
-$template['structure']="template/living/elements.php";
-$template['images']="template/living/images";
-$template['css'][0]="template/living/styles.css";
+$template['structure']="template/default/elements.php";
+$template['images']="template/default/images";
+$template['moreimages']="template/default/images";
+$template['css'][0]="template/default/styles.css";

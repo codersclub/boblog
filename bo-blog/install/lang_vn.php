@@ -84,6 +84,7 @@ $lang[81]='Mật khẩu để trống, hoặc hai lần nhập không khớp. H�
 $lang[82]='Vị trí của blog';
 $lang[83]='Điền đường dẫn <b>tuyệt đối</b> của trang chủ diễn đàn';
 $lang[84]='Kết nối chung hồ sơ';
+$lang[85]='Phân tách 1 hay 2 cột.';
 
 
 $langcopy=array (

@@ -1,5 +1,7 @@
-﻿<?PHP
-include("fmp_list.php");
+<?PHP
+error_reporting(E_ALL & ~E_NOTICE);
+include("include.php");
+include($file['list']);
 $id=$_GET['id'];
 foreach($fmp_list as $fp_id => $fp_song){
 	$addto.="\t\t<track>\n";
@@ -14,11 +16,12 @@ if(!empty($addtoid)){
 	$addto.= $addtoid;
 	$addto.="\t\t</track>\n";
 }
-echo <<<eot
+$addto=<<<eot
 <playlist version="1" xmlns="http://xspf.org/ns/0/">
     <trackList>
 $addto
 	 </trackList>
 </playlist>
 eot;
+echo $addto;
 ?>

@@ -10,14 +10,14 @@ In memory of my university life
 
 /* Version and Copyright Declaration
     You are not allowed to change anything in this part. */
-$blogversion="2.0.3 sp1";
-$codeversion="2.0.3.1421.0";
-$codename="sun";
+$blogversion="2.1.0";
+$codeversion="2.1.0.2431.0";
+$codename="summer";
 //You can change anything below as you wish. Good Luck!
 
 if (file_exists('install/install.php')) {
 	@header("Content-Type: text/html; charset=utf-8");
-	die ("警告：安装文件install/install.php仍然在您的服务器上，请立刻将其改名或删除！<br>警告：安裝程式install/install.php仍然在您的伺服器上，請立刻將其改名或刪除！<br>NOTICE: Installation file: install/install.php is still on your server. Please DELETE it or RENAME it now.");
+	die ("警告：安装文件install/install.php仍然在您的服务器上，请立刻将其改名或删除！<br>警告：安裝程式install/install.php仍然在您的伺服器上，請立刻將其改名或刪除！<br>NOTICE: Installation file: install/install.php is still on your server. Please DELETE or RENAME it now.");
 }
 
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
@@ -25,25 +25,35 @@ unregister_GLOBALS(); //When register_globals=On
 @set_magic_quotes_runtime (0);
 $mqgpc_status=get_magic_quotes_gpc();
 define("VALIDREQUEST",1);
-define("PATHADJUST", 'index.php?go=');
-@header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
-@header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
-@header("Cache-Control: no-store, no-cache, must-revalidate");
-@header("Pragma: no-cache");
-
+if (!defined('allowCache')) {
+	@header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+	@header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+	@header("Cache-Control: no-store, no-cache, must-revalidate");
+	@header("Pragma: no-cache");
+}
 if (stristr($_SERVER['SCRIPT_FILENAME'], 'global.php')) die ("Access Denied.");
 
 $ajax=$_REQUEST['ajax']; //If the page is in Ajax request mode
 
 require_once ("data/mod_config.php");
 require_once ("data/config.php");
+require_once ("inc/url.php");
 require_once ("inc/db.php");
 require_once ("inc/boblog_class_run.php");
 require_once ("data/language.php"); //Load language
+if (defined('isIndex') && is_file("data/langspec.php")) require_once ("data/langspec.php"); //Load customized language data
 
 //Auto detect mirror site
-$tmp_host=($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : $_ENV['HTTP_HOST'];
-$config['blogurl']=str_replace('{host}', $tmp_host, $config['blogurl']);
+if (!defined('VALIDADMIN')) {
+	//Set Base URL
+	if (!$config['blogurl'] || $config['blogurl']=='http://') { // $config['blogurl'] not set
+		@header("Content-Type: text/html; charset=utf-8");
+		die ($lnc[292]);
+	} else {
+		$config['blogurl']=str_replace('{host}', $_SERVER['HTTP_HOST'], $config['blogurl']);
+	}
+	$baseurl="<base href=\"{$config['blogurl']}/\" />";
+}
 
 /* data/config.php may be corrupted in some servers */
 if (!$db_server) {
@@ -70,21 +80,11 @@ if (!empty($customtemplate) && file_exists("template/{$customtemplate}/info.php"
 else require ("data/mod_template.php");
 define ('elementfile', $template['structure']); //2006-7-2 Seurity Fix, 2006-7-5 modified
 
-acceptcookie("userid,userpsw,killsidebar");
+acceptcookie("userid,userpsw");
 $userid=safe_convert($userid);
 $userpsw=safe_convert($userpsw);
 
 $blog=new boblog;
-
-//SEO URL for read.php
-if ($config['smarturl']==1) {
-	$config['sulink']=($config['urlrewrite']==1) ? "post/" : "read.php/";
-	$config['sulinkext']='.htm';
-}
-else {
-	$config['sulink']="read.php?";
-	$config['sulinkext']='';
-}
 
 //Initialize Time Info
 $nowtime['timestamp']=time();
@@ -108,11 +108,17 @@ else {
 }
 
 //Load User Group Permission Cache
+$permission=array();
 if (file_exists("data/usergroup{$userdetail['usergroup']}.php")) @include_once("data/usergroup{$userdetail['usergroup']}.php");
 else include_once("data/usergroup0.php");
 if (!defined('isLogin')) checkpermission('visit'); //Check 'Browse' permission
 
 if ($permission['ViewPHPError']==0) error_reporting(0);
+if ($permission['CloseSecurityCode']==1 && !defined('VALIDADMIN')) { //Disable security code for some usergroups
+	$config['validation']='0';
+	$config['loginvalidation']='0';
+	$config['applylinkvalidation']='0';
+}
 
 //Get IP
 $ip_tmp=$_SERVER['REMOTE_ADDR'];
@@ -133,7 +139,7 @@ if (!defined('noCounter')) { //trackback, rss, sitemap are not regarded as norma
 	for($i=0;$i<count($online_all);$i++){ 
 		$oldip=explode("|",$online_all[$i]);
 		if (trim($oldip[2])=='') continue;
-		if (gmdate("Ymd", $oldip[2]+$config['timezone']*3600)!=$nowtime['Ymd']) {
+		if (gmdate("Ymd", $oldip[2]+$config['timezone']*3600+86400)==$nowtime['Ymd']) {
 			savehistory(gmdate("Ymd", $oldip[2]+$config['timezone']*3600), $statistics['today']);
 			$statistics['today']=0;
 			break; //This will clear all visitors since yesterday, but will save visitors from today
@@ -161,15 +167,16 @@ if (!defined('noCounter')) { //trackback, rss, sitemap are not regarded as norma
 
 //Get Categories
 if (file_exists('data/cache_categories.php')) {
-	unset ($categories);
+	$categories=$categorynames=array();
 	$cates_lines=@file('data/cache_categories.php');
 	for ($i=0; $i<count($cates_lines); $i++) {
-		@list($unuse, $tmp_result['cateid'], $tmp_result['catename'], $tmp_result['catedesc'], $tmp_result['cateproperty'], $tmp_result['cateorder'], $tmp_result['catemode'], $tmp_result['cateurl'], $tmp_result['cateicon'], $tmp_result['catecount'], $tmp_result['parentcate'])=@explode('<|>', $cates_lines[$i]);
+		@list($unuse, $tmp_result['cateid'], $tmp_result['catename'], $tmp_result['catedesc'], $tmp_result['cateproperty'], $tmp_result['cateorder'], $tmp_result['catemode'], $tmp_result['cateurl'], $tmp_result['cateicon'], $tmp_result['catecount'], $tmp_result['parentcate'], $tmp_result['cateurlname'])=@explode('<|>', $cates_lines[$i]);
 		if ($permission['SeeSecretCategory']==1 || $tmp_result['cateproperty']!='1') $result[$i]=$tmp_result;
+		if ($tmp_result['cateurlname']) $categorynames[$tmp_result['cateurlname']]=$tmp_result['cateid'];
 	}
 	foreach ((array)$result as $row) {
 		$catid=$row['cateid'];
-		$categories[$catid]=array("catename"=>stripslashes($row['catename']), "catedesc"=>stripslashes($row['catedesc']), "cateproperty"=>$row['cateproperty'], "cateorder"=>$row['cateorder'], "catemode"=>$row['catemode'], "cateid"=>$row['cateid'], "cateurl"=>$row['cateurl'], "cateicon"=>$row['cateicon'], "catecount"=>$row['catecount'], "parentcate"=>$row['parentcate']);
+		$categories[$catid]=array("catename"=>stripslashes($row['catename']), "catedesc"=>stripslashes($row['catedesc']), "cateproperty"=>$row['cateproperty'], "cateorder"=>$row['cateorder'], "catemode"=>$row['catemode'], "cateid"=>$row['cateid'], "cateurl"=>$row['cateurl'], "cateicon"=>$row['cateicon'], "catecount"=>$row['catecount'], "parentcate"=>$row['parentcate'], "cateurlname"=>$row['cateurlname']);
 		if ($row['catemode']==1) { //Sub-category
 			$row['catename']='|- '.$row['catename'];
 			$categories[$row['parentcate']]['subcates'][]=$catid; //Parent category get its sub-categories
@@ -294,6 +301,7 @@ function addbar ($barname, $actions) { //Generate a module
 			$allowedgp=@explode('|', $blogitem[$eachitem]['permitgp']);
 			if (!in_array($userdetail['usergroup'], $allowedgp)) continue;
 		}
+		if (($blogitem[$eachitem]['indexonly']==1 && !strstr($_SERVER['SCRIPT_FILENAME'], 'index.php')) || ($blogitem[$eachitem]['indexonly']==2 && strstr($_SERVER['SCRIPT_FILENAME'], 'index.php'))) continue;
 		if ($blogitem[$eachitem]['type']=='link') {
 			$plus='';
 			if ($blogitem[$eachitem]['target']) $plus.=" target=\"".$blogitem[$eachitem]['target']."\"";
@@ -331,7 +339,7 @@ function safe_convert($string, $html=0, $filterslash=0) { //Words Filter
 	$string=str_replace("\r","<br/>",$string);
 	$string=str_replace("\n","",$string);
 	$string=str_replace("\t","&nbsp;&nbsp;",$string);
-	$string=str_replace("  "," &nbsp;",$string);
+	$string=str_replace("  ","&nbsp;&nbsp;",$string);
 	$string=str_replace('|', '&#124;', $string);
 	$string=str_replace("&amp;#96;","&#96;",$string);
 	$string=str_replace("&amp;#92;","&#92;",$string);
@@ -367,7 +375,7 @@ function catcherror ($error) {
 		@header("Content-Type: text/html; charset=utf-8");
 		if ($ajax=='on') die ("<boblog_ajax::error>".strip_tags($error));
 		$t=new template;
-		$t->showtips($lnc[4], $error, "{$lnc[5]}|<");
+		$t->showtips($lnc[4], $error, "{$lnc[5]}|<", true);
 	}
 }
 
@@ -376,7 +384,7 @@ function catchsuccess ($tip, $returnurl=false) {
 	@header("Content-Type: text/html; charset=utf-8");
 	if ($ajax=='on') die ("<boblog_ajax::success>".$tip);
 	$t=new template;
-	$t->showtips($lnc[6], $tip, $returnurl);
+	$t->showtips($lnc[6], $tip, $returnurl, true);
 }
 
 function urlconvert($url, $defaultprefix="http://") { //Turn url without http:// to a valid Internet link
@@ -436,7 +444,6 @@ function get_time_unix ($date, $destination="stamp") { //Convert an iso8601 date
 function strip_ubbs ($str) {
 	$str=preg_replace("/\[(.+?)\]/is", "", $str);
 	$str=preg_replace("/&(.+?);/is", "", $str);
-	$str=str_replace("\$", '\$', $str);
 	return $str;
 }
 
@@ -466,8 +473,8 @@ function makecalendar ($month, $year, $month_calendar, $lunarstream='') {
 			if ($j==0) $class="calendar-sunday"; //Sunday
 			elseif ($j==6) $class="calendar-saturday"; //Saturday
 			else $class="calendar-day"; //workdays
-			$outurl=($config['smarturl']==1 && $config['urlrewrite']==1) ? "showday_{$year}_{$month}_{$currentdate}.htm" : "index.php?go=showday_{$year}-{$month}-{$currentdate}";
-			if (@in_array($currentdate, $month_calendar)) $ca_sh="<a href=\"{$outurl}\">{$currentdate}</a>";
+			$outurl=getlink_date($year, $month, $currentdate);
+			if (@in_array($currentdate, $month_calendar)) $ca_sh="<a href=\"{$outurl}\" rel=\"noindex,nofollow\">{$currentdate}</a>";
 			else $ca_sh=$currentdate;
 			if (is_array($lunarstream)) {
 				if ($mbcon['lunarcalendar']==2) $ca_sh="<span title='{$lunarstream[$currentdate]}'>{$ca_sh}</span>";
@@ -620,8 +627,8 @@ function check_ip ($ip, $iparray) {
 		$ips=@explode(".", $ip);
 		$ipc=@explode(".", $iparray[$i]);
 		if (($ipc[0]=='*' || $ips[0]==$ipc[0]) && ($ipc[1]=='*' || $ips[1]==$ipc[1]) && ($ipc[2]=='*' || $ips[2]==$ipc[2]) && ($ipc[3]=='*' || $ips[3]==$ipc[3])) return true;
-		else return false;
 	}
+	return false;
 }
 
 function mystrtolower ($str) { //strtolower function that works fine with Chinese characters
@@ -671,7 +678,8 @@ function plugin_walk ($pluginpart, $str) { //Load plugins, compute and return re
 			$loadplugin=basename($loadplugin);
 			if (is_file("plugin/{$loadplugin}/{$pluginpart}.php")) {
 				include_once("plugin/{$loadplugin}/{$pluginpart}.php");
-				$str=call_user_func("plugin_{$loadplugin}_run", $str);
+				if (function_exists("plugin_{$loadplugin}_{$pluginpart}")) $str=call_user_func("plugin_{$loadplugin}_{$pluginpart}", $str);
+				elseif (function_exists("plugin_{$loadplugin}_run")) $str=call_user_func("plugin_{$loadplugin}_run", $str);
 			}
 		}
 	}
@@ -872,15 +880,47 @@ function kill_GLOBALS($input) { //Unregister $_REQUEST['GLOBALS'] like array rec
 	}
 }
 
-function tagurlencode($str) {
-	$str=urlencode($str);
-	$str=str_replace('-', '--', $str);
-	$str=str_replace('%', '-', $str);
-	return $str;
+function get_entry_url($id, $blogalias) { //To be discard
+	return getlink_entry($id, $blogalias);
 }
-function tagurldecode($str) {
-	$str=str_replace('-', '%', $str);
-	$str=str_replace('%%', '-', $str);
-	$str=urldecode($str);
-	return $str;
+
+
+function scheduledpublish() {
+	global $blog, $db_prefix, $nowtime;
+	$blog->query("UPDATE `{$db_prefix}blogs` SET `property`=0 WHERE `property`=4 AND `pubtime`<={$nowtime['timestamp']}");
+	$affn=db_affected_rows();
+	if ($affn>0) {
+		if (!defined('REPLYSPECIAL')) define('REPLYSPECIAL', 1);
+		include_once('admin/cache_func.php');
+		recache_latestentries ();
+		plugin_runphp('plannedpublish');
+	}
+}
+
+function in_iarray ($search, &$array) {
+  $search = strtolower($search);
+  foreach ($array as $item)
+   if (strtolower($item) == $search)
+     return true;
+  return false;
+} 
+
+function generate_emots_panel ($emots) {
+	if (!strstr($emots, '<!-- EmotPage -->')) return $emots;
+	else {
+		$emg=explode('<!-- EmotPage -->', $emots);
+		$howmanyemg=count($emg);
+		$emgout="<div id=\"smileygroup\">{$emg[0]}</div>\n";
+		$emgout.="<script type=\"text/javascript\">\n//<![CDATA[\n";
+		$emgout.="var emotgroup = new Array ();\n";
+		$emtslb="<div id=\"smileybuttons\">";
+		for ($i=0; $i<$howmanyemg; $i++) {
+			$emgout.="emotgroup[{$i}]='".str_replace("'", "\\'", $emg[$i])."';\n";
+			$emtslb.="<span class=\"smileybut\"><a href=\"javascript: turnsmileygroup({$i});\">".($i+1)."</a></span>";
+		}
+		$emtslb.="</div>";
+		$emgout.="//]]>\n</script>\n";
+		$emgout.=$emtslb;
+		return $emgout;
+	}
 }

@@ -1,4 +1,3 @@
 <?PHP
 $adminskin[]='default';
-$adminskin[]='vista';
-$currentadminskin='vista';
+$currentadminskin='default';

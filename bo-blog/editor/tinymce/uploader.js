@@ -258,48 +258,62 @@ function insertmyUpload (filename) {
 	tinyMCEPopup.close();
 }
 
-function autoattachubb (filename) {
+function generateUpload (attachid, filename) {
+	filename=filename.replace(/\*/g, '.');
+	filename=realpath+filename;
+	if (document.getElementById('ifautoaddubb').checked) filename=autoattachubb (attachid, filename);
+	tinyMCE.execCommand('mceInsertContent', false, filename);
+	tinyMCEPopup.close();
+}
+
+function autoattachubb (attachid, filename) {
 	var finalresult;
-	finalresult="[file]"+filename+"[/file]";
+	finalresult="[file]"+attachid+"[/file]";
 	var extindex = filename.lastIndexOf(".");
 	if (extindex!=-1) {
-		var realext=filename.substring(extindex+1);
+		var realext=filename.substring(extindex+1).toLowerCase();
 		if (realext=="gif" || realext=="jpg" || realext=="png" || realext=="bmp" || realext=="jpeg") {
-			 finalresult="<img src='"+filename+"' alt='' border='0' />";
+			var antileechurl;
+			antileechurl=attachid.replace(/\[attach\]/g, '');
+			antileechurl=antileechurl.replace(/\[\/attach\]/g, '');
+			antileechurl="attachment.php?fid="+antileechurl;
+			 finalresult="<img src='"+antileechurl+"' alt='' border='0' class='insertimage' />";
 		}
 		else if (realext=="swf")  {
-			 finalresult="[swf=400,300]"+filename+"[/swf]";
+			 finalresult="[swf=400,300]"+attachid+"[/swf]";
 		}
 		else if (realext=="wma" || realext=="mp3" || realext=="asf" || realext=="wmv")  {
-			 finalresult="[wmp=400,300]"+filename+"[/wmp]";
+			 finalresult="[wmp=400,300]"+attachid+"[/wmp]";
 		}
 		else if (realext=="rm" || realext=="rmvb" || realext=="ra" || realext=="ram")  {
-			 finalresult="[real=400,300]"+filename+"[/real]";
+			 finalresult="[real=400,300]"+attachid+"[/real]";
 		}
 		else if (realext=="htm" || realext=="html")  {
-			 finalresult="[url]"+filename+"[/url]";
+			 finalresult="[url]"+attachid+"[/url]";
 		}
 		else if (realext=="zip" || realext=="rar")  {
-			 finalresult="[file]"+filename+"[/file]";
+			 finalresult="[file]"+attachid+"[/file]";
 		}
 	}
 	return finalresult;
 }
 
-function picPreview (filename) {
-	var realfilename=realpath+filename;
-	currentpicname=realfilename;
-	var divdvs="<div style='margin-top: 0px;  width: 400px !important; width: 320px; height: 165px; background-repeat: no-repeat; background-position: 130px 20px !important; background-position: 0px 20px; background-image: url("+realfilename+");'>"+jslang[18]+"<input type='text' id='picalign' value='m' size=1 maxlength=1>(l-"+jslang[19]+",m-"+jslang[20]+",r-"+jslang[21]+") <input type='button' value='"+jslang[22]+"' onclick='doinsertimage();'></div>";
+function picPreview (filename, attachid) {
+	var divdvs="<div style='margin-top: 0px;  width: 400px !important; width: 320px; height: 165px; background-repeat: no-repeat; background-position: 130px 20px !important; background-position: 0px 20px; background-image: url("+filename+");'>"+jslang[18]+"<input type='text' id='picalign' value='m' size=1 maxlength=1>(l-"+jslang[19]+",m-"+jslang[20]+",r-"+jslang[21]+") <input type='button' value='"+jslang[22]+"' onclick=\"doinsertimage('"+attachid+"');\"></div>";
 	document.getElementById('picp').innerHTML=divdvs;
 }
 
-function doinsertimage() {
+function doinsertimage(attachid) {
+	var antileechurl;
+	antileechurl=attachid.replace(/\[attach\]/g, '');
+	antileechurl=antileechurl.replace(/\[\/attach\]/g, '');
+	antileechurl="attachment.php?fid="+antileechurl;
 	var alignpro=document.getElementById('picalign').value;
 	var plusalign;
 	if (alignpro=='l') plusalign=' align="left"';
 	else if  (alignpro=='r') plusalign=' align="right"';
 	else plusalign='';
-	var finalresult="<img"+plusalign+" alt='' border='0' src='"+currentpicname+"' />";
+	var finalresult="<img"+plusalign+" alt='' border='0' src='"+antileechurl+"' />";
 	tinyMCE.execCommand('mceInsertContent', false, finalresult);
 	tinyMCEPopup.close();
 }

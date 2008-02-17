@@ -242,7 +242,7 @@ function checkuser($username, $password) {
 }
 
 function check_user ($username, $password) {
-	$username=safe_convert(addslashes($username)_; //2007-1-20 Security Fix
+	$username=safe_convert(addslashes($username)); //2007-1-20 Security Fix
 	$password=safe_convert(addslashes($password)); //2007-1-20 Security Fix
 	$userdetail=checkuser($username, $password);
 	if (!$userdetail) xml_error("Authentification failed by the conbination of provided username ({$username}) and password.");
@@ -309,7 +309,7 @@ function metaWeblog_newPost ($values) {
 
 	$maxrecord=$blog->getsinglevalue("{$db_prefix}maxrec");
 	$currentid=$maxrecord['maxblogid']+1;
-	$query="INSERT INTO `{$db_prefix}blogs` VALUES ('{$currentid}', '{$title}','{$time}','{$userdetail['userid']}', 0, 0, 0, '{$property}','{$category}','','0','{$html}', '1', '1', '{$content}', '0', '0', 'blank', '0', '', '', '0', '', '0')";
+	$query="INSERT INTO `{$db_prefix}blogs` VALUES ('{$currentid}', '{$title}','{$time}','{$userdetail['userid']}', 0, 0, 0, '{$property}','{$category}','','0','{$html}', '1', '1', '{$content}', '0', '0', 'blank', '0', '', '', '0', '', '0', '', '', '', '')";
 	$blog->query($query);
 	$newcym=gmdate("Ym", $time+$config['timezone']*3600);
 	$newcd=gmdate("d", $time+$config['timezone']*3600);
@@ -425,30 +425,49 @@ function blogger_getUserInfo ($values) {
 }
 
 function metaWeblog_newMediaObject ($values) { //2006-12-2 add support for uploading files
-	global $config, $defualtcategoryid, $db_prefix, $mbcon;
+	global $config, $defualtcategoryid, $db_prefix, $mbcon, $nowtime;
 	$userdetail=check_user ($values['username'], $values['password']);
 	$struct=$values['struct'];
 	//writetofile ('text1.php', $struct['bits']); //debug only
 	if ($struct['bits'] && $struct['name']) {
 		$writefilecontent=base64_decode($struct['bits']);
-		if (file_exists("attachment/{$struct['name']}")) @unlink("attachment/{$struct['name']}");
-		$filenum=@fopen("attachment/{$struct['name']}","wb");
+		$ext=strtolower(strrchr($struct['name'],'.'));
+		$ext=str_replace(".", '', $ext);
+		$upload_filename=time().'_'.rand(1000, 9999).substr(md5($struct['name']), 0, 4).'.'.$ext;
+
+		if ($mbcon['uploadfolders']=='1') {
+			$targetfolder_ym=date("Ym").'/';
+			$targetfolder="attachment/{$targetfolder_ym}";
+			if (!is_dir ($targetfolder)) {
+				$mktargetfolder=@mkdir($targetfolder, 0777);
+				if (!$mktargetfolder) xml_error ("Sorry, uploading file ({$struct['name']}) failed because PHP was unable to create a new directory.");
+			}
+		} else {
+			$targetfolder_ym='';
+			$targetfolder='attachment';
+		}
+
+		$filenum=@fopen("{$targetfolder}/{$upload_filename}","wb");
 		if (!$filenum) {
 			xml_error ("Sorry, uploading file ({$struct['name']}) failed.");
 		}
 		flock($filenum,LOCK_EX);
 		fwrite($filenum,$writefilecontent);
 		fclose($filenum);
+
+		//DB updating, new function in 2.1.0
+		$blog=new boblog;
+		$blog->query("INSERT INTO `{$db_prefix}upload` (fid,filepath,originalname,uploadtime,uploaduser) VALUES (null, \"attachment/{$targetfolder_ym}{$upload_filename}\", \"{$struct['name']}\", {$nowtime['timestamp']}, {$userdetail['userid']})");
+		$currentid=db_insert_id();
+
 		if ($mbcon['wmenable']=='1') {	//Add watermark
 			$imgext_watermark=array('jpg', 'gif', 'png');
-			$ext=strtolower(strrchr($struct['name'],'.'));
-			$ext=str_replace(".", '', $ext);
 			if (in_array($ext, $imgext_watermark)) {
-				create_watermark("attachment/{$struct['name']}");
+				create_watermark("attachment/{$targetfolder_ym}{$upload_filename}");
 			}
 		}
 	}
-	$xml_content=make_xml_piece ("struct", array('url'=>"{$config['blogurl']}/attachment/{$struct['name']}"));
+	$xml_content=make_xml_piece ("struct", array('url'=>"{$config['blogurl']}/attachment.php?fid={$currentid}"));
 	$body_xml=xml_generate($xml_content);
 	send_response ($body_xml);
 }

@@ -15,6 +15,11 @@ if (!defined('VALIDREQUEST')) die ('Access Denied.');
 extract_forbidden();
 acceptrequest('job');
 
+if (!$job) {
+	@header("Location: index.php");
+	exit();
+}
+
 if ($job=='addreply' || $job=='addmessage' || $job=='editreply' || $job=='editmessage') {
 	if (check_ip ($userdetail['ip'], $forbidden['banip'])) catcherror($lnc[209]);
 	define('REPLYSPECIAL', 1);
@@ -29,8 +34,9 @@ if ($job=='addreply' || $job=='addmessage' || $job=='editreply' || $job=='editme
 			if (($nowtime['timestamp']-$findreplies['reptime'])<$permission['MinPostInterval']) catcherror($lnc[210]); 
 		}
 	}
-	acceptrequest('v_replier,v_password,stat_html,stat_ubb,stat_emot,stat_property,v_repurl,v_repemail,v_content,v_id,v_security,onetimecounter,v_reppsw');
+	acceptrequest('v_replier,v_password,stat_html,stat_ubb,stat_emot,stat_property,v_repurl,v_repemail,v_content,v_id,v_security,onetimecounter,v_reppsw,v_contentc');
 
+	if ($v_contentc) $v_content=$v_contentc;
 	$v_id=intval(trimplus($v_id));
 	if ($job=='addreply') {
 		checkpermission('Reply');
@@ -69,6 +75,9 @@ if ($job=='addreply' || $job=='addmessage' || $job=='editreply' || $job=='editme
 			session_cache_limiter("private, must-revalidate");
 			session_start();
 			if ($v_security=='' || strtolower($v_security)!=strtolower($_SESSION['code'])) $cancel=$lnc[165];
+			else { //Delete current session
+				session_destroy();
+			}
 		}
 		$v_repurl=safe_convert(trimplus($v_repurl));
 		$v_repemail=safe_convert(trimplus($v_repemail));
@@ -83,26 +92,21 @@ if ($job=='addreply' || $job=='addmessage' || $job=='editreply' || $job=='editme
 			$replier=$userdetail['username'];
 			$replierid=$userdetail['userid'];
 		} else {
-			if ($v_password!='') {
-				$v_password=md5($v_password);
-				$userchecker=$blog->getbyquery("SELECT * FROM `{$db_prefix}user` WHERE `username`='{$v_replier}' AND `userpsw`='{$v_password}'");
-				if ($userchecker['username']==$v_replier) {
-					$replier=$userchecker['username'];
-					$replierid=$userchecker['userid'];
-					@setcookie ('userid', $userchecker['userid']);
-					@setcookie ('userpsw', $v_password);
-				} else {
-					if (@in_array ($v_replier, $adminlist)) $cancel=$lnc[212];
-					$replier=$v_replier;
-					$replierid=-1;
-				}
+			$v_password=md5($v_password);
+			$v_replier_checker=mystrtolower($v_replier);
+			$userchecker=$blog->getbyquery("SELECT * FROM `{$db_prefix}user` WHERE LOWER(username)='{$v_replier_checker}'");
+			if (mystrtolower($userchecker['username'])==$v_replier_checker && $v_password==$userchecker['userpsw']) {
+				$replier=$userchecker['username'];
+				$replierid=$userchecker['userid'];
+				@setcookie ('userid', $userchecker['userid']);
+				@setcookie ('userpsw', $v_password);
 			} else {
-				if (@in_array ($v_replier, $adminlist)) $cancel=$lnc[212];
+				if ($userchecker['username']) $cancel=$lnc[308];
+				if (@in_iarray ($v_replier, $adminlist)) $cancel=$lnc[212];
 				$replier=$v_replier;
 				$replierid=-1;
 			}
 		}
-
 	}
 	$v_content=safe_convert(trimplus($v_content), $html);
 	if ($v_content=='') $cancel=$lnc[214];
@@ -115,6 +119,7 @@ if ($job=='addreply' || $job=='addmessage' || $job=='editreply' || $job=='editme
 		//If the post contains more than X links, it may be a spam
 		if (substr_count($v_content, 'http://')>=$mbcon['susurlnum']) $suspectspam=1;
 		if (substr_count($v_content, '[url')>=$mbcon['susurlnum']) $suspectspam=1;
+		if (substr_count($v_content, 'www.')>=$mbcon['susurlnum']) $suspectspam=1;
 		//If the post contains spam common words, it may be a spam
 		if (preg_search($v_content, $forbidden['suspect'])) $suspectspam=1;
 		//If the post is too short, it may be a spam
@@ -147,6 +152,7 @@ if ($job=='addreply' || $job=='addmessage' || $job=='editreply' || $job=='editme
 		$valuedtable=($job=='editreply') ? 'replies' : 'messages';
 		$try=$blog->getbyquery("SELECT * FROM `{$db_prefix}{$valuedtable}` WHERE `repid`='{$repid}' AND `repip`='{$userdetail['ip']}'");
 		if ($try['repid']!=$repid) catcherror($lnc[303]);
+		if (!empty($try['adminreptime'])) catcherror($lnc[303]);
 		if (time()-$try['reptime']>$mbcon['editcomment']) catcherror($lnc[303]);
 	}
 
@@ -159,6 +165,7 @@ if ($job=='addreply' || $job=='addmessage' || $job=='editreply' || $job=='editme
 	//Start storage
 	if ($job=='addreply' || $job=='addmessage') {
 		setcookie ('lastpost', time(), time()+$permission['MinPostInterval']);
+		plugin_runphp('visitorsubmit');
 		$blog->query("INSERT INTO  `{$targettable}` VALUES ('{$currentmaxid}', '{$reproperty}', {$plusquery_c} '{$reptime}', '{$replierid}', '{$replier}', '{$v_repemail}', '{$v_repurl}', '{$userdetail['ip']}', '{$v_content}', '{$html}', '{$ubb}', '{$emot}', '0', '', '0', '', '0', '', '0', '{$v_reppsw}', '', '', '', '', '', '', '')");
 		$blog->query("UPDATE `{$db_prefix}maxrec` SET `{$alter_column}`='{$currentmaxid}'");
 	} else {
@@ -174,7 +181,7 @@ if ($job=='addreply' || $job=='addmessage' || $job=='editreply' || $job=='editme
 		include("admin/cache_func.php");
 		recache_latestreplies();
 	}
-	if ($ajax!='on') catchsuccess("{$lnc[216]}{$tipsplus}", array('{$lnc[5]}|<', '{$lnc[5]}|index.php', '{$lnc[91]}|guestbook.php'));
+	if ($ajax!='on') catchsuccess("{$lnc[216]}{$tipsplus}", array("{$lnc[5]}|<", "{$lnc[163]}|index.php", "{$lnc[91]}|guestbook.php"));
 	else { //Deal with ajax
 		$m_b=new getblogs;
 		if ($job=='addreply' || $job=='addmessage') {
@@ -258,7 +265,7 @@ if ($job=='search') {
 		if (!writetofile ("{$db_tmpdir}/{$sid}.php", $pinchall)) catcherror ($lnc[226]);
 		@header("Content-Type: text/html; charset=utf-8");
 		$t=new template;
-		$t->showtips($lnc[227], $lnc[228], "{$lnc[229]}|visit.php?job=viewresult&amp;sid={$sid}");
+		$t->showtips($lnc[227], $lnc[228], "{$lnc[229]}|visit.php?job=viewresult&amp;sid={$sid}", true);
 	}
 }
 
@@ -271,7 +278,7 @@ if ($job=='viewresult') {
 	$keyword=trim($results[1]);
 	$tmp_results3=@explode(',', trim($results[3]));
 	for ($i=0; $i<count($tmp_results3); $i++) {
-		$tmp_results3[$i]="'".floor($tmp_results3[$i])."'";
+		$tmp_results3[$i]="'".$tmp_results3[$i]."'";
 	}
 	$result=@implode(',', $tmp_results3);
 	$start_id=($page-1)*$mbcon['listitemperpage'];
@@ -286,9 +293,9 @@ if ($job=='viewresult') {
 	}
 
 	if ($searchmethod==3) {
-		$records=$blog->getgroupbyquery("SELECT t1.*, t2.title FROM `{$db_prefix}replies` t1 INNER JOIN `{$db_prefix}blogs` t2 ON t2.blogid=t1.blogid WHERE t1.repid in  ({$result}) ORDER BY t1.reptime DESC LIMIT {$start_id}, {$mbcon['listitemperpage']}");
+		$records=$blog->getgroupbyquery("SELECT t1.*, t2.title, t2.blogalias FROM `{$db_prefix}replies` t1 INNER JOIN `{$db_prefix}blogs` t2 ON t2.blogid=t1.blogid WHERE t1.repid in  ({$result}) ORDER BY t1.reptime DESC LIMIT {$start_id}, {$mbcon['listitemperpage']}");
 		for ($i=0; $i<count($records); $i++) {
-			$records[$i]['repcontent']="<strong>{$lnc[71]}</strong><a href=\"{$config['sulink']}{$records[$i]['blogid']}{$config['sulinkext']}\">{$records[$i]['title']}</a><br/><strong>{$lnc[76]}</strong>".$records[$i]['repcontent'];
+			$records[$i]['repcontent']="<strong>{$lnc[71]}</strong><a href=\"".getlink_entry($records[$i]['blogid'], $records[$i]['blogalias'])."\">{$records[$i]['title']}</a><br/><strong>{$lnc[76]}</strong>".$records[$i]['repcontent'];
 		}
 		$section_body_main[]=$m_b->make_replies($records);
 		$pagebar=$m_b->make_pagebar ($page, $mbcon['pagebaritems'], $urlref, $counter_now, $mbcon['listitemperpage']);
@@ -303,9 +310,10 @@ if ($job=='viewresult') {
 	if ($searchmethod==5) {
 		$alltags=$blog->getarraybyquery("SELECT * FROM `{$db_prefix}tags` WHERE `tagname` in ({$result})");
 		for ($i=0; $i<count($alltags['tagname']); $i++) {	
-			$eachtag_encoded=urlencode($alltags['tagname'][$i]);
-			$urlref="tag.php?tag={$eachtag_encoded}";
-			if ($mbcon['tagunderlinetospace']==1) 	$alltags['tagname'][$i]=str_replace('_', ' ', $alltags['tagname'][$i]);			$tag_show[]="<a href=\"{$urlref}\" title=\"{$lnc[188]}{$alltags['tagcounter'][$i]}\" rel=\"tag\">{$alltags['tagname'][$i]}</a>";
+			$eachtag_encoded=urlencode(($alltags['tagname'][$i]));
+			$urlref=getlink_tags($eachtag_encoded);
+			if ($mbcon['tagunderlinetospace']==1) 	$alltags['tagname'][$i]=str_replace('_', ' ', $alltags['tagname'][$i]);
+			$tag_show[]="<a href=\"{$urlref}\" title=\"{$lnc[188]}{$alltags['tagcounter'][$i]}\" rel=\"tag\">{$alltags['tagname'][$i]}</a>";
 		}
 		if (is_array($tag_show)) {
 			$tagshow=@implode(" &nbsp; ", $tag_show);
@@ -327,15 +335,16 @@ if ($job=='getcontentonly') {
 	acceptrequest('blogid,blogpsw,way');
 	$blogid=floor($blogid);
 	if ($permission['SeeHiddenEntry']!=1) {
-		$partialquery="SELECT * FROM `{$db_prefix}blogs` WHERE `blogid`='{$blogid}' AND `property`<>'2' AND `property`<>'3' LIMIT 1";
+		$partialquery="SELECT * FROM `{$db_prefix}blogs` WHERE `blogid`='{$blogid}' AND `property`<'2' LIMIT 1";
 	} else {
-		$partialquery="SELECT * FROM `{$db_prefix}blogs` WHERE `blogid`='{$blogid}' AND `property`<>'3' LIMIT 1";
+		$partialquery="SELECT * FROM `{$db_prefix}blogs` WHERE `blogid`='{$blogid}' AND `property`<'3' LIMIT 1";
 	}
 	$m_b=new getblogs;
 	$records=$m_b->getbyquery($partialquery);
 	if (!is_array($records) || $records['blogid']!=$blogid) catcherror($lnc[211]);
 	if ($blogpsw!=$records['blogpsw']) catcherror($lnc[297]);
 	$return_main=$m_b->make_viewentry($records, $way, true);
+	setcookie("entrypassword{$blogid}", $blogpsw);
 	catchsuccess($return_main);
 }
 

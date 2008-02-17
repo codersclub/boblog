@@ -1,3 +1,51 @@
+===2.0.3 sp1 -> 2.1.0
+ALTER TABLE `boblog_user` DROP `empty2` ,
+DROP `empty3` ,
+DROP `empty4` ,
+DROP `empty5` ,
+DROP `empty6` ,
+DROP `empty7` ,
+DROP `empty8` ;
+
+ALTER TABLE `boblog_user` CHANGE `from` `fromplace` TEXT NULL DEFAULT NULL;
+
+ALTER TABLE `boblog_mods` CHANGE `order` `modorder` INT( 5 ) NOT NULL; 
+
+ALTER TABLE `boblog_categories` CHANGE `empty1` `cateurlname` VARCHAR( 100 ) NULL ;
+
+CREATE TABLE `boblog_upload` (
+  `fid` int(6) NOT NULL auto_increment,
+  `filepath` varchar(255) default NULL,
+`originalname` VARCHAR( 255 ) NULL,
+`dltime` int(8) NOT NULL default '0',
+  `uploadtime` int(11) default NULL,
+  `uploaduser` int(6) NOT NULL default '0',
+  PRIMARY KEY  (`fid`)
+) ENGINE=MyISAM;
+
+INSERT INTO `boblog_mods` VALUES ('sidebar', 'columnbreak', '侧边栏一与侧边栏二的分割线', '1', '1', 'system');
+
+ALTER TABLE `boblog_blogs` ADD `entrysummary` TEXT NULL ,
+ADD `comefrom` VARCHAR( 255 ) NULL ,
+ADD `originsrc` VARCHAR( 255 ) NULL ,
+ADD `blogalias` VARCHAR( 100 ) NULL ;
+
+CREATE TABLE `boblog_pages` (
+`pageid` INT( 5 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+`pagetitle` VARCHAR( 255 ) NULL ,
+`pagecontent` TEXT NULL ,
+`pageauthor` INT( 8 ) NOT NULL DEFAULT '0',
+`pagetime` INT( 11 ) NOT NULL DEFAULT '0',
+`pageedittime` INT( 11 ) NOT NULL DEFAULT '0',
+`closesidebar` TINYINT( 1 ) NOT NULL DEFAULT '0',
+`htmlstat` TINYINT( 1 ) NOT NULL DEFAULT '0',
+`ubbstat` TINYINT( 1 ) NOT NULL DEFAULT '0',
+`emotstat` TINYINT( 1 ) NOT NULL DEFAULT '0',
+`pagealias` VARCHAR( 255 ) NULL,
+INDEX ( `pageauthor` )
+) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+
 ===2.0.3 Alpha 5->2.0.3 beta 1
 ALTER TABLE `boblog_replies` CHANGE `empty1` `reppsw` TINYTEXT NULL;
 ALTER TABLE `boblog_messages` CHANGE `empty1` `reppsw` TINYTEXT NULL

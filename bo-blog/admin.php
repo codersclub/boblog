@@ -11,13 +11,14 @@ In memory of my university life
 ------------------------------------------------------- */
 
 define('VALIDADMIN', 1);
+define ("noCounter", 1);
 require_once ("global.php");
 include_once ("lang/{$langback}/backend.php");
 include_once ("data/allmods.php");
 include("data/cache_usergroup.php");
 require_once ("admin/cache_func.php");
 
-unset($blogplugin);
+$blogplugin=$plugin_onload=$plugin_header=null;
 include_once("data/plugin_enabled.php");
 
 
@@ -39,27 +40,32 @@ include_once("admin/admin_header.php");
 //Start Loading Modules
 if (file_exists("admin/cp_{$act}.php")) include ("admin/cp_{$act}.php");
 else {
-	if (is_file("plugin/{$act}/admin.php")) {
+	$realact=$actgoto='';
+	@list($realact, $actgoto)=@explode('::', $act);
+	 $actgotofile=($actgoto) ? "plugin/".basename($realact)."/admin_".basename($actgoto).".php" : "plugin/".basename($realact)."/admin.php";
+	if (is_file( $actgotofile)) {
 		$display_overall.=highlightadminitems('plugin', 'addon');
-		include ("plugin/{$act}/admin.php");
-		$display_overall=str_replace('<!--plugin_header-->', $plugin_header, $display_overall);
-		$display_overall=str_replace('<body', '<body '.$plugin_onload, $display_overall);
+		include ( $actgotofile);
 		$display_overall.=$plugin_return;
 	}
 	else include ("admin/cp_main.php");
 }
+$display_overall=str_replace('<!--plugin_header-->', $plugin_header, $display_overall);
+$display_overall=str_replace('<body', '<body '.$plugin_onload, $display_overall);
 include_once("admin/admin_footer.php");
 
 
 //Starting Admin-only functions
 function highlightadminitems ($itemhighlight, $itemsrow) {
 	global $admin_item;
-	while (@list ($key, $value)=@each($admin_item[$itemsrow])) {
-		if ($itemhighlight==$key) $addclass='highlight';
-		else $addclass='normal';
-		$rollall.="<li class=\"{$addclass}\"><a href=\"admin.php?go={$itemsrow}_{$key}\">{$value}</a></li>";
+	$str="<script type=\"text/javascript\">
+	function adminitemhover(hovername, obj) {
+		if (document.getElementById('dropmenudiv') && document.getElementById('hoveritem_'+hovername)) document.getElementById('dropmenudiv').innerHTML=document.getElementById('hoveritem_'+hovername).innerHTML;
+		if (is_ie || is_ie4) document.getElementById('dropmenudiv').innerHTML+=\"<iframe src='javascript:false' style='position:absolute; visibility:inherit;   top:0px; left:0px; width:128px; height:200px; z-index:-1; filter=progid:DXImageTransform.Microsoft.Alpha(style=0,opacity=0);'></iframe>\";
+		dropdownmenu(obj);
 	}
-	return ("<div id='adminrow'>\n<ul>{$rollall}</ul>\n<script type=\"text/javascript\">\nvar initialadminitems=document.getElementById('adminrow').innerHTML;\nfunction adminitemhover(hovername) {\n	document.getElementById('adminrow').innerHTML=document.getElementById('hoveritem_'+hovername).innerHTML;\n}\nfunction adminitemreset() {\ndocument.getElementById('adminrow').innerHTML=initialadminitems;\n}\n</script>\n</div><div id=\"adminmain\"><div id=\"admininner\">");
+	</script>";
+	return ("\n{$str}\n<div id=\"adminmain\" onmouseover=\"hidemenu();\"><div id=\"admininner\">");
 }
 
 function addpref ($pref_type, $pref_content) { //This will generate the complete config form body
@@ -146,15 +152,20 @@ function mod_append ($value) {
 }
 
 
-function mod_replace ($name, $value) {
+function mod_replace ($name, $value, $mustchange=false) {
 	global $lnc;
 	$filename="data/modules.php";
 	$filecontent=@file($filename);
+	$changed=false;
 	for ($i=0; $i<count($filecontent); $i++) {
 		if (strstr($filecontent[$i], "\$blogitem['{$name}']=")) {
 			$filecontent[$i]=$value;
+			$changed=true;
 			break;
 		}
+	}
+	if ($mustchange && !$changed) {
+		$filecontent[]=$value;
 	}
 	$newfilecontent=@implode('', $filecontent);
 	if (writetofile ($filename, $newfilecontent)) {
@@ -233,8 +244,8 @@ function admin_convert ($str) {
 	return $str;
 }
 
-function confirmpsw() {
-	global $logstat, $config, $ajax, $lna, $db_tmpdir, $userdetail, $db_defaultsessdir;
+function confirmpsw() { //Temporarily discarded
+/*	global $logstat, $config, $ajax, $lna, $db_tmpdir, $userdetail, $db_defaultsessdir;
 	if ($config['noadminsession']=='1') return;
 	if ($db_defaultsessdir!=1) session_save_path("./{$db_tmpdir}");
 	session_cache_limiter("private, must-revalidate");
@@ -245,6 +256,8 @@ function confirmpsw() {
 		header ("Location: login.php?job={$loginjob}");
 		exit();
 	}
+*/
+	return;
 }
 
 function checksafe ($str) {
@@ -264,4 +277,12 @@ function reArrayFiles($file_post) {
    return $file_ary;
 }
 
-
+function blogalias_convert ($str, $rewrite=0) {
+	if ($rewrite==0) {
+		$str=str_replace(array(' ', "'", '"'), '', $str);
+		$str=urlencode($str);
+	} else {
+		$str=str_replace(array('_', '.'), array("\\_", "\\."), $str);
+	}
+	return $str;
+}

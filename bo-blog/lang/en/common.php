@@ -308,7 +308,14 @@ $lnc=array (
 302=>'Modify',
 303=>'You can not edit this post. You may not have the permission to do so, or the post is locked after a period of time.',
 304=>'This is a protected comment/message. To view its content, please input the password: ',
-305=>'Unexisted comment/message.'
+305=>'Unexisted comment/message.',
+306=>'Source: ',
+307=>'Original',
+308=>'Your nickname is a registered username. Please provide your password if you registered it, or choose another nickname if you didn\'t. Sorry for any inconvenience.',
+309=>'Back to where you click the login link',
+310=>'Browser is redirecting, or you can click one of the following links:',
+311=>'Hidden content',
+312=>'You are not allowed to see this part. Please '
 );
 
 //农历用字

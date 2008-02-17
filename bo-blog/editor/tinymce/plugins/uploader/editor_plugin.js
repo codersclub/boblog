@@ -34,7 +34,7 @@ var TinyMCE_UploaderPlugin = {
 			case "mceUploader":
 				var template = new Array();
 
-				template['file'] = '../../../../admin.php?act=upload'; // Relative to theme
+				template['file'] = '../../../../admin.php?act=upload&useeditor=tinymce'; // Relative to theme
 				template['width'] = 580;
 				template['height'] = 200;
 

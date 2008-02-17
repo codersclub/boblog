@@ -84,6 +84,7 @@ $lang[81]='Passwords are empty, or differentiate with each other!';
 $lang[82]='Blog Path:';
 $lang[83]='Enter the absolute path of your blog.';
 $lang[84]='Link to archive list';
+$lang[85]='This separates Sidebar One and Sidebar Two.';
 
 
 $langcopy=array (

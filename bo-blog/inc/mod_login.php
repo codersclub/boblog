@@ -15,15 +15,17 @@ if (!defined('VALIDREQUEST')) die ('Access Denied.');
 acceptrequest('job', 1);
 
 if (!$job) {
+	$urlreturn=($_SERVER['HTTP_REFERER']=='') ? "index.php" : $_SERVER['HTTP_REFERER'];
 	$m_b=new getblogs;
-	$jobs="javascript: ajax_login();";
+	$jobs="login.php?job=verify";
 	$actionnow="{$lnc[253]} [<a href=\"login.php?job=register\">{$lnc[254]}</a>]";
-	$formbody.=$t->set('form_eachline', array('text'=>$lnc[132], 'formelement'=>"<input name='username' type='text' id='username' size='24' class='text' />"));
-	$formbody.=$t->set('form_eachline', array('text'=>$lnc[133], 'formelement'=>"<input type='password'  class='text' size='16' name='password' id='password' />"));
-	$formbody.=$t->set('form_eachline', array('text'=>$lnc[255], 'formelement'=>"<input name=\"savecookie\" type=\"radio\" id=\"savecookie\" value=\"0\"/>{$lnc[256]} <input name=\"savecookie\" type=\"radio\" id=\"savecookie1\" value=\"3600\" checked='checked'/>{$lnc[257]} <input name=\"savecookie\" type=\"radio\" id=\"savecookie2\" value=\"86400\"/>{$lnc[258]}  <input name=\"savecookie\" type=\"radio\" id=\"savecookie3\" value=\"604800\"/>{$lnc[259]}  <input name=\"savecookie\" type=\"radio\" id=\"savecookie4\" value=\"2592000\"/>{$lnc[260]}   <input name=\"savecookie\" type=\"radio\" id=\"savecookie5\" value=\"31104000\"/>{$lnc[261]}"));
+	$formbody.=$t->set('form_eachline', array('text'=>"*{$lnc[132]}", 'formelement'=>"<input name='username' type='text' id='username' size='24' class='text' /><input type='hidden' name='urlreturn' value='{$urlreturn}' />"));
+	$formbody.=$t->set('form_eachline', array('text'=>"*{$lnc[133]}", 'formelement'=>"<input type='password'  class='text' size='16' name='password' id='password' />"));
+	$formbody.=$t->set('form_eachline', array('text'=>'&nbsp;', 'formelement'=>"<input name=\"savecookie\" type=\"checkbox\" id=\"savecookie\" value=\"1\" checked='checked' />{$lnc[284]}"));
+	plugin_runphp('loginform');
 	if ($config['loginvalidation']==1) {
 		$rand=rand (0,100000);
-		$formbody.=$t->set('form_eachline', array('text'=>$lnc[249], 'formelement'=>"<span id='securityimagearea'><img src='inc/securitycode.php?rand={$rand}' alt='' title='{$lnc[250]}'/></span> <input name='securitycode' type='text' id='securitycode' size='16' class='text' /> {$lnc[251]} [<a href=\"javascript: refreshsecuritycode('securityimagearea', 'securitycode');\">{$lnc[283]}</a>]"));
+		$formbody.=$t->set('form_eachline', array('text'=>"*{$lnc[249]}", 'formelement'=>"<span id='securityimagearea'><img src='inc/securitycode.php?rand={$rand}' alt='' title='{$lnc[250]}'/></span> <input name='securitycode' type='text' id='securitycode' size='16' class='text' /> {$lnc[251]} [<a href=\"javascript: refreshsecuritycode('securityimagearea', 'securitycode');\">{$lnc[283]}</a>]"));
 	}
 	$section_body_main=$t->set('register', array('title'=>$actionnow, 'job'=>$jobs, 'registerbody'=>$formbody));
 	announcebar();
@@ -94,7 +96,7 @@ if ($job=='register' || $job=='modpro') {
 		$formbody.=$t->set('form_eachline', array('text'=>$lnc[145], 'formelement'=>"<input type='text' class='text' size='16' name='qq' value='".stripslashes($userdetail['qq'])."'/>"));
 		$formbody.=$t->set('form_eachline', array('text'=>'MSN', 'formelement'=>"<input type='text' class='text' size='16' name='msn' value='".stripslashes($userdetail['msn'])."'/>"));
 		$formbody.=$t->set('form_eachline', array('text'=>'Skype', 'formelement'=>"<input type='text' class='text' size='16' name='skype' value='".stripslashes($userdetail['skype'])."'/>"));
-		$formbody.=$t->set('form_eachline', array('text'=>$lnc[146], 'formelement'=>"<input type='text' class='text' size='16' name='from' value='".stripslashes($userdetail['from'])."'/>"));
+		$formbody.=$t->set('form_eachline', array('text'=>$lnc[146], 'formelement'=>"<input type='text' class='text' size='16' name='from' value='".stripslashes($userdetail['fromplace'])."'/>"));
 		$formbody.=$t->set('form_eachline', array('text'=>$lnc[147], 'formelement'=>"<textarea cols='30' rows='3' name='intro'>".stripslashes($userdetail['intro'])."</textarea>"));
 		if ($mbcon['avatar']=='1') {
 			if (file_exists('data/cache_avatars.php')) @require_once ('data/cache_avatars.php');
@@ -113,6 +115,7 @@ if ($job=='register' || $job=='modpro') {
 			$formbody.=$t->set('form_eachline', array('text'=>$lnc[152], 'formelement'=>"<select name='avatarvalue' id='avatarvalue' onchange=\"changeavatar('avatarvalue', 'avatararea');\"><option value='$avatarvalue'>{$lnc[153]}</option>{$bodyofselctavatar}</select><br/><span id='avatararea'>{$avatararea}</span>"));
 		}
 	}
+	plugin_runphp('registerform');
 	if ($job=='register' && $config['registervalidation']==1) {
 		$rand=rand (0,100000);
 		$formbody.=$t->set('form_eachline', array('text'=>$lnc[249], 'formelement'=>"<span id='securityimagearea'><img src='inc/securitycode.php?rand={$rand}' alt='' title='{$lnc[250]}'/></span> <input name='securitycode' type='text' id='securitycode' size='16' class='text' /> {$lnc[251]} [<a href=\"javascript: refreshsecuritycode('securityimagearea', 'securitycode');\">{$lnc[283]}</a>]"));
@@ -163,18 +166,20 @@ if ($job=='doregister' || $job=='domodpro') {
 	$avatarvalue=basename(trimplus(safe_convert($avatarvalue)));
 	$avatarall="{$avatartype}|{$avatarvalue}";
 	if (preg_search($intro, $forbidden['banword'])) catcherror ($lnc[161]);
+	plugin_runphp('registerprocess');
+
 	if ($job=='doregister') {
 		$maxrecord=$blog->getsinglevalue("{$db_prefix}maxrec");
 		$currentuserid=$maxrecord['maxuserid']+1;
 		$imajikan=time();
-		$blog->query("INSERT INTO `{$db_prefix}user` VALUES ('{$currentuserid}', '{$username}', '{$password}', '{$imajikan}', '1', '{$email}', '{$homepage}', '{$qq}', '{$msn}', '{$intro}', '{$gender}', '{$skype}', '{$from}', '0', '{$userdetail['ip']}', '{$avatarall}', '', '', '', '', '', '', '')");
+		$blog->query("INSERT INTO `{$db_prefix}user` VALUES ('{$currentuserid}', '{$username}', '{$password}', '{$imajikan}', '1', '{$email}', '{$homepage}', '{$qq}', '{$msn}', '{$intro}', '{$gender}', '{$skype}', '{$from}', '0', '{$userdetail['ip']}', '{$avatarall}')");
 		$blog->query("UPDATE `{$db_prefix}maxrec` SET `maxuserid`=`maxuserid`+1");
 		$blog->query("UPDATE `{$db_prefix}counter` SET `users`=`users`+1");
 		@setcookie ('userid', $currentuserid);
 		@setcookie ('userpsw', $password);
 		catchsuccess($lnc[162], "{$lnc[163]}|index.php");
 	} else {
-		$blog->query("UPDATE `{$db_prefix}user` SET `userpsw`='{$userdetail['userpsw']}', `email`='{$email}', homepage='{$homepage}',  qq='{$qq}', msn='{$msn}', intro='{$intro}', gender='{$gender}', skype='{$skype}', `from`='{$from}', avatar='{$avatarall}' WHERE `userid`='{$userdetail['userid']}'");
+		$blog->query("UPDATE `{$db_prefix}user` SET `userpsw`='{$userdetail['userpsw']}', `email`='{$email}', homepage='{$homepage}',  qq='{$qq}', msn='{$msn}', intro='{$intro}', gender='{$gender}', skype='{$skype}', `fromplace`='{$from}', avatar='{$avatarall}' WHERE `userid`='{$userdetail['userid']}'");
 		@setcookie ('userid', '', time()-3600);
 		@setcookie ('userpsw', '', time()-3600);
 		@setcookie ('userid', $userdetail['userid']);
@@ -185,7 +190,7 @@ if ($job=='doregister' || $job=='domodpro') {
 
 
 if ($job=='verify') {
-	acceptrequest('savecookie,securitycode');
+	acceptrequest('savecookie,securitycode,urlreturn');
 	if ($config['loginvalidation']==1) {
 		if ($db_defaultsessdir!=1) session_save_path("./{$db_tmpdir}");
 		session_cache_limiter("private, must-revalidate");
@@ -194,38 +199,35 @@ if ($job=='verify') {
 	}
 	$password=md5($_POST['password']);
 	$username=safe_convert(mystrtolower($_POST['username']));
+	plugin_runphp('loginprocess');
 	$try=$blog->getbyquery("SELECT * FROM `{$db_prefix}user` WHERE LOWER(username)='{$username}' AND `userpsw`='{$password}'");
 	if (!is_array($try)) {
 		catcherror ($lnc[166]);
 	} else {
-		setcookie ('userid', '', time()-3600);
-		setcookie ('userpsw', '', time()-3600);
-		setcookie('blogtemplate', '', time()-3600);
-		setcookie('lastpost', '', time()-3600);
-		setcookie('lastsearch', '', time()-3600);
-		setcookie('sidebaroff', '', time()-3600);
 		$userid=$try['userid'];
 		if ($savecookie==0) {
 			setcookie ('userid', $userid);
 			setcookie ('userpsw', $password);
 		} else {
-			setcookie ('userid', $userid, gmmktime()-$config['timezone']*3600+$savecookie);
-			setcookie ('userpsw', $password, gmmktime()-$config['timezone']*3600+$savecookie);
+			$savecookielong=3600*24*30;
+			setcookie ('userid', $userid, time()+$savecookielong);
+			setcookie ('userpsw', $password, time()+$savecookielong);
 		}
-		catchsuccess ("{$lnc[167]} ".$username, "{$lnc[163]}|index.php");
+		$redirection=array("{$lnc[309]}|{$urlreturn}", "{$lnc[163]}|index.php");
+		if ($try['usergroup']=='2') {
+			$redirection[]="{$lnc[107]}|admin.php";
+			$redirection[]="{$lnc[108]}|admin.php?act=edit";
+		}
+		catchsuccess ("{$lnc[167]} ".$username, $redirection);
 	}
 }
 
 if ($job=='logout') {
+	plugin_runphp('logoutprocess');
 	define ('isLogout', 1);
-	if ($config['noadminsession']!='1') {
-		if ($db_defaultsessdir!=1) session_save_path("./{$db_tmpdir}");
-		session_cache_limiter("private, must-revalidate");
-		session_start();
-		session_destroy();
-	}
-	$logoutjs="\n<script type='text/javascript'>quicklogout();</script>\n";
-	catchsuccess ($lnc[168], "{$logoutjs}{$lnc[163]}|index.php");
+	setcookie ('userid', '', time()-3600);
+	setcookie ('userpsw', '', time()-3600);
+	catchsuccess ($lnc[168], "{$lnc[163]}|index.php");
 }
 
 if ($job=='applylink') {
@@ -241,7 +243,7 @@ if ($job=='applylink') {
 	$formbody.=$t->set('form_eachline', array('text'=>"*{$lnc[170]}", 'formelement'=>"<input type='text'  class='text' size='30' name='siteurl' />"));
 	$formbody.=$t->set('form_eachline', array('text'=>$lnc[171], 'formelement'=>"<input type='text'  class='text' size='30' name='sitelogo' /> {$lnc[172]}"));
 	$formbody.=$t->set('form_eachline', array('text'=>$lnc[173], 'formelement'=>"<input type='text'  class='text' size='30' name='siteintro' /> {$lnc[174]}"));
-	$formbody.=$t->set('form_eachline', array('text'=>$lnc[175], 'formelement'=>"{$lnc[176]}<br/><ul><li>{$lnc[177]}<br/><textarea class='text' cols='60' rows='2' name='sitemycode1'>{$mycode1}</textarea></li><li>{$lnc[178]}<br/><textarea class='text' cols='60' rows='2' name='sitemycode2'>{$mycode2}</textarea></li></ul>"));
+	$formbody.=$t->set('form_eachline', array('text'=>$lnc[175], 'formelement'=>"{$lnc[176]}<br/><ul><li>{$lnc[177]}<br/><textarea class='text' cols='40' rows='2' name='sitemycode1'>{$mycode1}</textarea></li><li>{$lnc[178]}<br/><textarea class='text' cols='40' rows='2' name='sitemycode2'>{$mycode2}</textarea></li></ul>"));
 	if ($config['applylinkvalidation']==1) {
 		$rand=rand (0,100000);
 		$formbody.=$t->set('form_eachline', array('text'=>$lnc[249], 'formelement'=>"<span id='securityimagearea'><img src='inc/securitycode.php?rand={$rand}' alt='' title='{$lnc[250]}'/></span> <input name='securitycode' type='text' id='securitycode' size='16' class='text' /> {$lnc[251]} [<a href=\"javascript: refreshsecuritycode('securityimagearea', 'securitycode');\">{$lnc[283]}</a>]"));

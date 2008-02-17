@@ -156,7 +156,7 @@ function ajax_addcategory () {
 		seld=document.getElementById('targetcate');
 		var targetcate=blogencode(seld.options[seld.selectedIndex].value);
 		var postData = "unuse=unuse&newcatename="+newcatename+"&newcatedesc="+newcatedesc+"&newcatemode="+newcatemode+"&newcateproperty="+newcateproperty+"&targetcate="+targetcate;
-		var gourl=absbaseurl+"admin.php?ajax=on&go=category_new";
+		var gourl="admin.php?ajax=on&go=category_new";
 		makeRequest(gourl, 'quickaddcategory', 'POST', postData);
 	}
 }

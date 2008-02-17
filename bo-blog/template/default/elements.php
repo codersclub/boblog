@@ -13,11 +13,11 @@ $elements['header']=<<<eot
 <link rel="alternate" title="{blogname}" href="feed.php" type="application/rss+xml" />
 {csslocation}
 <title>{pagetitle}{blogname} - {blogdesc}</title>
-<script type="text/javascript" src="images/js/common.js"></script>
+<script type="text/javascript" src="images/js/common.js?jsver={codeversion}"></script>
 {ajax_js}
 {extraheader}
 </head>
-<body>
+<body id="{pageID}">
 eot;
 
 $elements['displayheader']=<<<eot
@@ -67,7 +67,20 @@ eot;
 $elements['displayside']=<<<eot
 		<div id="sidebar" class="sidebar">
 			<div id="innerSidebar">
-				{section_side_components}
+				<div id="innerSidebarSearch">
+				<!--global:{block_search}-->
+				</div>
+				<div id="innerSidebarOne">
+					{section_side_components_one}
+				</div>
+				<div id="innerSidebarTwo">
+					{section_side_components_two}
+				</div>
+				<div id="innerSidebarFooter">
+				<!--global:{section_foot_components}-->
+				<div id="processtime">
+				</div>
+				</div>
 			</div>
 		</div>
 eot;
@@ -86,11 +99,6 @@ eot;
 $elements['displayfooter']=<<<eot
 	</div>
 		<div id="footer">
-			<div id="innerFooter">
-				{section_foot_components}
-			<div id="processtime">
-			</div>
-			</div>
 		</div>
 	</div>
 </div>
@@ -135,65 +143,96 @@ $elements['sideblock_category']=<<<eot
 </div>
 eot;
 
-$elements['displaybody']=<<<eot
-<div id="sidebar" class="sidebar">
-<div id="innerSidebar">
-{section_side_components}
-</div>
-</div>
-eot;
-
+$elements['sideblock_search']='';
 
 $elements['excerpt']=<<<eot
 <div class="textbox">
+	<div class="textbox-calendar">
+	<span class="textbox-calendar-month">{entrydatemnameshort}</span>
+	<span class="textbox-calendar-day">{entrydated}</span>
+	</div>
 	<div class="textbox-title">
 		<h4>
-		{entrystar} {entrytitle}
+		{entrytitle} {entrystar} {entryicon}
 		</h4>
 		<div class="textbox-label">
-		[{entryicon} {entrydate} {entrytime} | by {entryauthor} ]
+		{entryauthor} , {entrytime} , {entrycate} , {entrycomment} , {entrytb} , {entryviews} , Via {entrysourcewithlink} {ifadmin}
 		</div>
-	</div>
-	<div class="textbox-content">
-	{entrycontent}
-	</div>
-	<div class="tags" style="display: {iftags}"> {tags} {alltags}
-	</div>
-	<div class="textbox-bottom">
-	{entrycateicon} {entrycate} | {entrycomment} | {entrytb} | {entryviews} {ifadmin}
 	</div>
 	{tbbar}
 	{adminbar}
+	<div class="textbox-content">
+	{entrycontent}
+	</div>
+	<div class="textbox-bottom">
+	</div>
+	<div class="tags" style="display: {iftags}">{tags} {alltags}
+	</div>
 </div>
 eot;
 
 $elements['excerptontop']=<<<eot
 <div class="textbox">
+	<div class="textbox-calendar">
+	<span class="textbox-calendar-month">{entrydatemnameshort}</span>
+	<span class="textbox-calendar-day">{entrydated}</span>
+	</div>
 	<div class="textbox-title">
-		<div style="float: left; width: 95%;">
 		<h4>
-		{entrystar} {entrytitle}
+		[{$lnc[33]}] <a href="javascript: showhidediv('{topid}');">{entrytitletext}</a> {entrystar} {entryicon}
 		</h4>
-		</div> 
-		<div style="float: right; text-align:right; width: 5%;"><a href="javascript: showhidediv('{topid}');"><img src="{$template['images']}/folder.gif" border="0" alt="" title="{$lnc[236]}" /></a></div>
-		<div class="textbox-label" style="clear: both;">
-		[{entryicon} {entrydate} {entrytime} | by {entryauthor} ]
+		<div class="textbox-label">
+		{entryauthor} , {entrytime} , {entrycate} , {entrycomment} , {entrytb} , {entryviews} , Via {entrysourcewithlink} {ifadmin}
 		</div>
 	</div>
+	{tbbar}
+	{adminbar}
 	<div id="{topid}" style="display: none;">
 	<div class="textbox-content">
 	{entrycontent}
 	</div>
+	<div class="textbox-bottom">
+	</div>
 	<div class="tags" style="display: {iftags}"> {tags} {alltags}
 	</div>
-	<div class="textbox-bottom">
-	{entrycateicon} {entrycate} | {entrycomment} | {entrytb} | {entryviews} {ifadmin}
+	</div>
+	<div class="textbox-top"></div>
+</div>
+eot;
+
+$elements['viewentry']=<<<eot
+<div class="article-top">
+	<div class="prev-article">{previous}</div>
+	<div class="next-article">{next}</div>
+</div>
+<div class="textbox">
+	<div class="textbox-calendar">
+	<span class="textbox-calendar-month">{entrydatemnameshort}</span>
+	<span class="textbox-calendar-day">{entrydated}</span>
+	</div>
+	<div class="textbox-title">
+		<h4>
+		{entrytitletext} {entrystar} {entryicon} 
+		</h4>
+		<div class="textbox-label">
+		 {entryauthor} , {entrytime} , {entrycate} , {entrycomment} , {entrytb} , {entryviews} ,  Via {entrysourcewithlink} {ifadmin}<span class="text-label-indented">{toolbar}</span>
+		</div>
 	</div>
 	{tbbar}
 	{adminbar}
+	<div class="textbox-content" id="zoomtext">
+	 	{entrycontent} {ifedited}
+	</div>
+	<div class="textbox-bottom">
+	</div>
+	<div class="tags" style="display: {iftags}"> {tags} {alltags}
 	</div>
 </div>
+<div id="commentWrapper" class="comment-wrapper">
+	<a name="topreply"></a>
+	<div id="addnew"></div>
 eot;
+
 
 $elements['list']=<<<eot
 	<tr>
@@ -222,40 +261,8 @@ $elements['listbody']=<<<eot
 </div>
 eot;
 
-$elements['viewentry']=<<<eot
-<div class="article-top">
-	<div class="prev-article">{previous}</div>
-	<div class="next-article">{next}</div>
-</div>
-<div class="textbox">
-	<div class="textbox-title">
-		<h4>
-		{entrystar} {entrytitle}
-		</h4>
-		<div class="textbox-fontsize">
-		{toolbar}
-		</div>
-		<div class="textbox-label">
-		[{entryicon} {entrydate} {entrytime} | by {entryauthor} ]
-		</div>
-	</div>
-	<div class="textbox-content" id="zoomtext">
-		{entrycontent} {ifedited}
-		<div class="tags" style="display: {iftags}">{tags} {alltags}</div>
-	</div>
-	<div class="textbox-bottom">
-	{entrycateicon} {entrycate} | {entrycomment} | {entrytb} | {entryviews} {ifadmin}
-	{tbbar}
-	{adminbar}
-	</div>
-</div>
-<div id="commentWrapper" class="comment-wrapper">
-	<a name="topreply"></a>
-	<div id="addnew"></div>
-eot;
-
 $elements['comment']=<<<eot
-	<div class="commentbox">
+	<div class="commentbox commentbox-{oddorcouplecss}">
 		<div class="commentbox-title">
 		{replier} {replieremail} {replierhomepage} {replierip}
 			<div class="commentbox-label">{replytime} {addadminreply} {deladminreply} {delreply} {blockreply}</div>
@@ -275,7 +282,7 @@ eot;
 $elements['trackback']=<<<eot
 	<div class="trackbackbox">
 		<div class="trackbackbox-title">
-		<img src="{$template['images']}/trackback.gif" alt="" title="{$lnc[60]}"/> {tbtitle} 
+		 {tbtitle} 
 			<div class="trackbackbox-label">
 			[{tbtime}] {delreply}
 			</div>
@@ -297,7 +304,7 @@ $elements['form_reply']=<<<eot
 				<td colspan="2" class="formbox-comment-title">{formtitle}</td>
 			</tr>
 			<tr>
-				<td class="formbox-comment-rowheader" width="140">
+				<td class="formbox-comment-rowheader" width="140" valign="top">
 					<div class="panel-smilies">
 						<div class="panel-smilies-title">{$lnc[241]}</div>
 							<div class="panel-smilies-content">
@@ -324,7 +331,7 @@ $elements['form_reply']=<<<eot
 					</div>
 					{ubbcode}
 					{if_securitycode_begin}<script type="text/javascript">securitycodejs="{$lnc[249]} <span id='securityimagearea'><img src='inc/securitycode.php?rand={rand}' alt='' title='{$lnc[250]}'/></span> <input name='v_security' id='v_security' type='text' size='4' maxlength='4' class='text' /> {$lnc[251]}   [<a href=\"javascript: refreshsecuritycode('securityimagearea', 'v_security');\">{$lnc[283]}</a>]";</script>  {if_securitycode_end}
-					<textarea name="v_content" id="v_content" cols="64" rows="10" onkeydown="ctrlenterkey(event);" onfocus="if (securitycodejs!=null) {document.getElementById('showsecuritycode').innerHTML=securitycodejs; securitycodejs=null;}"></textarea> <br/>	<span id="showsecuritycode"></span>
+					<textarea name="v_content" id="v_content" cols="44" rows="10" onkeydown="ctrlenterkey(event);" onfocus="if (securitycodejs!=null) {document.getElementById('showsecuritycode').innerHTML=securitycodejs; securitycodejs=null;}"></textarea> <br/>	<span id="showsecuritycode"></span>
 					<div style="padding-top:10px">
 					{hidden_areas}
 						<input type="button" name="btnSubmit" id="btnSubmit" value="{$lnc[25]}" class="button" onclick="ajax_submit('{jobnow}'); return false;"/>&nbsp;
@@ -385,11 +392,9 @@ $elements['login']=<<<eot
 eot;
 
 $elements['contentpage']=<<<eot
-<div class="textbox">
-	<div class="textbox-title"><h4>{title}</h4></div>
-	<div class="textbox-content">
-		{contentbody}
-	</div>
+<div class="pagebox-title"><h4>{title}</h4></div>
+<div class="pagebox-content">
+{contentbody}
 </div>
 eot;
 
@@ -444,6 +449,19 @@ $elements['linkdiv']=<<<eot
 <div class="linkover">
 <div class="linkgroup">{title}</div>
 <div class="linkgroupcontent">{tablebody}</div>
+</div>
+eot;
+
+$elements['viewpage']=<<<eot
+<div class="pagebox">
+	<div class="pagebox-title">
+		<h4>
+		{entrytitle}
+		</h4>
+	</div>
+	<div class="pagebox-content">
+		{entrycontent}
+	</div>
 </div>
 eot;
 

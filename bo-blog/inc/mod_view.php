@@ -32,7 +32,7 @@ if ($job=='user') {
 	$formbody.=$t->set('form_eachline', array('text'=>$lnc[145], 'formelement'=>stripslashes($nowuser['qq'])));
 	$formbody.=$t->set('form_eachline', array('text'=>'MSN', 'formelement'=>stripslashes($nowuser['msn'])));
 	$formbody.=$t->set('form_eachline', array('text'=>'Skype', 'formelement'=>stripslashes($nowuser['skype'])));
-	$formbody.=$t->set('form_eachline', array('text'=>$lnc[146], 'formelement'=>stripslashes($nowuser['from'])));
+	$formbody.=$t->set('form_eachline', array('text'=>$lnc[146], 'formelement'=>stripslashes($nowuser['fromplace'])));
 	$formbody.=$t->set('form_eachline', array('text'=>$lnc[147], 'formelement'=>stripslashes($nowuser['intro'])));
 	$section_table=$t->set('normaltable', array('tablebody'=>$formbody));
 	$section_body_main=$t->set('contentpage', array('title'=>$lnc[194], 'contentbody'=>$section_table));
@@ -45,12 +45,24 @@ if ($job=='links') {
 	$linkgp=$blog->getgroupbyquery("SELECT * FROM `{$db_prefix}linkgroup` ORDER BY `linkgporder`");
 	$links=$blog->getgroupbyquery("SELECT * FROM `{$db_prefix}links` ORDER BY `linkorder`");
 	if ($links && is_array($links)) {
+		$mbcon['linkperpage']=($mbcon['linkperpage']>0) ? floor($mbcon['linkperpage']) : 2;
+		$linkeachcloumn=floor(100/$mbcon['linkperpage']).'%';
+		$rowcount=array();
 		foreach ($links as $linkeachitem) {
 			unset ($tmp_gp, $tmp_displayitem);
 			$tmp_gp=$linkeachitem['linkgptoid'];
 			if ($linkeachitem['linklogo']) $displayitemlogo="<img src=\"{$linkeachitem['linklogo']}\" alt=\"{$linkeachitem['linkname']}\" border=\"0\" />";
 			else $displayitemlogo='';
+			if (empty($rowcount[$tmp_gp])) {
+				$rowcount[$tmp_gp]=1;
+				$alllinks[$tmp_gp].="<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\">\n";
+			}
+			if ($rowcount[$tmp_gp]%$mbcon['linkperpage']==1) $alllinks[$tmp_gp].="<tr valign=\"top\">";
+			$alllinks[$tmp_gp].="<td width=\"{$linkeachcloumn}\">\n";
 			$alllinks[$tmp_gp].=$t->set('eachlink', array('logo'=>$displayitemlogo, 'title'=>"<a href=\"{$linkeachitem['linkurl']}\" target=\"_blank\">{$linkeachitem['linkname']}</a>", 'desc'=>$linkeachitem['linkdesc']));
+			$alllinks[$tmp_gp].="</td>\n";
+			if ($rowcount[$tmp_gp]%$mbcon['linkperpage']==0) $alllinks[$tmp_gp].="</tr>";
+			$rowcount[$tmp_gp]+=1;
 		}
 	}
 
@@ -58,6 +70,7 @@ if ($job=='links') {
 		foreach ($linkgp as $linkgpeachitem) {
 			unset ($tmp_gp);
 			$tmp_gp=$linkgpeachitem['linkgpid'];
+			$alllinks[$tmp_gp].=($alllinks[$tmp_gp]) ?  '</table>' : '';
 			$displaygp[$tmp_gp]=$t->set('linkdiv', array('title'=>$linkgpeachitem['linkgpname'], 'tablebody'=>$alllinks[$tmp_gp]));
 		}
 	} else {
@@ -71,9 +84,9 @@ if ($job=='links') {
 
 if ($job=='comment') {
 	$start_id=($page-1)*$mbcon['replyperpage'];
-	$records=$blog->getgroupbyquery("SELECT t1.*, t2.title FROM `{$db_prefix}replies` t1 INNER JOIN `{$db_prefix}blogs` t2 ON t2.blogid=t1.blogid WHERE t1.reproperty<=1 AND t2.property<2 ORDER BY t1.reptime DESC LIMIT {$start_id}, {$mbcon['replyperpage']}");
+	$records=$blog->getgroupbyquery("SELECT t1.*, t2.title, t2.blogalias FROM `{$db_prefix}replies` t1 INNER JOIN `{$db_prefix}blogs` t2 ON t2.blogid=t1.blogid WHERE t1.reproperty<=1 AND t2.property<2 ORDER BY t1.reptime DESC LIMIT {$start_id}, {$mbcon['replyperpage']}");
 	for ($i=0; $i<count($records); $i++) {
-		$records[$i]['repcontent']="<strong>{$lnc[71]}</strong><a href=\"{$config['sulink']}{$records[$i]['blogid']}{$config['sulinkext']}\">{$records[$i]['title']}</a><br/><strong>{$lnc[76]}</strong>".$records[$i]['repcontent'];
+		$records[$i]['repcontent']="<strong>{$lnc[71]}</strong><a href=\"".getlink_entry($records[$i]['blogid'], $records[$i]['blogalias'])."\">{$records[$i]['title']}</a><br/><strong>{$lnc[76]}</strong>".$records[$i]['repcontent'];
 	}
 	$m_b=new getblogs;
 	if (is_array($records)) {
@@ -91,9 +104,9 @@ if ($job=='comment') {
 
 if ($job=='tb') {
 	$start_id=($page-1)*$mbcon['replyperpage'];
-	$records=$blog->getgroupbyquery("SELECT t1.*, t2.title FROM `{$db_prefix}replies` t1 INNER JOIN `{$db_prefix}blogs` t2 ON t2.blogid=t1.blogid WHERE t1.reproperty='4' ORDER BY t1.reptime DESC LIMIT {$start_id}, {$mbcon['replyperpage']}");
+	$records=$blog->getgroupbyquery("SELECT t1.*, t2.title, t2.blogalias FROM `{$db_prefix}replies` t1 INNER JOIN `{$db_prefix}blogs` t2 ON t2.blogid=t1.blogid WHERE t1.reproperty='4' ORDER BY t1.reptime DESC LIMIT {$start_id}, {$mbcon['replyperpage']}");
 	for ($i=0; $i<count($records); $i++) {
-		$records[$i]['repemail']="{$lnc[197]} <a href=\"{$config['sulink']}{$records[$i]['blogid']}{$config['sulinkext']}\">{$records[$i]['title']}</a>";
+		$records[$i]['repemail']="{$lnc[197]} <a href=\"".getlink_entry($records[$i]['blogid'], $records[$i]['blogalias'])."\">{$records[$i]['title']}</a>";
 	}
 	$m_b=new getblogs;
 	if (is_array($records)) {
@@ -124,7 +137,7 @@ if ($job=='userlist') {
 		$tmp_gp=$detail_array[$i]['usergroup'];
 		$tmp_sgp=$usergp[$tmp_gp];
 		$tmp_tm=zhgmdate("{$mbcon['timeformat']} H:i", $detail_array[$i]['regtime']+3600*$config['timezone']);
-		$tablebody.="<tr><td width='42%' class=\"listbox-entry\">{$detail_array[$i]['username']}</td><td width='10%'  align='center' class=\"listbox-entry\">{$tmp_sgp}</td><td width='40%' align='center' class=\"listbox-entry\">{$tmp_tm}</td><td width='5%' align='center' class=\"listbox-entry\"><a href='view.php?go=user_{$detail_array[$i]['userid']}'><img src='{$mbcon['images']}/detail.gif' alt='{$lnc[194]}' title='{$lnc[194]}' border='0'></a></td></tr>\n";
+		$tablebody.="<tr><td width='42%' class=\"listbox-entry\">{$detail_array[$i]['username']}</td><td width='10%'  align='center' class=\"listbox-entry\">{$tmp_sgp}</td><td width='40%' align='center' class=\"listbox-entry\">{$tmp_tm}</td><td width='5%' align='center' class=\"listbox-entry\"><a href=\"".getlink_user($detail_array[$i]['userid'])."\"><img src='{$mbcon['images']}/detail.gif' alt='{$lnc[194]}' title='{$lnc[194]}' border='0'></a></td></tr>\n";
 	}
 	$tablelist="<tr><td class=\"listbox-header\" width='42%' align='center'>{$lnc[132]}</td><td class=\"listbox-header\" width='13%'  align='center'>{$lnc[199]}</td><td class=\"listbox-header\" width='40%' align='center'>{$lnc[200]}</td><td class=\"listbox-header\" width='5%' align='center'></td></tr>\n".$tablebody;
 	foreach ($usergp as $i=>$value) {
@@ -170,7 +183,7 @@ if ($job=='archivelist') {
 			$result.="<tr><td colspan=\"4\"><strong>{$y}{$lnc[299]}</strong></td></tr>\n<tr>";
 			for ($j=1; $j<13; $j++) {
 				$resultdates[$y][$j]=floor($resultdates[$y][$j]);
-				$result.="<td><a href=\"index.php?go=archive&cm={$j}&cy={$y}\"><strong>{$j}{$lnc[298]}</strong></a> ({$resultdates[$y][$j]})</td>"; 
+				$result.="<td><a href=\"".getlink_archive($j, $y)."\" rel=\"noindex,nofollow\"><strong>{$j}{$lnc[298]}</strong></a> ({$resultdates[$y][$j]})</td>"; 
 				if ($j%4==0) $result.="</tr><tr>";
 			}
 			$result.="</tr>\n";
