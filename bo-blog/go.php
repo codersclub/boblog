@@ -2,13 +2,13 @@
 /* -----------------------------------------------------
 Bo-Blog 2 : The Blog Reloaded.
 <<A Bluview Technology Product>>
-禁止使用Windows记事本修改文件，由此造成的一切使用不正常恕不解答！
+Prohibition of the Use Windows Notepad to modify the file, all the resulting answer will not be the use of non-normal!
 PHP+MySQL blog system.
 Code: Bob Shen
 Offical site: http://www.bo-blog.com
 Copyright (c) Bob Shen
 In memory of my university life
-本文件用于基于PHP的URL优化
+This file is used for URL optimization based on PHP 
 ------------------------------------------------------- */
 
 @error_reporting(E_ERROR | E_WARNING | E_PARSE);

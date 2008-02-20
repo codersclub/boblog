@@ -2,17 +2,17 @@
 /* -----------------------------------------------------
 Bo-Blog 2 : The Blog Reloaded.
 <<A Bluview Technology Product>>
-禁止使用Windows记事本修改文件，由此造成的一切使用不正常恕不解答！
+Prohibition of the Use Windows Notepad to modify the file, all the resulting answer will not be the use of non-normal!
 PHP+MySQL blog system.
 Code: Bob Shen
 Offical site: http://www.bo-blog.com
-Copyright (c) Bob Shen 中国－上海
+Copyright (c) Bob Shen - China, Shanghai
 In memory of my university life
 ------------------------------------------------------- */
 
 //Security Code Image Generation
 //This part needs GD Library to be installed
-//Original Code: 小猪会气功   http://guan8.net
+//Original Code: Piglets will qigong   http://guan8.net
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
 require_once ("../data/config.php");
 
@@ -21,13 +21,13 @@ session_cache_limiter("private, must-revalidate");
 session_start();
 session_register('code');
 $_SESSION['code'] = "";
-$width = "40";//图片宽
-$height = "15";//图片高
-$len = "4";//生成几位验证码
-$bgcolor = "#ffffff";//背景色
-$noise = true;//生成杂点
-$noisenum = 10;//杂点数量
-$border = false;//边框
+$width = "40";//Picture width
+$height = "15";//Picture height
+$len = "4";//Generated a number of verification code
+$bgcolor = "#ffffff";//Background Color
+$noise = true;//Miscellaneous points generated
+$noisenum = 10;//Number of miscellaneous points
+$border = false;//Border
 $bordercolor = "#000000";
 $image = imageCreate($width, $height);
 $back = getcolor($bgcolor);
