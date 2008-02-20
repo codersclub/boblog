@@ -73,4 +73,3 @@ function setnoise()
 		imageSetPixel($image, rand(0, $width), rand(0, $height), $randColor);
 	} 
 }
-?> 
