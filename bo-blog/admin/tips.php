@@ -1,11 +1,11 @@
 <?PHP
-$showtips[0]='您可以创建一个隐藏的分类，没有查看权限的用户甚至不会意识到该分类的存在。';
-$showtips[1]='Bo-Blog支持RSS订阅。';
-$showtips[2]='Bo-Blog支持MetaWeblogAPI，可以通过日志编辑软件直接撰写和编辑。';
-$showtips[3]='您可将RSS文件作为数据源导入数据库中。';
-$showtips[4]='您可以将想要推荐的日志加上星标。';
-$showtips[5]='您可以一次向多个blog发送引用（Trackback）。';
-$showtips[6]='留言审核机制可以从关键词、链接出现频率和文字长短等多方面识别垃圾留言。';
-$showtips[7]='如果您的服务器支持GD，可以打开验证码，防止恶意留言。';
-$showtips[8]='您可以任意增删侧边栏上的项目，比如添加广告或者天气预报等。';
-$showtips[9]='Bo-Blog采用UTF-8编码，可以支持世界上几乎所有语种的文字。';
+$showtips[0]='You can create a hidden classification, users do not see not even aware of the existence of the classification.';
+$showtips[1]='Bo-Blog support RSS subscriptions.';
+$showtips[2]='Bo-Blog support MetaWeblogAPI, log editing software can write and edit directly.';
+$showtips[3]='Your RSS file can be imported as a data source database.';
+$showtips[4]='You can log you want to recommend starred.';
+$showtips[5]='You can send to multiple blog quoted (Trackback).';
+$showtips[6]='Message from Key audit mechanism, the link frequency and the length of the text to identify spam and so on.';
+$showtips[7]='If your server supports the GD, you can open the code to prevent the malicious message.';
+$showtips[8]='you can add to, delete from any item on the sidebar, for example, to add advertisements or weather.';
+$showtips[9]='Bo-Blog using UTF-8 encoding, can support almost all the world's languages text.';
