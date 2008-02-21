@@ -1,4 +1,4 @@
-//Current Language: 简体中文
+//Current Language: English
 var jslang = new Array ();
 jslang[0]='Reply: ';
 jslang[1]='Submit';
@@ -73,3 +73,9 @@ jslang[69]='Type in a password for this post.\nYou need to input the password ne
 jslang[70]='Maximum password length is 12 characters.';
 jslang[71]='Copy';
 jslang[72]='Copied to clipboard!';
+jslang[73]='Auto-save is disabled';
+jslang[74]='Auto-save failed.';
+jslang[75]='The error message is as follows:';
+jslang[76]='Warning: If you load the auto archive now, all the changes made this time will be invalid! Whether to continue?';
+jslang[77]='Cleanup failed.';
+jslang[78]='Please configure the CC Video Alliance plug-in in the plug-in management first, you have not yet bound the user ID number!';

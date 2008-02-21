@@ -50,7 +50,7 @@ $lnc=array (
 44=>'Clear replies',
 45=>'Clear trackbacks',
 46=>'Property: ',
-47=>'Lock', //动词，去锁定
+47=>'Lock', //Verb, go to lock 
 48=>'Unlock',
 49=>'Pin+unfold',
 50=>'Pin+fold',
@@ -295,14 +295,14 @@ $lnc=array (
 289=>'<strong>Note: </strong>The trackback url will expire after 23:59:59 today',
 290=>'Block',
 291=>'Block',
-292=>'File data/mod_config.php is damaged. ',
-293=>'File data/config.php is damaged. ',
+292=>'File data/mod_config.php is damaged.',
+293=>'File data/config.php is damaged.',
 294=>'Password protected',
 295=>'This entry is protected. Please go to the original site and type in the password if you want to read it.',
 296=>'This is a protected entry. To view its content, please input the password.',
 297=>'Password is incorrect!',
-298=>'', //加在归档页的月份后
-299=>'', //加在归档页的年后
+298=>'', //Add after the month of the archive page
+299=>'', //Add after the year of the archive page
 300=>'You can modify your post before',
 301=>'.',
 302=>'Modify',
@@ -315,7 +315,7 @@ $lnc=array (
 309=>'Back to where you click the login link',
 310=>'Browser is redirecting, or you can click one of the following links:',
 311=>'Hidden content',
-312=>'You are not allowed to see this part. Please '
+312=>'You are not allowed to see this part. Please ',
 );
 
 //农历用字

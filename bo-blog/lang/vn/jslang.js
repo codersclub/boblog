@@ -78,3 +78,4 @@ jslang[74]='Tự động lưu thất bại.';
 jslang[75]='Thông tin báo lỗi như sau：';
 jslang[76]='Chú ý: nếu tải phần lưu tự động, phần thay đổi sẽ  bị mất! Có tiếp tục không?';
 jslang[77]='Xoá thất bại.';
+jslang[78]='Trước tiên, hãy định cấu hình trình cắm CC Video Alliance trong quản lý trình cắm, bạn chưa ràng buộc số ID người dùng!';

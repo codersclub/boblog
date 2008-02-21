@@ -319,6 +319,7 @@ $lnc=array (
 312=>'Nội dung này cần đăng nhập mới xem được. Hãy '
 );
 
+//nhân vật Trung Quốc 
 $lnlunarcalendar=array(
 'tiangan'=>array("không rõ","Năm Giáp ","Năm Ất ","Năm Bính ","Năm Đinh ","Năm Mậu ","Năm Kỷ ","Năm Canh ","Năm Tân ","Năm Nhâm ","Năm Quý "),
 'dizhi'=>array("không rõ","Tý（Chuột）","Sửu（Trâu）","Dần（Hổ）","Mão（Mèo）","Thìn（Rồng）",
