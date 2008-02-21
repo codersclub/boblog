@@ -8,7 +8,7 @@ if (is_file($definedfile)) {
 	$sorttype=floor($sorttype);
 }
 
-if (!$uid) $plugincode="<script type='text/javascript'>alert(\"请先在插件管理中配置CC视频联盟插件，您现在尚未绑定用户ID号！\");</script>";
+/*vot*/ if (!$uid) $plugincode="<script type='text/javascript'>alert(jslang[78]);</script>";
 else $plugincode="<script type='text/javascript' src='http://union.bokecc.com/ccplugin.bo?userID={$uid}&type=boblog'></script>";
 
 global $plugin_ubbeditor_functions, $plugin_ubbeditor_buttons;
