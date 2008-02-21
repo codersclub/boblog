@@ -5,7 +5,7 @@ Bo-Blog 2 : The Blog Reloaded.
 PHP+MySQL blog system under GNU Licence.
 Code: Bob Shen <bob.shen@gmail.com>
 Offical site: http://www.bo-blog.com
-Copyright (c) Bob Shen й?
+Copyright (c) Bob Shen, China - Shanghai
 In memory of my university life
 ------------------------------------------------------- */
 
