@@ -1,5 +1,5 @@
 <?PHP
-//
+//Prohibition of the Use Windows Notepad to modify the file, all the resulting answer will not be the use of non-normal!
 $langname['front']="Russian";
 $langname['languagename']="ru-RU";
 $lnc=array (
@@ -50,7 +50,7 @@ $lnc=array (
 44=>'Clear replies',
 45=>'Clear trackbacks',
 46=>'Property: ',
-47=>'Lock', //еЉЁиЇЌпјЊеЋ»й”Ѓе®љ
+47=>'Lock', //Verb, go to lock
 48=>'Unlock',
 49=>'Pin+unfold',
 50=>'Pin+fold',
@@ -70,7 +70,7 @@ $lnc=array (
 64=>'Малый',
 65=>'Subscribe',
 66=>'Сохранить как TXT файл',
-67=>'Read more 1',
+67=>'Читать дальше',
 68=>'Читать дальше',
 69=>'Previous entry',
 70=>'Next entry',
@@ -95,8 +95,8 @@ $lnc=array (
 89=>'Вход',
 90=>'Профиль',
 91=>'Сообщения',
-92=>'Sidebar',
-93=>'Starred',
+92=>'Боковик',
+93=>'Популярные',
 94=>'Ссылки',
 95=>'RSS категории',
 96=>'Категории',
@@ -295,23 +295,30 @@ $lnc=array (
 289=>'<strong>Note: </strong>The trackback url will expire after 23:59:59 today',
 290=>'Block',
 291=>'Block2',
-292=>'Файл data/mod_config.php поврежден. ',
-293=>'Файл data/config.php поврежден. ',
+292=>'Файл data/mod_config.php поврежден.',
+293=>'Файл data/config.php поврежден.',
 294=>'Защита паролем',
 295=>'This entry is protected. Please go to the original site and type in the password if you want to read it.',
 296=>'This is a protected entry. To view its content, please input the password.',
 297=>'Неверный пароль!',
-298=>'', //еЉ ењЁеЅ’жЎЈйЎµзљ„жњ€д»ЅеђЋ
-299=>'', //еЉ ењЁеЅ’жЎЈйЎµзљ„е№ґеђЋ
+298=>'', //Add after the month of the archive page
+299=>'', //Add after the year of the archive page
 300=>'You can modify your post before',
 301=>'.',
 302=>'Modify',
 303=>'Вы не можете редактировать данное сообщение. Либо сообщение в настоящее время заблокировано, либо у Вас недостаточно прав для выполнения данного действия.',
 304=>'This is a protected comment/message. To view its content, please input the password: ',
-305=>'Unexisted comment/message.'
+305=>'Unexisted comment/message.',
+306=>'Source: ',
+307=>'Original',
+308=>'Your nickname is a registered username. Please provide your password if you registered it, or choose another nickname if you didn\'t. Sorry for any inconvenience.',
+309=>'Back to where you click the login link',
+310=>'Browser is redirecting, or you can click one of the following links:',
+311=>'Hidden content',
+312=>'You are not allowed to see this part. Please ',
 );
 
-//е†њеЋ†з”Ёе­—
+//Chinese characters
 $lnlunarcalendar=array(
 'tiangan'=>array("Unknown","Jia ","Yi ","Bing ","Ding ","Wu ","Ji ","Geng ","Xin ","Ren ","Gui "),
 'dizhi'=>array("Unknown","Zi (Mouse)","Chou (Ox)","Yin (Tiger)","Mao (Rabbit)","Chen (Dragon)",

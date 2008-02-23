@@ -1,5 +1,5 @@
 <?PHP
-//
+//Prohibition of the Use Windows Notepad to modify the file, all the resulting answer will not be the use of non-normal!
 $langname['front']="English";
 $langname['languagename']="en-US";
 $lnc=array (
@@ -318,7 +318,7 @@ $lnc=array (
 312=>'You are not allowed to see this part. Please ',
 );
 
-//农历用字
+//Chinese characters
 $lnlunarcalendar=array(
 'tiangan'=>array("Unknown","Jia ","Yi ","Bing ","Ding ","Wu ","Ji ","Geng ","Xin ","Ren ","Gui "),
 'dizhi'=>array("Unknown","Zi (Mouse)","Chou (Ox)","Yin (Tiger)","Mao (Rabbit)","Chen (Dragon)",

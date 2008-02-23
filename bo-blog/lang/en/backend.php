@@ -1,5 +1,5 @@
 <?PHP
-//
+//Prohibition of the Use Windows Notepad to modify the file, all the resulting answer will not be the use of non-normal!
 $langname['back']="en-US";
 $lna=array (
 0=>'Admin',
@@ -902,7 +902,7 @@ $lna=array (
 897=>'Search and session usage will generate many temp files in the temporary directory. You need to dump all of the temp files regularly.',
 898=>'Rebuild the calendar',
 899=>'You need to rebuild the calendar after you make some changes to time zone or after importing some new data.',
-900=>'<b>Important: </b>Some important data stored in text files are not exported. Please backup the files (mainly modules.php、mod_config.php、usergroup*.php) in dir data/ manually.',
+900=>'<b>Important: </b>Some important data stored in text files are not exported. Please backup the files (mainly modules.phpгЂЃmod_config.php, usergroup*.php) in dir data/ manually.',
 901=>'Guest',
 902=>'Show entry counter of each category',
 903=>'Plugin management has been finished.',
@@ -987,7 +987,7 @@ $lna=array (
 982=>'Select a dir',
 983=>'Upload options',
 984=>'Add watermarks',
-985=>'Watermark file is images/others/watermark.png . Replace it through FTP. <br><b>Note: </b>PHP 4.3.0 or higher and GD Library is required.',
+985=>'Watermark file is images/others/watermark.png. Replace it through FTP. <br><b>Note: </b>PHP 4.3.0 or higher and GD Library is required.',
 986=>'Image size limit',
 987=>'pix (widthxheight, eg. 200x200)<br>Only images larger than this size will be added a watermark.',
 988=>'Watermark location',
