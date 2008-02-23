@@ -53,11 +53,11 @@ input, textarea, select {
 	float:left;
 	margin: 0;
 	padding: 0;
-	width:80px;	
+*	width:80px;	
 	text-align: center;
 	background: url('bg_nav.png') repeat-x;
 	border: 1px solid #93ADC7;
-	border-left: none;
+*	border-left: none;
 }
 #adminheaderbar .firstitem {
 	border-left: 1px solid #93ADC7;
@@ -76,7 +76,7 @@ input, textarea, select {
 #adminheaderbar li a {
 	text-decoration: none; display: block; color: #044275;
 	height: 23px;
-	padding-top: 5px;
+	padding: 5px 0.5em;
 }
 *+html #adminheaderbar li a {
 	padding-top: 8px;

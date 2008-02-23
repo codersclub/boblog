@@ -55,7 +55,8 @@ textarea, select {
 #adminheaderbar li {
 	display: block;
 	float:left;
-	width:80px;	
+*	width:80px;
+	padding: 0;
 	text-align: center;
 	background: url('images/bgnavitems.png') no-repeat;
 	background-position: 0px 1px;
@@ -63,7 +64,7 @@ textarea, select {
 #adminheaderbar li a {
 	text-decoration: none; display: block; color: #fff;
 	height: 23px;
-	padding-top: 5px;
+	padding: 5px 0.5em;
 }
 #adminheaderbar li a:hover {
 	background: url('images/bgnavitems.png') no-repeat;

@@ -139,11 +139,10 @@ h1 a:hover {
 	list-style: none;
 	text-align: center;
 	float: left;
-	width: 72px;
+*	width: 72px;
 }
 #menu a{
-	padding: 8px;
-	padding-bottom: 2px;
+	padding: 2px 8px;
 	display: block;
 	color: #999;
 	height: 20px;
@@ -155,7 +154,7 @@ h1 a:hover {
 	color: #000;
 	background: #F4FBFF;
 	border: 1px solid #9EC9FF;
-	border-bottom: none;
+*	border-bottom: none;
 }
 
 /****** Content Layout ******/

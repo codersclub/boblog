@@ -176,19 +176,17 @@ h1 a:hover {
 }
 #menu li{
 	list-style: none;
-	width: 68px;
+*	width: 68px;
 	float: left;
 	text-align: center;
 	padding: 0px;
 	margin: 0px;
 }
 #menu a{
-	padding-top: 5px;
+	padding: 5px 5px;
 	display: block;
 	color: #ffffff;
 	height: 20px;
-	padding-left: 4px;
-	padding-right: 4px;
 	/* background: url('images/menu_bg.gif') no-repeat;  */
 }
 #menu a:hover, #menu .activepage a {
