@@ -19,7 +19,6 @@ require_once ("../data/config.php");
 if ($db_defaultsessdir!=1) session_save_path("../{$db_tmpdir}");
 session_cache_limiter("private, must-revalidate");
 session_start();
-session_register('code');
 $_SESSION['code'] = "";
 $width = "40";//Picture width
 $height = "15";//Picture height
