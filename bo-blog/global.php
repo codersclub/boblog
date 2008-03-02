@@ -17,7 +17,7 @@ $codename="summer";
 
 if (file_exists('install/install.php')) {
 	@header("Content-Type: text/html; charset=utf-8");
-	die ("WARNING: Installation file: install/install.php is still on your server. Please DELETE or RENAME it now.<br>警告：安装文件install/install.php仍然在您的服务器上，请立刻将其改名或删除！<br>警告：安裝程式install/install.php仍然在您的伺服器上，請立刻將其改名或刪除！");
+	die ("WARNING: Installation file: install/install.php is still on your server. Please DELETE or RENAME it now.<br>警告：安装文件install/install.php仍然在您的服务器上，请立刻将其改名或删除！");
 }
 
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
