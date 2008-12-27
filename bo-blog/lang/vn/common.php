@@ -316,7 +316,14 @@ $lnc=array (
 309=>'Xem tiếp trang trước khi đăng nhập',
 310=>'Xin chờ trang web tự chuyển, hoặc bấm kết nối dưới đây：',
 311=>'Nội dung ẩn giấu',
-312=>'Nội dung này cần đăng nhập mới xem được. Hãy '
+312=>'Nội dung này cần đăng nhập mới xem được. Hãy ',
+313=>'HTTP/1.1 404 Page Not Found.',
+314=>"You can also login with your <a href=\"http://vi.wikipedia.org/wiki/OpenID\" target=\"_blank\">OpenID</a>",
+315=>'OpenID Error:<br/>',
+316=>'You have chosen to deny the OpenID authentification request.<br/>Please go back or <a href="javascript: history.go(-2)"><strong>Click Here</strong></a> to cancel the process, but you will lose the unsubmitted content.',
+317=>'You are now logged in with limited permissions as ',
+318=>'OpenID',
+319=>'OpenID has been disabled.'
 );
 
 $lnlunarcalendar=array(

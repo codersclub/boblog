@@ -41,7 +41,7 @@ if ($job=='default') {
 
 	//Begin check unapproved comments and messages
 	$pending_replies=$blog->countbyquery("SELECT COUNT(repid) FROM `{$db_prefix}replies` WHERE `reproperty`=2 OR `reproperty`=3");
-	$pending_messages=$blog->countbyquery("SELECT COUNT(repid) FROM `{$db_prefix}messages` WHERE `reproperty`=2 OR `reproperty`=3");
+	if ($flset['guestbook']!=1) $pending_messages=$blog->countbyquery("SELECT COUNT(repid) FROM `{$db_prefix}messages` WHERE `reproperty`=2 OR `reproperty`=3");
 	$pending_tbs=$blog->countbyquery("SELECT COUNT(repid) FROM `{$db_prefix}replies` WHERE `reproperty`=5");
 	if (file_exists("data/cache_applylinks.php")) {
 		$tmps=@file("data/cache_applylinks.php");
@@ -50,7 +50,10 @@ if ($job=='default') {
 		unset ($tmps);
 	} else $pending_links=0;
 	$pending_replies_show=(empty($pending_replies)) ? " (0 {$lna[45]})" : " (<b><font color=red>{$pending_replies}</font> {$lna[45]}</b>)";
-	$pending_messages_show=(empty($pending_messages)) ? " (0 {$lna[45]})" : " (<b><font color=red>{$pending_messages}</font> {$lna[45]}</b>)";
+	if ($flset['guestbook']!=1) {
+		$pending_messages_show=(empty($pending_messages)) ? " (0 {$lna[45]})" : " (<b><font color=red>{$pending_messages}</font> {$lna[45]}</b>)";
+		$pending_messages_shows="<li><a href=\"admin.php?go=message_censor\">{$lna[26]}</a> $pending_messages_show</li>";
+	}
 	$pending_tbs_show=(empty($pending_tbs)) ? " (0 {$lna[45]})" : " (<b><font color=red>{$pending_tbs}</font> {$lna[45]}</b>)";
 	$pending_links_show=(empty($pending_links)) ? " (0 {$lna[45]})" : " (<b><font color=red>{$pending_links}</font> {$lna[45]}</b>)";
 
@@ -62,9 +65,9 @@ if ($job=='default') {
 	if (file_exists("lang/{$langback}/licence")) $copytxt=nl2br(readfromfile("lang/{$langback}/licence"));
 	else $copytxt=nl2br(readfromfile("admin/licence"));
 	$display_overall.=highlightadminitems('default', 'main');
-$display_overall.= <<<eot
-<table class='tablewidth' align=center cellpadding=4 cellspacing=0>
+$display_overall_plus= <<<eot
 <form action='admin.php?go=main_selectadminskin' method='post'>
+<table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
 <td width=160 class="sectstart">
 {$lna[47]}
@@ -77,7 +80,7 @@ $promptcleartmp
 <ul>
 	<li><a href="admin.php?go=edit_add">{$lna[22]}</a></li>
 	<li><a href="admin.php?go=reply_censor">{$lna[24]}</a> $pending_replies_show</li>
-	<li><a href="admin.php?go=message_censor">{$lna[26]}</a> $pending_messages_show</li>
+	$pending_messages_shows
 	<li><a href="admin.php?go=reply_tbcensor">{$lna[947]}</a> $pending_tbs_show</li>
 	<li><a href="admin.php?go=link_pending">{$lna[21]}</a> $pending_links_show</li>
 	<li><a href="admin.php?go=addon_skin">{$lna[27]}</a></li>
@@ -86,8 +89,8 @@ $promptcleartmp
 	<li>{$lna[874]} <select name=targetskin>{$admskinsel}</select> <input type='submit' value='$lna[64]' class='formbutton'> <input type='button' value='{$lna[875]}' onclick='window.location="admin.php?go=main_refreshadminskinlist";' class='formbutton'></li>
 </td>
 </tr>
-</form></table>
-<br><br>
+</table>
+</form><br><br>
 
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
@@ -161,6 +164,8 @@ msxcms, Nicky, Loveshell, 4ngel, and many more...
 </tr>
 </table>
 eot;
+	if ($ajax=='on') die($display_overall_plus);
+	else $display_overall.=$display_overall_plus;
 }
 
 if ($job=='update') {
@@ -220,14 +225,14 @@ $display_overall.= <<<eot
 </tr>
 </table>
 <table class='tablewidth' cellpadding=4 cellspacing=1 align=center>
-<form action="admin.php?go=main_configsave" method="post">
+<form action="admin.php?go=main_configsave" method="post" id="ajaxForm1">
 <tr><td class="prefsection" align="center" colspan='2'><a name="top"></a>{$lna[47]}</td></tr>
 <tr><td class="prefright" align="center" colspan='2'><table width=100%>{$pref_quicksel}</table></td></tr>
 $pref_result_show
 <tr><td class="prefleft" valign="top" width="180">{$lna[527]}</td><td class="prefright"><input type="button" value="{$lna[1083]}" onclick="window.location='admin.php?go=misc_urlrewrite';" class="formbutton"></td></tr>
 </table>
 <br><input type='hidden' name='prefconfig[urlrewritemethod]' value="{$config['urlrewritemethod']}">
-<div align=center><input type=submit value="{$lna[64]}" class='formbutton'> <input type=reset value="{$lna[65]}" class='formbutton'></div>
+<div align=center><a name="bottom"></a><input type=button value="{$lna[64]}" class='formbutton' onclick="adminSubmitAjax(1);"> <input type=reset value="{$lna[65]}" class='formbutton'></div>
 </form>
 eot;
 }
@@ -235,7 +240,9 @@ eot;
 if ($job=='configsave') {
 	$savetext="<?PHP\n\$db_server='{$db_server}';\n\$db_username='{$db_username}';\n\$db_password='{$db_password}';\n\$db_name='{$db_name}';\n\$db_prefix='{$db_prefix}';\n\$db_410='{$db_410}';\n\$db_tmpdir='{$db_tmpdir}';\n\$db_defaultsessdir='{$db_defaultsessdir}';\n";
 	$save_config=$_POST['prefconfig'];
+	//catcherror (print_r($save_config, true));
 	if (count($save_config)<=1) catcherror ($lna[1013]);
+	$save_config['blogcreatetime']=strtotime($save_config['blogcreatetime']);
 	while (@list ($key, $val) = @each ($save_config)) {
 		$savetext.="\$config['{$key}']='".admin_convert(stripslashes($val))."';\n";
 	}
@@ -272,14 +279,14 @@ $display_overall.= <<<eot
 </tr>
 </table>
 <table class='tablewidth' cellpadding=4 cellspacing=1 align=center>
-<form action="admin.php?go=main_mbconsave" method="post">
+<form action="admin.php?go=main_mbconsave" method="post" id="ajaxForm1">
 <tr><td class="prefsection" align="center" colspan='2'><a name="top"></a>{$lna[47]}</td></tr>
 <tr><td class="prefright" align="center" colspan='2'><table width=100%>{$pref_quicksel}</table></td></tr>
 $pref_result_show
 <tr><td colspan=2 class="sect"><ul><li>{$lna[746]}</li><li>{$cau_icon} {$lna[68]}</li><li>{$lna[69]}</li><li>{$lna[70]}</li></ul>
 </table>
 <br>
-<div align=center><input type=submit value="{$lna[64]}" class='formbutton'> <input type=reset value="{$lna[65]}" class='formbutton'></div>
+<div align=center><a name="bottom"></a><input type=button value="{$lna[64]}" class='formbutton' onclick="adminSubmitAjax(1);"> <input type=reset value="{$lna[65]}" class='formbutton'></div>
 </form>
 eot;
 }
@@ -316,7 +323,7 @@ if ($job=='module') {
 	$class_new=($section=='new' || $section=='new2') ? 'sect' : 'prefleft';
 	$realname=array('header'=>$lna[71], 'sidebar'=>$lna[72], 'footer'=>$lna[73], 'prebody'=>$lna[1055], 'new'=>$lna[74]);
 	if ($section=='header' || $section=='sidebar' || $section=='footer' || $section=='prebody') {
-		$formbody="<form action=\"admin.php?go=main_modulesave\" method=\"post\"><tr class='admintitle' ><td width=30 align=center>{$lna[75]}</td><td align=center>{$lna[76]}</td><td align=center>{$lna[77]}</td><td align=center>{$lna[78]}</td></tr>\n";
+		$formbody="<form action=\"admin.php?go=main_modulesave\" method=\"post\" id=\"ajaxForm1\"><table width=95% align=right cellpadding=4 cellspacing=1><tr class='admintitle' ><td width=30 align=center>{$lna[75]}</td><td align=center>{$lna[76]}</td><td align=center>{$lna[77]}</td><td align=center>{$lna[78]}</td></tr>\n";
 		$mod_array=$blog->getgroupbyquery("SELECT * FROM `{$db_prefix}mods` WHERE `position`='{$section}' ORDER BY `modorder`");
 		for ($i=0; $i<count($mod_array); $i++) {
 			if ($mod_array[$i]['active']==1) {
@@ -328,16 +335,15 @@ if ($job=='module') {
 				$addwords="<font color=red>{$lna[80]}</font>";
 			}
 			$linkdel=($mod_array[$i]['func']=='system') ? "javascript: alert(\"{$lna[81]}\");" : "javascript: redirectcomfirm (\"admin.php?go=main_moduledel_".base64_encode($mod_array[$i]['name'])."\");";
-			//$linkedit=($mod_array[$i]['func']=='system') ? "javascript: alert(\"{$lna[81]}\");" : "admin.php?go=main_module&section=edit&itemname=".base64_encode($mod_array[$i]['name']);
 			$linkedit="admin.php?go=main_module&section=edit&itemname=".base64_encode($mod_array[$i]['name']);
 			$class_distinct=($i%2==0) ? 'visibleitem' : 'hiddenitem';
 			$formbody.="<tr class='$class_distinct'><td width=30 align=center><input type=checkbox name='selid[]' value='{$mod_array[$i]['name']}'{$chex}></td><td width='80%'><b>{$mod_array[$i]['name']}</b>$addwords<br>{$mod_array[$i]['desc']}</td><td align=center width=30><a href='$linkedit'><img src='admin/theme/{$themename}/edit.gif' alt='{$lna[77]}' title='{$lna[77]}' border='0'></a></td><td align=center width=30><a href='$linkdel'><img src='admin/theme/{$themename}/del.gif' alt='{$lna[78]}' title='{$lna[78]}' border='0'></a></td></tr>\n";
 		}
-		$formbody.="<tr class='sect' align=center><td colspan=4><input type=hidden name=section value='$section'><input type=submit value=\"{$lna[82]}\" class='formbutton'> <input type=reset value=\"{$lna[65]}\" class='formbutton'> <input type=button value=\"{$lna[83]}\" onclick=\"window.location='admin.php?go=main_module&section=new2&newitemposition={$section}'\" class='formbutton'> <input type=button value=\"{$lna[84]}\" onclick=\"window.location='admin.php?go=main_ordermodule&section={$section}'\" class='formbutton'></td></tr>\n";
+		$formbody.="<tr class='sect' align=center><td colspan=4><input type=hidden name=section value='$section'><input type=button value=\"{$lna[82]}\" class='formbutton' onclick=\"adminSubmitAjax(1);\"> <input type=reset value=\"{$lna[65]}\" class='formbutton'> <input type=button value=\"{$lna[83]}\" onclick=\"window.location='admin.php?go=main_module&section=new2&newitemposition={$section}'\" class='formbutton'> <input type=button value=\"{$lna[84]}\" onclick=\"window.location='admin.php?go=main_ordermodule&section={$section}'\" class='formbutton'></td></tr>\n";
 		$formbody.="<tr class='sect'><td colspan=4><ul><li>{$lna[85]}</li><li>{$lna[86]}</li><li>{$lna[87]}</li><li>{$lna[88]}</li></ul></td></tr>\n";
 	}
 	if ($section=='new') {
-		$formbody.="<form action=\"admin.php?go=main_module&section=new2\" method=\"post\"><tr class='admintitle'><td align='center' colspan=2>1. {$lna[89]}</td></tr>\n";
+		$formbody.="<form action=\"admin.php?go=main_module&section=new2\" method=\"post\" id=\"ajaxForm1\"><table width=95% align=right cellpadding=4 cellspacing=1><tr class='admintitle'><td align='center' colspan=2>1. {$lna[89]}</td></tr>\n";
 		$formbody.="<tr><td align='center' class='prefleft' width=20% valign=top>{$lna[90]}</td><td class='hiddenitem' valign=top><select name='newitemposition'><option value='header' selected>{$lna[71]}</option><option value='sidebar'>{$lna[72]}</option><option value='footer'>{$lna[73]}</option><option value='prebody'>{$lna[1055]}</option></select></td></tr>\n";
 		$formbody.="<tr class='admintitle'><td align='center' colspan=2><input type=submit value='{$lna[64]}' class='formbutton'> <input type=reset value='{$lna[65]}' class='formbutton'></td></tr></form>\n";
 		$formbody.="<tr><td colspan=2 height=30></td></tr><form enctype='multipart/form-data' action=\"admin.php?go=main_automod\" method=\"post\"><tr class='admintitle'><td align='center' colspan=2>2. {$lna[91]}</td></tr>\n";
@@ -411,7 +417,7 @@ if ($job=='module') {
 					$ddshow="{$lna[112]}";
 			}
 		}
-		$formbody.="<form action=\"admin.php?go=main_{$actionform}\" method=\"post\"><tr class='admintitle'><td align='center' colspan=2>{$lna[113]}</td></tr>\n";
+		$formbody.="<form action=\"admin.php?go=main_{$actionform}\" method=\"post\" id=\"ajaxForm1\"><table width=95% align=right cellpadding=4 cellspacing=1><tr class='admintitle'><td align='center' colspan=2>{$lna[113]}</td></tr>\n";
 		//$formbody.="<tr><td align='center' class='prefleft' width=20% valign=top>{$lna[482]}</td><td class='hiddenitem' valign=top><input name='modpassword' size=20 type='password'><br>{$lna[964]}</td></tr>\n";
 		$formbody.="<tr><td align='center' class='prefleft' width=20% valign=top>{$lna[90]}</td><td class='hiddenitem' valign=top>{$realname[$newitemposition]}<input type=hidden name=newitemposition value={$newitemposition}></td></tr>\n";
 		if ($section=='new2') {
@@ -428,11 +434,11 @@ if ($job=='module') {
 		$formbody.="<tr><td align='center' class='prefleft' width=20% valign=top>{$lna[75]}</td><td class='hiddenitem' valign=top><select name='indexonly'> <option value=''>{$lna[1182]}</option><option value='1' {$box_5}>{$lna[1152]}</option><option value='2' {$box_6}>{$lna[1181]}</option></td></tr>\n";
 		$formbody.="<tr><td align='center' class='prefleft' width=20% valign=top>{$lna[186]}</td><td class='hiddenitem' valign=top>{$lna[930]}<br>{$permitgpshow}</td></tr>\n";
 		$formbody.="<tr><td align='center' class='prefleft' width=20% valign=top>{$lna[120]}</td><td class='hiddenitem' valign=top>{$ddshow}</td></tr>\n";
-		$formbody.="<tr class='admintitle'><td align='center' colspan=2><input type=submit value='{$lna[64]}' class='formbutton'> <input type=reset value='{$lna[65]}' class='formbutton'></td></tr>\n";
+		$formbody.="<tr class='admintitle'><td align='center' colspan=2><input type=button value='{$lna[64]}' class='formbutton' onclick=\"adminSubmitAjax(1);\"> <input type=reset value='{$lna[65]}' class='formbutton'></td></tr>\n";
 		$formbody.="<tr class='sect'><td colspan=2><ul><li>{$lna[121]}</li><li>{$lna[122]}</li></ul></td></tr>\n";
 	}
 	$display_overall.=highlightadminitems('module', 'main');
-$display_overall.= <<<eot
+$display_overall_plus= <<<eot
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
 <td width=160 class="sectstart">
@@ -455,12 +461,14 @@ $display_overall.= <<<eot
 </td>
 <td class="sect" valign=top>
 
-<table width=95% align=right cellpadding=4 cellspacing=1>
+
 $formbody
 </table>
 </form>
 </td></tr></table>
 eot;
+	if ($ajax=='on') die($display_overall_plus);
+	else $display_overall.=$display_overall_plus;
 }
 
 if ($job=='modulesave') {
@@ -542,7 +550,7 @@ if ($job=='modulenew' || $job=='moduledoedit') {
 	$value=trim($value);
 	if (substr($value, -1, 1)==',') $value=substr($value, 0, strlen($value)-1); //Remove last ','
 	$workout="\$blogitem['".safe_convert($newitemname)."']=array({$value});\n";
-	//die ($workout); //debug only
+
 	if ($job=='modulenew') {
 		$newitemname=safe_convert($newitemname);
 		$newitemname=str_replace('_', '', $newitemname);
@@ -560,7 +568,11 @@ if ($job=='modulenew' || $job=='moduledoedit') {
 		mod_replace ($newitemname ,$workout, true);
 		recache_mods ();
 	}
-	catchsuccess ($finishok2, $backtomodule);
+	if ($ajax=='on' && $job=='modulenew') {
+		$fetchURL="admin.php?go=main_module&section=edit&itemname=".base64_encode($newitemname);
+		catchsuccessandfetch($finishok2, $fetchURL);
+	}
+	else catchsuccess ($finishok2, $backtomodule);
 }
 
 if ($job=='moduledel') {
@@ -571,7 +583,11 @@ if ($job=='moduledel') {
 	$blog->query("DELETE FROM `{$db_prefix}mods` WHERE `name`='$itemid'");
 	mod_replace ($itemid , '');
 	if ($try['active']==1) recache_mods();
-	catchsuccess ($finishok2, $backtomodule);
+	if ($ajax=='on') {
+		$fetchURL="admin.php?go=main_module&section={$try['position']}";
+		catchsuccessandfetch($finishok2, $fetchURL);
+	}
+	else catchsuccess ($finishok2, $backtomodule);
 }
 
 if ($job=='automod') {
@@ -765,12 +781,12 @@ Current Language Pack/当前语言包/當前語言包<br><br>
 
 <br><br><hr><br>
 Set Language Pack Location/更改语言包为/更改語言包為<br><br>
-<b>Front-End/前台/前臺</b> <!-- lang/<input style="text-align:center;" type=text name=newlangf value='{$langfront}'>/common.php --> 
+<b>Front-End/前台/前臺</b>  
 <br><select name='newlangf'>
 $selectbody
 </select>
 <br><br>
-<b>Back-End/后台/後臺</b> <!-- lang/<input style="text-align:center;" type=text name=newlangb value='{$langback}'>/backend.php --> 
+<b>Back-End/后台/後臺</b>  
 <br><select name='newlangb'>
 $selectbody
 </select>
@@ -812,4 +828,71 @@ if ($job=='refreshadminskinlist' || $job=='selectadminskin') {
 	$sleout="<?PHP\n".$out."\$currentadminskin='{$currentadminskin}';";
 	writetofile("data/cache_adminskinlist.php", $sleout);
 	header ("Location: admin.php");
+}
+
+if ($job=='funclock') {
+	if (sizeof($flset)<1) {
+		$flset=array('tags'=>0, 'weather'=>0, 'avatar'=>0, 'star'=>0, 'guestbook'=>0, 'modeselectable'=>0);
+	}
+
+	$uidesc=array('tags'=>$lnc[288], 'weather'=>$lna[301], 'avatar'=>$lna[881], 'star'=>$lnc[93], 'guestbook'=>$lnc[91], 'modeselectable'=>"{$lnc[183]}/{$lnc[185]}");
+	
+	$pref_leftchar="200";
+	$pref_variable="flset";
+	foreach ($flset as $flkey => $flval) {
+		addpref("r", "{$flkey}|{$uidesc[$flkey]}|{$lna[512]}|{$lna[511]}");
+	}
+	$pref_result_show=@implode('', $pref_result);
+	$display_overall.=highlightadminitems('funclock', 'main');
+$display_overall.= <<<eot
+<table class='tablewidth' align=center cellpadding=4 cellspacing=0>
+<tr>
+<td width=160 class="sectstart">
+{$lna[1194]}
+</td>
+<td class="sectend">{$lna[1195]}</td>
+</tr>
+</table>
+<table class='tablewidth' cellpadding=4 cellspacing=1 align=center>
+<form action="admin.php?go=main_funclocksave" method="post" id="ajaxForm1">
+$pref_result_show
+<tr><td colspan=2 class="sect">{$lna[1196]}</td></tr>
+</table>
+<br>
+<div align=center><a name="bottom"></a><input type=button value="{$lna[64]}" class='formbutton' onclick="adminSubmitAjax(1);"> <input type=reset value="{$lna[65]}" class='formbutton'></div>
+</form>
+eot;
+}
+
+
+if ($job=='funclocksave') {
+	$savetext="<?PHP\nif (!defined('VALIDREQUEST')) die ('Access Denied.');\n";
+	$save_config=$_POST['prefconfig'];
+	if (count($save_config)<=1) catcherror ($lna[1013]);
+
+	$relatedmods=array('tags'=>'alltags', 'star'=>'starred', 'guestbook'=>'guestbook');
+	$tosetinvisiblearray=$tosetvisiblearray=array();
+
+	while (@list ($key, $val) = @each ($save_config)) {
+		$savetext.="\$flset['{$key}']='".admin_convert($val)."';\n";
+		if ($relatedmods[$key]) {
+			if ($val==1) $tosetinvisiblearray[]=$relatedmods[$key];
+			if ($val==0) $tosetvisiblearray[]=$relatedmods[$key];
+		}
+	}
+	if ($savetext=='') catcherror ($lna[1013]);
+	if (writetofile ("data/functionlock.php", $savetext)) {
+		if (sizeof($tosetinvisiblearray)>=1) {
+			$allinvisibles=makeaquery($tosetinvisiblearray, "`name`='%s'", 'OR');
+			$blog->query("UPDATE `{$db_prefix}mods` SET `active`=0 WHERE {$allinvisibles}");
+		}
+		if (sizeof($tosetvisiblearray)>=1) {
+			$allvisibles=makeaquery($tosetvisiblearray, "`name`='%s'", 'OR');
+			$blog->query("UPDATE `{$db_prefix}mods` SET `active`=1 WHERE {$allvisibles}");
+		}
+		recache_mods();
+		catchsuccess ($finishok, "{$lna[1194]}|admin.php?go=main_funclock");
+	} else {
+		catcherror ("{$lna[66]}"."data/functionlock.php");
+	}
 }

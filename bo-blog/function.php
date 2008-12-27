@@ -88,7 +88,7 @@ function GetReplies ($number, $range=-1, $startid=0) {
 	global $blog, $db_prefix, $permission;
 	$permissionlimit=($permission['SeeHiddenEntry']!=1) ? 2 : 3;
 	if ($range!=-1) $rangeplus=" AND t1.blogid='{$range}' ";
-	$content=$blog->getgroupbyquery("SELECT t1.*, t2.title FROM `{$db_prefix}replies` t1 INNER JOIN `{$db_prefix}blogs` t2 ON t2.blogid=t1.blogid WHERE t1.reproperty<=1 {$rangeplus} AND t2.property<{$permissionlimit} ORDER BY t1.reptime DESC LIMIT {$startid}, {$number}");
+	$content=$blog->getgroupbyquery("SELECT t1.*, t2.title, t2.blogalias FROM `{$db_prefix}replies` t1 INNER JOIN `{$db_prefix}blogs` t2 ON t2.blogid=t1.blogid WHERE t1.reproperty<=1 {$rangeplus} AND t2.property<{$permissionlimit} ORDER BY t1.reptime DESC LIMIT {$startid}, {$number}");
 	if (!$content) return false;
 	return $content;
 }

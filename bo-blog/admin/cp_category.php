@@ -26,34 +26,9 @@ if ($job=='' || $job=="default") {
 		$puttingcates_after.="<option value='{$arrayvalue_categories[$i]}'>{$lna[1025]} {$arrayoption_categories[$i]}</option>";
 	}
 	$display_overall.=highlightadminitems('default', 'category');
-$display_overall.=<<<eot
-<script type="text/javascript">
-function swapdiv(opt) {
-	if (opt==0) {
-		document.getElementById("targetdiv").style.display="none";
-		document.getElementById("targetdiv2").style.display="none";
-		document.getElementById("targetdiv3").style.display="block";
-	} else if (opt==1) {
-		document.getElementById("targetdiv").style.display="block";
-		document.getElementById("targetdiv2").style.display="none";
-		document.getElementById("targetdiv3").style.display="none";
-	}  else {
-		document.getElementById("targetdiv").style.display="none";
-		document.getElementById("targetdiv2").style.display="block";
-		document.getElementById("targetdiv3").style.display="none";
-	} 
-}
-function waitforconfirm() {
-	if(confirm("{$lna[179]}")){
-		return true;
-	}
-	else {
-		return false;
-	}
-}
-</script>
+$display_overall_plus=<<<eot
+<form action="admin.php?go=category_new" method="post" id="ajaxForm1">
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
-<form action="admin.php?go=category_new" method="post" >
 <tr>
 <td width=160 class="sectstart">
 {$lna[180]}
@@ -89,15 +64,15 @@ $puttingcates_after
 </td></tr>
 <tr>
 <td colspan=4 align=center class="sectbar">
-<input type=submit value="{$lna[64]}" class='formbutton'> <input type=reset value="{$lna[65]}" class='formbutton'>
+<input type=button value="{$lna[64]}" class='formbutton' onclick="clearAllRadios();adminSubmitAjax(1);"> <input type=reset value="{$lna[65]}" class='formbutton'>
 </td></tr>
-</form>
 </table>
+</form>
 <br>
 <br>
 
-<table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <form action="" method="post" >
+<table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
 <td width=160 class="sectstart">
 {$lna[195]}
@@ -109,22 +84,19 @@ $puttingcates_after
 <select multiple size=8 style="width: 50%;" name="list2" style="width: 120px">
 $puttingcates
 </select><br>
-<input type="button" value="{$lna[141]}" onclick="Moveup(this.form.list2)" name="B3">
-<input type="button" value="{$lna[142]}" onclick="Movedown(this.form.list2)" name="B4">
+<input type="button" value="{$lna[141]}" onclick="Moveup(this.form.list2)" name="B3" class='formbutton'>
+<input type="button" value="{$lna[142]}" onclick="Movedown(this.form.list2)" name="B4" class='formbutton'>
+<input type=button onclick="GetOptions(this.form.list2, '$urlnew')" class='formbutton' value="{$lna[64]}">
 {$lna[143]}
 </td>
 </tr>
-<tr>
-<td colspan=4 align=center class="sectbar">
-<input type=button onclick="GetOptions(this.form.list2, '$urlnew')" value="{$lna[64]}"> <input type=reset value="{$lna[65]}">
-</td>
-</tr></form>
 </table>
+</form>
 <br>
 <br>
 
+<form action="admin.php" method="post" id="ajaxForm2">
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
-<form action="admin.php" method="post" >
 <tr>
 <td width=160 class="sectstart">
 {$lna[197]}
@@ -146,22 +118,24 @@ $puttingcates
 <td width=50%>
 <div id="targetdiv3" style="display:none"><input type=submit value="{$lna[64]}" class='formbutton'></div>
 <div id="targetdiv" style="display:none"><b>{$lna[202]}<a href='admin.php?act=entry'>{$lna[203]}</a><br>
-<input type=submit value="{$lna[64]}" onclick="return waitforconfirm();" class='formbutton'>
+<input type=button value="{$lna[64]}" onclick='if(confirm("{$lna[179]}")){adminSubmitAjax(2);}' class='formbutton'>
 </div>
 <div id="targetdiv2" style="display:none">{$lna[204]}
 <select name="targetcate">
 $puttingcates
 </select>
-<input type=submit value="{$lna[64]}" onclick="" class='formbutton'>
+<input type=button value="{$lna[64]}" class='formbutton' onclick="adminSubmitAjax(2);">
 </div>
 </td></tr></td></tr>
 </table>
 <tr>
 <td colspan=4 align=center class="sectbar">
 </td></tr>
-</form>
 </table>
+</form>
 eot;
+	if ($ajax=='on') die($display_overall_plus);
+	else $display_overall.=$display_overall_plus;
 }
 
 if ($job=='order') {
@@ -200,11 +174,11 @@ function catchusefuldata() {
 	if (document.getElementById('alsoch').style.display=='none') {
 		document.getElementById('ignorepropertychange').value='1';
 	}
-	document.getElementById('u_data').submit();
+	adminSubmitAjax('f_s');
 }
 </script>
 
-<form action="admin.php" method="post" id='u_data'>
+<form action="admin.php" method="post" id='f_s'>
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
 <td width=160 class="sectstart">
@@ -244,7 +218,7 @@ function catchusefuldata() {
 <td colspan=4 align=center class="sectbar">
 <input type=hidden name=go value="category_save_{$sourcecate}">
 <input type=hidden name='ignorepropertychange' id='ignorepropertychange' value=''>
-<input type=button value="{$lna[64]}" onclick="catchusefuldata();"> <input type=reset value="{$lna[65]}">
+<input type=button value="{$lna[64]}" class='formbutton' onclick="catchusefuldata();"> <input type=reset class='formbutton' value="{$lna[65]}">
 </td></tr>
 </table>
 </form>
@@ -252,7 +226,7 @@ eot;
 }
 
 
-if ($job=='new' || $job=='save') {
+if ($job=='new' || $job=='save' || $job=='newinedit') {
 	acceptrequest('newcatename,newcateurlname,newcatedesc,newcateproperty,newcatemode,newcateurl,newcateicon,alsochange,ignorepropertychange,targetcate');
 	if ($newcatename=='' || $newcatedesc=='') {
 		catcherror ($lna[206]);
@@ -274,7 +248,7 @@ if ($job=='new' || $job=='save') {
 	$newcatedesc=addslashes(safe_convert(stripslashes($newcatedesc), 1));
 	$newcatedesc=str_replace('<|>', '&lt;|&gt;', $newcatedesc);
 	
-	if ($job=='new') {
+	if ($job=='new' || $job=='newinedit') {
 		$new_cate_id=$maxrecord['maxcateid']+1;
 		$targetcate=floor($targetcate);
 		if ($targetcate!=-2) {
@@ -312,7 +286,7 @@ if ($job=='new' || $job=='save') {
 	}
 	recache_categories();
 
-	if ($job=='new' && $ajax=='on') {
+	if ($job=='newinedit' && $ajax=='on') {
 		$tmpresult=$blog->getgroupbyquery("SELECT * FROM `{$db_prefix}categories` ORDER BY `cateorder` ASC");
 		$puttingcates='<select name="category" id="category" class="formselect">';
 		foreach ($tmpresult as $tmp) {
@@ -325,7 +299,11 @@ if ($job=='new' || $job=='save') {
 		catchsuccess($puttingcates);
 	}
 
-	catchsuccess($finishok, $backtodefault);
+	if ($ajax=='on') {
+		$fetchURL='admin.php?go=category_default';
+		catchsuccessandfetch($finishok, $fetchURL);
+	}
+	else catchsuccess($finishok, $backtodefault);
 }
 
 if ($job=='del') {
@@ -338,7 +316,11 @@ if ($job=='del') {
 	catcherror ($cancel);
 	$blog->query("DELETE FROM `{$db_prefix}categories` WHERE `cateid`='{$sourcecate}'");
 	recache_categories();
-	catchsuccess($finishok, $backtodefault);
+	if ($ajax=='on') {
+		$fetchURL='admin.php?go=category_default';
+		catchsuccessandfetch($finishok, $fetchURL);
+	}
+	else catchsuccess($finishok, $backtodefault);
 }
 	
 
@@ -365,8 +347,9 @@ if ($job=='tags') {
 	}
 	$tablebody.="</tr>";
 	$display_overall.=highlightadminitems('tags', 'category');
-$display_overall.= <<<eot
-<table class='tablewidth' align=center cellpadding=4 cellspacing=0><form action="admin.php?go=category_batchtags" method='post'>
+$display_overall_plus= <<<eot
+<form action="admin.php?go=category_batchtags" method='post' id="ajaxForm1">
+<table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
 <td width=160 class="sectstart">
 {$lna[17]}
@@ -382,27 +365,13 @@ $tablebody
 </td></tr>
 <tr class='sect'>
 <td colspan=2 align=center class="sectbar">
-{$lna[211]} <!--<input type=radio name='opt' value='combine'>{$lna[212]}<input type=text size=6 name='newtagname'> &nbsp;&nbsp;--> <input type=radio name='opt' value='del'>{$lna[78]} &nbsp;&nbsp; <input type=submit value="{$lna[64]}" class='formbutton'>
-</td></tr></form>
-</table>
-<br>
-<br>
-<br>
-<table class='tablewidth' align=center cellpadding=4 cellspacing=0><form action="admin.php?go=category_counttags" method='post'>
-<tr>
-<td width=160 class="sectstart">
-{$lna[1183]}
-</td>
-<td class="sectend">{$lna[1184]}</td>
-</tr>
-<tr class='sect'>
-<td colspan=2 align=center>
-<br>
-Tag: <input type="text" name="tagname" size="29"> <input type=submit value="{$lna[64]}" class='formbutton'>
+{$lna[211]} <!--<input type=radio name='opt' value='combine'>{$lna[212]}<input type=text size=6 name='newtagname'> &nbsp;&nbsp;--> <input type=radio name='opt' value='del'>{$lna[78]} &nbsp;&nbsp;  <input type=radio name='opt' value='counttags'><acronym title="{$lna[1184]}">{$lna[1183]}</acronym></a> &nbsp;&nbsp; <input type=button value="{$lna[64]}" class='formbutton' onclick="adminSubmitAjax(1);">
 </td></tr>
-</form>
 </table>
+</form>
 eot;
+	if ($ajax=='on') die($display_overall_plus);
+	else $display_overall.=$display_overall_plus;
 }
 
 if ($job=='batchtags') {
@@ -414,21 +383,23 @@ if ($job=='batchtags') {
 			$blog->query("DELETE FROM `{$db_prefix}tags` WHERE `tagname`='{$selid[$i]}'");
 		}
 	}
+	if ($opt=='counttags') {
+		$all_tagentries=$blog->getarraybyquery("SELECT `tags` FROM `{$db_prefix}blogs` WHERE tags<>'' AND tags<>'>'");
+		$all_tag_lists=@implode('', $all_tagentries['tags']);
+		$all_tag_lists=@explode('>', $all_tag_lists);
+		$counted_list=array_count_values($all_tag_lists);
+		for ($i=0; $i<count($selid); $i++) {
+			$to_update_tag=$selid[$i];
+			$to_update_value=floor($counted_list[$to_update_tag]);
+			$blog->query("UPDATE `{$db_prefix}tags` SET tagcounter='{$to_update_value}' WHERE `tagname`='{$to_update_tag}'");
+		}
+	}
 	recache_taglist();
-	catchsuccess($finishok2, $backtotag);
+	if ($ajax=='on') {
+		$fetchURL='admin.php?go=category_tags';
+		catchsuccessandfetch($finishok2, $fetchURL);
+	}
+	else catchsuccess($finishok2, $backtotag);
 }
-
-if ($job=='counttags') {
-	acceptrequest('tagname');
-	if (!$tagname) catcherror ($lna[213]);
-	$all_tagentries=$blog->getarraybyquery("SELECT `tags` FROM `{$db_prefix}blogs` WHERE tags<>'' AND tags<>'>'");
-	$all_tag_lists=@implode('', $all_tagentries['tags']);
-	$all_tag_lists=@explode('>', $all_tag_lists);
-	$counted_list=array_count_values($all_tag_lists);
-	$to_update_value=floor($counted_list[$tagname]);
-	$blog->query("UPDATE `{$db_prefix}tags` SET tagcounter='{$to_update_value}' WHERE `tagname`='{$tagname}'");
-	catchsuccess($finishok2, $backtotag);
-}
-
 
 ?>

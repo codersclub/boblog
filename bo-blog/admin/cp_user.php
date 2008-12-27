@@ -26,13 +26,13 @@ if ($job=='' || $job=="usergroup") {
 	if (is_array($usergp)) {
 		foreach ($usergp as $key=>$value) {
 			$addclass=($i%2==0) ? 'visibleitem' : 'hiddenitem';
-			$delitornot=($key==0 || $key==1 || $key==2) ? "<a href='javascript: alert(\"{$lna[436]}\");'><img src='admin/theme/{$themename}/del.gif' alt='' title='{$lna[436]}' border='0'></a>" : "<a href='javascript: redirectcomfirm(\"admin.php?go=user_delgp_{$key}\");'><img src='admin/theme/{$themename}/del.gif' alt='{$lna[78]}' title='{$lna[78]}' border='0'></a>";
+			$delitornot=($key==0 || $key==1 || $key==2) ? "<a href='javascript: alert(\"{$lna[436]}\");'><img src='admin/theme/{$themename}/del.gif' alt='' title='{$lna[436]}' border='0'></a>" : "<a href='admin.php?go=user_delgp_{$key}'><img src='admin/theme/{$themename}/del.gif' alt='{$lna[78]}' title='{$lna[78]}' border='0'></a>";
 			$tablebody.="<tr class='$addclass'><td align='center'>{$key}</td><td>{$value}</td><td align='center'>{$delitornot}</td><td align='center'><a href='admin.php?go=user_editgp_{$key}'><img src='admin/theme/{$themename}/edit.gif' alt='{$lna[77]}' title='{$lna[77]}' border='0'></a></td></tr>";
 			$i+=1;
 		}
 	}
 	$display_overall.=highlightadminitems('usergroup', 'user');
-$display_overall.= <<<eot
+$display_overall_plus= <<<eot
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
 <td width=160 class="sectstart">
@@ -64,6 +64,8 @@ $display_overall.= <<<eot
 </td></tr>
 </table>
 eot;
+	if ($ajax=='on') die($display_overall_plus);
+	else $display_overall.=$display_overall_plus;
 }
 
 if ($job=='newgp' || $job=='editgp') {
@@ -98,8 +100,8 @@ $display_overall.= <<<eot
 <td class="sectend">{$lna[452]}</td>
 </tr>
 </table>
+<form action="admin.php?go=user_{$hiddenaction}" method="post" id="ajaxForm1">
 <table class='tablewidth' cellpadding=4 cellspacing=1 align=center>
-<form action="admin.php?go=user_{$hiddenaction}" method="post">
 <tr><td class="prefsection" align="center" colspan='2'><a name="top"></a>{$lna[47]}</td></tr>
 <tr><td class="prefright" align="center" colspan='2'><table width=100%>{$pref_quicksel}</table></td></tr>
 $pref_result_show
@@ -107,7 +109,7 @@ $pref_result_show
 </table>
 <input type=hidden name='gpnum' value='{$itemid}'>
 <br>
-<div align=center><input type=submit value="{$lna[64]}" class='formbutton'> <input type=reset value="{$lna[65]}" class='formbutton'></div>
+<div align=center><a name="bottom"></a><input type=button value="{$lna[64]}" class='formbutton' onclick="adminSubmitAjax(1);"> <input type=reset value="{$lna[65]}" class='formbutton'></div>
 </form>
 eot;
 }
@@ -138,9 +140,12 @@ if ($job=='addnewgp' || $job=='savegp') {
 	if (!writetofile ("data/usergroup{$gpnum}.php", $savetext)) {
 		catcherror ($lna[66]."data/usergroup{$gpnum}.php");
 	} 
-
 	recache_adminlist ();
-	catchsuccess ($finishok1, $backtodefault);
+	if ($ajax=='on') {
+		$fetchURL='admin.php?go=user_usergroup';
+		catchsuccessandfetch($finishok1, $fetchURL);
+	}
+	else catchsuccess ($finishok1, $backtodefault);
 }
 
 if ($job=='delgp') {
@@ -150,7 +155,7 @@ if ($job=='delgp') {
 	}
 	@header("Content-Type: text/html; charset=utf-8");
 	$t=new template;
-	$t->showtips($lna[454], "<br><form action='admin.php?go=user_dodelgp_{$itemid}' method=post>{$lna[455]}<br><br><select name='togp'>{$gplist}</select> <input type=submit value='{$lna[64]}' class='formbutton'></form>");
+	$t->showtips($lna[454], "<br><form action='admin.php?go=user_dodelgp_{$itemid}' method='post'>{$lna[455]}<br><br><select name='togp'>{$gplist}</select> <input type=button value='{$lna[138]}' onclick='window.location=\"admin.php?go=user_usergroup\"' class='formbutton'> <input type=submit value='{$lna[64]}' class='formbutton'></form>");
 	exit();
 }
 
@@ -166,7 +171,6 @@ if ($job=='dodelgp') {
 	if (!writetofile ("data/cache_usergroup.php", $savetext)) {
 		catcherror ($lna[66]."data/cache_usergroup.php");
 	}
-
 	recache_adminlist ();
 	catchsuccess ($finishok1, $backtodefault);
 }
@@ -186,7 +190,7 @@ if ($job=='users') {
 		$tmp_tm=gmdate('Y/m/d H:i', $detail_array[$i]['regtime']+3600*$config['timezone']);
 		if ($i%2==0) $addclass='hiddenitem';
 		else $addclass='visibleitem';
-		$tablebody.="<tr class='$addclass'><td align='center'><input type='checkbox' name='selid[]' id='selid[]' value='{$detail_array[$i]['userid']}'></td><td>{$tmp_sgp}</td><td width=50%>{$detail_array[$i]['username']}</td><td align='center'>{$tmp_tm}</td><td align='center'><a href='javascript: redirectcomfirm (\"admin.php?go=user_deluser_{$detail_array[$i]['userid']}\");'><img src='admin/theme/{$themename}/del.gif' alt='{$lna[78]}' title='{$lna[78]}' border='0'></a></td><td align='center'><a href='admin.php?go=user_edituser_{$detail_array[$i]['userid']}'><img src='admin/theme/{$themename}/edit.gif' alt='{$lna[77]}' title='{$lna[77]}' border='0'></a></td></tr>";
+		$tablebody.="<tr class='$addclass'><td align='center'><input type='checkbox' name='selid[]' id='selid[]' value='{$detail_array[$i]['userid']}'></td><td>{$tmp_sgp}</td><td align='center'>{$detail_array[$i]['userid']}</td><td width=50%>{$detail_array[$i]['username']}</td><td align='center'>{$tmp_tm}</td><td align='center'><a href='javascript: redirectcomfirm (\"admin.php?go=user_deluser_{$detail_array[$i]['userid']}\");'><img src='admin/theme/{$themename}/del.gif' alt='{$lna[78]}' title='{$lna[78]}' border='0'></a></td><td align='center'><a href='admin.php?go=user_edituser_{$detail_array[$i]['userid']}'><img src='admin/theme/{$themename}/edit.gif' alt='{$lna[77]}' title='{$lna[77]}' border='0'></a></td></tr>";
 	}
 	unset($i);
 	foreach ($usergp as $i=>$value) {
@@ -196,7 +200,7 @@ if ($job=='users') {
 	}
 	$pagebar=gen_page ($page, 5, "admin.php?go=user_users&usergroup={$usergroup}&ordered={$ordered}", $statistics['users'], $adminitemperpage);
 	$display_overall.=highlightadminitems('users', 'user');
-$display_overall.= <<<eot
+$display_overall_plus= <<<eot
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
 <td width=160 class="sectstart">
@@ -206,22 +210,27 @@ $display_overall.= <<<eot
 </tr>
 </table>
 
-<table cellpadding=3 cellspacing=1 align=center class='tablewidth'>
 <form action="admin.php?go=user_users&ordered={$ordered}" method="post">
+<table cellpadding=3 cellspacing=1 align=center class='tablewidth'>
 <tr><td colspan=7>
-<select name="usergroup"><option value=''>{$lna[457]}</option>$puttingcates</select> <input type=submit value="{$lna[244]}" class='formbutton'> {$lna[458]} <a href="admin.php?go=user_users&usergroup={$usergroup}&ordered=1">{$lna[459]}</a> | <a href="admin.php?go=user_users&usergroup={$usergroup}&ordered=2">{$lna[460]}</a> | <a href="admin.php?go=user_users&usergroup={$usergroup}&ordered=3">{$lna[461]}</a> | <a href="admin.php?go=user_users&usergroup={$usergroup}&ordered=4">{$lna[462]}</a></td></tr></form>
-<tr><td colspan=7 height=10></td></tr>
-<form action="admin.php?go=user_batchusers" method="post" id='f_s' name='f_s'>
-<tr align=center class="admintitle"><td width=35 align=center>{$lna[245]}</td><td width=80>{$lna[463]}</td><td align=center>{$lna[464]}</td><td width=190 align=center>{$lna[465]}</td><td width=35 align=center>{$lna[78]}</td><td width=35 align=center>{$lna[77]}</td></tr>
-{$tablebody}
-<tr><td colspan=3><a href="#unexist" onclick="checkallbox('f_s', 'checked');">{$lna[247]}</a> | <a href="#unexist" onclick="checkallbox('f_s', '');">{$lna[248]}</a></td><td colspan=3 align=right>$pagebar</td></tr>
-<tr><td colspan=6 height=20></td></tr>
-<tr class="adminoption"><td colspan=7>{$lna[249]}<input type=radio name=opt value='del'>{$lna[78]} <input type=radio name=opt value='newusergroup'>{$lna[466]}<select name="tousergroup">$puttingcates</select> <input type=submit value="{$lna[64]}" class='formbutton'>
-</td></tr>
-</form>
+<select name="usergroup"><option value=''>{$lna[457]}</option>$puttingcates</select> <input type=submit value="{$lna[244]}" class='formbutton'> {$lna[458]} <a href="admin.php?go=user_users&usergroup={$usergroup}&ordered=1">{$lna[459]}</a> | <a href="admin.php?go=user_users&usergroup={$usergroup}&ordered=2">{$lna[460]}</a> | <a href="admin.php?go=user_users&usergroup={$usergroup}&ordered=3">{$lna[461]}</a> | <a href="admin.php?go=user_users&usergroup={$usergroup}&ordered=4">{$lna[462]}</a></td></tr>
 </table>
+</form>
+<br>
 
-<br><br>
+<form action="admin.php?go=user_batchusers" method="post" id='f_s' name='f_s'>
+<table cellpadding=3 cellspacing=1 align=center class='tablewidth'>
+<tr align=center class="admintitle"><td width=35 align=center>{$lna[245]}</td><td width=80>{$lna[463]}</td><td width=40>{$lna[471]}</td><td align=center>{$lna[464]}</td><td width=190 align=center>{$lna[465]}</td><td width=35 align=center>{$lna[78]}</td><td width=35 align=center>{$lna[77]}</td></tr>
+{$tablebody}
+<tr><td colspan=3><a href="#unexist" onclick="checkallbox('f_s', 'checked');">{$lna[247]}</a> | <a href="#unexist" onclick="checkallbox('f_s', '');">{$lna[248]}</a></td><td colspan=4 align=right>$pagebar</td></tr>
+<tr><td colspan=6 height=10></td></tr>
+<tr class="adminoption"><td colspan=8>{$lna[249]}<input type=radio name=opt value='del'>{$lna[78]} <input type=radio name=opt value='newusergroup'>{$lna[466]}<select name="tousergroup">$puttingcates</select> <input type=button value="{$lna[64]}" class='formbutton' onclick="adminSubmitAjax('f_s');">
+</td></tr>
+</table>
+</form>
+
+<br>
+<br>
 <form action="admin.php?go=user_finduser" method="post">
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
@@ -240,7 +249,10 @@ $display_overall.= <<<eot
 </td></tr></table>
 
 </td></tr></table>
+</form>
 eot;
+	if ($ajax=='on') die($display_overall_plus);
+	else $display_overall.=$display_overall_plus;
 }
 
 if ($job=='finduser') {
@@ -310,11 +322,14 @@ $showword
 <table cellpadding=3 cellspacing=0 align=center class='tablewidth'>
 <tr>
 <td class='sect'>$pluswarn
+
+<form action="admin.php?go=user_{$jobs}" method="post" id="ajaxForm1">
 <table cellpadding=4 cellspacing=1 align=center class='tablewidth'>
-<form action="admin.php?go=user_{$jobs}" method="post">
 $formbody
-<tr class="adminoption"><td colspan=2 align=center><input type=submit value="{$lna[64]}" class='formbutton'> <input type=reset value="{$lna[65]}" class='formbutton'>
+<tr class="adminoption"><td colspan=2 align=center><input type=button value="{$lna[64]}" class='formbutton' onclick="adminSubmitAjax(1);"> <input type=reset value="{$lna[65]}" class='formbutton'>
 </td></tr></table>
+</form>
+
 </td></tr></table>
 </td></tr></table>
 eot;
@@ -355,16 +370,26 @@ if ($job=='savenewuser' || $job=='saveuser') {
 		$blog->query("UPDATE `{$db_prefix}user` SET {$password} `usergroup`='{$musergroup}', `email`='{$email}', homepage='{$homepage}',  qq='{$qq}', msn='{$msn}', intro='{$intro}', gender='{$gender}', skype='{$skype}', `fromplace`='{$from}' WHERE `userid`='{$p['userid']}'");
 		recache_adminlist();
 	}
-	catchsuccess ($finishok2, array($backtouseradmin,$backtoaddnew));
+	if ($ajax=='on') {
+		$fetchURL='admin.php?go=user_users';
+		catchsuccessandfetch($finishok2, $fetchURL);
+	}
+	else catchsuccess ($finishok2, array($backtouseradmin,$backtoaddnew));
 }
 
 if ($job=='deluser') {
 	if ($itemid==='') catcherror ($lna[474]);
+	$itemid=floor($itemid);
+	if ($itemid==$userdetail['userid']) catcherror ($lna[1193]);
 	$try=$blog->getbyquery("SELECT userid FROM `{$db_prefix}user` WHERE`userid`='{$itemid}'");
 	if (!$try) catcherror ($lna[474]);
 	$blog->query("DELETE FROM `{$db_prefix}user` WHERE `userid`='{$itemid}'");
 	$blog->query("UPDATE `{$db_prefix}counter` SET `users`=`users`-1");
-	catchsuccess ($finishok2, array($backtouseradmin,$backtoaddnew));
+	if ($ajax=='on') {
+		$fetchURL='admin.php?go=user_users';
+		catchsuccessandfetch($finishok2, $fetchURL);
+	}
+	else catchsuccess ($finishok2, array($backtouseradmin,$backtoaddnew));
 }
 
 if ($job=='batchusers') {
@@ -381,7 +406,11 @@ if ($job=='batchusers') {
 		$blog->query("UPDATE `{$db_prefix}user` SET `usergroup`='{$tousergroup}'  WHERE `userid` IN ({$dels})");
 	}
 	recache_adminlist();
-	catchsuccess ($finishok2, array($backtouseradmin,$backtoaddnew));
+	if ($ajax=='on') {
+		$fetchURL='admin.php?go=user_users';
+		catchsuccessandfetch($finishok2, $fetchURL);
+	}
+	else catchsuccess ($finishok2, array($backtouseradmin,$backtoaddnew));
 }
 
 ?>

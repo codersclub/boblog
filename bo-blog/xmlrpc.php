@@ -319,6 +319,7 @@ function metaWeblog_newPost ($values) {
 	recache_categories(); //Update Category counter
 	$blog->query("UPDATE `{$db_prefix}maxrec` SET maxblogid={$currentid}");
 	$blog->query("UPDATE `{$db_prefix}counter` SET entries=entries+1");
+	plugin_runphp('metaweblogadd');
 	$xml_content=make_xml_piece("string", $currentid);
 	$body_xml=xml_generate($xml_content);
 	send_response ($body_xml);
@@ -361,6 +362,7 @@ function metaWeblog_editPost ($values) {
 	recache_currentmonthentries();
 	recache_categories(); //Update Category counter
 	$blog->query($query);
+	plugin_runphp('metaweblogedit');
 	$xml_content=make_xml_piece("boolean", '1');
 	$body_xml=xml_generate($xml_content);
 	send_response ($body_xml);

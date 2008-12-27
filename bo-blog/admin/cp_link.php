@@ -34,34 +34,9 @@ if ($job=='' || $job=="default") {
 	$urlnew="admin.php?go=link_ordergp_";
 	$puttinggp2=$puttinggp."<option value='removeall'>{$lna[215]}</option>";
 	$display_overall.=highlightadminitems('default', 'link');
-$display_overall.=<<<eot
-<script type="text/javascript">
-function swapdiv(opt) {
-	if (opt==0) {
-		document.getElementById("targetdiv").style.display="none";
-		document.getElementById("targetdiv2").style.display="none";
-		document.getElementById("targetdiv3").style.display="block";
-	} else if (opt==1) {
-		document.getElementById("targetdiv").style.display="block";
-		document.getElementById("targetdiv2").style.display="none";
-		document.getElementById("targetdiv3").style.display="none";
-	}  else {
-		document.getElementById("targetdiv").style.display="none";
-		document.getElementById("targetdiv2").style.display="block";
-		document.getElementById("targetdiv3").style.display="none";
-	} 
-}
-function waitforconfirm() {
-	if(confirm("{$lna[179]}")){
-		return true;
-	}
-	else {
-		return false;
-	}
-}
-</script>
+$display_overall_plus=<<<eot
+<form action="admin.php?go=link_newgp" method="post" id="ajaxForm1">
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
-<form action="admin.php?go=link_newgp" method="post" >
 <tr>
 <td width=160 class="sectstart">
 {$lna[216]}
@@ -83,15 +58,15 @@ function waitforconfirm() {
 </table></td></tr>
 <tr>
 <td colspan=4 align=center class="sectbar">
-<input type=submit value="{$lna[64]}" class='formbutton'> <input type=reset value="{$lna[65]}" class='formbutton'>
+<input type=button value="{$lna[64]}" class='formbutton' onclick="clearAllRadios();adminSubmitAjax(1);"> <input type=reset value="{$lna[65]}" class='formbutton'>
 </td></tr>
-</form>
 </table>
+</form>
 <br>
 <br>
 
-<table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <form action="" method="post" >
+<table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
 <td width=160 class="sectstart">
 {$lna[222]}
@@ -103,21 +78,18 @@ function waitforconfirm() {
 <select multiple size=8 style="width: 50%;" name="list2" style="width: 120px">
 $puttinggp
 </select><br>
-<input type="button" value="{$lna[141]}" onclick="Moveup(this.form.list2)" name="B3">
-<input type="button" value="{$lna[142]}" onclick="Movedown(this.form.list2)" name="B4">
+<input type="button" value="{$lna[141]}" onclick="Moveup(this.form.list2)" name="B3" class='formbutton'>
+<input type="button" value="{$lna[142]}" onclick="Movedown(this.form.list2)" name="B4" class='formbutton'>
+<input type=button onclick="GetOptions(this.form.list2, '$urlnew')"  class='formbutton' value="{$lna[64]}">
 {$lna[143]}
 </td>
 </tr>
-<tr>
-<td colspan=4 align=center class="sectbar">
-<input type=button onclick="GetOptions(this.form.list2, '$urlnew')" value="{$lna[64]}"> <input type=reset value="{$lna[65]}">
-</td>
-</tr></form>
 </table>
+</form>
 <br>
 <br>
+<form action="admin.php" method="post" id="ajaxForm2">
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
-<form action="admin.php" method="post" >
 <tr>
 <td width=160 class="sectstart">
 {$lna[224]}
@@ -141,22 +113,24 @@ $puttinggp
 <div id="targetdiv" style="display:none">{$lna[228]}<select name="targetlinkgp2">
 $puttinggp2
 </select>
-<input type=submit value="{$lna[64]}" onclick="return waitforconfirm();" class='formbutton'>
+<input type=button value="{$lna[64]}" onclick='if(confirm("{$lna[179]}")){adminSubmitAjax(2);}' class='formbutton'>
 </div>
 <div id="targetdiv2" style="display:none">{$lna[204]}
 <select name="targetlinkgp">
 $puttinggp
 </select>
-<input type=submit value="{$lna[64]}" onclick="" class='formbutton'>
+<input type=button value="{$lna[64]}" class='formbutton' onclick="adminSubmitAjax(2);">
 </div>
 </td></tr></td></tr>
 </table>
 <tr>
 <td colspan=4 align=center class="sectbar">
 </td></tr>
-</form>
 </table>
+</form>
 eot;
+	if ($ajax=='on') die($display_overall_plus);
+	else $display_overall.=$display_overall_plus;
 }
 
 
@@ -183,7 +157,7 @@ if ($job=='editgp' ) {
 	}
 	$display_overall.=highlightadminitems('default', 'link');
 $display_overall.= <<<eot
-<form action="admin.php" method="post" >
+<form action="admin.php" method="post" id='ajaxForm1'>
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
 <td width=160 class="sectstart">
@@ -209,7 +183,7 @@ $display_overall.= <<<eot
 <tr>
 <td colspan=4 align=center class="sectbar">
 <input type=hidden name=go value="link_savegp_{$sourcelinkgp}">
-<input type=submit value="{$lna[64]}" class='formbutton'> <input type=reset value="{$lna[65]}" class='formbutton'>
+<input type=button value="{$lna[64]}" class='formbutton' onclick="adminSubmitAjax(1);"> <input type=reset value="{$lna[65]}" class='formbutton'>
 </td></tr>
 </table>
 </form>
@@ -232,7 +206,11 @@ if ($job=='newgp' || $job=='savegp') {
 		$result=$blog->query("UPDATE `{$db_prefix}linkgroup` SET `linkgpname`='{$newlinkgpname}', `linkgppt`='{$newlinkgppt}' WHERE `linkgpid`='{$itemid}'");
 	}
 	recache_links ();
-	catchsuccess($finishok, $backtodefault);
+	if ($ajax=='on') {
+		$fetchURL='admin.php?go=link_default';
+		catchsuccessandfetch($finishok, $fetchURL);
+	}
+	else catchsuccess($finishok, $backtodefault);
 }
 
 
@@ -255,7 +233,11 @@ if ($job=='delgp' || $job=='combinegp') {
 		$blog->query("DELETE FROM `{$db_prefix}linkgroup` WHERE `linkgpid`='{$sourcelinkgp}'");
 	}
 	recache_links ();
-	catchsuccess($finishok, $backtodefault);
+	if ($ajax=='on') {
+		$fetchURL='admin.php?go=link_default';
+		catchsuccessandfetch($finishok, $fetchURL);
+	}
+	else catchsuccess($finishok, $backtodefault);
 }
 
 if ($job=='add' || $job=='modify' || $job=='approve') {
@@ -288,7 +270,7 @@ if ($job=='add' || $job=='modify' || $job=='approve') {
 	}
 	$display_overall.=highlightadminitems('add', 'link');
 $display_overall.= <<<eot
-<form action="admin.php" method="post" >
+<form action="admin.php" method="post" id="ajaxForm1">
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
 <td width=160 class="sectstart">
@@ -332,7 +314,7 @@ $display_overall.= <<<eot
 </td>
 </tr>
 <tr><td colspan=4 align=center class="sectbar">
-<input type=submit value="{$lna[64]}" class='formbutton'> <input type=reset value="{$lna[65]}" class='formbutton'>
+<input type=button value="{$lna[64]}" class='formbutton' onclick="adminSubmitAjax(1);"> <input type=reset value="{$lna[65]}" class='formbutton'>
 </td>
 </tr></table>
 </form>
@@ -355,11 +337,13 @@ if ($job=='save') {
 	if ($tomodify) {
 		$blog->query("UPDATE `{$db_prefix}links` SET `linkname`='{$newlinkname}', `linkurl`='{$newlinkurl}', `linklogo`='{$newlinklogo}', `linkdesc`='{$newlinkdesc}', `linkgptoid`='{$newlinkgptoid}', `isdisplay`='{$newisdisplay}' WHERE `linkid`='{$linkid}'");
 		$return_display='detail';
+		$fetchURL='admin.php?go=link_detail';
 	} else {
 		$new_link_id=$maxrecord['maxlinkid']+1;
 		$blog->query("INSERT INTO `{$db_prefix}links` VALUES ($new_link_id, '{$newlinkname}', '{$newlinkurl}', '{$newlinklogo}', '{$newlinkdesc}', '{$newlinkgptoid}', $new_link_id, '{$newisdisplay}', '', '')");
 		$blog->query("UPDATE `{$db_prefix}maxrec` SET `maxlinkid`='{$new_link_id}'");
 		$return_display='add';
+		$fetchURL='admin.php?go=link_order&sourcelinkgp={$new_link_id}';
 	}
 	if (!empty($alsodel)) {
 		$filename="data/cache_applylinks.php";
@@ -376,10 +360,20 @@ if ($job=='save') {
 			if ($allnow=='') @unlink($filename);
 			else writetofile ($filename, $allnow);
 		}
+		$fetchURL='admin.php?go=link_pending';
 	}
 	recache_links ();
-	if (!empty($alsodel)) catchsuccess ($finishok, $backtopending);
-	else catchsuccess ($finishok, array($backtodetail , $backtoaddnew));
+	if ($ajax=='on') {
+		catchsuccessandfetch($finishok, $fetchURL);
+	}
+	else {
+		if (!empty($alsodel)) {
+			catchsuccess ($finishok, $backtopending);
+		}
+		else {
+			catchsuccess ($finishok, array($backtodetail , $backtoaddnew));
+		}
+	}
 }
 
 if ($job=='detail') {
@@ -399,7 +393,7 @@ if ($job=='detail') {
 	$numenries=$blog->countbyquery("SELECT COUNT(*) FROM `{$db_prefix}links` {$queryplus}  ORDER BY `linkorder`");
 	$pagebar=gen_page ($page, 5, "admin.php?go=link_detail&linkgptoid={$linkgptoid}", $numenries, $adminitemperpage);
 	$display_overall.=highlightadminitems('detail', 'link');
-$display_overall.= <<<eot
+$display_overall_plus= <<<eot
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
 <td width=160 class="sectstart">
@@ -409,22 +403,28 @@ $display_overall.= <<<eot
 </tr>
 </table>
 
-<table cellpadding=3 cellspacing=1 align=center class='tablewidth'>
 <form action="admin.php?go=link_detail" method="post">
+<table cellpadding=3 cellspacing=1 align=center class='tablewidth'>
 <tr><td colspan=7>
-<select name="linkgptoid"><option value=''>{$lna[243]}</option>$puttinggp</select> <input type=submit value="{$lna[244]}" class='formbutton'></td></tr></form>
-<tr><td colspan=7 height=10></td></tr>
+<select name="linkgptoid"><option value=''>{$lna[243]}</option>$puttinggp</select> <input type=submit value="{$lna[244]}" class='formbutton'></td></tr>
+</table>
+</form>
+
 <form action="admin.php?go=link_batch" method="post" id='f_s' name='f_s'>
+<table cellpadding=3 cellspacing=1 align=center class='tablewidth'>
+<tr><td colspan=7 height=10></td></tr>
 <tr align=center class="admintitle"><td width=35>{$lna[245]}</td><td width=95>Logo</td><td width=220>{$lna[233]}</td><td width=250>{$lna[234]}</td><td width=80>{$lna[237]}</td><td width=35>{$lna[246]}</td><td width=35>{$lna[77]}</td></tr>
 {$tablebody}
 <tr><td colspan=7><a href="#unexist" onclick="checkallbox('f_s', 'checked');">{$lna[247]}</a> | <a href="#unexist" onclick="checkallbox('f_s', '');">{$lna[248]}</a></td></tr>
 <tr><td colspan=7 height=20></td></tr>
-<tr class="adminoption"><td colspan=7>{$lna[249]} <input type=radio name=opt value='del'>{$lna[78]} <input type=radio name=opt value='move'>{$lna[250]}<select name="newlinkgptoid">$puttinggp</select>  <input type=radio name=opt value='ppt'>{$lna[238]}<select name="newproperty"><option value=1>{$lna[239]}</option><option value=0>{$lna[240]}</option></select>  <input type=submit value="{$lna[64]}" class='formbutton'><br><br>
+<tr class="adminoption"><td colspan=7>{$lna[249]} <input type=radio name=opt value='del'>{$lna[78]} <input type=radio name=opt value='move'>{$lna[250]}<select name="newlinkgptoid">$puttinggp</select>  <input type=radio name=opt value='ppt'>{$lna[238]}<select name="newproperty"><option value=1>{$lna[239]}</option><option value=0>{$lna[240]}</option></select>  <input type=button value="{$lna[64]}" class='formbutton' onclick="adminSubmitAjax('f_s');"><br><br>
 $pagebar
 </td></tr>
-</form>
 </table>
+</form>
 eot;
+	if ($ajax=='on') die($display_overall_plus);
+	else $display_overall.=$display_overall_plus;
 }
 
 if ($job=='batch') {
@@ -440,7 +440,11 @@ if ($job=='batch') {
 		$blog->query($queryactnow);
 	}
 	recache_links ();
-	catchsuccess ($finishok, $backtodetail);
+	if ($ajax=='on') {
+		$fetchURL='admin.php?go=link_detail';
+		catchsuccessandfetch($finishok, $fetchURL);
+	}
+	else catchsuccess($finishok, $backtodefault);
 }
 
 if ($job=='groupsorting') {
@@ -487,7 +491,7 @@ if ($job=='order') {
 	}
 	$urlnew="admin.php?go=link_saveorder_";
 	$display_overall.=highlightadminitems('groupsorting', 'link');
-$display_overall.=<<<eot
+$display_overall_plus=<<<eot
 <form action="" method="post" >
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
@@ -502,18 +506,17 @@ $display_overall.=<<<eot
 <select multiple size=8 name="list2" style="width: 50%;">
 $puttingdetail
 </select><br>
-<input type="button" value="{$lna[141]}" onclick="Moveup(this.form.list2)" name="B3">
-<input type="button" value="{$lna[142]}" onclick="Movedown(this.form.list2)" name="B4">
+<input type="button" value="{$lna[141]}" onclick="Moveup(this.form.list2)" name="B3" class='formbutton'>
+<input type="button" value="{$lna[142]}" onclick="Movedown(this.form.list2)" name="B4" class='formbutton'>
+<input type=button onclick="GetOptions(this.form.list2, '$urlnew')" class='formbutton' value="{$lna[64]}">
 {$lna[143]}
 </td>
 </tr>
-<tr>
-<td colspan=4 align=center class="sectbar">
-<input type=button onclick="GetOptions(this.form.list2, '$urlnew')" value="{$lna[64]}">
-</td></tr>
 </table>
 </form>
 eot;
+	if ($ajax=='on') die($display_overall_plus);
+	else $display_overall.=$display_overall_plus;
 }
 
 if ($job=='saveorder') {
@@ -542,12 +545,12 @@ if ($job=="pending") {
 			foreach ($wlinks as $link) {
 				@list($unuse, $siteid, $sitename, $siteurl, $sitelogo, $siteintro)=@explode('<|>', trim($link));
 				$sitelogo=($sitelogo) ? "<a href='$sitelogo' target='_blank' title='{$lna[255]}'><img src='admin/theme/{$themename}/view.gif' border='0'></a>" : "&nbsp;";
-				$tablebody.="<tr class='visibleitem'><td width=35 align=center><input type=checkbox name='selid[]' value='{$siteid}'></td><td width=150>{$sitename}</td><td width=250><a href='{$siteurl}' target=_blank>{$siteurl}</a></td><td width=35 align=center>{$sitelogo}</td><td>{$siteintro}</td><td width=30 align=center><a href=\"admin.php?go=link_approve_{$siteid}\" title='{$lna[256]}'><img src='admin/theme/{$themename}/yes.gif' border='0'></a></td><td width=30 align=center><a href=\"admin.php?go=link_disapprove_{$siteid}\" title='{$lna[257]}'><img src='admin/theme/{$themename}/del.gif' border='0'></a></td></tr>\n";
+				$tablebody.="<tr class='visibleitem'><td width=35 align=center><input type=checkbox name='selid[]' value='{$siteid}'></td><td width=150>{$sitename}</td><td width=250><a href='{$siteurl}' target=_blank>{$siteurl}</a></td><td width=35 align=center>{$sitelogo}</td><td>{$siteintro}</td><td width=30 align=center><a href=\"admin.php?go=link_approve_{$siteid}\" title='{$lna[256]}'><img src='admin/theme/{$themename}/yes.gif' border='0'></a></td><td width=30 align=center><a href=\"javascript: simulateFormSubmit('admin.php?go=link_disapprove_{$siteid}')\" title='{$lna[257]}'><img src='admin/theme/{$themename}/del.gif' border='0'></a></td></tr>\n";
 			}
 		}
 	}
 	$display_overall.=highlightadminitems('pending', 'link');
-$display_overall.=<<<eot
+$display_overall_plus=<<<eot
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
 <td width=160 class="sectstart">
@@ -557,13 +560,13 @@ $display_overall.=<<<eot
 </tr>
 </table>
 
-<table cellpadding=3 cellspacing=1 align=center class='tablewidth'>
 <form action="admin.php?go=link_batchpending" method="post" id='f_s' name='f_s'>
+<table cellpadding=3 cellspacing=1 align=center class='tablewidth'>
 <tr class="admintitle"><td width=35 align=center></td><td width=150 align=center>{$lna[233]}</td><td width=250 align=center>{$lna[234]}</td><td width=35 align=center>Logo</td><td align=center>{$lna[134]}</td><td width=30 align=center>{$lna[259]}</td><td width=30 align=center>{$lna[260]}</td></tr>
 $tablebody
 eot;
 
-	if ($totoshow==1) $display_overall.=<<<eot
+	if ($totoshow==1) $display_overall_plus.=<<<eot
 <tr><td colspan=7><a href="#unexist" onclick="checkallbox('f_s', 'checked');">{$lna[247]}</a> | <a href="#unexist" onclick="checkallbox('f_s', '');">{$lna[248]}</a></td></tr>
 <tr><td colspan=7 height=20></td></tr>
 <tr class="adminoption"><td colspan=7>
@@ -571,10 +574,12 @@ eot;
 	<input type=radio name=opt value='del'>{$lna[78]}<br>
 	<input type=radio name=opt value='accept'>{$lna[261]}<select name="newlinkgptoid">$puttinggp</select><br>
 	<input type=radio name=opt value='textonly'>{$lna[262]}<select name="newlinkgptoid2">$puttinggp</select><br>
-	<div align=center> <input type=submit value="{$lna[64]}" class='formbutton'> </div>
+	<div align=center> <input type=button value="{$lna[64]}" class='formbutton' onclick="adminSubmitAjax('f_s');"> </div>
 </td></tr>
 eot;
-	$display_overall.="</table>";
+	$display_overall_plus.="</table></form>";
+	if ($ajax=='on') die($display_overall_plus);
+	else $display_overall.=$display_overall_plus;
 }
 
 if ($job=="disapprove") {
@@ -591,7 +596,11 @@ if ($job=="disapprove") {
 		if ($allnow=='') @unlink($filename);
 		else writetofile ($filename, $allnow);
 	}
-	catchsuccess ($finishok, $backtopending);
+	if ($ajax=='on') {
+		$fetchURL='admin.php?go=link_pending';
+		catchsuccessandfetch($finishok, $fetchURL);
+	}
+	else catchsuccess ($finishok, $backtopending);
 }
 
 if ($job=="batchpending") {
@@ -636,7 +645,11 @@ if ($job=="batchpending") {
 		else writetofile ($filename, $allnow);	
 		recache_links ();
 	}
-	catchsuccess ($finishok, $backtopending);
+	if ($ajax=='on') {
+		$fetchURL='admin.php?go=link_pending';
+		catchsuccessandfetch($finishok, $fetchURL);
+	}
+	else catchsuccess ($finishok, $backtopending);
 }
 
 

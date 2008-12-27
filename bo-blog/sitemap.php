@@ -1,10 +1,10 @@
 <?PHP
 /* Sitemap generator for Bo-Blog 2.0.x
 Written by Bob
-Updated on 2006-11-26  */
+Updated on 2008-7-12  */
 
 //How many items are included?
-$entrynumber=500;
+$entrynumber=1500;
 
 //No need to change anything below
 error_reporting(0);
@@ -19,7 +19,7 @@ if (is_array($smentries)) {
 		$entryurl="{$config['blogurl']}/".getlink_entry($entry['blogid'], $entry['blogalias']);
 		$entrytime=($entry['edittime']) ? $entry['edittime'] : $entry['pubtime'];
 		$entrytime=gmdate("Y-m-d\TH:i:s+00:00", $entrytime);
-		$outputxml.="<url>\n<loc>{$entryurl}</loc>\n<lastmod>{$entrytime}</lastmod>\n<changefreq>always</changefreq>\n<priority>1.0</priority>\n</url>\n";
+		$outputxml.="<url>\n<loc>{$entryurl}</loc>\n<lastmod>{$entrytime}</lastmod>\n<changefreq>daily</changefreq>\n<priority>0.9</priority>\n</url>\n";
 	}
 }
 $outputxml.="</urlset>";

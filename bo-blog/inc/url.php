@@ -21,6 +21,7 @@ $config['urlrewritemethod']的意义
 if (!defined('VALIDREQUEST')) die ('Access Denied.');
 define ('URLRewrite', floor($config['urlrewritemethod']));
 
+
 function getlink_entry ($id, $alias, $page=null, $part=null) {
 	if (URLRewrite==0) $outurl="read.php?{$id}";
 	elseif (URLRewrite==1) $outurl=($alias) ? "post/{$alias}.php" : "read.php/{$id}.htm";

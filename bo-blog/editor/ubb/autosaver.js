@@ -40,8 +40,8 @@ function savedraft() {
 	var ubb = document.getElementById('ubb').checked ? 1 : 0;
 	var emot = document.getElementById('emot').checked ? 1 : 0;
 	var property = document.getElementById('property').checked ? 1 : 0;
-	var starred = document.getElementById('starred').checked ? 1 : 0;
-	var sweather=document.getElementById('sweather').options[document.getElementById('sweather').selectedIndex].value;	
+	var starred =(document.getElementById('starred')) ? (document.getElementById('starred').checked ? 1 : 0) : '';
+	var sweather=(document.getElementById('sweather')) ? document.getElementById('sweather').options[document.getElementById('sweather').selectedIndex].value : '';	
 //	var blogalias = blogencode(document.getElementById('blogalias').value);
 	var originsrc = blogencode(document.getElementById('originsrc').value);
 	var comefrom = blogencode(document.getElementById('comefrom').value);

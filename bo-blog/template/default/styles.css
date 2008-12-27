@@ -662,22 +662,6 @@ h1 a:hover {
 	padding: 5px;
 }
 
-/* smilies list */
-.panel-smilies {
-	padding:5px;
-	text-align: center;
-}
-.panel-smilies-title {
-	color: #000;
-	text-align: left;
-	border-bottom: 1px solid #BFCAD2;
-}
-.panel-smilies-content {
-	padding: 5px;
-	line-height: 120%;
-}
-
-
 /****** UBB Code Custom Styles ******/
 /* IE fix for ul */
 .code {
@@ -770,6 +754,25 @@ h1 a:hover {
 	line-height: 120%;
 }
 
+/* smilies list */
+.panel-smilies {
+	text-align: center;
+	position:relative;
+	height:0px;
+}
+.panel-smilies-title {
+	display:none;
+}
+.panel-smilies-content {
+	padding: 3px;
+	line-height: 120%;
+	position:absolute;
+	border: 1px solid #BFCAD2;
+	background:#fff;
+	left:160px;
+	top:-1px;
+}
+
 /* Emot Page Selection */
 #smileybuttons {
 	text-align: right;
@@ -785,4 +788,10 @@ h1 a:hover {
 
 .smileybut  a{
 	border: 1px solid #BEE6FD;
+}
+
+/*OpenID input area */
+#openid_url {
+	background: url(../../images/others/openid.gif) no-repeat;
+	text-indent: 20px;
 }

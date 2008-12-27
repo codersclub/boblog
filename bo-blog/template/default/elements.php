@@ -294,54 +294,54 @@ $elements['trackback']=<<<eot
 	</div>
 eot;
 
-
 $elements['form_reply']=<<<eot
-	<a name="reply"></a>
-	<div id="commentForm">
-		<form name="visitorinput" id="visitorinput" method="post" action="javascript: ajax_submit('{jobnow}');">
-		<table width="100%" border="0" align="center" cellpadding="4" cellspacing="1" class="formbox-comment">
-			<tr>
-				<td colspan="2" class="formbox-comment-title">{formtitle}</td>
-			</tr>
-			<tr>
-				<td class="formbox-comment-rowheader" width="140" valign="top">
-					<div class="panel-smilies">
-						<div class="panel-smilies-title">{$lnc[241]}</div>
-							<div class="panel-smilies-content">
-								{emots}
-							</div>
-						</div>
-						<div style="text-align: left;">
-							<input name="stat_html" id="stat_html" type="checkbox" value="1" {disable_html} /> {$lnc[242]}<br />
-							<input name="stat_ubb" id="stat_ubb" type="checkbox" value="1" {disable_ubb} /> {$lnc[243]}<br />
-							<input name="stat_emot" id="stat_emot" type="checkbox" value="1" {disable_emot} /> {$lnc[244]}<br />
-							<input name="stat_property" id="stat_property" type="checkbox" value="1" onclick="promptreppsw();"/> {$lnc[245]}
-							{if_neednopsw_begin}<br />
-							<input name="stat_rememberme" id="stat_rememberme" type="checkbox" value="1" {checked_rememberme} onclick="quickremember();"/>  {$lnc[284]} {if_neednopsw_rawend}
-						</div>
-				</td>
-				<td class="formbox-comment-content" valign="top">
-					<div style="padding-bottom:5px">
-					{if_neednopsw_begin}
-					{$lnc[246]} <input name="v_replier" id="v_replier" type="text" size="12" class="text" value="{replier}" {disable_replier}/>&nbsp;
-					 {$lnc[133]} <input name="v_password" id="v_password" type="password" size="12" class="text"  value="{password}" {disable_password}/>&nbsp; {$lnc[247]} 
-					<br/>
-					{$lnc[170]} <input name="v_repurl" id="v_repurl" type="text" size="12" class="text" value="{repurl}" />&nbsp;
-					{$lnc[248]} <input name="v_repemail" id="v_repemail" type="text" size="12" class="text"  value="{repemail}" />&nbsp; {if_neednopsw_end}{additional}
-					</div>
-					{ubbcode}
-					{if_securitycode_begin}<script type="text/javascript">securitycodejs="{$lnc[249]} <span id='securityimagearea'><img src='inc/securitycode.php?rand={rand}' alt='' title='{$lnc[250]}'/></span> <input name='v_security' id='v_security' type='text' size='4' maxlength='4' class='text' /> {$lnc[251]}   [<a href=\"javascript: refreshsecuritycode('securityimagearea', 'v_security');\">{$lnc[283]}</a>]";</script>  {if_securitycode_end}
-					<textarea name="v_content" id="v_content" cols="44" rows="10" onkeydown="ctrlenterkey(event);" onfocus="if (securitycodejs!=null) {document.getElementById('showsecuritycode').innerHTML=securitycodejs; securitycodejs=null;}"></textarea> <br/>	<span id="showsecuritycode"></span>
-					<div style="padding-top:10px">
-					{hidden_areas}
-						<input type="button" name="btnSubmit" id="btnSubmit" value="{$lnc[25]}" class="button" onclick="ajax_submit('{jobnow}'); return false;"/>&nbsp;
-						<input name="reset" id="reset" type="reset" value="{$lnc[252]}" class="button" />
-					</div>
-				</td>
-			</tr>
-		</table>
-		</form>
-	</div>
+  <a name="reply"></a>
+  <div id="commentForm">
+    <form name="visitorinput" id="visitorinput" method="post" action="javascript: ajax_submit('{jobnow}');">
+    <div class="formbox-comment">
+      <div class="formbox-comment-title">{formtitle}</div>
+      <div class="formbox-comment-content">
+        {if_neednopsw_begin}
+        <div class="formbox-comment-input">
+					<p class="in"><input name="v_replier" id="v_replier" type="text" size="32" class="text" value="{replier}" {disable_replier}/>  {$lnc[246]}</p>			
+					<p class="in"><input name="v_repurl" id="v_repurl" type="text" size="32" class="text" value="{repurl}" />  {$lnc[170]}</p>				
+					<p class="in"><input name="v_repemail" id="v_repemail" type="text" size="32" class="text"  value="{repemail}" />  {$lnc[248]}</p>
+					<input name="v_password" id="v_password" type="hidden" size="12" class="text"  value="{password}" {disable_password}/>
+        </div>
+        {if_neednopsw_end}
+
+        {if_openid_begin}
+		<div id="commentbox-openid" style="padding-bottom:5px">
+		<strong>{$lnc[314]}:</strong> <br/>
+		<input name="openid_url" id="openid_url" type="text" size="44" class="text" value="{repopenurl}" {disable_openurl}/>
+		</div>
+        {if_openid_end}
+
+        <div class="formbox-comment-tool">
+          <input name="stat_html" id="stat_html" type="checkbox" value="1" {disable_html} /> {$lnc[242]}
+          <input name="stat_ubb" id="stat_ubb" type="checkbox" value="0" onclick="showhidediv('ubbid')"/> {$lnc[243]} 
+          <input name="stat_emot" id="stat_emot" type="checkbox" value="1" {disable_emot}/> {$lnc[244]}<img src="{$template['moreimages']}/arrows/singledown.gif" alt="" title="{$lnc[241]}" style="cursor: pointer;" onclick="showhidediv('emotid')" align="absmiddle" />
+          <input name="stat_property" id="stat_property" type="checkbox" value="1" onclick="promptreppsw();"/> {$lnc[245]}
+          {if_neednopsw_begin}
+          <input name="stat_rememberme" id="stat_rememberme" type="checkbox" value="1" {checked_rememberme} onclick="quickremember();"/>  {$lnc[284]} <a href="login.php">[{$lnc[89]}]</a> {if_neednopsw_rawend}{additional}
+          </div>
+        <div id="ubbid" class="formbox-comment-ubb" style="display: none;">{ubbcode}</div>
+        <div id="emotid" class="panel-smilies" style="display: none;" onclick="showhidediv('emotid')">
+            <div class="panel-smilies-content">
+            {emots}
+            </div>
+        </div>
+        {if_securitycode_begin}<script type="text/javascript">securitycodejs="{$lnc[249]} <span id='securityimagearea'><img src='inc/securitycode.php?rand={rand}' alt='' title='{$lnc[250]}' style='cursor: pointer;' onclick=\"refreshsecuritycode('securityimagearea', 'v_security');\"/></span> <input name='v_security' id='v_security' type='text' size='4' maxlength='4' class='text' style='ime-mode: disabled' /> ";</script>  {if_securitycode_end}
+        <textarea name="v_content" id="v_content" cols="64" rows="10" onkeydown="ctrlenterkey(event);" onfocus="if (securitycodejs!=null) {document.getElementById('showsecuritycode').innerHTML=securitycodejs; securitycodejs=null;}"></textarea> <br/>  <span id="showsecuritycode"></span>
+        <div style="padding-top:10px">
+        {hidden_areas}
+        <input type="button" name="btnSubmit" id="btnSubmit" value="{$lnc[25]}" class="button" onclick="ajax_submit('{jobnow}'); return false;"/>&nbsp;
+        <input name="reset" id="reset" type="reset" value="{$lnc[252]}" class="button" />
+        </div>
+      </div>
+    </div>
+    </form>
+  </div>
 eot;
 
 $elements['endviewentry']=<<<eot

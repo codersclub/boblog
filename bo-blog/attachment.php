@@ -21,10 +21,13 @@ if ($attachfind['fid']!=$fid) die ("File does not exist.");
 
 $check_ok=($mbcon['antileech']=='0') ? true : false;
 if ($mbcon['antileech']!='0') {
-	$allowedlinkdomain=@explode(' ', $mbcon['alloweddomain']);
-	$linkfrom=@parse_url($_SERVER['HTTP_REFERER']);
-	$linkdomain=$linkfrom['host'];
-	if (@in_array($linkdomain, $allowedlinkdomain)) $check_ok=true;
+	if (empty($_SERVER['HTTP_REFERER'])) $check_ok=true;
+	else {
+		$allowedlinkdomain=@explode(' ', $mbcon['alloweddomain']);
+		$linkfrom=@parse_url($_SERVER['HTTP_REFERER']);
+		$linkdomain=$linkfrom['host'];
+		if (@in_array($linkdomain, $allowedlinkdomain)) $check_ok=true;
+	}
 }
 
 if (!$check_ok) {

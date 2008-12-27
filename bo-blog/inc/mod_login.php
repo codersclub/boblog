@@ -20,7 +20,13 @@ if (!$job) {
 	$jobs="login.php?job=verify";
 	$actionnow="{$lnc[253]} [<a href=\"login.php?job=register\">{$lnc[254]}</a>]";
 	$formbody.=$t->set('form_eachline', array('text'=>"*{$lnc[132]}", 'formelement'=>"<input name='username' type='text' id='username' size='24' class='text' /><input type='hidden' name='urlreturn' value='{$urlreturn}' />"));
-	$formbody.=$t->set('form_eachline', array('text'=>"*{$lnc[133]}", 'formelement'=>"<input type='password'  class='text' size='16' name='password' id='password' />"));
+	$formbody.=$t->set('form_eachline', array('text'=>"*{$lnc[133]}", 'formelement'=>"<input type='password'  class='text' size='24' name='password' id='password' />"));
+
+	if ($mbcon['enableopenid']=='1') {
+		$formbody.=$t->set('form_eachline', array('text'=>"", 'formelement'=>"{$lnc[314]}:"));
+		$formbody.=$t->set('form_eachline', array('text'=>"OpenID", 'formelement'=>"<input name='openid_url' type='text' id='openid_url' size='32' class='text' />"));
+	}
+
 	$formbody.=$t->set('form_eachline', array('text'=>'&nbsp;', 'formelement'=>"<input name=\"savecookie\" type=\"checkbox\" id=\"savecookie\" value=\"1\" checked='checked' />{$lnc[284]}"));
 	plugin_runphp('loginform');
 	if ($config['loginvalidation']==1) {
@@ -190,13 +196,22 @@ if ($job=='doregister' || $job=='domodpro') {
 
 
 if ($job=='verify') {
-	acceptrequest('savecookie,securitycode,urlreturn');
+	acceptrequest('savecookie,securitycode,urlreturn,openid_url');
 	if ($config['loginvalidation']==1) {
 		if ($db_defaultsessdir!=1) session_save_path("./{$db_tmpdir}");
 		session_cache_limiter("private, must-revalidate");
 		session_start();
 		if ($securitycode=='' || strtolower($securitycode)!=strtolower($_SESSION['code'])) catcherror($lnc[165]);
 	}
+
+	if ($openid_url) {
+		if ($mbcon['enableopenid']!='1') catcherror($lnc[315].$lnc[319]);
+		$openid = $openid_url;
+		$process_url = "{$config['blogurl']}/login.php?job=openidverify&savecookie={$savecookie}&urlreturn=".urlencode($urlreturn)."&securitycode={$securitycode}";
+		prepareOpenID($openid, $process_url);
+		exit();
+	}
+
 	$password=md5($_POST['password']);
 	$username=safe_convert(mystrtolower($_POST['username']));
 	plugin_runphp('loginprocess');
@@ -222,11 +237,34 @@ if ($job=='verify') {
 	}
 }
 
+if ($job=='openidverify') {
+	if ($mbcon['enableopenid']!='1') catcherror($lnc[315].$lnc[319]);
+	$openidresult=completeOpenID();
+	acceptrequest('savecookie,securitycode,urlreturn');
+	if ($config['loginvalidation']==1) {
+		if ($db_defaultsessdir!=1) session_save_path("./{$db_tmpdir}");
+		session_cache_limiter("private, must-revalidate");
+		session_start();
+		if ($securitycode=='' || strtolower($securitycode)!=strtolower($_SESSION['code'])) catcherror($lnc[165]);
+	}
+	if ($savecookie==0) {
+		setcookie ('openid_url_id', $openidresult['openidurl']);
+	} else {
+		$savecookielong=3600*24*30;
+		setcookie ('openid_url_id', $openidresult['openidurl'], time()+$savecookielong);
+	}
+	$redirection=array("{$lnc[309]}|{$urlreturn}", "{$lnc[163]}|index.php");
+	catchsuccess ("{$lnc[317]} ".$openidresult['openidurl'], $redirection);
+}
+
 if ($job=='logout') {
 	plugin_runphp('logoutprocess');
 	define ('isLogout', 1);
 	setcookie ('userid', '', time()-3600);
 	setcookie ('userpsw', '', time()-3600);
+	setcookie ('openid_url_id', '', time()-3600);
+	setcookie ('bloglanguage', '', time()-3600);
+	setcookie ('blogtemplate', '', time()-3600);
 	catchsuccess ($lnc[168], "{$lnc[163]}|index.php");
 }
 

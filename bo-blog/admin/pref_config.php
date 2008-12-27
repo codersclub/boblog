@@ -1,11 +1,12 @@
 <?PHP
 if (!defined('VALIDADMIN')) die ('Access Denied.');
 include("data/config.php");
+$config['blogcreatetime']=date("Y-m-d H:i:s", $config['blogcreatetime']);
 addpref("sec", "{$lna[500]}");
 addpref("t", "blogname|{$lna[501]}");
 addpref("t", "blogdesc|{$lna[502]}");
 addpref("t", "blogkeywords|{$lna[503]}");
-addpref("t", "blogcreatetime|{$lna[504]}|{$lna[505]}");
+addpref("t", "blogcreatetime|{$lna[504]}|(yyyy-mm-dd HH:mm:ss)");
 addpref("t", "blogurl|{$lna[506]}|{$lna[507]}<br>{$lna[952]}");
 addpref("t", "bloglogo|{$lna[508]}");
 addpref("sec", "{$lna[509]}");
@@ -20,10 +21,9 @@ addpref("r", "validation|{$lna[521]}|{$lna[511]}|{$lna[512]}|{$lna[522]}<br>{$ln
 addpref("r", "loginvalidation|{$lna[523]}|{$lna[511]}|{$lna[512]}|{$lna[522]}<br>{$lna[1170]}");
 addpref("r", "registervalidation|{$lna[1018]}|{$lna[511]}|{$lna[512]}|{$lna[522]}");
 addpref("r", "applylinkvalidation|{$lna[1019]}|{$lna[511]}|{$lna[512]}|{$lna[522]}<br>{$lna[1170]}");
-//addpref("r", "noadminsession|{$lna[1009]}|{$lna[511]}|{$lna[512]}|<br>{$lna[1010]}");
 addpref("sec", "{$lna[524]}");
 addpref("r", "closeajax|{$lna[1096]}|{$lna[511]}|{$lna[512]}|<br>{$lna[1097]}");
+addpref("r", "closeadminajax|{$lna[1191]}|{$lna[511]}|{$lna[512]}|<br>{$lna[1192]}");
 addpref("r", "gzip|{$lna[525]}|{$lna[511]}|{$lna[512]}|{$lna[526]}");
 addpref("t", "updatesrc|{$lna[531]}");
-//addpref("r", "smarturl|{$lna[527]}|{$lna[511]}|{$lna[512]}|<br>{$lna[528]} {$lna[529]}");
-//addpref("r", "urlrewrite|{$lna[937]}|{$lna[938]} (url/read.php/10.htm) <a href='read.php/test.htm' target=_blank>[{$lna[939]}]</a><br>{$lna[530]}|{$lna[940]} (url/post/10.htm) <a href='post/1.htm' target=_blank>[{$lna[939]}]</a><br>");
+addpref("t", "customized404|{$lna[1187]}|<br>{$lna[1188]}");

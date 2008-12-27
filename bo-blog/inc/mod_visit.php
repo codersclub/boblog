@@ -20,6 +20,19 @@ if (!$job) {
 	exit();
 }
 
+
+if ($job=='openidsubmit') {
+	if ($mbcon['enableopenid']!='1') catcherror($lnc[315].$lnc[319]);
+	$openidresult=completeOpenID();
+	$v_replier=$openidresult['openidurl'];
+	if (@$openidresult['sreg']['email']) {
+		$v_repemail=$openidresult['sreg']['email'];
+	}
+	acceptrequest('todojob');
+	$job=$todojob;
+	setcookie ('openid_url_id', $openidresult['openidurl']);
+}
+
 if ($job=='addreply' || $job=='addmessage' || $job=='editreply' || $job=='editmessage') {
 	if (check_ip ($userdetail['ip'], $forbidden['banip'])) catcherror($lnc[209]);
 	define('REPLYSPECIAL', 1);
@@ -181,7 +194,8 @@ if ($job=='addreply' || $job=='addmessage' || $job=='editreply' || $job=='editme
 		include("admin/cache_func.php");
 		recache_latestreplies();
 	}
-	if ($ajax!='on') catchsuccess("{$lnc[216]}{$tipsplus}", array("{$lnc[5]}|<", "{$lnc[163]}|index.php", "{$lnc[91]}|guestbook.php"));
+	$returnurl=($job=='addmessage') ? "{$lnc[91]}|guestbook.php" : "{$lnc[5]}|".getlink_entry($v_id, $originblog['blogalias']).'#topreply';
+	if ($ajax!='on') catchsuccess("{$lnc[216]}{$tipsplus}", array($returnurl, "{$lnc[163]}|index.php"));
 	else { //Deal with ajax
 		$m_b=new getblogs;
 		if ($job=='addreply' || $job=='addmessage') {
@@ -207,44 +221,65 @@ if ($job=='search') {
 	}
 	if (preg_search($keyword, $forbidden['nosearch'])) catcherror ($lnc[221]);
 	$keyword=safe_convert($keyword);
+	$keywordgroup=@explode(' ', $keyword);
+	$keywordgroup=array_values(array_unique($keywordgroup));
 	if ($searchmethod!=1 && $searchmethod!=5 && $permission['FulltextSearch']!=1) catcherror ($lnc[222]);
+	$sqlconditions=array();
 	switch ($searchmethod) {
 		case 1:
 			$target_table="{$db_prefix}blogs";
-			$target_column="title";
 			$target_id="blogid";
 			$extralimit=($permission['SeeHiddenEntry']==1) ? " AND `property`<>'3'" : " AND `property`<=1"; 
+			foreach ($keywordgroup as $keyword) {
+				$sqlconditions[]="`title` LIKE '%{$keyword}%'";
+			}
+			$sqlcondition=@implode(' AND ', $sqlconditions).$extralimit;
 			break;
 		case 2:
 			$target_table="{$db_prefix}blogs";
-			$target_column="content";
 			$target_id="blogid";
 			$extralimit=($permission['SeeHiddenEntry']==1) ? " AND `property`<>'3'" : " AND `property`<=1"; 
+			foreach ($keywordgroup as $keyword) {
+				$sqlconditions[]="(`content` LIKE '%{$keyword}%'  OR `title` LIKE '%{$keyword}%')";
+			}
+			$sqlcondition=@implode(' AND ', $sqlconditions).$extralimit;
 			break;
 		case 3:
 			$target_table="{$db_prefix}replies";
-			$target_column="repcontent";
 			$target_id="repid";
 			$extralimit=($permission['SeeHiddenReply']==1) ? " AND `reproperty`<=1" : " AND `reproperty`='0'"; 
+			foreach ($keywordgroup as $keyword) {
+				$sqlconditions[]="`repcontent` LIKE '%{$keyword}%'";
+			}
+			$sqlcondition=@implode(' AND ', $sqlconditions).$extralimit;
 			break;
 		case 4:
 			$target_table="{$db_prefix}messages";
-			$target_column="repcontent";
 			$target_id="repid";
 			$extralimit=($permission['SeeHiddenReply']==1) ? " AND `reproperty`<=1" : " AND `reproperty`='0'"; 
+			foreach ($keywordgroup as $keyword) {
+				$sqlconditions[]="`repcontent` LIKE '%{$keyword}%'";
+			}
+			$sqlcondition=@implode(' AND ', $sqlconditions).$extralimit;
 			break;
 		case 5:
 			$target_table="{$db_prefix}tags";
-			$target_column="tagname";
 			$target_id="tagname";
+			foreach ($keywordgroup as $keyword) {
+				$sqlconditions[]="`tagname` LIKE '%{$keyword}%'";
+			}
+			$sqlcondition=@implode(' AND ', $sqlconditions).$extralimit;
 			break;
 		default:
 			$target_table="{$db_prefix}blogs";
-			$target_column="title";
 			$target_id="blogid";
 			$extralimit=($permission['SeeHiddenEntry']==1) ? " AND `property`<>'3'" : " AND `property`<=1"; 
+			foreach ($keywordgroup as $keyword) {
+				$sqlconditions[]="`title` LIKE '%{$keyword}%'";
+			}
+			$sqlcondition=@implode(' AND ', $sqlconditions).$extralimit;
 	}
-	$results=$blog->getarraybyquery("SELECT `{$target_id}` FROM `{$target_table}` WHERE `{$target_column}` LIKE '%{$keyword}%' {$extralimit} LIMIT 0,{$mbcon['maxresults']}");
+	$results=$blog->getarraybyquery("SELECT `{$target_id}` FROM `{$target_table}` WHERE {$sqlcondition} LIMIT 0,{$mbcon['maxresults']}");
 	$result=$results[$target_id];
 	$count_result=(is_array($result)) ? (count($result)) : 0;
 	setcookie ('lastsearch', time(), time()+$permission['SearchInterval']);
@@ -310,7 +345,7 @@ if ($job=='viewresult') {
 	if ($searchmethod==5) {
 		$alltags=$blog->getarraybyquery("SELECT * FROM `{$db_prefix}tags` WHERE `tagname` in ({$result})");
 		for ($i=0; $i<count($alltags['tagname']); $i++) {	
-			$eachtag_encoded=urlencode(($alltags['tagname'][$i]));
+			$eachtag_encoded=urlencode(urlencode($alltags['tagname'][$i]));
 			$urlref=getlink_tags($eachtag_encoded);
 			if ($mbcon['tagunderlinetospace']==1) 	$alltags['tagname'][$i]=str_replace('_', ' ', $alltags['tagname'][$i]);
 			$tag_show[]="<a href=\"{$urlref}\" title=\"{$lnc[188]}{$alltags['tagcounter'][$i]}\" rel=\"tag\">{$alltags['tagname'][$i]}</a>";
@@ -364,3 +399,49 @@ if ($job=='getreplyonly') {
 	else $output_single=$m_b->single_message($records, floor($onetimecounter));
 	catchsuccess($output_single);
 }
+
+//OpenID support
+if ($job=='openidaddreply' || $job=='openidaddmessage') {
+	if ($mbcon['enableopenid']!='1') catcherror($lnc[315].$lnc[319]);
+	$lastpost=$_COOKIE['lastpost'];
+	if (($nowtime['timestamp']-$lastpost)<$permission['MinPostInterval']) catcherror($lnc[210]);
+	$findintable=($job=='openidaddreply') ? 'replies' : 'messages';
+	$findreplies=$blog->getbyquery("SELECT * FROM `{$db_prefix}{$findintable}` WHERE `repip`='{$userdetail['ip']}' ORDER BY `reptime` DESC LIMIT 1");
+	if ($findreplies['repip']==$userdetail['ip']) {
+		if (($nowtime['timestamp']-$findreplies['reptime'])<$permission['MinPostInterval']) catcherror($lnc[210]); 
+	}
+
+	acceptrequest('openid_url,stat_html,stat_ubb,stat_emot,stat_property,v_content,v_id,v_security,onetimecounter');
+
+	if (!$openid_url) catcherror($lnc[212]);
+	$v_id=intval(trimplus($v_id));
+	if ($job=='openidaddreply') {
+		checkpermission('Reply');
+		if ($permission['SeeHiddenEntry']!=1) $limitmore="AND `property`<>2";
+		$originblog=$blog->getbyquery("SELECT * FROM `{$db_prefix}blogs` WHERE `blogid`='{$v_id}' AND `property`<>1  AND `property`<>3 {$limitmore}");
+		if ($originblog['blogid']!=$v_id) $cancel=$lnc[211];
+		else {
+			$allowedgp=@explode('|', $originblog['permitgp']);
+			if ($originblog['permitgp']!='' && !@in_array ($userdetail['usergroup'], $allowedgp)) $cancel=$lnc[211];
+		}
+	} else checkpermission('LeaveMessage');
+	catcherror ($cancel);
+
+	if (preg_search($openid_url, $forbidden['banword']) || preg_search($openid_url, $forbidden['keep'])) $cancel=$lnc[158];
+	if ($config['validation']==1) {
+		if ($db_defaultsessdir!=1) session_save_path("./{$db_tmpdir}");
+		session_cache_limiter("private, must-revalidate");
+		session_start();
+		if ($v_security=='' || strtolower($v_security)!=strtolower($_SESSION['code'])) $cancel=$lnc[165];
+	}
+	catcherror ($cancel);
+	$v_content=urlencode($v_content);
+	$v_replier=urlencode($openid_url);
+	$openidtojob=str_replace('openid', '', $job);
+
+
+	$openid = $openid_url;
+	$process_url = "{$config['blogurl']}/visit.php?job=openidsubmit&todojob={$openidtojob}&ajax=off&v_replier={$v_replier}&stat_html={$stat_html}&stat_ubb={$stat_ubb}&stat_emot={$stat_emot}&stat_property={$stat_property}&v_id={$v_id}&onetimecounter={$onetimecounter}&v_security={$v_security}&v_content={$v_content}";
+	prepareOpenID($openid, $process_url);
+}
+

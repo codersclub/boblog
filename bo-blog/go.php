@@ -42,15 +42,23 @@ $RedirectTo[]="page.php?pagealias=\\1";
 $i=0;
 foreach ($RewriteRules as $rule) {
 	if (preg_match($rule, $rewritedURL)) {
-		$rewritedURL=preg_replace($rule, $RedirectTo[$i], $rewritedURL, 1);
+		$tmp_rewritedURL=preg_replace($rule, '<'.$RedirectTo[$i].'<', $rewritedURL, 1);
+		$tmp_rewritedURL=@explode('<', $tmp_rewritedURL);
+		$rewritedURL=($tmp_rewritedURL[2]) ? false : $tmp_rewritedURL[1];
 		break;
 	}
 	$i+=1;
 }
 
-if ($rewritedURL==$rawURL) {
+if ($rewritedURL==$rawURL || !$rewritedURL) {
+	include_once("./data/config.php");
 	@header ("HTTP/1.1 404 Not Found");
-	die("<html><head><title>Not Found</title></head><body><h1>HTTP/1.1 404 Not Found</h1></body></html>");
+	if ($config['customized404']) {
+		@header ("Location: {$config['customized404']}");
+	}
+	else {
+		die("<html><head><title>Not Found</title></head><body><h1>HTTP/1.1 404 Not Found</h1></body></html>");
+	}
 }
 
 $parsedURL=parse_url ($rewritedURL);

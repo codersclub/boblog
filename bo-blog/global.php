@@ -10,14 +10,14 @@ In memory of my university life
 
 /* Version and Copyright Declaration
     You are not allowed to change anything in this part. */
-$blogversion="2.1.0";
-$codeversion="2.1.0.2431.0";
-$codename="summer";
+$blogversion="2.1.1 Release";
+$codeversion="2.1.1.3626.0";
+$codename="pilot";
 //You can change anything below as you wish. Good Luck!
 
 if (file_exists('install/install.php')) {
 	@header("Content-Type: text/html; charset=utf-8");
-	die ("警告：安装文件install/install.php仍然在您的服务器上，请立刻将其改名或删除！<br>警告：安裝程式install/install.php仍然在您的伺服器上，請立刻將其改名或刪除！<br>NOTICE: Installation file: install/install.php is still on your server. Please DELETE or RENAME it now.");
+	die ("警告：安装文件install/install.php仍然在您的服务器上，请立刻将其改名或删除！<br>警告：安裝程式install/install.php仍然在您的伺服器上，請立刻將其改名或刪除！<br>NOTICE: Installation file: install/install.php is still on your server. Please DELETE or RENAME it immediately.");
 }
 
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
@@ -37,11 +37,32 @@ $ajax=$_REQUEST['ajax']; //If the page is in Ajax request mode
 
 require_once ("data/mod_config.php");
 require_once ("data/config.php");
+if (file_exists("data/functionlock.php")) {
+	require_once ("data/functionlock.php");
+}
 require_once ("inc/url.php");
 require_once ("inc/db.php");
 require_once ("inc/boblog_class_run.php");
-require_once ("data/language.php"); //Load language
-if (defined('isIndex') && is_file("data/langspec.php")) require_once ("data/langspec.php"); //Load customized language data
+
+//Load language
+if (defined('isIndex')) {
+	if ($_REQUEST['lang']) {
+		$customlang=basename($_REQUEST['lang']);
+		setcookie('bloglanguage', $customlang);
+	}
+	else $customlang=basename($_COOKIE['bloglanguage']);
+	if (!empty($customlang) && file_exists("lang/{$customlang}/common.php")) {
+		include_once ("lang/{$customlang}/common.php");
+		$langfront=$customlang;
+	}
+	else {
+		require_once ("data/language.php"); 
+	}
+	if (is_file("data/langspec.php")) require_once ("data/langspec.php"); //Load customized language data
+} else {
+	require_once ("data/language.php"); 
+}
+
 
 //Auto detect mirror site
 if (!defined('VALIDADMIN')) {
@@ -76,8 +97,12 @@ if ($_REQUEST['tem']) {
 	setcookie('blogtemplate', $customtemplate);
 }
 else $customtemplate=basename($_COOKIE['blogtemplate']);
-if (!empty($customtemplate) && file_exists("template/{$customtemplate}/info.php")) require ("template/{$customtemplate}/info.php");
-else require ("data/mod_template.php");
+if (!empty($customtemplate) && file_exists("template/{$customtemplate}/info.php")) {
+	require ("template/{$customtemplate}/info.php");
+}
+else {
+	require ("data/mod_template.php");
+}
 define ('elementfile', $template['structure']); //2006-7-2 Seurity Fix, 2006-7-5 modified
 
 acceptcookie("userid,userpsw");
@@ -106,6 +131,9 @@ else {
 	}
 	else $logstat=1;
 }
+if ($mbcon['enableopenid']=='1') { 
+	$openidloginstat=($logstat==0 && $_COOKIE['openid_url_id']) ? 1 : 0;
+} else $openidloginstat=0;
 
 //Load User Group Permission Cache
 $permission=array();
@@ -369,13 +397,13 @@ function msubstr($str,$start,$end,$len=0) { //UTF-8 Cutting
 }
 
 
-function catcherror ($error) {
+function catcherror ($error, $enableautojump=true) {
 	global $ajax, $lnc;
 	if (!empty($error)) {
 		@header("Content-Type: text/html; charset=utf-8");
 		if ($ajax=='on') die ("<boblog_ajax::error>".strip_tags($error));
 		$t=new template;
-		$t->showtips($lnc[4], $error, "{$lnc[5]}|<", true);
+		$t->showtips($lnc[4], $error, "{$lnc[5]}|<", $enableautojump);
 	}
 }
 
@@ -385,6 +413,15 @@ function catchsuccess ($tip, $returnurl=false) {
 	if ($ajax=='on') die ("<boblog_ajax::success>".$tip);
 	$t=new template;
 	$t->showtips($lnc[6], $tip, $returnurl, true);
+}
+
+function catchsuccessandfetch ($tip, $url) {
+	global $ajax, $lnc;
+	@header("Content-Type: text/html; charset=utf-8");
+	if ($ajax!='on') { //This function should be used in ajax mode only
+		return;
+	}
+	die ("<boblog_ajax::success>".$tip."<boblog_ajax::fetch>".$url);
 }
 
 function urlconvert($url, $defaultprefix="http://") { //Turn url without http:// to a valid Internet link
@@ -922,5 +959,79 @@ function generate_emots_panel ($emots) {
 		$emgout.="//]]>\n</script>\n";
 		$emgout.=$emtslb;
 		return $emgout;
+	}
+}
+
+function checkPageValidity($page, $total) {
+	$total=max(1, $total);
+	if ($page>$total) {
+		global $lnc;
+		getHttp404($lnc[313]);
+	}
+}
+
+function getHttp404($errormsg) {
+	global $config;
+	@header ("HTTP/1.1 404 Not Found");
+	if ($config['customized404']) {
+		@header ("Location: {$config['customized404']}");
+	}
+	else {
+		catcherror($errormsg);
+	}
+}
+
+function prepareOpenID($openid, $process_url) {
+	global $db_defaultsessdir, $db_tmpdir, $config, $lnc;
+	define('OpenIDFileStorePath', $db_tmpdir.'/openid');
+	require_once ('openid.php');
+	if ($db_defaultsessdir!=1) session_save_path("./{$db_tmpdir}");
+	session_start();
+	$trust_root = $config['blogurl'];
+
+	// Begin the OpenID authentication process.
+	$auth_request = $consumer->begin($openid);
+
+	// Handle failure status return values.
+	if (!$auth_request) {
+		catcherror($lnc[315]."Authentication error.");
+	}
+
+	$auth_request->addExtensionArg('sreg', 'optional', 'email');
+
+	// Redirect the user to the OpenID server for authentication.  Store
+	// the token for this authentication so we can verify the response.
+	$redirect_url = $auth_request->redirectURL($trust_root, $process_url);
+	header("Location: ".$redirect_url);
+}
+
+function completeOpenID () {
+	global $db_defaultsessdir, $db_tmpdir, $config, $lnc;
+	define('OpenIDFileStorePath', $db_tmpdir.'/openid');
+	require_once ('openid.php');
+	if ($db_defaultsessdir!=1) session_save_path("./{$db_tmpdir}");
+	session_start();
+
+	// Complete the authentication process using the server's response.
+	$response = $consumer->complete($_GET);
+
+	if ($response->status == Auth_OpenID_CANCEL) {
+		// This means the authentication was cancelled.
+		catcherror($lnc[316], false);
+	} else if ($response->status == Auth_OpenID_FAILURE) {
+		$msg = "OpenID authentication failed: " . $response->message;
+		catcherror($lnc[315].$msg, false);
+	} else if ($response->status == Auth_OpenID_SUCCESS) {
+		// This means the authentication succeeded.
+		$openid = $response->identity_url;
+		$sreg = $response->extensionResponse('sreg');
+
+		//Format openid
+		$openid=str_replace(array('http://', 'https://'), array('', ''), $openid);
+		if (substr($openid, -1, 1)=='/') $openid=substr($openid, 0, strlen($openid)-1);
+
+		return array('openidurl'=>$openid, 'sreg'=>$sreg);
+	} else {
+		catcherror($lnc[315].'OpenID Unknown Error.', false);
 	}
 }

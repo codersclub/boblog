@@ -13,7 +13,7 @@ In memory of my university life
 if (!defined('VALIDREQUEST')) die ('Access Denied.');
 
 function convert_ubb ($str, $advanced=0, $inrss=0) {
-	global $logstat, $template, $mbcon, $lnc, $config;
+	global $logstat, $openidloginstat, $template, $mbcon, $lnc, $config;
 	if ($logstat!=1) {
 		$str=preg_replace("/\[hide\](.+?)\[\/hide\]/is", "<div class=\"quote hidebox\"><div class=\"quote-title\">{$lnc[311]}</div><div class=\"quote-content\">{$lnc[312]}  <a href=\"{$config['blogurl']}/login.php?job=register\">{$lnc[79]}</a> {$lnc[235]} <a href=\"{$config['blogurl']}/login.php\">{$lnc[89]}</a> </div></div>", $str);
 	} else {
@@ -39,7 +39,7 @@ function convert_ubb ($str, $advanced=0, $inrss=0) {
 	$str=preg_replace("/\[file\]\s*(\S+?)\s*\[\/file\]/ise", "makedownload('\\1', 0, $inrss, false)", $str);
 
 	//Auto add url link
-	if ($mbcon['autoaddlink']==1) $str=preg_replace("/(?<=[^\]a-z0-9-=\"'\\/])((https?|ftp|gopher|news|telnet|rtsp|mms|callto|ed2k):\/\/|www\.)([a-z0-9\/\-_+=.~!%@?#%&;:$\\()|]+)/i", "[url]\\1\\3[/url]", $str);
+	if ($mbcon['autoaddlink']==1) $str=preg_replace("/(?<=[^\]a-z0-9-=\"'\\/])((https?|ftp|gopher|news|telnet|rtsp|mms|callto|ed2k):\/\/|www\.)([a-z0-9\/\-_+=.~!%@?#%&;:$\\()|]+)/i", "[autourl]\\1\\3[/autourl]", $str);
 
 	
 	$regubb_search = array(
@@ -48,6 +48,7 @@ function convert_ubb ($str, $advanced=0, $inrss=0) {
 				"/\s*\[quote\][\n\r]*(.+?)[\n\r]*\[\/quote\]\s*/is",
 				"/\s*\[quote=(.+?)\][\n\r]*(.+?)[\n\r]*\[\/quote\]\s*/is",
 				"/\s*\[code\][\n\r]*(.+?)[\n\r]*\[\/code\]\s*/ie",
+				"/\[autourl\]([^\[]*)\[\/autourl\]/ie",
 				"/\[url\]([^\[]*)\[\/url\]/ie",
 				"/\[url=www.([^\[\"']+?)\](.+?)\[\/url\]/is",
 				"/\[url=([^\[]*)\](.+?)\[\/url\]/is",
@@ -70,6 +71,7 @@ function convert_ubb ($str, $advanced=0, $inrss=0) {
 				"<div class=\"quote\"><div class=\"quote-title\">{$lnc[265]}</div><div class=\"quote-content\">\\1</div></div>",
 				"<div class=\"quote\"><div class=\"quote-title\">{$lnc[266]} \\1</div><div class=\"quote-content\">\\2</div></div>",
 				"makecode('\\1')",
+				"makeurl('\\1')",
 				"makeurl('\\1')",
 				"<a href=\"http://www.\\1\" target=\"_blank\">\\2</a>",
 				"<a href=\"\\1\" target=\"_blank\">\\2</a>",
@@ -121,11 +123,14 @@ function makemedia ($mediatype, $url, $width, $height) {
 	$typedesc=array('wmp'=>'Windows Media Player', 'swf'=>'Flash Player', 'real'=>'Real Player', 'flv'=>'Flash Video Player');
 	$mediapic=array('wmp'=>'wmp.gif', 'swf'=>'swf.gif', 'real'=>'real.gif', 'flv'=>'swf.gif');
 	$url=($mediatype=='flv') ? urlconvert ($url, $config['blogurl'].'/') : $url;
+	$url=urlencode($url);
 	$str="<div class=\"quote mediabox\"><div class=\"quote-title\"><img src=\"{$template['images']}/{$mediapic[$mediatype]}\" alt=\"\"/>{$typedesc[$mediatype]}{$lnc[268]}</div><div class=\"quote-content\"><a href=\"javascript: playmedia('player{$id}', '{$mediatype}', '{$url}', '{$width}', '{$height}');\">{$lnc[269]}</a><div id='player{$id}' style='display:none;'></div></div></div>";
 	return $str;
 }
 
 function makecode ($str) {
+	$str=str_replace('[autourl]', '', $str);
+	$str=str_replace('[/autourl]', '', $str);
 	return "<div class=\"code\">{$str}</div>";
 }
 
@@ -176,11 +181,11 @@ function xhtmlHighlightString($str) {
 	if (PHP_VERSION>'5') return "<div class=\"code\" style=\"overflow: auto;\">$hlt</div>";
 	$fon = str_replace(array('<font ', '</font>'), array('<span ', '</span>'), $hlt);
 	$ret = preg_replace('#color="(.*?)"#', 'style="color: \\1"', $fon);
-	return "<div class=\"code\" style=\"overflow: auto;\">$ret;</div>";
+	return "<div class=\"code\" style=\"overflow: auto;\">$ret</div>";
 }
 
 function makedownload ($url, $sfile, $inrss, $isattached=false) {
-	global $logstat, $template, $lnc, $mbcon, $dlstat;
+	global $logstat, $openidloginstat, $template, $lnc, $mbcon, $dlstat, $config;
 	if ($isattached) {
 		$downloadtime=" ({$lnc[280]} <!--global:{dlstat_{$url}}--> {$lnc[281]})";
 		$downloadtime2=": <!--global:{dlfname_{$url}}-->";
@@ -188,7 +193,7 @@ function makedownload ($url, $sfile, $inrss, $isattached=false) {
 		$url="attachment.php?fid={$url}";
 	}
 	if ($inrss==0) {
-		if ($logstat==1 || $sfile!=1) $str="<div class=\"quote downloadbox\"><div class=\"quote-title\"><img src=\"{$template['images']}/download.gif\" alt=\"\"/>{$lnc[232]} {$downloadtime}</div><div class=\"quote-content\"><a href=\"{$url}\">{$lnc[233]}{$downloadtime2}</a></div></div>";
+		if (($logstat==1 || $openidloginstat==1) || $sfile!=1) $str="<div class=\"quote downloadbox\"><div class=\"quote-title\"><img src=\"{$template['images']}/download.gif\" alt=\"\"/>{$lnc[232]} {$downloadtime}</div><div class=\"quote-content\"><a href=\"{$url}\">{$lnc[233]}{$downloadtime2}</a></div></div>";
 		else  $str="<div class=\"quote\"><div class=\"quote-title\"><img src=\"{$template['images']}/download.gif\" alt=\"\"/>{$lnc[232]}{$downloadtime}</div><div class=\"quote-content\">{$lnc[234]} <a href=\"{$config['blogurl']}/login.php?job=register\">{$lnc[79]}</a> {$lnc[235]} <a href=\"{$config['blogurl']}/login.php\">{$lnc[89]}</a> </div></div>";
 	} else {
 		if ($sfile==1) $str="{$lnc[234]} <a href=\"{$config['blogurl']}/login.php?job=register\">{$lnc[79]}</a> {$lnc[235]} <a href=\"{$config['blogurl']}/login.php\">{$lnc[89]}</a>";

@@ -221,6 +221,7 @@ function ajax_submit (job) {
 	var stat_ubb = document.getElementById('stat_ubb').checked ? 1 : 0;
 	var stat_emot = document.getElementById('stat_emot').checked ? 1 : 0;
 	var stat_property = document.getElementById('stat_property').checked ? 1 : 0;
+	var openid_url = (document.getElementById('openid_url')) ? document.getElementById('openid_url').value : '';
 	var v_replier = document.getElementById('v_replier').value+' ';
 	var v_repurl = document.getElementById('v_repurl').value;
 	var v_repemail = document.getElementById('v_repemail').value;
@@ -239,26 +240,38 @@ function ajax_submit (job) {
 	} else {
 		v_security_plus='';
 	}
-	if (v_replier=='' || v_content==''|| v_replier==' ' || v_content==' ' ) {
-		alert(jslang[11]);
-		return false;
+
+	if (openid_url) {
+		if (v_content=='' || v_content==' ') {
+			alert(jslang[11]);
+			return false;
+		}
+		document.getElementById('visitorinput').action="visit.php?ajax=off&job=openid"+job;
+		document.getElementById('visitorinput').submit();	
 	}
-	document.getElementById('btnSubmit').value=jslang[12];
-	document.getElementById('btnSubmit').disabled='disabled';
-	if (shutajax==0) { //Currently for IE, Safari, Mozilla and Opera
-		v_replier = blogencode(v_replier);
-		v_repurl = blogencode(v_repurl);
-		v_repemail = blogencode(v_repemail);
-		v_content = blogencode(v_content);
-		v_password = blogencode(v_password);
-		v_id = blogencode(v_id);
-		v_reppsw = blogencode(v_reppsw);
-		var postData = "unuse=unuse&onetimecounter="+onetimecounter+"&v_id="+v_id+"&v_replier="+v_replier+"&v_password="+v_password+"&v_repurl="+v_repurl+"&v_repemail="+v_repemail+"&v_content="+v_content+"&stat_html="+stat_html+"&stat_ubb="+stat_ubb+"&stat_emot="+stat_emot+"&v_reppsw="+v_reppsw+"&stat_property="+stat_property+v_security_plus;
-		var gourl=absbaseurl+"visit.php?ajax=on&job="+job;
-		makeRequest(gourl, 'quickreply', 'POST', postData);
-	} else {
-		document.getElementById('visitorinput').action=absbaseurl+"visit.php?job="+job;
-		document.getElementById('visitorinput').submit();
+
+	else {
+		if (v_replier=='' || v_content==''|| v_replier==' ' || v_content==' ' ) {
+			alert(jslang[11]);
+			return false;
+		}
+		document.getElementById('btnSubmit').value=jslang[12];
+		document.getElementById('btnSubmit').disabled='disabled';
+		if (shutajax==0) { //Currently for IE, Safari, Mozilla and Opera
+			v_replier = blogencode(v_replier);
+			v_repurl = blogencode(v_repurl);
+			v_repemail = blogencode(v_repemail);
+			v_content = blogencode(v_content);
+			v_password = blogencode(v_password);
+			v_id = blogencode(v_id);
+			v_reppsw = blogencode(v_reppsw);
+			var postData = "unuse=unuse&onetimecounter="+onetimecounter+"&v_id="+v_id+"&v_replier="+v_replier+"&v_password="+v_password+"&v_repurl="+v_repurl+"&v_repemail="+v_repemail+"&v_content="+v_content+"&stat_html="+stat_html+"&stat_ubb="+stat_ubb+"&stat_emot="+stat_emot+"&v_reppsw="+v_reppsw+"&stat_property="+stat_property+v_security_plus;
+			var gourl=absbaseurl+"visit.php?ajax=on&job="+job;
+			makeRequest(gourl, 'quickreply', 'POST', postData);
+		} else {
+			document.getElementById('visitorinput').action=absbaseurl+"visit.php?job="+job;
+			document.getElementById('visitorinput').submit();
+		}
 	}
 }
 
@@ -406,7 +419,7 @@ function makemedia (strType,strURL,intWidth,intHeight,strID) {
 			strHtml="<object classid='clsid:D27CDB6E-AE6D-11cf-96B8-444553540000' width='"+intWidth+"' height='"+intHeight+"'><param name='movie' value='"+strURL+"'/><param name='quality' value='high' /><embed src='"+strURL+"' quality='high' type='application/x-shockwave-flash' width='"+intWidth+"' height='"+intHeight+"'></embed></object>";
 			break;
 		case 'flv':
-			strHtml="<object classid='clsid:D27CDB6E-AE6D-11cf-96B8-444553540000' width='"+intWidth+"' height='"+intHeight+"'><param name='movie' value='images/others/mediaplayer.swf?file="+strURL+"&bufferlength=10'/><param name='quality' value='high' /><embed src='images/others/mediaplayer.swf?file="+strURL+"&bufferlength=10' quality='high' type='application/x-shockwave-flash' width='"+intWidth+"' height='"+intHeight+"'></embed></object>";
+			strHtml="<object classid='clsid:D27CDB6E-AE6D-11cf-96B8-444553540000' width='"+intWidth+"' height='"+intHeight+"'><param name='movie' value='images/others/mediaplayer.swf?file="+strURL+"&bufferlength=10'/><param name='quality' value='high' /><param name='allowFullScreen' value='true' /><embed src='images/others/mediaplayer.swf?file="+strURL+"&bufferlength=10' quality='high' allowFullScreen='true' type='application/x-shockwave-flash' width='"+intWidth+"' height='"+intHeight+"'></embed></object>";
 			break;
 		case 'real':
 			strHtml="<object classid='clsid:CFCDAA03-8BE4-11cf-B84B-0020AFBBCCFA' width='"+intWidth+"' height='"+intHeight+"'><param name='src' value='"+absbaseurl+"inc/realplay.php?link="+strURL+"' /><param name='controls' value='Imagewindow' /><param name='console' value='clip1' /><param name='autostart' value='true' /><embed src='"+absbaseurl+"inc/realplay.php?link="+strURL+"' type='audio/x-pn-realaudio-plugin' autostart='true' console='clip1' controls='Imagewindow' width='"+intWidth+"' height='"+intHeight+"'></embed></object><br/><object classid='clsid:CFCDAA03-8BE4-11cf-B84B-0020AFBBCCFA' width='"+intWidth+"' height='44'><param name='src' value='"+absbaseurl+"inc/realplay.php?link="+strURL+"' /><param name='controls' value='ControlPanel' /><param name='console' value='clip1' /><param name='autostart' value='true' /><embed src='"+absbaseurl+"inc/realplay.php?link="+strURL+"' type='audio/x-pn-realaudio-plugin' autostart='true' console='clip1' controls='ControlPanel' width='"+intWidth+"' height='44'></embed></object>";
