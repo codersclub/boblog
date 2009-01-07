@@ -23,6 +23,8 @@ if ($mode==1 || $mode==2) {
 	$mbcon['archive_list']=$mode-1;
 	$mbcon['showday_list']=$mode-1;
 	$mbcon['starred_list']=$mode-1;
+} elseif (!empty($mode) && (!is_numeric($mode) || $mode>2)) {
+	getHttp404($lnc[313]);
 }
 
 $pageway=1;
@@ -40,7 +42,7 @@ switch ($job) {
 		$counter_now=($permission['SeeHiddenEntry']==1) ? ($blog->countbyquery("SELECT COUNT(blogid) FROM `{$db_prefix}blogs` WHERE `property`<'3'")) : ($blog->countbyquery("SELECT COUNT(blogid) FROM `{$db_prefix}blogs` WHERE `property`<'2'"));
 		$statistics['entries']=$counter_now; //Modify the entry counter to a correct value
 		$urlpattern=getlink_index ('%s', 1);
-		$pagebaritem=" [ {$lnc[181]} <a href=\"".sprintf($urlpattern, 1)."\" title=\"{$lnc[182]}\">{$lnc[183]}</a> | <a href=\"".sprintf($urlpattern, 2)."\" title=\"{$lnc[184]}\">{$lnc[185]}</a> ]";
+		if ($flset['modeselectable']!=1) $pagebaritem=" [ {$lnc[181]} <a href=\"".sprintf($urlpattern, 1)."\" title=\"{$lnc[182]}\">{$lnc[183]}</a> | <a href=\"".sprintf($urlpattern, 2)."\" title=\"{$lnc[184]}\">{$lnc[185]}</a> ]";
 		if ($mbcon['main_list']==1) {
 			$partialquery="{$limitation1} ORDER BY `sticky`DESC, `pubtime` DESC";
 			$perpagevalue=$mbcon['listitemperpage'];
@@ -57,9 +59,10 @@ switch ($job) {
 		}
 		break;
 	case 'starred':
+		if ($flset['star']==1) getHttp404($lnc[313]);
 		$counter_now=($permission['SeeHiddenEntry']==1) ? ($blog->countbyquery("SELECT COUNT(blogid) FROM `{$db_prefix}blogs` WHERE `starred`%2 = 1 AND `property`<'3'")) : ($blog->countbyquery("SELECT COUNT(blogid) FROM `{$db_prefix}blogs` WHERE `starred`%2 = 1 AND `property`<'2'"));
 		$urlpattern=getlink_star ('%s', 1);
-		$pagebaritem=" [ {$lnc[181]} <a href=\"".sprintf($urlpattern, 1)."\" title=\"{$lnc[182]}\">{$lnc[183]}</a> | <a href=\"".sprintf($urlpattern, 2)."\" title=\"{$lnc[184]}\">{$lnc[185]}</a> ]";
+		if ($flset['modeselectable']!=1) $pagebaritem=" [ {$lnc[181]} <a href=\"".sprintf($urlpattern, 1)."\" title=\"{$lnc[182]}\">{$lnc[183]}</a> | <a href=\"".sprintf($urlpattern, 2)."\" title=\"{$lnc[184]}\">{$lnc[185]}</a> ]";
 		$pagetitle="{$lnc[93]} - ";
 		if ($mbcon['starred_list']==1) {
 			$partialquery="{$limitation1} AND `starred`%2 = 1 ORDER BY `sticky`DESC, `pubtime` DESC";
@@ -84,8 +87,7 @@ switch ($job) {
 		if (is_numeric($itemid)) $itemid=floor($itemid);
 		elseif (isset($categorynames[$itemid])) $itemid=floor($categorynames[$itemid]);
 		else {
-			@header ("HTTP/1.1 404 Not Found");
-			catcherror($lnc[186]);
+			getHttp404($lnc[186]);
 		}
 		if (is_array($categories[$itemid]['subcates'])) {
 			$categories[$itemid]['subcates'][]=$itemid;
@@ -95,7 +97,7 @@ switch ($job) {
 		}
 		$counter_now=$blog->countbyquery("SELECT COUNT(blogid) FROM `{$db_prefix}blogs` {$limitation2}  `category` in ({$all_needed_cates})");
 		$urlpattern=getlink_category($itemid, '%s', '1');
-		$pagebaritem=" [ {$lnc[181]} <a href=\"".sprintf($urlpattern, 1)."\" title=\"{$lnc[182]}\">{$lnc[183]}</a> | <a href=\"".sprintf($urlpattern, 2)."\" title=\"{$lnc[184]}\">{$lnc[185]}</a> ]";
+		if ($flset['modeselectable']!=1) $pagebaritem=" [ {$lnc[181]} <a href=\"".sprintf($urlpattern, 1)."\" title=\"{$lnc[182]}\">{$lnc[183]}</a> | <a href=\"".sprintf($urlpattern, 2)."\" title=\"{$lnc[184]}\">{$lnc[185]}</a> ]";
 		$pagetitle="{$categories[$itemid]['catename']} - ";
 		if ($mbcon['cate_list']==1) {
 			$partialquery="{$limitation2} `category` in ({$all_needed_cates}) ORDER BY `sticky`DESC, `pubtime` DESC";
@@ -117,6 +119,10 @@ switch ($job) {
 		acceptrequest('cm,cy');
 		$cm=floor(abs($cm));
 		$cy=floor(abs($cy));
+
+		if ($cm>12 || $cy<1990 || $cy>2099) {
+			getHttp404($lnc[313]);
+		}
 		$month=$cm;
 		$year=$cy;
 
@@ -128,7 +134,7 @@ switch ($job) {
 		$partialquery="{$limitation2} blogid in($jointstr) ORDER BY `pubtime` DESC";
 
 		$urlpattern=getlink_archive($month, $year, '%s', '1');
-		$pagebaritem=" [ {$lnc[181]} <a href=\"".sprintf($urlpattern, 1)."\" title=\"{$lnc[182]}\">{$lnc[183]}</a> | <a href=\"".sprintf($urlpattern, 2)."\" title=\"{$lnc[184]}\">{$lnc[185]}</a> ]";
+		if ($flset['modeselectable']!=1) $pagebaritem=" [ {$lnc[181]} <a href=\"".sprintf($urlpattern, 1)."\" title=\"{$lnc[182]}\">{$lnc[183]}</a> | <a href=\"".sprintf($urlpattern, 2)."\" title=\"{$lnc[184]}\">{$lnc[185]}</a> ]";
 
 		$timeperiod_start=gmmktime(0, 0, 0, $month, 1, $year);
 		$archiveformat=($mbcon['archiveformat']=='custom') ? $mbcon['customarchiveformat'] : $mbcon['archiveformat'];
@@ -154,7 +160,7 @@ switch ($job) {
 		$timeperiod_end=gmmktime(0, 0, 0, $month, $day+1, $year)-$config['timezone']*3600;
 		$counter_now=$blog->countbyquery("SELECT COUNT(blogid) FROM `{$db_prefix}blogs` {$limitation2}  `pubtime`>'{$timeperiod_start}' AND `pubtime`<'{$timeperiod_end}' ORDER BY `pubtime` DESC");
 		$urlpattern=getlink_date($year, $month, $day, '%s', '1');
-		$pagebaritem=" [ {$lnc[181]} <a href=\"".sprintf($urlpattern, 1)."\" title=\"{$lnc[182]}\">{$lnc[183]}</a> | <a href=\"".sprintf($urlpattern, 2)."\" title=\"{$lnc[184]}\">{$lnc[185]}</a> ]";
+		if ($flset['modeselectable']!=1) $pagebaritem=" [ {$lnc[181]} <a href=\"".sprintf($urlpattern, 1)."\" title=\"{$lnc[182]}\">{$lnc[183]}</a> | <a href=\"".sprintf($urlpattern, 2)."\" title=\"{$lnc[184]}\">{$lnc[185]}</a> ]";
 		$pagetitle="{$year}/{$month}/{$day} {$lnc[106]} - ";
 		$partialquery="{$limitation2} `pubtime`>'{$timeperiod_start}' AND `pubtime`<'{$timeperiod_end}' ORDER BY `pubtime` DESC";
 		if ($mbcon['showday_list']==1) {

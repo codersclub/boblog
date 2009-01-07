@@ -1160,7 +1160,7 @@ $lna=array (
 1163=>'Đường dẫn bài viết của bạn với bí danh sẽ trông tương tự ',
 1164=>'Tạo trang',
 1165=>'Tải dữ liệu lên',
-1166=>'<font color=red>Thông báo: Đã <b>%s</b> ngày từ lúc bạn xóa các file tạm. Bạn nên thường xuyên dọn dẹp các file này. [<a href=\'admin.php?go=carecenter_cleartmpandreturn\'>Bắt đầu dọn dẹp</a>]</font>',
+1166=>"<font color=red>Thông báo: Đã <b>%s</b> ngày từ lúc bạn xóa các file tạm. Bạn nên thường xuyên dọn dẹp các file này. [<a href=\"javascript: simulateFormSubmit('admin.php?go=carecenter_cleartmpandreturn')\">Bắt đầu dọn dẹp</a>]</font>",
 1167=>'<font color=red>Thông báo: Chương trình soạn thảo của bạn không được cài đặt mặc định. Bạn cần cài đặt nó trước khi muốn sử dụng. Hãy cập nhật thông tin từ trang chủ để biết rõ hơn.</font>',
 1168=>'Địa chỉ link có chứa kí tự đặc biệt không được chấp nhận.',
 1169=>'Địa chỉ web đã được lưư trữ.',
@@ -1178,5 +1178,18 @@ $lna=array (
 1181=>'Chỉ hiển thị ở những trang ngoài trang chủ',
 1182=>'Hiển thị trên tất cả các trang',
 1183=>'Khôi phục số thống kê',
-1184=>'Thống kê lại số nhật ký dưới mỗi tag'
+1184=>'Thống kê lại số nhật ký dưới mỗi tag',
+1185=>'File cannot be replaced because the original file cannot be deleted.',
+1186=>'File has been updated.',
+1187=>'	Tùy chỉnh HTTP 404',
+1188=>'Specify the 404 (file not found) error page. Leave it blank if the default system page should be used.<br/>Notice: a 404 code should be given to the browser in your customized 404 error page to enhance search engine friendliness.',
+1189=>'Enable OpenID',
+1190=>'Allow visitors to login with <a href="http://vi.wikipedia.org/wiki/OpenID" target="_blank">OpenID</a>, but remain in the usergroup of Visitors.',
+1191=>'Non-Ajax admin center',
+1192=>'Enable this option if Ajax is not properly supported by your server.',
+1193=>'Cannot delete the active user.',
+1194=>'Function Lock',
+1195=>'Turning on/off some functions',
+1196=>'Turning off one of the functions will <ul><li>deactivate its correspondant module (if any);</li><li>redirect all requests of its functional page (if any) to the HTTP 404 (Page not found) error page; </li><li>hide all of its related options in the admin center and navigation bar.</li></ul>Turning on one of the functions will <ul><li>activate its correspondant module (if any).</ul>',
+1197=>'Xem trước'
 );

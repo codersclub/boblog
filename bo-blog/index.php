@@ -12,7 +12,7 @@ In memory of my university life
 
 define('isIndex', 1);
 $begintime=getmicrotime();
-$blogplugin=$section_header=$section_footer=$section_sidebar=$section_prebody=$dlstat=$blogitem=array();
+$blogplugin=$section_header=$section_footer=$section_sidebar=$section_prebody=$dlstat=$blogitem=$flset=array();
 
 require_once ("global.php");
 include_once ("data/allmods.php");
@@ -28,11 +28,17 @@ if (!$isSafeMode) {
 }
 
 acceptrequest('act,go,page,part');
-if (!isset($page) || !is_numeric($page) || $page<=0) $page=1;
+if (!$page) $page=1;
+elseif (!is_numeric($page) || $page<=0) {
+	getHttp404($lnc[313]);
+}
 else $page=floor($page);
 
-$part=floor($part);
-if (empty($part)) $part=1;
+if (!$part) $part=1;
+elseif (!is_numeric($part) || $part<=0) {
+	getHttp404($lnc[313]);
+}
+else $page=floor($page);
 $pageitems='';
 
 if ($config['blogopen']!=1 && !defined('isLogin')) {
@@ -72,12 +78,13 @@ else {
 }
 
 //Section: <head>..<body>
-$ajax_js="<script type=\"text/javascript\" src=\"lang/{$langfront}/jslang.js?jsver={$codeversion}\"></script>\n";
+$ajax_js="<link rel=\"EditURI\" type=\"application/rsd+xml\" title=\"RSD\" href=\"{$config['blogurl']}/inc/rsd.php\" />\n";
+$ajax_js.="<script type=\"text/javascript\" src=\"lang/{$langfront}/jslang.js?jsver={$codeversion}\"></script>\n";
 $ajax_js.="<script type=\"text/javascript\" src=\"images/js/ajax.js?jsver={$codeversion}\"></script>\n";
 $ajax_js.="<script type=\"text/javascript\" src=\"images/js/swfobject.js?jsver={$codeversion}\"></script>\n";
 $shutajax=($config['closeajax']=='1') ? 1 : 0;
-$ajax_js.="<script type=\"text/javascript\">\n//<![CDATA[\nvar moreimagepath=\"{$template['moreimages']}\";\nvar shutajax={$shutajax};\nvar absbaseurl='{$config['blogurl']}/';\n//]]>\n</script>";
-$ajax_js.="<link title=\"{$lnc[128]} {$config['blogname']}\" rel=\"search\"  type=\"application/opensearchdescription+xml\"  href=\"inc/opensearch.php\" />\n";
+$ajax_js.="<script type=\"text/javascript\">\n//<![CDATA[\nvar moreimagepath=\"{$template['moreimages']}\";\nvar shutajax={$shutajax};\nvar absbaseurl='{$config['blogurl']}/';\n//]]>\n</script>\n";
+$ajax_js.="<link title=\"{$lnc[128]} {$config['blogname']}\" rel=\"search\"  type=\"application/opensearchdescription+xml\"  href=\"{$config['blogurl']}/inc/opensearch.php\" />\n";
 $ajax_js=plugin_walk ('firstheader', $ajax_js);
 
 include_once ("inc/mod_basic.php");
@@ -98,7 +105,7 @@ if (defined('whereAmI')) $currentpagelocation=whereAmI;
 else {
 	$nav=$_SERVER["REQUEST_URI"];
 	$currentpagelocation=strrchr($nav, '/');
-	$currentpagelocation=str_replace('.php', '', substr($currentpagelocation, 1));
+	@list($currentpagelocation, $unused)=@explode('.', substr($currentpagelocation, 1));
 	if ($currentpagelocation=='') $currentpagelocation='index';
 }
 $headmenu_tmp=str_replace(array("<span id=\"nav_{$currentpagelocation}\">", "<span id=\"navitem_{$currentpagelocation}\">"), array("<span id=\"nav_{$currentpagelocation}\" class=\"activepage\">", "<span id=\"navitem_{$currentpagelocation}\" class=\"activepageitem\">"), $headmenu); 

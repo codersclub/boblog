@@ -20,7 +20,7 @@ addpref("r", "stattoday|{$lna[554]}|{$lna[534]}|{$lna[535]}");
 addpref("r", "statentries|{$lna[555]}|{$lna[534]}|{$lna[535]}");
 addpref("r", "statreplies|{$lna[556]}|{$lna[534]}|{$lna[535]}");
 addpref("r", "stattb|{$lna[557]}|{$lna[534]}|{$lna[535]}");
-addpref("r", "statmessages|{$lna[558]}|{$lna[534]}|{$lna[535]}");
+if ($flset['guestbook']!=1) addpref("r", "statmessages|{$lna[558]}|{$lna[534]}|{$lna[535]}");
 addpref("r", "statusers|{$lna[559]}|{$lna[534]}|{$lna[535]}");
 addpref("r", "statonline|{$lna[560]}|{$lna[534]}|{$lna[535]}");
 addpref("sec", "{$lna[561]}");
@@ -64,17 +64,22 @@ addpref("sel", "tbfilter|{$lna[941]}|0>>{$lna[942]}<<1>>{$lna[943]}<<2>>{$lna[94
 addpref("r", "tburlexpire|{$lna[1049]}|{$lna[511]}|{$lna[512]}|<br>{$lna[1050]}");
 addpref("r", "tburljs|{$lna[1053]}|{$lna[511]}|{$lna[512]}|<br>{$lna[1054]}");
 addpref("r", "tburlmath|{$lna[1051]}|{$lna[511]}|{$lna[512]}|<br>{$lna[1052]}");
-addpref("sec", "{$lna[601]}");
-addpref("t", "tagminsize|{$lna[602]}|px");
-addpref("t", "tagmaxsize|{$lna[603]}|px");
-addpref("sel", "tagorder|{$lna[960]}|0>>{$lna[961]}<<1>>{$lna[962]}<<2>>{$lna[963]}|");
-addpref("r", "tagunderlinetospace|{$lna[1077]}|{$lna[511]}|{$lna[512]}");
-addpref("t", "tagperpage|{$lna[1148]}");
+
+if ($flset['tags']!=1) {
+	addpref("sec", "{$lna[601]}");
+	addpref("t", "tagminsize|{$lna[602]}|px");
+	addpref("t", "tagmaxsize|{$lna[603]}|px");
+	addpref("sel", "tagorder|{$lna[960]}|0>>{$lna[961]}<<1>>{$lna[962]}<<2>>{$lna[963]}|");
+	addpref("r", "tagunderlinetospace|{$lna[1077]}|{$lna[511]}|{$lna[512]}");
+	addpref("t", "tagperpage|{$lna[1148]}");
+}
+
 addpref("sec", "{$lna[604]}");
 addpref("r", "regadvance|{$lna[605]}|{$lna[606]}|{$lna[607]}|");
 addpref("t", "minusenamelen|{$lna[611]}|{$lna[612]}");
 addpref("t", "maxusenamelen|{$lna[613]}|{$lna[612]}");
 addpref("t", "minpswlen|{$lna[614]}|{$lna[612]}");
+addpref("r", "enableopenid|{$lna[1189]}|{$lna[511]}|{$lna[512]}|<br>{$lna[1190]}");
 addpref("sec", "{$lna[615]}");
 addpref("r", "searchon|{$lna[616]}|{$lna[511]}|{$lna[512]}|^global^<br><a href='admin.php?go=misc_forbidden#f_nosearch'>{$lna[617]}</a>");
 addpref("t", "keymin|{$lna[618]}|{$lna[612]}");
@@ -102,14 +107,18 @@ addpref("t", "wmsize|{$lna[986]}|{$lna[987]}");
 addpref("sel", "wmposition|{$lna[988]}|0>>{$lna[989]}<<3>>{$lna[990]}<<1>>{$lna[991]}<<2>>{$lna[992]}<<4>>{$lna[993]}<<5>>{$lna[994]}");
 addpref("t", "wmpadding|{$lna[995]}|{$lna[996]}");
 addpref("t", "wmtrans|{$lna[997]}|<br>{$lna[998]}");
-addpref("sec", "{$lna[881]}");
-addpref("r", "avatar|{$lna[608]}|{$lna[609]}|{$lna[610]}|<br><a href='admin.php?go=misc_avatar'>{$lna[891]}</a>");
-addpref("r", "usergravatar|{$lna[883]}|{$lna[609]}|{$lna[610]}|");
-addpref("r", "visitorgravatar|{$lna[884]}|{$lna[609]}|{$lna[610]}|");
-addpref("t", "gravatarurl|{$lna[885]}");
-addpref("r", "leftavatar|{$lna[886]}|{$lna[888]}|{$lna[887]}|");
-addpref("t", "avatarwidth|{$lna[889]}|{$lna[879]}");
-addpref("t", "avatarheight|{$lna[890]}|{$lna[879]}");
+
+if ($flset['avatar']!=1) {
+	addpref("sec", "{$lna[881]}");
+	addpref("r", "avatar|{$lna[608]}|{$lna[609]}|{$lna[610]}|<br><a href='admin.php?go=misc_avatar'>{$lna[891]}</a>");
+	addpref("r", "usergravatar|{$lna[883]}|{$lna[609]}|{$lna[610]}|");
+	addpref("r", "visitorgravatar|{$lna[884]}|{$lna[609]}|{$lna[610]}|");
+	addpref("t", "gravatarurl|{$lna[885]}");
+	addpref("r", "leftavatar|{$lna[886]}|{$lna[888]}|{$lna[887]}|");
+	addpref("t", "avatarwidth|{$lna[889]}|{$lna[879]}");
+	addpref("t", "avatarheight|{$lna[890]}|{$lna[879]}");
+}
+
 addpref("sec", "{$lna[1045]}");
 addpref("sel", "lunarcalendar|{$lna[1030]}#|0>>{$lna[534]}<<1>>{$lna[1031]}<<2>>{$lna[1032]}");
 addpref("sel", "timeformat|{$lna[1035]}|Y/m/d>>{$lna[1036]}<<m/d/Y>>{$lna[1037]}<<d/m/Y>>{$lna[1038]}<<Y-n-j>>{$lna[1039]}<<F j, Y>>{$lna[1040]}<<custom>>{$lna[1041]}");

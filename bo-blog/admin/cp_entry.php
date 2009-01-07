@@ -11,6 +11,12 @@ In memory of my university life
 ------------------------------------------------------- */
 
 if (!defined('VALIDADMIN')) die ('Access Denied.');
+//Section: Blog Posting
+if ($job=='write') {
+	header ("Location: admin.php?go=edit");
+	exit();
+}
+
 checkpermission('CP');
 confirmpsw(); //Re-check password
 //Define some senteces
@@ -70,7 +76,7 @@ if ($job=='' || $job=="default") {
 	$numenries=$blog->countbyquery("SELECT COUNT(*) FROM `{$db_prefix}blogs` WHERE {$queryplus}");
 	$pagebar=gen_page ($page, 5, "admin.php?go=entry_default&category={$category}&property={$property}&timeperiod={$timeperiod}&keyword=".urlencode($keyword), $numenries, $adminitemperpage);
 	$display_overall.=highlightadminitems('default', 'entry');
-$display_overall.= <<<eot
+$display_overall_plus= <<<eot
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
 <td width=160 class="sectstart">
@@ -80,25 +86,31 @@ $display_overall.= <<<eot
 </tr>
 </table>
 
-<table cellpadding=3 cellspacing=1 align=center class='tablewidth'>
 <form action="admin.php?go=entry_default" method="post">
+<table cellpadding=3 cellspacing=1 align=center class='tablewidth'>
 <tr><td colspan=7>
-<select name="category"><option value=''>{$lna[328]}</option>$puttingcates</select>  $adminselection2 $adminselection4 $adminselection3 <input type=submit value="{$lna[244]}" class='formbutton'></td></form></tr>
+<select name="category"><option value=''>{$lna[328]}</option>$puttingcates</select>  $adminselection2 $adminselection4 $adminselection3 <input type=submit value="{$lna[244]}" class='formbutton'></td></tr>
 <tr><td colspan=7 height=10></td></tr>
-<tr align=center class="admintitle">
+</table>
+</form>
+
 <form action="admin.php?go=entry_batch" method="post" id='f_s' name='f_s'>
+<table cellpadding=3 cellspacing=1 align=center class='tablewidth'>
+<tr align=center class="admintitle">
 <td width=35 align=center>{$lna[245]}</td><td width=35>{$lna[297]}</td><td align=center>{$lna[284]}</td><td width=200 align=center>{$lna[288]}</td><td width=80 align=center>{$lna[285]}</td><td width=35 align=center>{$lna[78]}</td><td width=35 align=center>{$lna[77]}</td></tr>
 {$tablebody}
 <tr><td colspan=3><a href="#unexist" onclick="checkallbox('f_s', 'checked');">{$lna[247]}</a> | <a href="#unexist" onclick="checkallbox('f_s', '');">{$lna[248]}</a></td><td colspan=4 align=right>$pagebar</td></tr>
 <tr><td colspan=7 height=20></td></tr>
-<tr class="adminoption"><td colspan=7>{$lna[249]}<br><input type=radio name=opt value='del'>{$lna[78]} <input type=radio name=opt value='noreply'>{$lna[329]} <input type=radio name=opt value='sticky'>{$lna[330]} <input type=radio name=opt value='unsticky'>{$lna[331]}  <br><input type=radio name=opt value='changeauthor'>{$lna[873]}{$adminselection} <input type=radio name=opt value='move'>{$lna[250]}<select name="newcategory">$puttingcates</select>  <input type=radio name=opt value='newppt'>{$lna[332]}<select name="newproperty"><option value=0>{$lna[269]}</option><option value=1>{$lna[270]}</option><option value=2>{$lna[271]}</option></select><br><input type=submit value="{$lna[64]}" class='formbutton'>
+<tr class="adminoption"><td colspan=7>{$lna[249]}<br><input type=radio name=opt value='del' onclick="document.getElementById('f_s').submit();">{$lna[78]} <input type=radio name=opt value='noreply'onclick="document.getElementById('f_s').submit();">{$lna[329]} <input type=radio name=opt value='sticky'>{$lna[330]} <input type=radio name=opt value='unsticky'>{$lna[331]}  <br><input type=radio name=opt value='changeauthor'>{$lna[873]}{$adminselection} <input type=radio name=opt value='move'>{$lna[250]}<select name="newcategory">$puttingcates</select>  <input type=radio name=opt value='newppt'>{$lna[332]}<select name="newproperty"><option value=0>{$lna[269]}</option><option value=1>{$lna[270]}</option><option value=2>{$lna[271]}</option></select><br> <input type=button value="{$lna[64]}" class='formbutton' onclick="adminSubmitAjax('f_s');">
 </td></tr>
-</form>
 </table>
+</form>
 
 <br><br><div align=center width=70%>{$lna[333]}<img src='admin/theme/{$themename}/openblog.gif'>{$lna[269]} <img src='admin/theme/{$themename}/lockblog.gif'>{$lna[270]} <img src='admin/theme/{$themename}/secretblog.gif'>{$lna[271]} </div>
 <br>
 eot;
+	if ($ajax=='on') die($display_overall_plus);
+	else $display_overall.=$display_overall_plus;
 }
 
 if ($job=='batch') {
@@ -123,7 +135,6 @@ if ($job=='batch') {
 	$batch_id=makeaquery($selid, "`blogid`='%s'", 'OR');
 	if ($opt=='del' || $opt=='deldraft') {
 		$tags_affected_raw=$blog->getarraybyquery("SELECT blogid, tags FROM `{$db_prefix}blogs` WHERE ({$batch_id}) AND tags<>'' AND tags<>'>'");
-		//print_r($tags_affected_raw); die();
 		for ($i=0; $i<count($tags_affected_raw['blogid']); $i++) {
 			$tmp_tag=@explode('>', trim($tags_affected_raw['tags'][$i],'>'));
 			$tmp_tag_q=makeaquery($tmp_tag, "`tagname`='%s'", 'OR');
@@ -157,8 +168,8 @@ if ($job=='batch') {
 				recache_currentmonthentries();
 			}
 		}
-		catchsuccess($finishok, $backtodefault);
-		exit();
+		//catchsuccess($finishok, $backtodefault);
+		//exit();
 	}
 	if ($opt=='noreply') {
 		$countreps=$blog->countbyquery("SELECT COUNT(repid) FROM `{$db_prefix}replies` WHERE `reproperty`<=1");
@@ -170,7 +181,11 @@ if ($job=='batch') {
 
 	if ($opt=='publish') {
 		recache_latestentries();
-		catchsuccess($finishok, $backtodraft);
+	}
+	
+	if ($ajax=='on' && $opt!='del' && $opt!='deldraft') {
+		$fetchURL=($opt=='publish') ? 'admin.php?go=entry_draft' : 'admin.php?go=entry_default';
+		catchsuccessandfetch($finishok, $fetchURL);
 	}
 	else catchsuccess($finishok, $backtodefault);
 }
@@ -181,7 +196,13 @@ if ($job=='deleteblog' || $job=='deletedraft') {
 	if ($itemid=='') catcherror($lna[337]);
 	else {
 		$detail=$blog->getbyquery("SELECT * FROM `{$db_prefix}blogs` WHERE `blogid`='{$itemid}'");
-		if ($detail['blogid']!=$itemid) catcherror($lna[337]);
+		if ($detail['blogid']!=$itemid) {
+			if ($itemid==-1) {
+				catchsuccess();
+			} else {
+				catcherror($lna[337]);
+			}
+		}
 		if ($job=='deleteblog') {
 			$blog->query("DELETE FROM `{$db_prefix}replies` WHERE `blogid`='{$itemid}'");
 			$countreps=$blog->countbyquery("SELECT COUNT(repid) FROM `{$db_prefix}replies` WHERE `reproperty`<=1");
@@ -201,7 +222,10 @@ if ($job=='deleteblog' || $job=='deletedraft') {
 			recache_latestentries();
 			recache_latestreplies();
 		}
-		catchsuccess($finishok, array($backtodefault, $backtodraft));
+		if ($ajax=='on') {
+			catchsuccessandfetch($finishok, $returnurl);
+		}
+		else catchsuccess($finishok, array($backtodefault, $backtodraft));
 	}
 	catcherror ($cancel);
 }
@@ -216,11 +240,11 @@ if ($job=='draft') {
 		$tmp_tm=gmdate('Y/m/d H:i', $detail_array[$i]['pubtime']+3600*$config['timezone']);
 		$hiddensign=($detail_array[$i]['property']==3) ? "<img src='admin/theme/{$themename}/draft.gif' alt='' title='{$lna[339]}'>" : "<img src='admin/theme/{$themename}/openblog.gif' alt='' title='{$lna[1111]}'>";
 		if ($detail_array[$i]['property']==4) $detail_array[$i]['title'].=" [<b>{$lna[1174]}</b>]";
-		$tablebody.="<tr class='$addclass'><td align='center'><input type='checkbox' name='selid[]' id='selid[]' value='{$detail_array[$i]['blogid']}'></td><td align='center'>{$hiddensign}</td><td>{$detail_array[$i]['title']}</td><td>{$tmp_tm}</td><td align='center'>{$categories[$tmp_gp]['catename']}</td><td align='center'><a href='javascript: ensuredel(\"{$detail_array[$i]['blogid']}\", \"0\");'><img src='admin/theme/{$themename}/del.gif' alt='{$lna[78]}' title='{$lna[78]}' border='0'></a></td><td align='center'><a href='admin.php?go=edit_edit_{$detail_array[$i]['blogid']}'><img src='admin/theme/{$themename}/edit.gif' alt='{$lna[77]}' title='{$lna[77]}' border='0'></a></td><td align='center'><a href='admin.php?go=entry_publish_{$detail_array[$i]['blogid']}'><img src='admin/theme/{$themename}/openblog.gif' alt='{$lna[340]}' title='{$lna[340]}' border='0'></a></td></tr>";
+		$tablebody.="<tr class='$addclass'><td align='center'><input type='checkbox' name='selid[]' id='selid[]' value='{$detail_array[$i]['blogid']}'></td><td align='center'>{$hiddensign}</td><td>{$detail_array[$i]['title']}</td><td>{$tmp_tm}</td><td align='center'>{$categories[$tmp_gp]['catename']}</td><td align='center'><a href='javascript: ensuredel(\"{$detail_array[$i]['blogid']}\", \"0\");'><img src='admin/theme/{$themename}/del.gif' alt='{$lna[78]}' title='{$lna[78]}' border='0'></a></td><td align='center'><a href='admin.php?go=edit_edit_{$detail_array[$i]['blogid']}'><img src='admin/theme/{$themename}/edit.gif' alt='{$lna[77]}' title='{$lna[77]}' border='0'></a></td><td align='center'><a href='admin.php?go=entry_publish_{$detail_array[$i]['blogid']}' onclick=\"if(shutajax==0) {window.location='admin.php?go=entry_publish_{$detail_array[$i]['blogid']}&ajax=on';return false;}\"><img src='admin/theme/{$themename}/openblog.gif' alt='{$lna[340]}' title='{$lna[340]}' border='0'></a></td></tr>";
 	}
 	}
 	$display_overall.=highlightadminitems('draft', 'entry');
-$display_overall.= <<<eot
+$display_overall_plus= <<<eot
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
 <td width=160 class="sectstart">
@@ -230,24 +254,31 @@ $display_overall.= <<<eot
 </tr>
 </table>
 
-<table cellpadding=3 cellspacing=1 align=center class='tablewidth'>
 <form action="admin.php?go=entry_batch" method="post" id='f_s' name='f_s'>
+<table cellpadding=3 cellspacing=1 align=center class='tablewidth'>
 <tr align=center class="admintitle"><td width=35 align=center>{$lna[245]}</td><td width=35 align=center>{$lna[297]}</td><td align=center>{$lna[284]}</td><td width=200 align=center>{$lna[288]}</td><td width=80 align=center>{$lna[285]}</td><td width=35 align=center>{$lna[78]}</td><td width=35 align=center>{$lna[77]}</td><td width=35 align=center>{$lna[340]}</td></tr>
 {$tablebody}
 eot;
-if (count($detail_array)>0) $display_overall.= <<<eot
+
+if (count($detail_array)>0) $display_overall_plus.= <<<eot
 <tr><td colspan=7><a href="#unexist" onclick="checkallbox('f_s', 'checked');">{$lna[247]}</a> | <a href="#unexist" onclick="checkallbox('f_s', '');">{$lna[248]}</a></td></tr>
 <tr><td colspan=7 height=20></td></tr>
-<tr class="adminoption"><td colspan=7>{$lna[249]}{$lna[249]}<input type=radio name=opt value='del'>{$lna[78]} <input type=radio name=opt value='publish'>{$lna[340]} <input type=submit value="{$lna[64]}" class='formbutton'>
+<tr class="adminoption"><td colspan=7>{$lna[249]}{$lna[249]}<input type=radio name=opt value='del'>{$lna[78]} <input type=radio name=opt value='publish'>{$lna[340]} <input type=button value="{$lna[64]}" class='formbutton' onclick="adminSubmitAjax('f_s');">
 </td></tr>
 eot;
-$display_overall.="</form></table>";
+
+	$display_overall_plus.="</table></form>";
+	if ($ajax=='on') die($display_overall_plus);
+	else $display_overall.=$display_overall_plus;
 }
 
 if ($job=='publish') {
 	$blog->query("UPDATE `{$db_prefix}blogs` SET `property`=0 WHERE `blogid`='{$itemid}'");
 	recache_latestentries();
-	catchsuccess($finishok, $backtodraft);
+	if ($ajax=='on') {
+		@header('Location: admin.php?go=entry_draft');
+	}
+	else catchsuccess($finishok, $backtodraft);
 }
 
 
@@ -305,10 +336,6 @@ if ($job=='ae') {
 	header ("Location: {$previouspage}");
 }
 
-//Section: Blog Posting
-if ($job=='write') {
-	header ("Location: admin.php?go=edit");
-}
 
 if ($job=='pagewrite') {
 	header ("Location: admin.php?go=page");
@@ -327,7 +354,7 @@ if ($job=="pagemanage") {
 	$numenries=$blog->countbyquery("SELECT COUNT(*) FROM `{$db_prefix}pages`");
 	$pagebar=gen_page ($page, 5, "admin.php?go=entry_pagemanage", $numenries, $adminitemperpage);
 	$display_overall.=highlightadminitems('pagemanage', 'entry');
-$display_overall.= <<<eot
+$display_overall_plus= <<<eot
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
 <td width=160 class="sectstart">
@@ -337,18 +364,20 @@ $display_overall.= <<<eot
 </tr>
 </table>
 
+<form action="admin.php?go=entry_deletepage" method="post" id='f_s' name='f_s'>
 <table cellpadding=3 cellspacing=1 align=center class='tablewidth'>
 <tr align=center class="admintitle">
-<form action="admin.php?go=entry_deletepage" method="post" id='f_s' name='f_s'>
 <td width=35 align=center>{$lna[245]}</td><td width=35>{$lna[297]}</td><td align=center>{$lna[284]}</td><td width=200 align=center>{$lna[288]}</td><td width=35 align=center>{$lna[78]}</td><td width=35 align=center>{$lna[77]}</td></tr>
 {$tablebody}
 <tr><td colspan=3><a href="#unexist" onclick="checkallbox('f_s', 'checked');">{$lna[247]}</a> | <a href="#unexist" onclick="checkallbox('f_s', '');">{$lna[248]}</a></td><td colspan=4 align=right>$pagebar</td></tr>
 <tr><td colspan=7 height=20></td></tr>
-<tr class="adminoption"><td colspan=7>{$lna[249]} <input type=radio name=opt value='del'>{$lna[78]} <input type=submit value="{$lna[64]}" class='formbutton'>
+<tr class="adminoption"><td colspan=7>{$lna[249]} <input type=radio name=opt value='del'>{$lna[78]}  <input type=button value="{$lna[64]}" class='formbutton' onclick="adminSubmitAjax('f_s');">
 </td></tr>
-</form>
 </table>
+</form>
 eot;
+	if ($ajax=='on') die($display_overall_plus);
+	else $display_overall.=$display_overall_plus;
 }
 
 if ($job=="deletepage") {
@@ -360,7 +389,10 @@ if ($job=="deletepage") {
 		$blog->query("DELETE FROM `{$db_prefix}mods` WHERE `name`='pageshortcut{$itemid}' AND `position`='header'");
 		mod_replace ('pageshortcut{$itemid}', '');
 		recache_mods();
-		catchsuccess ($lna[1095], "{$lna[1057]}|admin.php?go=entry_pagemanage");
+		if ($ajax=='on') {
+			catchsuccessandfetch($lna[1095], 'admin.php?go=entry_pagemanage');
+		}
+		else catchsuccess ($lna[1095], "{$lna[1057]}|admin.php?go=entry_pagemanage");
 	}
 	if ($opt=='del') {
 		if ($selid=='') catcherror($lna[337]);
@@ -372,7 +404,10 @@ if ($job=="deletepage") {
 			mod_replace ('pageshortcut{$singleid}', '');
 		}
 		recache_mods();
-		catchsuccess ($lna[1095], "{$lna[1057]}|admin.php?go=entry_pagemanage");
+		if ($ajax=='on') {
+			catchsuccessandfetch($lna[1095], 'admin.php?go=entry_pagemanage');
+		}
+		else catchsuccess ($lna[1095], "{$lna[1057]}|admin.php?go=entry_pagemanage");
 	}
 	catcherror($lna[965]);
 }

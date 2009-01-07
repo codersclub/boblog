@@ -14,6 +14,7 @@ define ("noCounter", 1);
 require_once ("global.php");
 include_once ("data/mod_config.php");
 include_once("data/cache_adminlist.php");
+include_once("data/plugin_enabled.php");
 
 acceptrequest('go');
 if ($config['blogopen']!=1 && $act!='login') {

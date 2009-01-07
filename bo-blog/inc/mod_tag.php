@@ -12,6 +12,8 @@ In memory of my university life
 
 if (!defined('VALIDREQUEST')) die ('Access Denied.');
 
+if ($flset['tags']==1) getHttp404($lnc[313]);
+
 if (!$job) $job='default';
 else $job=basename($job);
 $itemid=safe_convert($itemid);
@@ -63,9 +65,10 @@ if ($job=='show') {
 	$m_b=new getblogs;
 	if ($tag==='') catcherror($lnc[192]);
 	$tag=str_replace('&#039;', "\\'", $tag);
+
 	$allentries=$blog->getgroupbyquery("SELECT * FROM `{$db_prefix}tags` WHERE `tagname`='{$tag}' LIMIT 0,1");
 	if (!is_array($allentries[0]) || $allentries[0]['tagentry']=='<end>' || $allentries[0]['tagcounter']==0) {
-		$section_body_main[]="<br/><div align='center'><span style='font-size: 14px;'>{$lnc[186]}</span></div><br/>";
+		getHttp404($lnc[186]);
 	} else {
 		$taginfo=$allentries[0];
 		$entries_query=str_replace(',<end>', '', $taginfo['tagentry']);
@@ -84,7 +87,7 @@ if ($job=='show') {
 		$counter_now=$blog->countbyquery("SELECT COUNT(blogid) FROM `{$db_prefix}blogs` WHERE `blogid` IN ({$entries_query}) AND `property`<'2'");
 		$urlref=getlink_tags(str_replace('%', '%%', urlencode(urlencode($tag))), $mode, '%s');
 		$pagebar=$m_b->make_pagebar($page, $mbcon['pagebaritems'], $urlref, $counter_now, $perpagevalue, '1');
-		$pagebar.=" [ {$lnc[181]} <a href=\"".getlink_tags(urlencode(urlencode($tag)), '1')."\" title=\"{$lnc[182]}\">{$lnc[183]}</a> | <a href=\"".getlink_tags(urlencode(urlencode($tag)), '2')."\" title=\"{$lnc[184]}\">{$lnc[185]}</a> ]";
+		if ($flset['modeselectable']!=1) $pagebar.=" [ {$lnc[181]} <a href=\"".getlink_tags(urlencode(urlencode($tag)), '1')."\" title=\"{$lnc[182]}\">{$lnc[183]}</a> | <a href=\"".getlink_tags(urlencode(urlencode($tag)), '2')."\" title=\"{$lnc[184]}\">{$lnc[185]}</a> ]";
 	}
 	$iftoppage=($mbcon['pagebarposition']=='down') ? 'none' : 'block';
 	$ifbottompage=($mbcon['pagebarposition']=='up') ? 'none' : 'block';

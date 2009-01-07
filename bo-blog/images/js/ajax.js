@@ -224,3 +224,38 @@ function quickeditcomment () {
 		}
 	}
 }
+
+
+function adminSubmitAjaxRun() {
+	if (http_request.readyState == 4) {
+		if (http_request.status == 200) {
+			var messagereturn = http_request.responseText;
+			if (messagereturn.indexOf("<boblog_ajax::error>")!=-1) {
+				messagereturn=messagereturn.replace("<boblog_ajax::error>", '');
+				adminAjaxAlert(messagereturn, 1);
+			} else if (messagereturn.indexOf("<boblog_ajax::success>")!=-1) {
+				messagereturn=messagereturn.replace("<boblog_ajax::success>", '');
+				if (messagereturn.indexOf("<boblog_ajax::fetch>")!=-1) {
+					var tmpmsg=messagereturn.split("<boblog_ajax::fetch>");
+					messagereturn=tmpmsg[0];
+					ajaxURL=tmpmsg[1]+"&ajax=on";
+					makeRequest(ajaxURL, 'adminFetchAjaxRun', 'GET', null);
+				}
+				adminAjaxAlert(messagereturn, 0);
+			}
+		}  else {
+			adminAjaxAlert('There was a problem with the request.', 1);
+		}
+	}
+}
+
+function adminFetchAjaxRun() {
+	if (http_request.readyState == 4) {
+		if (http_request.status == 200) {
+			var messagereturn = http_request.responseText;
+			if (document.getElementById('admininner')) {
+				document.getElementById('admininner').innerHTML=messagereturn;
+			}
+		}
+	}
+}

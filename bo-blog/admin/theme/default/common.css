@@ -192,19 +192,27 @@ input, textarea, select {
 * html .sectstart{
 	height: 20px;
 }
+body:nth-of-type(1) .sectstart{ /*For Chrome*/
+	height: 20px;
+}
 .sectend {
 	background: url('bg_lead.png') repeat-x;
 	color: #003366;
 	text-align: right;
 	padding-right: 10px;
-	height: 30px;
 	border-right: 1px solid #6A9DC8;
 	border-bottom: 1px solid #6A9DC8;
 }
-*+html .sectend {
+.sectend { /*For Firefox*/
+	height: 30px;
+}
+*+html .sectend {  /*For IE7*/
 	height: 20px;
 }
-* html .sectend {
+* html .sectend { /*For IE6*/
+	height: 20px;
+}
+body:nth-of-type(1) .sectend{ /*For Chrome*/
 	height: 20px;
 }
 .sect {
@@ -279,4 +287,51 @@ input, textarea, select {
 }
 .highlight {
 	font-weight: bold;
+}
+
+#taghint { min-height: 30px; height: 30px; }
+#taghint ul { margin: 0; padding: 5px; list-style: none; }
+#taghint li { display: inline; float:left; width: auto; padding-right: 18px; overflow: hidden; text-align: left;}
+#taghint li a {text-decoration: none; display: block;}
+* html #taghint a{
+	width: 0;
+	white-space: nowrap;
+}
+#taghint li a:hover {color:#fff;}
+
+
+.adminbox-success {
+	border: 1px solid #3E5F10;
+	background: #E7F7D1;
+	color: #000;
+	font-weight: bold;
+	height: 30px;
+	padding: 10px;
+}
+.adminbox-success-mask {
+	height: 30px;
+	background: #5C8F18;
+}
+.adminbox-failure {
+	border: 1px solid #CC0000;
+	background: #FFD7D7;
+	color: #000;
+	font-weight: bold;
+	height: 30px;
+	padding: 10px;
+}
+.adminbox-failure-mask {
+	height: 30px;
+	background: #930000;
+}
+.adminbox-loading {
+	border: 1px solid #CA700B;
+	background-color: #FFFFCC;
+	color: #000;
+	font-weight: bold;
+	height: 20px;
+	padding: 5px;
+}
+#divMask {
+	margin-top: -50px;
 }

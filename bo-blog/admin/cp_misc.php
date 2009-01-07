@@ -34,13 +34,13 @@ if ($job=='weatherset') {
 			else $formbody.="<tr><td class='prefleft'>{$lna[362]}</td><td class='prefright'><input type=text size=20 name='variable[{$i}]' value='{$weathername}' disabled><input type=hidden name='variable[{$i}]' value='{$weathername}'> {$lna[364]}</td></tr>";
 			$formbody.="<tr><td class='prefleft'>{$lna[365]}</td><td class='prefright'><input type=text size=20 name='desc[{$i}]' value='{$weatherdetail['text']}'></td></tr>";
 			$formbody.="<tr><td class='prefleft'>{$lna[366]}</td><td class='prefright'><input type=text size=40 name='icon[{$i}]' value='{$weatherdetail['image']}'> <img src='{$weatherdetail['image']}'></td></tr>";
-			if ($weathername!='blank') $formbody.="<tr><td class='prefleft'>{$lna[367]}</td><td class='prefright'><input type=button value='{$lna[368]}' onclick=\"makesuredelweather('$weathername');\"></td></tr>";
+			if ($weathername!='blank') $formbody.="<tr><td class='prefleft'>{$lna[367]}</td><td class='prefright'><input type=button value='{$lna[368]}' onclick=\"makesuredelweather('$weathername');\" class='formbutton'></td></tr>";
 			$i+=1;
 			unset ($weathername, $weatherdetail);
 		}
 	}
 	$display_overall.=highlightadminitems('weatherset', 'misc');
-$display_overall.= <<<eot
+$display_overall_plus= <<<eot
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
 <td width=160 class="sectstart">
@@ -49,25 +49,27 @@ $display_overall.= <<<eot
 <td class="sectend">{$lna[369]}</td>
 </tr>
 </table>
+<form action="admin.php?go=misc_weathersave" method="post" id="ajaxForm1">
 <table class='tablewidth' cellpadding=4 cellspacing=1 align=center>
-<form action="admin.php?go=misc_weathersave" method="post">
 $formbody
 </table>
 <br>
-<div align=center><input type=submit value="{$lna[64]}" class='formbutton'> <input type=reset value="{$lna[65]}" class='formbutton'></div>
+<div align=center><input type='button' value="{$lna[64]}" class='formbutton' onclick="adminSubmitAjax(1);"> <input type=reset value="{$lna[65]}" class='formbutton'></div>
 </form>
 <br>
+<form action="admin.php?go=misc_weatheradd" method="post" id="ajaxForm2">
 <table class='tablewidth' cellpadding=4 cellspacing=1 align=center>
-<form action="admin.php?go=misc_weatheradd" method="post">
 <tr><td colspan=2 class='prefsection'>{$lna[370]}</td></tr>
-<tr><td class='prefleft'>{$lna[362]}</td><td class='prefright'><input type=text size=20 name='variable' value=''> {$lna[363]}</td></tr>
-<tr><td class='prefleft'>{$lna[365]}</td><td class='prefright'><input type=text size=20 name='desc' value=''></td></tr>
-<tr><td class='prefleft'>{$lna[366]}</td><td class='prefright'><input type=text size=40 name='icon' value=''> </td></tr>
+<tr><td class='prefleft'>{$lna[362]}</td><td class='prefright'><input type=text size=20 name='newvariable' value=''> {$lna[363]}</td></tr>
+<tr><td class='prefleft'>{$lna[365]}</td><td class='prefright'><input type=text size=20 name='newdesc' value=''></td></tr>
+<tr><td class='prefleft'>{$lna[366]}</td><td class='prefright'><input type=text size=40 name='newicon' value=''> </td></tr>
 </table>
 <br>
-<div align=center><input type=submit value="{$lna[64]}" class='formbutton'> <input type=reset value="{$lna[65]}" class='formbutton'></div>
+<div align=center><input type='button' value="{$lna[64]}" class='formbutton' onclick="adminSubmitAjax(2);"> <input type=reset value="{$lna[65]}" class='formbutton'></div>
 </form>
 eot;
+	if ($ajax=='on') die($display_overall_plus);
+	else $display_overall.=$display_overall_plus;
 }
 
 if ($job=='weathersave') {
@@ -82,22 +84,28 @@ if ($job=='weathersave') {
 	}
 	$wholeout="<?PHP\n{$conout}";
 	if (writetofile("data/weather.php", $wholeout)) {
-		catchsuccess ($finishok, array($backtoemot,$backtoforbidden,$backtoweather,$backtoava));
+		if ($ajax=='on') {
+			$fetchURL='admin.php?go=misc_weatherset';
+			catchsuccessandfetch($finishok, $fetchURL);
+		} else catchsuccess ($finishok, array($backtoweather,$backtoemot,$backtoforbidden,$backtoava));
 	} else {
 		catcherror ($lna[66]."data/weather.php");
 	}
 }
 
 if ($job=='weatheradd') {
-	acceptrequest('variable,icon,desc');
-	if (empty($variable) || empty($icon) || empty($desc)) {
+	acceptrequest('newvariable,newicon,newdesc');
+	if (empty($newvariable) || empty($newicon) || empty($newdesc)) {
 		catcherror($lna[371]);
 	}
 	$conout=@readfromfile("data/weather.php");
-	$conout.="\$weather['".safe_convert($variable)."']['image']='".safe_convert($icon)."';\n";
-	$conout.="\$weather['".safe_convert($variable)."']['text']='".safe_convert($desc)."';\n";
+	$conout.="\$weather['".safe_convert($newvariable)."']['image']='".safe_convert($newicon)."';\n";
+	$conout.="\$weather['".safe_convert($newvariable)."']['text']='".safe_convert($newdesc)."';\n";
 	if (writetofile("data/weather.php", $conout)) {
-		catchsuccess ($finishok, array($backtoemot,$backtoforbidden,$backtoweather,$backtoava));
+		if ($ajax=='on') {
+			$fetchURL='admin.php?go=misc_weatherset';
+			catchsuccessandfetch($finishok, $fetchURL);
+		} else catchsuccess ($finishok, array($backtoweather,$backtoemot,$backtoforbidden,$backtoava));
 	} else {
 		catcherror ($lna[66]."data/weather.php");
 	}
@@ -119,7 +127,10 @@ if ($job=='weatherdel') {
 	}
 	$wholeout="<?PHP\n{$conout}";
 	if (writetofile("data/weather.php", $wholeout)) {
-		catchsuccess ($finishok, array($backtoemot,$backtoforbidden,$backtoweather,$backtoava));
+		if ($ajax=='on') {
+			$fetchURL='admin.php?go=misc_weatherset';
+			catchsuccessandfetch($finishok, $fetchURL);
+		} else catchsuccess ($finishok, array($backtoweather,$backtoemot,$backtoforbidden,$backtoava));
 	} else {
 		catcherror ($lna[66]."data/weather.php");
 	}
@@ -140,7 +151,7 @@ $notopen=<<<eot
 eot;
 	}
 	$display_overall.=highlightadminitems('avatar', 'misc');
-$display_overall.= <<<eot
+$display_overall_plus= <<<eot
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
 <td width=160 class="sectstart">
@@ -157,12 +168,14 @@ $notopen
 <li>{$lna[379]}</li></ul>
 <br><br>
 <div align=center>
-<input type=button onclick="window.location='admin.php?go=misc_avatarrefresh';" value="{$lna[380]}">
+<input type=button onclick="simulateFormSubmit('admin.php?go=misc_avatarrefresh');" value="{$lna[380]}" class='formbutton'>
 </div>
 </td>
 </tr>
 </table>
 eot;
+	if ($ajax=='on') die($display_overall_plus);
+	else $display_overall.=$display_overall_plus;
 }
 
 if ($job=='avatarrefresh') {
@@ -175,7 +188,10 @@ if ($job=='avatarrefresh') {
 	}
 	$saveall="<?PHP\n\$avatars=array(\n".$savetext.");\n?>";
 	if (writetofile ("data/cache_avatars.php", $saveall)) {
-		catchsuccess ($finishok, array($backtoemot,$backtoforbidden,$backtoweather,$backtoava));
+		if ($ajax=='on') {
+			$fetchURL='admin.php?go=misc_avatar';
+			catchsuccessandfetch($finishok, $fetchURL);
+		} else catchsuccess ($finishok, array($backtoava,$backtoemot,$backtoforbidden,$backtoweather));
 	} else {
 		catcherror ($lna[66]."data/cache_avatars.php");
 	}
@@ -203,7 +219,7 @@ if ($job=='emot') {
 		}
 	//}
 	$display_overall.=highlightadminitems('emot', 'misc');
-$display_overall.= <<<eot
+$display_overall_plus= <<<eot
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
 <td width=160 class="sectstart">
@@ -212,8 +228,8 @@ $display_overall.= <<<eot
 <td class="sectend">{$lna[381]}</td>
 </tr>
 </table>
+<form action="admin.php?go=misc_emotsave" method="post" id="ajaxForm1">
 <table class='tablewidth' cellpadding=4 cellspacing=1 align=center>
-<form action="admin.php?go=misc_emotsave" method="post">
 <tr align=center class="admintitle"><td>{$lna[382]}</td><td>{$lna[383]}*</td><td>{$lna[384]}**</td><td>{$lna[385]}***</td></tr>
 $formbody
 </table>
@@ -222,9 +238,11 @@ $formbody
 </tr>
 </table>
 <br>
-<div align=center><input type=submit value="{$lna[64]}" class='formbutton'> <input type=reset value="{$lna[65]}" class='formbutton'></div>
+<div align=center><input type='button' value="{$lna[64]}" class='formbutton' onclick="adminSubmitAjax(1);"> <input type=reset value="{$lna[65]}" class='formbutton'></div>
 </form>
 eot;
+	if ($ajax=='on') die($display_overall_plus);
+	else $display_overall.=$display_overall_plus;
 }
 
 if ($job=='emotsave') {
@@ -244,7 +262,10 @@ if ($job=='emotsave') {
 	if (writetofile("data/cache_emot.php", $wholeout)) {
 		include_once("data/cache_emot.php");
 		recache_emotselection();
-		catchsuccess ($finishok, array($backtoemot,$backtoforbidden,$backtoweather,$backtoava));
+		if ($ajax=='on') {
+			$fetchURL='admin.php?go=misc_emot';
+			catchsuccessandfetch($finishok, $fetchURL);
+		} else catchsuccess ($finishok, array($backtoemot,$backtoforbidden,$backtoweather,$backtoava));
 	} else {
 		catcherror ($lna[66]."data/cache_emot.php");
 	}
@@ -262,7 +283,7 @@ if ($job=='forbidden') {
 	$selbody_all=@implode('', $selbody);
 	$option_all=@implode('', $option);
 	$display_overall.=highlightadminitems('forbidden', 'misc');
-$display_overall.= <<<eot
+$display_overall_plus= <<<eot
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
 <td width=160 class="sectstart">
@@ -270,15 +291,16 @@ $display_overall.= <<<eot
 </td>
 <td class="sectend">{$lna[403]}</td>
 </tr>
-<form action="admin.php?go=misc_forbiddensave" method="post">
 </table>
+<form action="admin.php?go=misc_forbiddensave" method="post" id="ajaxForm1">
 $selbody_all
 <table cellpadding=3 cellspacing=1 align=center class='tablewidth'>
-<tr><td class='sect' align=center><input type=submit value="{$lna[404]}" class='formbutton'> <input type=reset value="{$lna[405]}" class='formbutton'>
-</td></tr></form></table>
+<tr><td class='sect' align=center><input type='button' value="{$lna[404]}" class='formbutton' onclick="adminSubmitAjax(1);"> <input type=reset value="{$lna[405]}" class='formbutton'>
+</td></tr></table>
+</form>
 <br><br>
-<table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <form action="admin.php?go=misc_importforbidden" method="post" enctype='multipart/form-data'>
+<table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
 <td width=160 class="sectstart">
 {$lna[406]}
@@ -296,6 +318,8 @@ $selbody_all
 </td></tr></table>
 </form>
 eot;
+	if ($ajax=='on') die($display_overall_plus);
+	else $display_overall.=$display_overall_plus;
 }
 
 if ($job=='forbiddensave') {
@@ -313,7 +337,10 @@ if ($job=='forbiddensave') {
 	}
 	$update_query_all=@implode(', ', $update_query);
 	$blog->query("UPDATE `{$db_prefix}forbidden` SET {$update_query_all}");
-	catchsuccess ($finishok, array($backtoemot,$backtoforbidden,$backtoweather,$backtoava));
+	if ($ajax=='on') {
+		$fetchURL='admin.php?go=misc_forbidden';
+		catchsuccessandfetch($finishok, $fetchURL);
+	} else catchsuccess ($finishok, array($backtoforbidden,$backtoemot,$backtoweather,$backtoava));
 }
 
 if ($job=='importforbidden') {
@@ -336,15 +363,15 @@ if ($job=='importforbidden') {
 	$item=str_replace(",,", ',', $item);
 	$blog->query("UPDATE `{$db_prefix}forbidden` SET `{$destination}`='{$item}'");
 	@unlink("{$db_tmpdir}/{$upload_filename}");
-	catchsuccess ($finishok, array($backtoemot,$backtoforbidden,$backtoweather,$backtoava));
+	catchsuccess ($finishok, array($backtoforbidden,$backtoemot,$backtoweather,$backtoava));
 }
 
 if ($job=='sessiondir') {
 	$checked=($db_defaultsessdir=='1') ? 'checked' : '';
 
 	$display_overall.=highlightadminitems('sessiondir', 'misc');
-$display_overall.= <<<eot
-<form action="admin.php?go=misc_changesessiondir" method="post">
+$display_overall_plus= <<<eot
+<form action="admin.php?go=misc_changesessiondir" method="post" id="ajaxForm1">
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
 <td width=160 class="sectstart">
@@ -359,12 +386,14 @@ $display_overall.= <<<eot
 <tr><td width=25% align=right valign=top>{$lna[978]}</td><td><input type=text name="newdirname">/<br>{$lna[979]}</td></tr>
 <tr><td width=25% align=right valign=top>{$lna[824]}</td><td><input type=checkbox value=1 name="usedefaultsess" {$checked}>{$lna[1000]}<br>{$lna[1001]}</td></tr>
 
-<tr><td class='sect' align=center colspan=2><input type=submit value="{$lna[64]}" class='formbutton'> <input type=reset value="{$lna[65]}" class='formbutton'>
+<tr><td class='sect' align=center colspan=2><input type='button' value="{$lna[64]}" class='formbutton' onclick="adminSubmitAjax(1);"> <input type=reset value="{$lna[65]}" class='formbutton'>
 </td></tr></table>
 
 </td></tr></table>
 </form>
 eot;
+	if ($ajax=='on') die($display_overall_plus);
+	else $display_overall.=$display_overall_plus;
 }
 
 if ($job=='testsession') {
@@ -435,7 +464,10 @@ if ($job=='changesessiondir') {
 		$savetext.="\$config['{$key}']='".admin_convert(stripslashes($val))."';\n";
 	}
 	if (writetofile ("data/config.php", $savetext)) {
-		catchsuccess ($lna[981]);
+		if ($ajax=='on') {
+			$fetchURL='admin.php?go=misc_sessiondir';
+			catchsuccessandfetch($lna[981], $fetchURL);
+		} else catchsuccess ($lna[981]);
 	} else {
 		catcherror ($lna[66]."data/config.php");
 	}
@@ -454,7 +486,8 @@ if ($job=='urlrewrite') {
 	$ruletemplate=str_replace('&lt;ROOTHERE&gt;', $serverroot, $ruletemplate);
 
 	$display_overall.=highlightadminitems('urlrewrite', 'misc');
-$display_overall.= <<<eot
+$display_overall_plus= <<<eot
+<form action="admin.php?go=misc_urlrewritesave" method="post" id="ajaxForm1">
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
 <td width=160 class="sectstart">
@@ -462,8 +495,7 @@ $display_overall.= <<<eot
 </td>
 <td class="sectend">{$lna[528]}</td>
 <tr><td colspan=2 class='sect'>
-<form action="admin.php?go=misc_urlrewritesave" method="post">
-<!-- {$lna[1084]}<br> --><br>
+<br>
 <input type=radio value='0' name="urlrewritesta" {$checksta1} onclick="document.getElementById('urloptmessagearea').innerHTML=document.getElementById('urloptmessage0').value; document.getElementById('apachearea').style.display='none'"> {$lna[511]}<br>
 <input type=radio value='1' name="urlrewritesta" {$checksta2} onclick="document.getElementById('urloptmessagearea').innerHTML=document.getElementById('urloptmessage1').value; document.getElementById('apachearea').style.display='none'"> {$lna[938]} ({$lna[1139]})<br>
 <input type=radio value='2' name="urlrewritesta" {$checksta4} onclick="document.getElementById('urloptmessagearea').innerHTML=document.getElementById('urloptmessage3').value; document.getElementById('apachearea').style.display='block'"> {$lna[1138]}<br>
@@ -480,9 +512,11 @@ $ruletemplate
 <hr>
 </div>
 <br>
-<div align=center><input type=submit value="{$lna[64]}" class='formbutton'> <input type=reset value="{$lna[65]}" class='formbutton'></div></form>
-</td></tr></table>
+<div align=center><input type='button' value="{$lna[64]}" class='formbutton' onclick="adminSubmitAjax(1);"> <input type=reset value="{$lna[65]}" class='formbutton'></div>
+</td></tr></table></form>
 eot;
+	if ($ajax=='on') die($display_overall_plus);
+	else $display_overall.=$display_overall_plus;
 }
 
 if ($job=='urlrewritesave') {
@@ -498,101 +532,11 @@ if ($job=='urlrewritesave') {
 	}
 	if ($saved!=1) $savetext.="\$config['urlrewritemethod']='{$urlrewritesta}';\n";
 	if (writetofile ("data/config.php", $savetext)) {
-		catchsuccess ($lna[1094], "{$lna[39]}|admin.php");
+		if ($ajax=='on') {
+			$fetchURL='admin.php?go=misc_urlrewrite';
+			catchsuccessandfetch($lna[1094], $fetchURL);
+		} else catchsuccess ($lna[1094], "{$lna[39]}|admin.php");
 	} else {
 		catcherror ($lna[66]."data/config.php");
 	}
 }
-
-
-if ($job=='urlrewriteguide') {
-	acceptrequest('servertype,serverroot');
-	$servertype=floor($servertype);
-	$serverroot=safe_convert(stripslashes($serverroot));
-	if (!$servertype || !$serverroot) {
-		if (strstr(PHP_OS, 'WIN')) $IIScheck='checked';
-		else $Apachecheck='checked';
-		$possibleroot=pathinfo($_SERVER['PHP_SELF']);
-		$possibleroot=$possibleroot['dirname'].'/';
-		$display_overall.=highlightadminitems('urlrewrite', 'misc');
-		$display_overall.= <<<eot
-<table class='tablewidth' align=center cellpadding=4 cellspacing=0>
-<tr>
-<td width=160 class="sectstart">
-{$lna[529]}
-</td>
-<td class="sectend">{$lna[530]}</td>
-<tr><td colspan=2 class='sect'>
-<form action="admin.php?go=misc_urlrewriteguide" method="post">
-{$lna[1085]}<br>
-<input type=radio value='1' name="servertype" {$Apachecheck}> Apache<br>
-<input type=radio value='2' name="servertype" {$IIScheck}> IIS<br><br>
-{$lna[1086]}<br>
-<input type=text value='$possibleroot' name="serverroot"><br><br>
-<div align=center><input type=submit value="{$lna[64]}" class='formbutton'></div><br><br>
-</form>
-</td></tr></table>
-eot;
-	} else {
-		if ($servertype==1) {
-			$ruletemplate=nl2br(readfromfile("images/others/rule_apache.txt"));
-			$ruletemplate=str_replace('<ROOTHERE>', $serverroot, $ruletemplate);
-			$rulefilename=".htaccess";
-		} else {
-			$ruletemplate=nl2br(readfromfile("images/others/rule_iis.txt"));
-			$ruletemplate=str_replace('<ROOTHERE>', str_replace('/', "\\/", $serverroot), $ruletemplate);
-			$rulefilename="httpd.ini";
-		}
-		$showword=sprintf($lna[1087], $rulefilename);
-		@include_once ("data/cache_latest.php");
-		$testid=$cache_latest_all[0]['blogid'];
-		$display_overall.=highlightadminitems('urlrewrite', 'misc');
-		$display_overall.= <<<eot
-<table class='tablewidth' align=center cellpadding=4 cellspacing=0>
-<tr>
-<td width=160 class="sectstart">
-{$lna[529]}
-</td>
-<td class="sectend">{$lna[530]}</td>
-<tr><td colspan=2 class='sect'>
-{$showword}<br>
-<div style="width:90%; background-color: #CCC; font-family: Terminal; color: #000; border: 1px solid #000;">
-$ruletemplate
-</div>
-<br><br>
-<b>[{$lna[939]}]</b><br>
-<a href="read.php?{$testid}" target="_blank">{$lna[1088]}</a><br>
-<a href="post/{$testid}.htm" target="_blank">{$lna[1089]}</a><br>
-<br><br>
-<b>[{$lna[1090]}]</b><br>
-<a href="admin.php?go=misc_urlrewritesave&urlrewritesta=2">{$lna[1091]}</a><br>
-<a href="admin.php?go=misc_urlrewriteguide2">{$lna[1092]}</a><br>
-</td></tr></table>
-eot;
-	}
-}
-
-if ($job=='urlrewriteguide2') {
-	@include_once ("data/cache_latest.php");
-	$testid=$cache_latest_all[0]['blogid'];
-	$display_overall.=highlightadminitems('urlrewrite', 'misc');
-	$display_overall.= <<<eot
-<table class='tablewidth' align=center cellpadding=4 cellspacing=0>
-<tr>
-<td width=160 class="sectstart">
-{$lna[529]}
-</td>
-<td class="sectend">{$lna[530]}</td>
-<tr><td colspan=2 class='sect'>
-{$lna[1093]}<br>
-<b>[{$lna[939]}]</b><br>
-<a href="read.php?{$testid}" target="_blank">{$lna[1088]}</a><br>
-<a href="read.php/{$testid}.htm" target="_blank">{$lna[1089]}</a><br>
-<br><br>
-<b>[{$lna[1090]}]</b><br>
-<a href="admin.php?go=misc_urlrewritesave&urlrewritesta=1">{$lna[1091]}</a><br>
-<a href="admin.php?go=misc_urlrewritesave&urlrewritesta=0">{$lna[1092]}</a><br>
-</td></tr></table>
-eot;
-}
-

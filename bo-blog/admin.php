@@ -38,13 +38,17 @@ $maxrecord=$blog->getsinglevalue("{$db_prefix}maxrec");
 
 include_once("admin/admin_header.php");
 //Start Loading Modules
-if (file_exists("admin/cp_{$act}.php")) include ("admin/cp_{$act}.php");
+if (file_exists("admin/cp_{$act}.php")) {
+	if ($act!='edit' && $act!='entry') checkpermission('CP');
+	include ("admin/cp_{$act}.php");
+}
 else {
 	$realact=$actgoto='';
 	@list($realact, $actgoto)=@explode('::', $act);
 	 $actgotofile=($actgoto) ? "plugin/".basename($realact)."/admin_".basename($actgoto).".php" : "plugin/".basename($realact)."/admin.php";
 	if (is_file( $actgotofile)) {
 		$display_overall.=highlightadminitems('plugin', 'addon');
+		checkpermission('CP');
 		include ( $actgotofile);
 		$display_overall.=$plugin_return;
 	}
@@ -100,7 +104,7 @@ function addpref ($pref_type, $pref_content) { //This will generate the complete
 			unset($tmp_sel, $current_sel_all);
 			break;
 		case 'sec': //A separator
-			$output="<tr><td class=\"prefsection\" align=\"center\" colspan='2'><a name=\"pref{$prefseccounter}\"></a>{$prefs[0]} <a href=\"#top\">[top]</a></td></tr>";
+			$output="<tr><td class=\"prefsection\" align=\"center\" colspan='2'><a name=\"pref{$prefseccounter}\"></a>{$prefs[0]} [<a href=\"#top\"><img src=\"images/arrows/singleup.gif\" alt=\"\" title=\"TOP\" align=\"absmiddle\" border=\"0\"/></a><a href=\"#bottom\"><img src=\"images/arrows/singledown.gif\" alt=\"\" title=\"BOTTOM\" align=\"absmiddle\" border=\"0\"/></a>]</td></tr>";
 			if ($prefseccounter%5==0) $pref_quicksel.="<tr align='left'>";
 			$pref_quicksel.="<td width=20%>[<a href=\"#pref{$prefseccounter}\">{$prefs[0]}</a>]</td>";
 			if ($prefseccounter%5==4) $pref_quicksel.="</tr>";

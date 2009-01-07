@@ -250,7 +250,7 @@ function recache_cleartemp () {
 	$handle=opendir("{$db_tmpdir}/");
 	if (!$handle) catcherror ("{$lna[155]} {$db_tmpdir}/ {$lna[156]}<ul><li>{$lna[157]}</li><li>{$lna[158]}</li><li>{$lna[159]}</li></ul>");
 	while (false !== ($file=readdir($handle))) {
-		if ($file!="." && $file!="..") {
+		if ($file!="." && $file!=".."  && !is_dir("{$db_tmpdir}/{$file}")) {
 			@unlink ("{$db_tmpdir}/{$file}");
 		}
 	}

@@ -22,6 +22,7 @@ $finishok4=$lna[893];
 $finishok5=$lna[1108];
 $delok=$lna[755];
 $optimizeok=$lna[756];
+$replaceok=$lna[1186];
 $backtocache="{$lna[757]}|admin.php?go=carecenter_recache";
 $backtoupload="{$lna[758]}|admin.php?go=carecenter_adminattach";
 $backtomysql="{$lna[759]}|admin.php?go=carecenter_mysql";
@@ -29,13 +30,14 @@ $backtomysql="{$lna[759]}|admin.php?go=carecenter_mysql";
 if ($job=='cleartmpandreturn') {
 	$job='cleartmp';
 	$backtocache="{$lna[344]}|admin.php";
+	$fetchURL="admin.php?go=main_default";
 }
 
 if ($job=='recache') {
 		$display_overall.=highlightadminitems('recache', 'carecenter');
 $display_overall.= <<<eot
-<table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <form action="admin.php?go=carecenter_refreshcache" method="post"  id='f_s' name='f_s'>
+<table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
 <td width=160 class="sectstart">
 {$lna[35]}
@@ -69,14 +71,14 @@ $display_overall.= <<<eot
 </table>
 
 </td><tr>
-<tr><td colspan=2 class="sectbar" align=center><input type=submit value="{$lna[64]}" class='formbutton'> <input type=reset value="{$lna[65]}" class='formbutton'>
+<tr><td colspan=2 class="sectbar" align=center><input type='button' value="{$lna[64]}" class='formbutton' onclick="adminSubmitAjax('f_s');"> <input type=reset value="{$lna[65]}" class='formbutton'>
 </td></tr>
-</form>
 </table>
+</form>
 <br>
 <br>
+<form action="admin.php?go=carecenter_refreshcounter" method="post" id='ajaxForm1' name='ajaxForm1'>
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
-<form action="admin.php?go=carecenter_refreshcounter" method="post" id='f_s2' name='f_s2'>
 <tr>
 <td width=160 class="sectstart">
 {$lna[773]}
@@ -88,24 +90,24 @@ $display_overall.= <<<eot
 <br>
 <table width=80% align=center cellpadding=4>
 <tr>
-<td width=25%><input type=checkbox name='selid[]' value='entries'>{$lna[776]}</td>
-<td width=25%><input type=checkbox name='selid[]' value='tb'>{$lna[777]}</td>
-<td width=25%><input type=checkbox name='selid[]' value='messages'>{$lna[778]}</td>
-<td width=25%><input type=checkbox name='selid[]' value='users'>{$lna[779]}</td>
+<td width=25%><input type=checkbox name='selid2[]' value='entries'>{$lna[776]}</td>
+<td width=25%><input type=checkbox name='selid2[]' value='tb'>{$lna[777]}</td>
+<td width=25%><input type=checkbox name='selid2[]' value='messages'>{$lna[778]}</td>
+<td width=25%><input type=checkbox name='selid2[]' value='users'>{$lna[779]}</td>
 </tr>
 <tr>
-<td width=25%><input type=checkbox name='selid[]' value='replies'>{$lna[780]}</td>
-<td width=75% colspan=3><input type=checkbox name='selid[]' value='max'>{$lna[781]}</td>
+<td width=25%><input type=checkbox name='selid2[]' value='replies'>{$lna[780]}</td>
+<td width=75% colspan=3><input type=checkbox name='selid2[]' value='max'>{$lna[781]}</td>
 </tr>
 <tr>
-<td colspan=4><a href="#unexist" onclick="checkallbox('f_s2', 'checked');">{$lna[247]}</a> | <a href="#unexist" onclick="checkallbox('f_s2', '');">{$lna[248]}</a></td>
+<td colspan=4><a href="#unexist" onclick="checkallbox('ajaxForm1', 'checked');">{$lna[247]}</a> | <a href="#unexist" onclick="checkallbox('ajaxForm1', '');">{$lna[248]}</a></td>
 </tr>
 </table>
 </td><tr>
-<tr><td colspan=2 class="sectbar" align=center><input type=submit value="{$lna[64]}" class='formbutton'> <input type=reset value="{$lna[65]}" class='formbutton'>
+<tr><td colspan=2 class="sectbar" align=center><input type='button' value="{$lna[64]}" class='formbutton' onclick="adminSubmitAjax(1);"> <input type=reset value="{$lna[65]}" class='formbutton'>
 </td></tr>
-</form>
 </table>
+</form>
 <br>
 <br>
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
@@ -117,9 +119,9 @@ $display_overall.= <<<eot
 </tr>
 <tr class='sect'><td colspan=2>
 <ul>
-<li><b>{$lna[772]}</b> <a href="admin.php?go=carecenter_cleartmp">[{$lna[896]}]</a><br>{$lna[897]}<br><br></li>
-<li><b>{$lna[898]}</b> <a href="admin.php?go=carecenter_rebuildcalendar">[{$lna[896]}]</a><br>{$lna[899]}<br><br></li>
-<li><b>{$lna[1109]}</b> <a href="admin.php?go=carecenter_rebuildrewritefiles">[{$lna[896]}]</a><br>{$lna[1110]}<br></li>
+<li><b>{$lna[772]}</b> <a href="javascript: simulateFormSubmit('admin.php?go=carecenter_cleartmp')">[{$lna[896]}]</a><br>{$lna[897]}<br><br></li>
+<li><b>{$lna[898]}</b> <a href="javascript: simulateFormSubmit('admin.php?go=carecenter_rebuildcalendar')">[{$lna[896]}]</a><br>{$lna[899]}<br><br></li>
+<li><b>{$lna[1109]}</b> <a href="javascript: simulateFormSubmit('admin.php?go=carecenter_rebuildrewritefiles')">[{$lna[896]}]</a><br>{$lna[1110]}<br></li>
 </ul>
 </td></tr>
 </table>
@@ -137,8 +139,8 @@ if ($job=='refreshcache') {
 }
 
 if ($job=='refreshcounter') {
-	acceptrequest('selid');
-	if (!is_array($selid)) catcherror($lna[205]);
+	acceptrequest('selid2');
+	if (!is_array($selid2)) catcherror($lna[205]);
 	$countsql=array(
 		'entries'=>"SELECT COUNT(blogid) FROM `{$db_prefix}blogs`", 
 		'replies'=>"SELECT COUNT(repid) FROM `{$db_prefix}replies` WHERE `reproperty`<=1", 
@@ -146,15 +148,15 @@ if ($job=='refreshcounter') {
 		'messages'=>"SELECT COUNT(repid) FROM `{$db_prefix}messages` WHERE `reproperty`<=1", 
 		'users'=>"SELECT COUNT(userid) FROM `{$db_prefix}user`"
 	);
-	for ($i=0; $i<count($selid); $i++) {
-		if ($selid[$i]=='max') continue;
-		$idsql=$selid[$i];
+	for ($i=0; $i<count($selid2); $i++) {
+		if ($selid2[$i]=='max') continue;
+		$idsql=$selid2[$i];
 		$result_num=$blog->countbyquery($countsql[$idsql]);
 		if ($idsql=='users') $result_num-=1;
 		$blog->query("UPDATE `{$db_prefix}counter` SET `{$idsql}`={$result_num}");
 	}
 
-	if (in_array('max', $selid)) {
+	if (in_array('max', $selid2)) {
 		$maxsql=array(
 			"SELECT MAX(blogid) FROM `{$db_prefix}blogs`",
 			"SELECT MAX(userid) FROM `{$db_prefix}user`", 
@@ -179,7 +181,10 @@ if ($job=='refreshcounter') {
 if ($job=='cleartmp') {
 	recache_cleartemp ();
 	$blog->query("UPDATE `{$db_prefix}counter` SET `empty1`={$nowtime['timestamp']}");
-	catchsuccess ($finishok4, $backtocache);
+	if ($ajax=='on' && $fetchURL) {
+		catchsuccessandfetch($finishok4, $fetchURL);
+	}
+	else catchsuccess ($finishok4, $backtocache);
 }
 
 if ($job=='rebuildcalendar') {
@@ -238,10 +243,9 @@ if ($job=='adminattach') {
 		foreach ($detail_array as $dafile) {
 			$time_t=date('Y-n-j', $dafile['uploadtime']);
 			$dataoriginalname=urldecode($dafile['originalname']);
-			$tablebody.="<tr class='visibleitem'><td width=35 align=center><input type=checkbox name='selid[]' value='{$dafile['fid']}'></td><td align=center width=50%>{$dataoriginalname}</td><td align=center>{$time_t}</td><td width=35 align=center><a href=\"javascript: redirectcomfirm('admin.php?go=carecenter_delupload&filename={$dafile['fid']}');\"><img src='admin/theme/{$themename}/del.gif' alt='{$lna[78]}' title='{$lna[78]}' border='0'></a></td><td width=35 align=center><a href=\"{$dafile['filepath']}\" target='_blank'><img src='admin/theme/{$themename}/edit.gif' alt='{$lna[782]}' title='{$lna[782]}' border='0'></a></td></tr>";
+			$tablebody.="<tr class='visibleitem'><td width=35 align=center><input type=checkbox name='selid[]' value='{$dafile['fid']}'></td><td align=center width=50%>{$dataoriginalname}</td><td align=center>{$time_t}</td><td width=35 align=center><a href=\"javascript: redirectcomfirm('admin.php?go=carecenter_delupload&filename={$dafile['fid']}');\"><img src='admin/theme/{$themename}/del.gif' alt='{$lna[78]}' title='{$lna[78]}' border='0'></a></td><td width=35 align=center><a href=\"{$dafile['filepath']}\" target='_blank'><img src='admin/theme/{$themename}/view.gif' alt='{$lna[782]}' title='{$lna[782]}' border='0'></a></td><td width=35 align=center><a href=\"admin.php?go=carecenter_updateattachment&fileid={$dafile['fid']}\"><img src='admin/theme/{$themename}/edit.gif' alt='{$lna[782]}' title='{$lna[782]}' border='0'></a></td></tr>";
 		}
 	}
-
 
 	$foryears=range(2001,2050);
 	$formonths=range(1,12);
@@ -261,7 +265,7 @@ if ($job=='adminattach') {
 
 
 	$display_overall.=highlightadminitems('adminattach', 'carecenter');
-$display_overall.= <<<eot
+$display_overall_plus= <<<eot
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
 <td width=160 class="sectstart">
@@ -270,26 +274,31 @@ $display_overall.= <<<eot
 <td class="sectend">{$lna[783]}</td>
 </tr>
 </table>
-<table cellpadding=3 cellspacing=1 align=center class='tablewidth'>
 <form action="admin.php?go=carecenter_adminattach" method="post">
+<table cellpadding=3 cellspacing=1 align=center class='tablewidth'>
 <tr><td colspan=7>
 <!--
 {$lna[784]} <select name="specext2"><option value=''>{$lna[785]}</option><option value='gif jpg png bmp jpeg'>{$lna[786]}</option><option value='rar zip bz2 gz tar ace 7z'>{$lna[787]}</option><option value='txt doc htm html wps xsl ppt'>{$lna[788]}</option><option value='mp3 wma wmv rm ra rmvb wav asf swf'>{$lna[789]}</option></select> {$lna[790]} <input type=text name=specext size=9> {$lna[791]} <input type=submit value="{$lna[64]}" class='formbutton'>
 -->
 {$showysel} / {$showmsel} <input type=submit value='{$lna[244]}' class='formbutton'>
 </td></tr>
-</form>
 <tr><td colspan=7 height=10></td></tr>
+</table>
+</form>
+
 <form action="admin.php?go=carecenter_delupload" method="post" id='f_s' name='f_s'>
-<tr align=center class="admintitle"><td width=35 align=center>{$lna[245]}</td><td align=center>{$lna[792]}</td><td align=center width=260>{$lna[793]}</td><td align=center>{$lna[78]}</td><td align=center>{$lna[794]}</td></tr>
+<table cellpadding=3 cellspacing=1 align=center class='tablewidth'>
+<tr align=center class="admintitle"><td width=35 align=center>{$lna[245]}</td><td align=center>{$lna[792]}</td><td align=center width=260>{$lna[793]}</td><td align=center>{$lna[78]}</td><td align=center>{$lna[794]}</td><td align=center>{$lna[875]}</td></tr>
 {$tablebody}
 <tr><td colspan=7><a href="#unexist" onclick="checkallbox('f_s', 'checked');">{$lna[247]}</a> | <a href="#unexist" onclick="checkallbox('f_s', '');">{$lna[248]}</a><br>{$pagebar}</td></tr>
 <tr><td colspan=7 height=20></td></tr>
-<tr class="adminoption"><td colspan=7 align=center><input type=checkbox name=opt value='del'>{$lna[795]}<input type=submit value="{$lna[64]}" class='formbutton'>
+<tr class="adminoption"><td colspan=7 align=center><input type=checkbox name=opt value='del'>{$lna[795]}<input type='button' value="{$lna[64]}" class='formbutton' onclick="adminSubmitAjax('f_s');">
 </td></tr>
-</form>
 </table>
+</form>
 eot;
+	if ($ajax=='on') die($display_overall_plus);
+	else $display_overall.=$display_overall_plus;
 }
 
 if ($job=='delupload') {
@@ -302,13 +311,15 @@ if ($job=='delupload') {
 		else $result=true;
 		if ($result) 	{
 			$blog->query("DELETE FROM `{$db_prefix}upload` WHERE `fid`='{$filename}'");
-			catchsuccess ($delok, "{$lna[758]}|admin.php?go=carecenter_adminattach&dir={$dir}");
+			if ($ajax=='on') {
+				$fetchURL='admin.php?go=carecenter_adminattach';
+				catchsuccessandfetch($delok, $fetchURL);
+			} else catchsuccess ($delok, "{$lna[758]}|admin.php?go=carecenter_adminattach&dir={$dir}");
 		}
 		else catcherror ($lna[796]);
 	}
 	if ($opt!="del") {
-		header ("Location: admin.php?go=carecenter_adminattach");
-		exit;
+		catcherror($lna[499]);
 	}
 	if (!is_array($selid)) catcherror ($lna[797]);
 	else {
@@ -325,8 +336,92 @@ if ($job=='delupload') {
 		}
 		$blog->query("DELETE FROM `{$db_prefix}upload` WHERE `fid` in ({$delfiles}) ");
 	}
-	catchsuccess ($delok, "{$lna[758]}|admin.php?go=carecenter_adminattach");
+	if ($ajax=='on') {
+		$fetchURL='admin.php?go=carecenter_adminattach';
+		catchsuccessandfetch($delok, $fetchURL);
+	} else catchsuccess ($delok, "{$lna[758]}|admin.php?go=carecenter_adminattach");
 }
+
+
+if ($job=='updateattachment') {
+	acceptrequest('fileid');
+	$fileid=floor($fileid);
+	$detail_array=$blog->getbyquery("SELECT * FROM `{$db_prefix}upload` WHERE `fid`='{$fileid}' LIMIT 1");
+	if ($detail_array['fid']!=$fileid) catcherror($lna[127]);
+	$dataoriginalname=urldecode($detail_array['originalname']);
+	$message.="<table width=70% class=\"adminoption\"  align=center><tr><td width=15% valign=top><b>{$lna[792]}</b></td><td width=60%>{$dataoriginalname} &nbsp; [<a href=\"{$detail_array['filepath']}\" target=\"_blank\">{$lna[782]}</a>]</td></tr><tr><td width=15% valign=top><b>{$lna[408]}</b></td><td width=60%><input type=\"file\" name='newupfile' size=35></td></tr><tr><td colspan=2 align=center><input type='submit' value='{$lna[64]}' class='formbutton'> <input type='reset' value='{$lna[65]}' class='formbutton'></td></tr></table>";
+
+	$display_overall.=highlightadminitems('adminattach', 'carecenter');
+$display_overall.= <<<eot
+<table class='tablewidth' align=center cellpadding=4 cellspacing=0>
+<tr>
+<td width=160 class="sectstart">
+{$lna[36]}
+</td>
+<td class="sectend">{$lna[783]}</td>
+</tr>
+</table>
+<table cellpadding=3 cellspacing=1 align=center class='tablewidth'>
+<form action="admin.php?go=carecenter_replaceattachment" method="post" enctype='multipart/form-data'>
+<tr><td height=110>
+$message
+<input type="hidden" name="fileid" value="{$fileid}" />
+</td></tr>
+</form>
+</table>
+eot;
+}
+
+
+if ($job=='replaceattachment') {
+	acceptrequest('fileid');
+	$fileid=floor($fileid);
+	$detail_array=$blog->getbyquery("SELECT * FROM `{$db_prefix}upload` WHERE `fid`='{$fileid}' LIMIT 1");
+	if ($detail_array['fid']!=$fileid) catcherror($lna[127]);
+
+	unset ($upload_filename_list, $upload_parts);
+	$imgext_watermark=array('jpg', 'gif', 'png');
+	$lang_wm=explode('|', $lna[999]);
+
+	$newupfile=$_FILES['newupfile'];
+	if (!$newupfile['name']) catcherror ($lna[418]);
+
+	//die(print_r($newupfile));
+	
+	$targetfolder=dirname($detail_array['filepath']);
+	$targetname=basename($detail_array['filepath']);
+
+
+	$upload_file=$newupfile['tmp_name'];
+	$upload_file_size=$newupfile['size'];
+	if ($upload_file_size>$permission['MaxSize']*1024) catacherror ("{$lna[421]} ( {$permission['MaxSize']} KB)");
+
+	$ext=strtolower(strrchr($newupfile['name'],'.'));
+	$ext=str_replace(".", '', $ext);
+	$permission['AllowedTypes']=@explode(' ', $permission['AllowedTypes']);
+
+	if (@!in_array($ext, $permission['AllowedTypes'])) {
+		catcherror ("{$lna[420]} .{$ext} ");
+	}
+
+	@unlink($detail_array['filepath']);
+	if (file_exists($detail_array['filepath'])) catcherror($lna[1185]);
+
+	if (!move_uploaded_file ($upload_file,"{$targetfolder}/{$targetname}")) catcherror ($lna[130]."{$targetfolder}/");
+
+	//Add watermark
+	if ($mbcon['wmenable']=='1') {
+		if (in_array($ext, $imgext_watermark)) {
+			unset($watermark_result);
+			$watermark_result=create_watermark("{$targetfolder}/{$targetname}");
+			if (!$watermark_result) $watermark_result="<br>({$lang_wm[0]}: {$lang_wm[8]}{$watermark_err})";
+			else $watermark_result="<br>({$lang_wm[0]}: {$watermark_result})";
+		} else $watermark_result='';
+	} else $watermark_result='';
+
+	catchsuccess($replaceok.' '.$watermark_result, "{$lna[758]}|admin.php?go=carecenter_adminattach");
+}
+
 
 if ($job=='mysql') {
 	$all_tables=array("{$db_prefix}blogs", "{$db_prefix}calendar", "{$db_prefix}categories", "{$db_prefix}counter", "{$db_prefix}forbidden", "{$db_prefix}history", "{$db_prefix}linkgroup", "{$db_prefix}links", "{$db_prefix}maxrec", "{$db_prefix}messages", "{$db_prefix}mods", "{$db_prefix}replies", "{$db_prefix}tags", "{$db_prefix}user", "{$db_prefix}plugins", "{$db_prefix}pages", "{$db_prefix}upload");
@@ -358,6 +453,7 @@ MySQL
 </form>
 </table>
 <br><br>
+<form action="admin.php?go=carecenter_optimize" method='post' id="ajaxForm1">
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
 <td width=160 class="sectstart">
@@ -365,7 +461,6 @@ MySQL
 </td>
 <td class="sectend">{$lna[804]}</td>
 </tr>
-<form action="admin.php?go=carecenter_optimize" method='post'>
 <tr class='sect'>
 <td colspan=2>
 {$lna[805]}
@@ -373,10 +468,10 @@ MySQL
 {$tablebody}
 </table>
 <br>
-<div align=center><input type='submit' value='{$lna[64]}' class='formbutton'> <input type='reset' value='{$lna[65]}' class='formbutton'></div>
+<div align=center><input type='button' value="{$lna[64]}" class='formbutton' onclick="adminSubmitAjax(1);"> <input type='reset' value='{$lna[65]}' class='formbutton'></div>
 </td></tr>
-</form>
 </table>
+</form>
 </table>
 eot;
 }

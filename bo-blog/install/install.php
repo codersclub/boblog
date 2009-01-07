@@ -11,7 +11,7 @@ $ts=time();
 $ip=$_SERVER['REMOTE_ADDR'];
 
 if (!$v) {
-	template("<div class='log'>Select Language</div><form action='install.php?v=setlang' method='post'><div class='mes'><div align='center'><select style=\"width: 50%;\" name='slang'><option value='en'>English</option><option value='zh-cn' selected='selected'>Simplified Chinese</option><option value='zh-tw'>Traditional Chinese</option><option value='vn'>Vietnamese</option></select></div><br/><div align='center'><input type='submit' value='OK' class='inbut'></div></form></div>");
+	template("<div class='log'>Select Language</div><form action='install.php?v=setlang' method='post'><div class='mes'><div align='center'><select style=\"width: 50%;\" name='slang'><option value='en'>English</option><option value='zh-cn' selected='selected'>Simplified Chinese (简体中文)</option><option value='zh-tw'>Traditional Chinese (正體中文)</option><option value='vn'>Vietnamese (Tiếng Việt)</option></select></div><br/><div align='center'><input type='submit' value='OK' class='inbut'></div></form></div>");
 }
 
 if ($v=='setlang') {
@@ -51,11 +51,11 @@ if ($v=='cancel') {
 if ($v=='1') {
 	$linkfrom=@parse_url($_SERVER['HTTP_REFERER']);
 	$port=($linkfrom['port']) ? ":{$linkfrom['port']}" : '';
-	$blogurlpath=$linkfrom['scheme'].'://'.$linkfrom['host'].$port.str_replace('/install/install.php', '', $linkfrom['path']);
+	$blogurlpath=$linkfrom['host'].$port.str_replace('/install/install.php', '', $linkfrom['path']);
 	if ($newinstall==1) { // not repair
-		$overwritesel="{$lang[65]}<br><input type='radio' value='1' name='db_overwrite' onclick=\"alert('{$lang[68]}');\">{$lang[66]} <input type='radio' value='0' name='db_overwrite' checked>{$lang[67]}<br><br>";
+		$overwritesel="<b>{$lang[65]}</b><br><input type='radio' value='1' name='db_overwrite' onclick=\"alert('{$lang[68]}');\">{$lang[66]} <input type='radio' value='0' name='db_overwrite' checked>{$lang[67]}<br><br>";
 	}
-	template("<div class='log'>{$lang[8]}</div><div class='mes'><form action='install.php?v=2' method='post'>{$lang[9]}<br><input type='text' size='20' value='localhost' name='db_server'><br><br>{$lang[10]}<br><input type='text' size='20' value='' name='db_username'><br><br>{$lang[11]}<br><input type='password' size='20' value='' name='db_password'><br><br>{$lang[12]}<br><input type='text' size='20' value='' name='db_name'><br> {$lang[13]}<br><br>{$lang[14]}<br><input type='text' size='20' value='boblog_' name='db_prefix'><br> {$lang[15]}<br><br>{$lang[82]}<br><input type='text' size='20' value='{$blogurlpath}' name='blogurlpath'>/index.php<br> {$lang[83]}<br><br>{$overwritesel}{$lang[16]} <a href='javascript:showlayer(\"what1\");'>[{$lang[17]}]</a><br><input type='radio' value='0' name='db_410'>{$lang[18]} <input type='radio' value='1' name='db_410'>{$lang[19]} <div id='what1' style='display: none;'><br>{$lang[20]}</div><div align='center'><br><input type='hidden' name='newinstall' value='{$newinstall}'><input type='submit' value='{$lang[21]}' class='inbut'> <input type='reset' value='{$lang[22]}'  class='inbut'></div></form></div>");
+	template("<div class='log'>{$lang[8]}</div><div class='mes'><form action='install.php?v=2' method='post'><b>{$lang[9]}</b><br><input type='text' size='20' value='localhost' name='db_server'><br><br><b>{$lang[10]}</b><br><input type='text' size='20' value='' name='db_username'><br><br><b>{$lang[11]}</b><br><input type='password' size='20' value='' name='db_password'><br><br><b>{$lang[12]}</b><br><input type='text' size='20' value='' name='db_name'><br> {$lang[13]}<br><br><b>{$lang[14]}</b><br><input type='text' size='20' value='boblog_' name='db_prefix'><br> {$lang[15]}<br><br><b>{$lang[82]}</b><br>{$linkfrom['scheme']}://<input type='text' size='35' value='{$blogurlpath}' name='blogurlpath'>/index.php<br> {$lang[83]}<br><br>{$overwritesel}<b>{$lang[16]}</b> <a href='javascript:showlayer(\"what1\");'>[{$lang[17]}]</a><br><input type='radio' value='0' name='db_410'>{$lang[18]} <input type='radio' value='1' name='db_410'>{$lang[19]} <div id='what1' style='display: none;'><br>{$lang[20]}</div><div align='center'><br><input type='hidden' name='blogurlpathscheme' value='{$linkfrom['scheme']}'><input type='hidden' name='newinstall' value='{$newinstall}'><input type='submit' value='{$lang[21]}' class='inbut'> <input type='reset' value='{$lang[22]}'  class='inbut'></div></form></div>");
 }
 
 if ($v=='2') {
@@ -71,6 +71,7 @@ if ($v=='2') {
 	if ($newinstall==1) { // not repair
 		$overwritesel="{$lang[26]}<br><input type='text' size='20' value='' name='username'><br><br>{$lang[27]}<br><input type='password' size='20' value='' name='password' id='password'><br><br>{$lang[80]}<br><input type='password' size='20' value='' name='confirmpassword' id='confirmpassword'><br><br>";
 	}
+	$blogurlpath=$blogurlpathscheme.'://'.$blogurlpath;
 	template("<div class='log'>{$lang[25]}</div><div class='mes'><form action='install.php?v=3' method='post' id='frm1'>{$overwritesel} {$lang[28]}<br><input type='text' size='40' name='blogname' value='Bo-Blog'><br><br>{$lang[29]}<br><input type='text' size='40' name='blogdesc' value='Bo-Blog'><input type='hidden' name='db_server' value='{$db_server}'><input type='hidden' name='db_username' value='{$db_username}'><input type='hidden' name='db_password' value='{$db_password}'><input type='hidden' name='db_name' value='{$db_name}'><input type='hidden' value='{$db_410}' name='db_410'><input type='hidden' name='db_prefix' value='{$db_prefix}'><input type='hidden' name='blogurlpath' value='{$blogurlpath}'><input type='hidden' name='db_overwrite' value='{$db_overwrite}'><br><br><div align='center'><input type='hidden' name='newinstall' value='{$newinstall}'><input type='button' id='btn1' value='{$lang[21]}' onclick='checkandsubmit();' class='inbut'> <input type='reset' value='{$lang[22]}'  class='inbut'></div></form></div>");
 }
 
@@ -149,7 +150,7 @@ if ($v=='3') {
 	`cday` INT( 2 ) DEFAULT '1' NOT NULL ,
 	`cid` INT( 8 ) DEFAULT '0' NOT NULL ,
 	`cevent` TEXT NULL
-	) TYPE = MYISAM{$sqlcharset}";
+	) TYPE = MyISAM{$sqlcharset}";
 	$result=db_query($setup_query);
 	if (!$result) template("<div class='log'>{$lang[1]}</div><div class='mes'>{$errmsg}</div>");
 
@@ -413,7 +414,7 @@ if ($v=='3') {
 	`active` INT( 1 ) DEFAULT '1' NOT NULL ,
 	`modorder` INT( 5 ) NOT NULL ,
 	`func` TEXT NULL
-	) TYPE = MYISAM{$sqlcharset}";
+	) TYPE = MyISAM{$sqlcharset}";
 	$result=db_query($setup_query);
 	if (!$result) template("<div class='log'>{$lang[1]}</div><div class='mes'>{$errmsg}</div>");
 	$setup_query="INSERT INTO `{$db_prefix}mods` VALUES ('header', 'index', '{$lang[35]}', '1', '1', 'system'), ('header', 'customrss', '{$lang[36]}', '0', '2', 'system'), ('header', 'login', '{$lang[37]}', '0', '3', 'system'), ('header', 'modpro', '{$lang[38]}', '0', '4', 'system'), ('header', 'alltags', '{$lang[39]}', '1', '5', 'system'), ('header', 'guestbook', '{$lang[40]}', '1', '6', 'system'), ('header', 'togglesidebar', '{$lang[41]}', '1', '7', 'system'), ('header', 'starred', '{$lang[42]}', '1', '20', 'system')";
@@ -435,7 +436,7 @@ if ($v=='3') {
 	`active` TINYINT( 1 ),
 	`pladmin` TINYINT( 1 ),
 	`plregister` TINYTEXT
-	) TYPE = MYISAM{$sqlcharset}";
+	) TYPE = MyISAM{$sqlcharset}";
 	$result=db_query($setup_query);
 	if (!$result) template("<div class='log'>{$lang[1]}</div><div class='mes'>{$errmsg}</div>");
 	$setup_query="INSERT INTO `{$db_prefix}plugins` VALUES (1, 'viewstat', 'Bob', '{$lang[69]}', '1.0', 'http://www.bo-blog.com', '2.0.1', 1, 1, '')"; 
@@ -486,6 +487,8 @@ if ($v=='4') {
 \$config['loginvalidation']='0';
 \$config['registervalidation']='0';
 \$config['applylinkvalidation']='0';
+\$config['closeajax']='0';
+\$config['closeadminajax']='0';
 \$config['noadminsession']='1';
 \$config['gzip']='0';
 \$config['urlrewritemethod']='0';

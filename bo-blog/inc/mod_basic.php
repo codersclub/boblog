@@ -26,7 +26,7 @@ $blogitem['index']+=array('type'=>'link', 'url'=>'index.php', 'text'=>$lnc[88]);
 $blogitem['customrss']+=array('type'=>'link', 'url'=>'feed.php', 'text'=>'RSS', 'target'=>'_blank');
 
 $blogitem['login']+=array('type'=>'link');
-if ($logstat==1) {
+if ($logstat==1 || $openidloginstat==1) {
 	$blogitem['login']['text']=$lnc[78];
 	$blogitem['login']['url']='login.php?job=logout';
 } else {
@@ -38,19 +38,24 @@ $blogitem['modpro']['type']='link';
 if ($logstat==1) {
 	$blogitem['modpro']['text']=$lnc[90];
 	$blogitem['modpro']['url']='login.php?job=modpro';
-} else {
+} 
+elseif ($openidloginstat==1) {
+	$blogitem['modpro']['text']=$lnc[318];
+	$blogitem['modpro']['url']='http://'.$_COOKIE['openid_url_id'];
+}
+else {
 	$blogitem['modpro']['text']=$lnc[79];
 	$blogitem['modpro']['url']='login.php?job=register';
 }
 
 
-$blogitem['alltags']+=array('type'=>'link', 'url'=>'tag.php', 'text'=>$lnc[288]);
+if ($flset['tags']!=1) $blogitem['alltags']+=array('type'=>'link', 'url'=>'tag.php', 'text'=>$lnc[288]);
 
-$blogitem['guestbook']+=array('type'=>'link', 'url'=>'guestbook.php', 'text'=>$lnc[91]);
+if ($flset['guestbook']!=1) $blogitem['guestbook']+=array('type'=>'link', 'url'=>'guestbook.php', 'text'=>$lnc[91]);
 
 if ($plugin_closesidebar!=1) $blogitem['togglesidebar']+=array('type'=>'link', 'url'=>'javascript:showHideSidebar();', 'text'=>$lnc[92]);
 
-$blogitem['starred']+=array('type'=>'link', 'url'=>'star.php', 'text'=>$lnc[93]);
+if ($flset['star']!=1) $blogitem['starred']+=array('type'=>'link', 'url'=>'star.php', 'text'=>$lnc[93]);
 
 $blogitem['viewlinks']+=array('type'=>'link', 'url'=>'links.php', 'text'=>$lnc[94]);
 
@@ -125,7 +130,7 @@ if (in_array('statistics', $allopenmods)) {
 	if ($mbcon['statentries']=='1') $statshow.="{$lnc[99]} {$statistics['entries']}<br/>";
 	if ($mbcon['statreplies']=='1') $statshow.="<a href=\"view.php?go=comment\">{$lnc[100]} {$statistics['replies']}</a><br/>";
 	if ($mbcon['stattb']=='1') $statshow.="<a href=\"view.php?go=tb\">{$lnc[101]} {$statistics['tb']}</a><br/>";
-	if ($mbcon['statmessages']=='1') $statshow.="<a href=\"guestbook.php\">{$lnc[102]} {$statistics['messages']}</a><br/>";
+	if ($flset['guestbook']!=1 && $mbcon['statmessages']=='1') $statshow.="<a href=\"guestbook.php\">{$lnc[102]} {$statistics['messages']}</a><br/>";
 	if ($mbcon['statusers']=='1') $statshow.="<a href=\"view.php?go=userlist\">{$lnc[103]} {$statistics['users']}</a><br/>";
 	if ($mbcon['statonline']=='1' && !defined('noCounter')) $statshow.="{$lnc[104]} {$statistics['nowusers']}<br/>";
 	plugin_runphp('sidebarstatistics');
@@ -173,7 +178,11 @@ if (in_array('misc', $allopenmods)) {
 	if ($logstat==1) {
 		$misccontent="<a href='login.php?job=logout'>{$lnc[78]}</a><br/>";
 		$misccontent.="<a href='login.php?job=modpro'>{$lnc[90]}</a><br/>";
-	} else {
+	}
+	elseif ($openidloginstat==1) {
+		$misccontent="<a href='login.php?job=logout'>{$lnc[78]}</a><br/>";
+	}
+	else {
 		$misccontent="<a href='login.php'>{$lnc[89]}</a><br/>";
 		$misccontent.="<a href='login.php?job=register'>{$lnc[79]}</a><br/>";
 	}
@@ -333,11 +342,12 @@ eot;
 
 //[Start]Search
 if ($mbcon['searchon']==1) {
+	$addtagsearch=($flset['tags']==0) ? '' : "<option value=\"5\">{$lnc[127]}</option>";
 	$searchbox=<<<eot
 	<form method="post" action="visit.php">
 	<input name="job" type="hidden" value="search"/>
 	<input name="keyword" class="search-field" type="text"/>
-	<select name="searchmethod"><option value="1">{$lnc[123]}</option><option value="2">{$lnc[124]}</option><option value="3">{$lnc[125]}</option><option value="4">{$lnc[126]}</option><option value="5">{$lnc[127]}</option></select>
+	<select name="searchmethod"><option value="1">{$lnc[123]}</option><option value="2">{$lnc[124]}</option><option value="3">{$lnc[125]}</option><option value="4">{$lnc[126]}</option>{$$addtagsearch}</select>
 	<input value="{$lnc[128]}" class="button" type="submit"/>
 	</form>
 eot;

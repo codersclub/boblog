@@ -22,11 +22,15 @@ if (!$job) $job='add';
 $id=$itemid;
 
 include_once ("data/cache_emot.php");
-include_once ("data/weather.php");
+if ($flset['weather']!=1) {
+	include_once ("data/weather.php");
+}
 
 //All Tags
-$existtagall=trim(readfromfile("data/cache_tags.php"));
-$exist_tags_all=@explode(' ',$existtagall);
+if ($flset['tags']!=1) {
+	$existtagall=trim(readfromfile("data/cache_tags.php"));
+	$exist_tags_all=@explode(' ',$existtagall);
+}
 
 if ($job=='add' || $job=='store') { //Permission check
 	checkpermission('AddEntry');
@@ -74,7 +78,7 @@ if ($job=='add' || $job=='edit') { //Initialize public items
 	$currentjob=basename($_SERVER['QUERY_STRING']);
 	@list($currentjob, $unuse)=@explode('&useeditor=', $currentjob);
 
-	if(is_array($weather)) { //Get Weather List
+	if($flset['weather']!=1 && is_array($weather)) { //Get Weather List
 		while (@list($wkey, $wvalue)=@each($weather)) {
 			$arrayoption_weather[]=$wvalue['text'];
 			$arrayvalue_weather[]=$wkey;
@@ -90,18 +94,14 @@ if ($job=='add' || $job=='edit') { //Initialize public items
 	$arrayvalue_editors=array('quicktags', 'ubb', 'fckeditor', 'tinymce', 'custom');
 
 	$ismoreon='none';
-	if ($permission['AddTag']==1) {
-		$taglist="<b>{$lna[276]}</b>: &nbsp; ";
-		$taglist_all="<b>{$lna[1066]}</b>: &nbsp; ";
-		$exist_tags_tmp=$blog->getarraybyquery("SELECT * FROM `{$db_prefix}tags` ORDER BY `tagcounter` DESC LIMIT 20");
+	if ($flset['tags']!=1 && $permission['AddTag']==1) {
+		$exist_tags_tmp=$blog->getarraybyquery("SELECT * FROM `{$db_prefix}tags` ORDER BY `tagcounter` DESC LIMIT 50");
 		$exist_tags=$exist_tags_tmp['tagname'];
 		for ($i=0; $i<count($exist_tags); $i++) {
-			$taglist.="<a href=\"javascript: inserttag('{$exist_tags[$i]}', 'tags');\">{$exist_tags[$i]}</a> &nbsp; ";
+			$exist_tags[$i]="'".str_replace("'", '&#39;', $exist_tags[$i])."'";
 		}
-		for ($i=0; $i<count($exist_tags_all); $i++) {
-			$taglist_all.="<a href=\"javascript: inserttag('{$exist_tags_all[$i]}', 'tags');\">{$exist_tags_all[$i]}</a> &nbsp; ";
-		}
-		$tagdisable='';
+		$tag_js="<script type='text/javascript'>\nvar custom_array = new Array();\ncustom_array=[".@implode(',', $exist_tags)."];\n</script>\n<script type='text/javascript' src='images/js/autosuggestion.js'></script>";
+		$taglist='';
 	} else {
 		$taglist=$lna[277];
 		$tagdisable='disabled';
@@ -112,7 +112,7 @@ if ($job=='add' || $job=='edit') { //Initialize public items
 }
 
 if ($job=='edit') { //Initialize Edit only items
-	$selectedid_weather=array_search($records['weather'], $arrayvalue_weather); //selected weather
+	if ($flset['weather']!=1) $selectedid_weather=array_search($records['weather'], $arrayvalue_weather); //selected weather
 	$selectedid_category=array_search($records['category'], $arrayvalue_categories); //selected category
 	$selectedid_sticky=array_search($records['sticky'], $arrayvalue_sticky); //if pinned
 	$records['tags']=str_replace('>', ' ', trim($records['tags'],'>'));
@@ -176,13 +176,17 @@ if ($job=='add' || $job=='edit') { //Initialize public items
 		$puttingcates_after.="<option value='{$arrayvalue_categories[$i]}'>{$lna[1025]} {$arrayoption_categories[$i]}</option>";
 	}
 
-	$puttingweather=autoselect('sweather', $arrayoption_weather, $arrayvalue_weather, $selectedid_weather);
+	if ($flset['weather']!=1) $puttingweather=autoselect('sweather', $arrayoption_weather, $arrayvalue_weather, $selectedid_weather);
+	else {
+		$lna[301]=$puttingweather='';
+	}
 	$puttingsticky=autoselect('sticky', $arrayoption_sticky, $arrayvalue_sticky, $selectedid_sticky);
 	$puttinghtml=autoradio('checkbox', 'html', array($lna[280]), array(1), array($records['htmlstat']), array($disablehtmlstatus));
 	$puttingubb=autoradio('checkbox', 'ubb', array($lna[281]), array(1), array($records['ubbstat']), array($disableubbstatus));
 	$puttingemot=autoradio('checkbox', 'emot', array($lna[282]), array(1), array($records['emotstat']), array($disableemotstatus));
 	$puttingpermitgp=autoradio ('checkbox', 'permitgp[]', $usergp_1, $usergp_2, $arraychecked_permitgp);
-	$puttingstarred=autoradio ('checkbox', 'starred', array($lna[1020]), array(1), array($records['starred']%2));
+	if ($flset['star']!=1) $puttingstarred=autoradio ('checkbox', 'starred', array($lna[1020]), array(1), array($records['starred']%2));
+	else $puttingstarred='';
 
 	$hiddenareas.="<input type='hidden' name='forcedraft' id='forcedraft' value='0'/>";
 	if ($disableinvert!=1) $records['content']=safe_invert($records['content'], $records['htmlstat']);
@@ -213,12 +217,24 @@ function publishdraftnow() {
 	chktitle();
 }
 
+function previewcontent() {
+	var govaluetmp=document.getElementById('go').value;
+	document.getElementById('go').value='';
+	document.getElementById('editentry').target='_blank';
+	document.getElementById('editentry').action='read.php?preview_';
+	document.getElementById('editentry').submit();
+	document.getElementById('editentry').target='_self';
+	document.getElementById('editentry').action='admin.php';
+	document.getElementById('go').value=govaluetmp;
+}
+
 </script>
+$tag_js
 <form name='editentry' id='editentry' action='admin.php' method='post' enctype='multipart/form-data' 	{$submitjs}>{$hiddenareas}
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
 <td width=160 class="sectstart">
-{$lna[22]}
+{$lna[22]} <a href="#" onclick="dohs()"><img align="absmiddle" src="admin/theme/{$themename}/more.gif" alt="More" border="0"/></a>
 </td>
 <td class="sectend">{$lna[283]}</td>
 </tr>
@@ -226,11 +242,12 @@ function publishdraftnow() {
 <td colspan=2  class="sect">
 
 <table width=100% cellpadding=4 cellspacing=1 align=center>
-<tr bgcolor="#ffffff" align=left class="hiddenitem">
+<tr bgcolor="#ffffff" align=left class="hiddenitem" id="extraoption1">
 <td width=100 align=center>{$lna[567]}</td><td>{$puttingeditors} <input type=button value="{$lna[64]}" onclick="changeeditor();"></td>
 </tr>
 <tr bgcolor="#ffffff" align=left class="visibleitem">
-<td width=100 align=center>{$lna[284]}</td><td><input type='text' name='title' id='title' value="{$records['title']}" size='50'  class='formtext'></td></tr>
+<td width=100 align=center>{$lna[284]}</td><td><input type='text' name='title' id='title' value="{$records['title']}" size='50'  class='formtext'></td>
+</tr>
 <tr bgcolor="#ffffff" align=left class="hiddenitem">
 <td width=100 align=center valign=top>{$lna[285]}</td><td>
 <div id='cateselarea'>{$puttingcates} {$lna[286]}
@@ -270,7 +287,7 @@ $display_overall.= <<<eot
 </td>
 </tr>
 
-<tr bgcolor="#ffffff" align=left class="hiddenitem">
+<tr bgcolor="#ffffff" align=left class="hiddenitem" id="extraoption2">
 <td width=100 valign=top align=center>{$lna[1112]}</td>
 <td><select name='summaryway' id='summaryway' onchange="if (this.options[this.selectedIndex].value=='1') {document.getElementById('entrysummary').style.display='block';} else {document.getElementById('entrysummary').style.display='none';}"><option value="0"{$entrysummaryplus0}>{$lna[1113]}</option><option value="2"{$entrysummaryplus2}>{$lna[1114]}</option><option value="1"{$entrysummaryplus1}>{$lna[1115]}</option></select>
 <div id='entrysummary' style='display: {$displaysummary};'>
@@ -287,18 +304,19 @@ $display_overall.= <<<eot
 </tr>
 
 
-<tr bgcolor="#ffffff" align=left valign=top class="hiddenitem">
+<tr bgcolor="#ffffff" align=left valign=top class="hiddenitem" id="extraoption3">
 <td width=100 align=center>{$lna[1119]}</td><td>{$lna[1120]}: <input type=text name='originsrc' id='originsrc' value="{$records['originsrc']}" size="50">{$lna[1121]} &nbsp;&nbsp; {$lna[1122]}: <input name='comefrom' id='comefrom' type=text value="{$records['comefrom']}" size="20"></td>
 </tr>
 
-<tr bgcolor="#ffffff" align=left class="visibleitem">
+<tr bgcolor="#ffffff" align=left class="visibleitem" id="extraoption4">
 <td width=100 valign=top align=center>{$lna[288]}</td>
 <td><input type=checkbox id='changemytime' name='changemytime' value=1 onclick="timechanger();">{$lna[289]} $editwarntime
-<div style="clear:both; display: none;" id="changetime">{$lna[290]} <input type='text' name='newyear' size='4' value="{$records['pub_year']}" maxlength='4'>{$lna[291]} - <input type='text' name='newmonth' size='2' value="{$records['pub_month']}" maxlength='2'>{$lna[292]} - <input type='text' name='newday' size='2' value="{$records['pub_day']}" maxlength='2'>{$lna[293]} -  <input type='text' name='newhour' size='2' value="{$records['pub_hour']}" maxlength='2'>{$lna[294]} -  <input type='text' name='newmin' size='2' value="{$records['pub_min']}" maxlength='2'>{$lna[295]}  -  <input type='text' name='newsec' size='2' value="{$records['pub_sec']}" maxlength='2'>{$lna[296]}</div>
+<div style="clear:both; display: none;" id="changetime">{$lna[290]} <input type='text' name='newyear' size='4' value="{$records['pub_year']}" maxlength='4'>{$lna[291]} - <input type='text' name='newmonth' size='2' value="{$records['pub_month']}" maxlength='2'>{$lna[292]} - <input type='text' name='newday' size='2' value="{$records['pub_day']}" maxlength='2'>{$lna[293]} -  <input type='text' name='newhour' size='2' value="{$records['pub_hour']}" maxlength='2'>{$lna[294]} -  <input type='text' name='newmin' size='2' value="{$records['pub_min']}" maxlength='2'>{$lna[295]}  -  <input type='text' name='newsec' size='2' value="{$records['pub_sec']}" maxlength='2'>{$lna[296]}
+</div>
 </td>
 </tr>
 
-<tr bgcolor="#ffffff" align=left class="hiddenitem">
+<tr bgcolor="#ffffff" align=left class="hiddenitem" id="extraoption5">
 <td width=100 valign=top align=center>{$lna[297]}</td>
 <td>
 {$lna[298]} {$puttingproperty} ({$lna[299]})<br>
@@ -306,25 +324,33 @@ $display_overall.= <<<eot
 {$lna[301]} {$puttingweather}
 </td>
 </tr>
-<tr bgcolor="#ffffff" align=left class="visibleitem">
+<tr bgcolor="#ffffff" align=left class="visibleitem" id="extraoption6">
 <td width=100 valign=top align=center>{$lna[302]}</td>
 <td>{$lna[303]}<br>
 {$puttingpermitgp}
 </td>
 </tr>
+eot;
+
+if ($flset['tags']!=1) {
+	$display_overall.= <<<eot
 <tr bgcolor="#ffffff" align=left class="hiddenitem">
 <td width=100 valign=top align=center>Tags</td>
-<td><textarea name='tags' id='tags' rows='2' cols='100' class='formtextarea' {$tagdisable}>{$records['tags']}</textarea>
-<div id="tag_few">{$taglist} [<a href="javascript: showhidediv('tag_all');showhidediv('tag_few');">{$lna[1064]}</a>]</div><div id="tag_all" style='display:none;'>{$taglist_all} [<a href="javascript: showhidediv('tag_few');showhidediv('tag_all');">{$lna[1065]}</a>]</div>{$lna[304]} 
+<td>{$lna[304]}<br><input name='tags' autocomplete="off" id='tags' size='100' class='formtextarea'  value="{$records['tags']}" onfocus="simple_ac_init('tags', 'taghint')" {$tagdisable} />
+<div id="taghint" style="">{$taglist}</div>
 </td>
 </tr>
-<tr bgcolor="#ffffff" align=left class="visibleitem">
+eot;
+}
+
+$display_overall.= <<<eot
+<tr bgcolor="#ffffff" align=left class="visibleitem" id="extraoption7">
 <td width=100 valign=top align=center>{$lna[305]}</td>
 <td>{$resendping}<textarea name='pinged' id='pinged' rows='2' cols='100' class='formtextarea'>{$records['pinged']}</textarea><br>
 {$lna[306]}
 </td>
 </tr>
-<tr bgcolor="#ffffff" align=left class="hiddenitem">
+<tr bgcolor="#ffffff" align=left class="hiddenitem" id="extraoption8">
 <td width=100 align=center valign=top>{$lna[1080]}</td><td><input type='text' name='blogpsw' id='blogpsw' value="{$records['blogpsw']}" size='15' maxlength='18' class='formtext'> {$lna[1081]}</td></tr>
 
 </table>
@@ -335,10 +361,32 @@ $display_overall.= <<<eot
 <td colspan=4 align=center class="sectbar">
 <input type=button value="{$lna[64]}" onclick="chktitle();" class="formbutton"> <input type=reset value="{$lna[65]}" class="formbutton"> 
 $quickbutton_bottom
+<input type=button value="{$lna[1197]}" onclick="previewcontent();" class="formbutton">
 </td></tr>
 </table>
 <div style='visibility: hidden'><input type=submit value="{$lna[64]}" id='realsubmit' class='formbutton'></div>
 </form>
+
+<script type="text/javascript">
+var totalextras=8;
+var extrasdisplay=0;
+function hs_extras(status) {
+	var cihs='extraoption';
+	for (var ihs=1; ihs<totalextras+1; ihs++) {
+		document.getElementById(cihs+ihs).style.display=status;
+	}
+}
+function dohs() {
+	if (extrasdisplay==1) {
+		hs_extras('none');
+		extrasdisplay=0;
+	} else {
+		hs_extras('');
+		extrasdisplay=1;
+	}
+}
+hs_extras('none');
+</script>
 eot;
 }
 
@@ -480,7 +528,7 @@ if ($job=='store' || $job=='restore') {
 		$query="INSERT INTO `{$db_prefix}blogs` VALUES ('{$currentid}', '{$title}','{$finaltime}','{$currentuserid}', 0, 0, 0, '{$property}','{$category}','{$tags}','{$sticky}','{$htmlstat}', '{$ubbstat}', '{$emotstat}', '{$content}', '0', '0', '{$sweather}', '0', '{$pinged}', '{$permitgp}', '{$starred}', '{$blogpsw}', '{$frontpage}', '{$entrysummary}', '{$comefrom}', '{$originsrc}', '{$blogalias}')";
 	} else {
 		$currentid=$itemid;
-		if ($tags || $records['tags']!='') {
+		if ($tags || $records['tags']!='' && $ajax!='on') {
 			$oldtags=@explode('>', trim($records['tags'],'>'));
 			$oldtags_query="'".@implode("', '", $oldtags)."'";
 			if ($oldtags_query!="''") $blog->query("UPDATE `{$db_prefix}tags` SET tagentry=replace(tagentry, ',{$currentid},', ','), tagcounter=tagcounter-1 WHERE tagname in({$oldtags_query})"); //Remove all records containing this entry
@@ -572,6 +620,7 @@ if ($job=='sendtb') {
 	checkpermission('EditEntry');
 	acceptrequest('title,excerpt,url,blog_name,pingurl');
 	if (!is_array($pingurl)) catcherror($lna[315]);
+	plugin_runphp('trackbacksending');
 	@header("Content-Type: text/html; charset=utf-8");
 	$url=str_replace('{host}', $_SERVER['HTTP_HOST'], $url);
 	foreach ($pingurl as $durl) {
@@ -581,6 +630,7 @@ if ($job=='sendtb') {
 		elseif ($result=='unknown')  $showp.="<b>{$lna[316]}</b>{$durl} ; <b>{$lna[317]}</b>{$lna[949]}<br>";
 		else  $showp.="<b>{$lna[316]}</b>{$durl} ; <br><b>{$lna[317]}</b>{$lna[950]}{$result}<br>";
 	}
+	plugin_runphp('trackbacksent');
 	$t=new template;
 	$t->showtips("{$lna[320]}","{$lna[321]}<br><br>".$showp."<br><br>{$lna[322]}","{$partbacktoart}|{$url}");
 }
