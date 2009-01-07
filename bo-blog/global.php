@@ -1035,3 +1035,25 @@ function completeOpenID () {
 		catcherror($lnc[315].'OpenID Unknown Error.', false);
 	}
 }
+
+/**
+ * Show debug info
+ * @param $data
+ * @param string $name
+ */
+function dump($data, $name = '')
+{
+    $buf = var_export($data, true);
+
+    $buf = str_replace('\\r', '', $buf);
+    $buf = preg_replace('/\=\>\s*\n\s*array/s', '=> array', $buf);
+
+    echo '<pre>';
+
+    if ($name) {
+        echo $name, '=';
+    }
+
+    echo $buf;
+    echo "</pre>\n";
+}
