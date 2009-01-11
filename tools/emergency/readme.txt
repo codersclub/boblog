@@ -1,4 +1,5 @@
-emergency紧急恢复程序
+emergency - emergency recovery procedure
 
-可用于重置密码等，应急使用，较危险，没事勿解压上传。
-使用时请上传emergency.php到安装目录下并通过浏览器访问这个文件，使用完毕立即删除！
+It can be used to reset passwords, etc., for emergency use, which is more dangerous. Don't unzip and upload if you have nothing to do.
+
+Please upload emergency.php to the installation directory when using it and access this file through the browser. Delete it immediately after using it!
