@@ -1,9 +1,9 @@
 <?PHP
-error_reporting(E_ERROR | E_WARNING | E_PARSE);
+error_reporting(E_ALL);
 $v=$_REQUEST['v'];
 
 if (!$v) {
-	template("<div class='log'>升级确认 | 升級確認</div><form action='updateto210.php?v=1' method='post'><div class='mes'><div>本程序可将 2.0.3 sp1 / 2.1.0 alpha版本的数据格式升级到 2.1.0 beta/正式版的最新数据格式。 建议您在升级前备份您的数据。这步操作是不可逆的！<br/><br/>如果当前您的blog正处于关闭状态，请将其打开后继续。<br/><hr/><br/>本程式可將 2.0.3 sp1 / 2.1.0 alpha版本的資料格式升級到 2.1.0 beta/正式版的最新資料格式。 建議您在升級前備份您的資料。這步操作是不可逆的！<br/><br/>如果當前您的blog正處於關閉狀態，請將其開啟後繼續。</div><br/><div align='center'><input type='submit' value='现在升级 | 現在升級' class='inbut'></div></form></div>");
+	template("<div class='log'>Upgrade confirmation</div><form action='updateto210.php?v=1' method='post'><div class='mes'><div>This program can upgrade the data format of version 2.0.3 sp1 / 2.1.0 alpha to the latest data format of 2.1.0 beta/official version. It is recommended that you back up your data before upgrading. This operation is irreversible!<br/><br/>If your blog is currently closed, please open it and continue.</div><br/><div align='center'><input type='submit' value='Upgrade now' class='inbut'></div></form></div>");
 }
 
 if ($v=='1') {
@@ -20,7 +20,7 @@ if ($v=='1') {
 
 	$try=$blog->getbyquery("SELECT * FROM `{$db_prefix}mods` WHERE `name`='columnbreak' LIMIT 1");
 	if ($try['name']!='columnbreak') {
-		$queries[]="INSERT INTO `{$db_prefix}mods` VALUES ('sidebar', 'columnbreak', '侧边栏一与侧边栏二的分割线', '1', '1', 'system')";
+		$queries[]="INSERT INTO `{$db_prefix}mods` VALUES ('sidebar', 'columnbreak', 'The dividing line between sidebar 1 and sidebar 2', '1', '1', 'system')";
 	}
 
 	$try=$blog->getbyquery("SELECT * FROM `{$db_prefix}user` LIMIT 1");
@@ -73,7 +73,7 @@ INDEX ( `pageauthor` )
 
 	writetofile("data/cache_adminskinlist.php", "<?PHP\n\$adminskin[]='default';\n\$currentadminskin='default';");
 
-	template("<div class='log'>升级完成 | 升級完成</div><div class='mes'>已将 2.0.3 sp1 / 2.1.0 alpha 版本的数据格式升级到 2.1.0 beta/正式版的数据格式。<br/><br/>请到后台的“参数设置”中，设置tag分页数、每页表情数、防盗链等新选项，到“用户组权限”设置处赋予管理员创建自定义页面的权限，同时刷新所有缓存，否则blog显示可能不正常。<br/><br/>请立即从服务器上删除这个文件。<br/><hr/><br/>已將 2.0.3 sp1 / 2.1.0 alpha 版本的資料格式升級到 2.1.0 beta/正式版的資料格式。<br/><br/>請到後台的“參數設定”中，設定tag分頁數、每頁表情數、防盜鏈等新選項，到“使用者組權限”設定處賦予管理員創建自訂頁面的權限，同時重新整理所有快取，否則blog顯示可能不正常。<br/><br/>請立即從伺服器上刪除這個檔案。</div><br/></div>");
+	template("<div class='log'>Upgrade completed</div><div class='mes'>The data format of 2.0.3 sp1 / 2.1.0 alpha version has been upgraded to the data format of 2.1.0 beta/official version. <br/><br/>Please go to the "Parameter settings" in the background to set new options such as the number of tag pages, the number of emoticons per page, anti-theft link, etc., and give the administrator to create a custom page in the "User Group Authority" setting And refresh all caches at the same time, otherwise the blog display may be abnormal.<br/><br/>Please delete this file from the server immediately.</div><br/></div>");
 }
 
 

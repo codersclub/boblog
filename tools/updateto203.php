@@ -1,9 +1,9 @@
 <?PHP
-error_reporting(E_ERROR | E_WARNING | E_PARSE);
+error_reporting(E_ALL);
 $v=$_REQUEST['v'];
 
 if (!$v) {
-	template("<div class='log'>升级确认</div><form action='updateto203.php?v=1' method='post'><div class='mes'><div>本程序可将 2.0.2 sp2 / 2.0.3 alpha版本的数据格式升级到 2.0.3 beta/正式版的数据格式。 建议您在升级前备份您的数据。这步操作是不可逆的！<br/><br/>如果当前您的blog正处于关闭状态，请将其打开后继续。</div><br/><div align='center'><input type='submit' value='现在升级' class='inbut'></div></form></div>");
+	template("<div class='log'>Upgrade confirmation</div><form action='updateto203.php?v=1' method='post'><div class='mes'><div>This program can upgrade the data format of the 2.0.2 sp2 / 2.0.3 alpha version to the 2.0.3 beta/official version data format. It is recommended that you back up your data before upgrading. This operation is irreversible! <br/><br/>If your blog is currently closed, please open it and continue.</div><br/><div align='center'><input type='submit' value='Upgrade now' class='inbut'></div></form></div>");
 }
 
 if ($v=='1') {
@@ -18,12 +18,12 @@ if ($v=='1') {
 		$queries[]="ALTER TABLE `{$db_prefix}messages` CHANGE `empty1` `reppsw` TINYTEXT";
 	}
 	if ($codeversion>='2.0.3.1209.0') {
-		template("<div class='log'>升级终止</div><div class='mes'>程序检测到您的服务器上的文件已经升级到了 2.0.3。<br><br>您是否在未执行本更新程序的情况下先上传了主程序文件，替换、覆盖了原先旧版的程序文件？<br><br>如果是这样，请换回旧版的 global.php 文件，然后重新执行升级程序。<br><br>如果不是，则您已经是2.0.3的数据格式了，无需升级，请退出。<br/><br/>请立即从服务器上删除这个文件。</div><br/></div>");
+		template("<div class='log'>Upgrade terminated</div><div class='mes'>The program detects that the files on your server have been upgraded to 2.0.3. <br><br>Have you uploaded the main program file first without executing this update program, replacing or overwriting the original program file of the old version? <br><br>If this is the case, please change back to the old version of the global.php file and re-execute the upgrade procedure. <br><br>If not, you are already in the 2.0.3 data format, no need to upgrade, please exit. <br/><br/>Please delete this file from the server immediately.</div><br/></div>");
 	}
 	for ($i=0; $i<count($queries); $i++) {
 		$blog->query($queries[$i]);
 	}
-	template("<div class='log'>升级完成</div><div class='mes'>已将 2.0.2 sp2 / 2.0.3 alpha版本的数据格式升级到 2.0.3 beta/正式版的数据格式。<br/><br/>请到后台参数设置中，设置自定义日期格式等选项，否则blog显示可能不正常。<br/><br/>请立即从服务器上删除这个文件。</div><br/></div>");
+	template("<div class='log'>Upgrade completed</div><div class='mes'>The data format of 2.0.2 sp2 / 2.0.3 alpha version has been upgraded to the data format of 2.0.3 beta/official version. <br/><br/>Please go to the background parameter settings to set options such as custom date format, otherwise the blog display may not be normal. <br/><br/>Please delete this file from the server immediately.</div><br/></div>");
 }
 
 
