@@ -1,6 +1,6 @@
 <?PHP
 error_reporting(E_ALL);
-$v=$_REQUEST['v'];
+$v=@$_REQUEST['v'];
 
 if (!$v) {
 	template("<div class='log'>Upgrade confirmation</div><form action='updateto210.php?v=1' method='post'><div class='mes'><div>This program can upgrade the data format of version 2.0.3 sp1 / 2.1.0 alpha to the latest data format of 2.1.0 beta/official version. It is recommended that you back up your data before upgrading. This operation is irreversible!<br/><br/>If your blog is currently closed, please open it and continue.</div><br/><div align='center'><input type='submit' value='Upgrade now' class='inbut'></div></form></div>");
@@ -73,7 +73,7 @@ INDEX ( `pageauthor` )
 
 	writetofile("data/cache_adminskinlist.php", "<?PHP\n\$adminskin[]='default';\n\$currentadminskin='default';");
 
-	template("<div class='log'>Upgrade completed</div><div class='mes'>The data format of 2.0.3 sp1 / 2.1.0 alpha version has been upgraded to the data format of 2.1.0 beta/official version. <br/><br/>Please go to the "Parameter settings" in the background to set new options such as the number of tag pages, the number of emoticons per page, anti-theft link, etc., and give the administrator to create a custom page in the "User Group Authority" setting And refresh all caches at the same time, otherwise the blog display may be abnormal.<br/><br/>Please delete this file from the server immediately.</div><br/></div>");
+	template("<div class='log'>Upgrade completed</div><div class='mes'>The data format of 2.0.3 sp1 / 2.1.0 alpha version has been upgraded to the data format of 2.1.0 beta/official version.<br/><br/>Please go to the &laquo;Parameter settings&raquo; in the background to set new options such as the number of tag pages, the number of emoticons per page, anti-theft link, etc., and give the administrator to create a custom page in the &laquo;User Group Authority&raquo; setting And refresh all caches at the same time, otherwise the blog display may be abnormal.<br/><br/>Please delete this file from the server immediately.</div><br/></div>");
 }
 
 

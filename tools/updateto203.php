@@ -1,6 +1,6 @@
 <?PHP
 error_reporting(E_ALL);
-$v=$_REQUEST['v'];
+$v=@$_REQUEST['v'];
 
 if (!$v) {
 	template("<div class='log'>Upgrade confirmation</div><form action='updateto203.php?v=1' method='post'><div class='mes'><div>This program can upgrade the data format of the 2.0.2 sp2 / 2.0.3 alpha version to the 2.0.3 beta/official version data format. It is recommended that you back up your data before upgrading. This operation is irreversible! <br/><br/>If your blog is currently closed, please open it and continue.</div><br/><div align='center'><input type='submit' value='Upgrade now' class='inbut'></div></form></div>");
@@ -18,7 +18,7 @@ if ($v=='1') {
 		$queries[]="ALTER TABLE `{$db_prefix}messages` CHANGE `empty1` `reppsw` TINYTEXT";
 	}
 	if ($codeversion>='2.0.3.1209.0') {
-		template("<div class='log'>Upgrade terminated</div><div class='mes'>The program detects that the files on your server have been upgraded to 2.0.3. <br><br>Have you uploaded the main program file first without executing this update program, replacing or overwriting the original program file of the old version? <br><br>If this is the case, please change back to the old version of the global.php file and re-execute the upgrade procedure. <br><br>If not, you are already in the 2.0.3 data format, no need to upgrade, please exit. <br/><br/>Please delete this file from the server immediately.</div><br/></div>");
+		template("<div class='log'>Upgrade terminated</div><div class='mes'>The program detects that the files on your server have been upgraded already to 2.0.3. <br><br>Have you uploaded the main program file first without executing this update program, replacing or overwriting the original program file of the old version? <br><br>If this is the case, please change back to the old version of the global.php file and re-execute the upgrade procedure. <br><br>If not, you are already in the 2.0.3 data format, no need to upgrade, please exit. <br/><br/>Please delete this file from the server immediately.</div><br/></div>");
 	}
 	for ($i=0; $i<count($queries); $i++) {
 		$blog->query($queries[$i]);

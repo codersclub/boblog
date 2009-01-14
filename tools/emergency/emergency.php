@@ -9,9 +9,9 @@ if ($v!=2 && $v!=3) {
 	print<<<eot
 
 Bo-Blog 2.0.1 Emergency recovery procedure<br>
-<B><font color='red'>Warning: This procedure is very dangerous to only upload in the use of a state of emergency, immediately after use to remove!</font></B><br>
+<B><font color='red'>Warning: This program is quite dangerous, please upload and use it only in an emergency state, and delete it immediately after use!</font></B><br>
 <br><br><form action='emergency.php' method='post'><input type='hidden' value='3' name='v'>
-<b>User Group: reset the administrator group and the group of tourists all the permissions to default</b><br>
+<b>User Group: reset all the permissions of Administrator and Guest group to default</b><br>
 <input type='submit' value='Start'>
 </form>
 <hr>
@@ -19,7 +19,7 @@ Bo-Blog 2.0.1 Emergency recovery procedure<br>
 <b>General: Please tick and fill in the necessary options before the operation that needs to be performed</b><br>
 <input type='checkbox' name='act[]' value='psw'> Restore for admin: <input type='text' name='oldadmin'> Password: <input type='text' name='newpsw'><br>
 <input type='checkbox' name='act[]' value='nologinval'> Require verification code when canceling login<br>
-<input type='checkbox' name='act[]' value='changeuser'> Reset the identity of the following users as administrator usernames: <input type='text' name='newadmin'> Correct capitalization<br>
+<input type='checkbox' name='act[]' value='changeuser'> Reset the identity of the following user as an administrator, username: <input type='text' name='newadmin'> Use correct capitalization!<br>
 <input type='checkbox' name='act[]' value='open'> Restore the blog status to open<br>
 <input type='submit' value='OK'>
 </form>
