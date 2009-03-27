@@ -182,38 +182,18 @@ input, textarea, select {
 	color: #003366;
 	font-weight: bold;
 	padding-left: 15px;
-	height: 30px;
+	height: 20px;
 	border-left: 1px solid #6A9DC8;
 	border-bottom: 1px solid #6A9DC8;
 }
-*+html .sectstart{
-	height: 20px;
-}
-* html .sectstart{
-	height: 20px;
-}
-body:nth-of-type(1) .sectstart{ /*For Chrome*/
-	height: 20px;
-}
 .sectend {
+	height: 20px;
 	background: url('bg_lead.png') repeat-x;
 	color: #003366;
 	text-align: right;
 	padding-right: 10px;
 	border-right: 1px solid #6A9DC8;
 	border-bottom: 1px solid #6A9DC8;
-}
-.sectend { /*For Firefox*/
-	height: 30px;
-}
-*+html .sectend {  /*For IE7*/
-	height: 20px;
-}
-* html .sectend { /*For IE6*/
-	height: 20px;
-}
-body:nth-of-type(1) .sectend{ /*For Chrome*/
-	height: 20px;
 }
 .sect {
 	background-color: #FFF;
