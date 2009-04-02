@@ -65,7 +65,7 @@ function highlightadminitems ($itemhighlight, $itemsrow) {
 	$str="<script type=\"text/javascript\">
 	function adminitemhover(hovername, obj) {
 		if (document.getElementById('dropmenudiv') && document.getElementById('hoveritem_'+hovername)) document.getElementById('dropmenudiv').innerHTML=document.getElementById('hoveritem_'+hovername).innerHTML;
-		if (is_ie || is_ie4) document.getElementById('dropmenudiv').innerHTML+=\"<iframe src='javascript:false' style='position:absolute; visibility:inherit;   top:0px; left:0px; width:128px; height:200px; z-index:-1; filter=progid:DXImageTransform.Microsoft.Alpha(style=0,opacity=0);'></iframe>\";
+		if ((is_ie || is_ie4) && !is_ie8) document.getElementById('dropmenudiv').innerHTML+=\"<iframe src='javascript:false' style='position:absolute; visibility:inherit;   top:0px; left:0px; width:128px; height:200px; z-index:-1; filter=progid:DXImageTransform.Microsoft.Alpha(style=0,opacity=0);'></iframe>\";
 		dropdownmenu(obj);
 	}
 	</script>";
