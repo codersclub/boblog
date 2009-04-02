@@ -39,8 +39,7 @@ function db_connect($dbhost, $dbuser, $dbpw, $dbname='') {
 	if (!empty($dbname)) {
 		$a_result=mysql_select_db($dbname);
 		if ($a_result) {
-/*vot*/			if (mysql_get_server_info()>='4.1.0') mysql_query("SET NAMES 'utf8'");
-			mysql_query("SET NAMES 'utf8'");
+			if ($db_410=='1')  mysql_query("SET NAMES 'utf8'");
 		}
 		return $a_result;
 	}
