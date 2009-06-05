@@ -1189,5 +1189,5 @@ $lna=array (
 1194=>'Function Lock',
 1195=>'Turning on/off some functions',
 1196=>'Turning off one of the functions will <ul><li>deactivate its correspondant module (if any);</li><li>redirect all requests of its functional page (if any) to the HTTP 404 (Page not found) error page; </li><li>hide all of its related options in the admin center and navigation bar.</li></ul>Turning on one of the functions will <ul><li>activate its correspondant module (if any).</ul>',
-1197=>'Preview'
+1197=>'Preview',
 );

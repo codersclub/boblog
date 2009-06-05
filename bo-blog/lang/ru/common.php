@@ -316,6 +316,15 @@ $lnc=array (
 310=>'Browser is redirecting, or you can click one of the following links:',
 311=>'Hidden content',
 312=>'You are not allowed to see this part. Please ',
+313=>'HTTP/1.1 404 Page Not Found.',
+314=>"You can also login with your <a href=\"http://openid.net\" target=\"_blank\">OpenID</a>",
+315=>'OpenID Error:<br/>',
+316=>'You have chosen to deny the OpenID authentification request.<br/>Please go back or <a href="javascript: history.go(-2)"><strong>Click Here</strong></a> to cancel the process, but you will lose the unsubmitted content.',
+317=>'You are now logged in with limited permissions as ',
+318=>'OpenID',
+319=>'OpenID has been disabled.',
+320=>'Category',//'所属分类',
+321=>'Other',//'其他',
 );
 
 //Chinese characters

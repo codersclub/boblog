@@ -529,7 +529,7 @@ $lna=array (
 524=>'Features',
 525=>'Gzip accelerator',
 526=>' (Depending on server configuration)',
-527=>'URL Optimization', //2006-12-27 change
+527=>'URL Optimizer', //2006-12-27 change
 528=>'Optimize link addresses. ',
 529=>'URL Optimization Wizard', //2006-12-27 change
 530=>'Helping you find out a best solution of URL optimization', //2006-12-27 change
@@ -1088,7 +1088,7 @@ $lna=array (
 1093=>'Test of Apache/IIS Rewrite failed. Now trying another solution. <br>Click the two test links below. If both links work fine, it means you have passed the test. ',
 1094=>'URL optimization completed.',
 1095=>'Page management completed.',
-1096=>'Stop using Ajax',
+1096=>'Non-Ajax front-end',
 1097=>'Enable this function if commenting system does not work properly.',
 1098=>'Changes to language pack have been saved.',
 1099=>'Back to lang tuning',
@@ -1158,7 +1158,7 @@ $lna=array (
 1163=>'URL of blog entries with aliases will look like ',
 1164=>'Created pages',
 1165=>'Upload data',
-1166=>'<font color=red>Notice: <b>%s</b> days have been passed since you cleared temporary files. You are advised to clear these files frequently. [<a href=\'admin.php?go=carecenter_cleartmpandreturn\'>Start Clearing</a>]</font>',
+1166=>"<font color=red>Notice: <b>%s</b> days have been passed since you cleared temporary files. You are advised to clear these files frequently. [<a href=\"javascript: simulateFormSubmit('admin.php?go=carecenter_cleartmpandreturn')\">Start Clearing</a>]</font>",
 1167=>'<font color=red>Notice: This editor is not installed by default. You need to install it before you can use this editor. Check our official site for more information.</font>',
 1168=>'Unacceptable characters found in URL alias.',
 1169=>'This URL alias is already occupied.',
@@ -1176,5 +1176,18 @@ $lna=array (
 1181=>'Display on non-index pages only',
 1182=>'Display on every page',
 1183=>'Fix Entry No.',
-1184=>'Fix entry no. for a certain tag'
+1184=>'Fix entry no. for a certain tag',
+1185=>'File cannot be replaced because the original file cannot be deleted.',
+1186=>'File has been updated.',
+1187=>'Customize HTTP 404',
+1188=>'Specify the 404 (file not found) error page. Leave it blank if the default system page should be used.<br/>Notice: a 404 code should be given to the browser in your customized 404 error page to enhance search engine friendliness.',
+1189=>'Enable OpenID',
+1190=>'Allow visitors to login with <a href="http://openid.net/" target="_blank">OpenID</a>, but remain in the usergroup of Visitors.',
+1191=>'Non-Ajax admin center',
+1192=>'Enable this option if Ajax is not properly supported by your server.',
+1193=>'Cannot delete the active user.',
+1194=>'Function Lock',
+1195=>'Turning on/off some functions',
+1196=>'Turning off one of the functions will <ul><li>deactivate its correspondant module (if any);</li><li>redirect all requests of its functional page (if any) to the HTTP 404 (Page not found) error page; </li><li>hide all of its related options in the admin center and navigation bar.</li></ul>Turning on one of the functions will <ul><li>activate its correspondant module (if any).</ul>',
+1197=>'Preview'
 );

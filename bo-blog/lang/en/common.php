@@ -322,7 +322,9 @@ $lnc=array (
 316=>'You have chosen to deny the OpenID authentification request.<br/>Please go back or <a href="javascript: history.go(-2)"><strong>Click Here</strong></a> to cancel the process, but you will lose the unsubmitted content.',
 317=>'You are now logged in with limited permissions as ',
 318=>'OpenID',
-319=>'OpenID has been disabled.'
+319=>'OpenID has been disabled.',
+320=>'Category',//'所属分类',
+321=>'Other',//'其他',
 );
 
 //Chinese characters
