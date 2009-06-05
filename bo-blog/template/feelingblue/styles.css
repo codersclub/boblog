@@ -1,7 +1,7 @@
-/*----------- Feeling blue style, xhtml/css by É××ÓÓëÃ¨( J.Lyfon Fabacat http://Lyfon.com ) 2008.1.6 -----------*/
+/*----------- Feeling blue style, xhtml/css by Spoon and cat ( J.Lyfon Fabacat http://Lyfon.com ) 2008.1.6 -----------*/
 
 * { margin:0;padding:0;list-style:none;}
-body { font:12px Verdana,Tahoma,"ËÎÌå";color:#D7E5F2;line-height:180%;background: #397BBD;}
+body { font:12px Verdana,Tahoma,Arial,sans-serif;color:#D7E5F2;line-height:180%;background: #397BBD;}
 * html body{font-size:11px;}
 *+ html body{font-size:11px;}
 a{color:#CCDDEE;text-decoration:none;}

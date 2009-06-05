@@ -87,7 +87,7 @@ $elements['displayfooter']=<<<eot
 
 	<div id="foot"></div>
 	<div id="Copyright">
-		<p>Copyright © Lyfon.com 2006-2008, logs since 2005. Sys powered by <a href="http://www.bo-blog.com" title="boblog" rel="nofollow">boblog</a>.<br /> Feeling blue skin designed and xhtml/css developed by <a href="http://lyfon.com" title="勺子与猫-老W">J.Lyfon Fabacat</a>, Jan 6, 2008.</p>
+		<p>Copyright &copy; Lyfon.com 2006-2008, logs since 2005. Sys powered by <a href="http://www.bo-blog.com" title="boblog" rel="nofollow">boblog</a>.<br /> Feeling blue skin designed and xhtml/css developed by <a href="http://lyfon.com" title="Spoon and Cat-Old W">J.Lyfon Fabacat</a>, Jan 6, 2008.</p>
 	</div>
 
 </div>
