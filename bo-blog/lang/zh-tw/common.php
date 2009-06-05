@@ -322,7 +322,11 @@ $lnc=array (
 316=>'您拒絕了本站發出的OpenID驗證請求。<br/>請返回並重新驗證，或者您可以<a href="javascript: history.go(-2)"><strong>取消</strong></a>驗證，未提交的內容可能會丟失。',
 317=>'您已使用OpenID有限登入為 ',
 318=>'OpenID頁',
-319=>'OpenID已禁用。'
+319=>'OpenID已禁用。',
+320=>'所属分类',//'Category',
+321=>'其他',//'Other',
+322=>'输入关键词后回车',//'Enter keywords and press Enter',
+323=>'随机日志',//'Random article',
 );
 
 //農曆用字

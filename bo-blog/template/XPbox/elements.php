@@ -85,7 +85,7 @@ $elements['mainpage']=<<<eot
 <li><a href="#" onmouseover="easytabs('1', '1');" onfocus="easytabs('1', '1');" onclick="return false;"  title="" id="tablink1">{$lnc[113]}</a></li>
 <li><a href="#" onmouseover="easytabs('1', '2');" onfocus="easytabs('1', '2');" onclick="return false;"  title="" id="tablink2">{$lnc[114]}</a></li>
 <li><a href="#" onmouseover="easytabs('1', '3');" onfocus="easytabs('1', '3');" onclick="return false;"  title="" id="tablink3">{$lnc[126]}</a></li>
-<li><a href="#" onmouseover="easytabs('1', '4');" onfocus="easytabs('1', '4');" onclick="return false;"  title="" id="tablink4">随机日志</a></li>
+<li><a href="#" onmouseover="easytabs('1', '4');" onfocus="easytabs('1', '4');" onclick="return false;"  title="" id="tablink4">{$lnc[323]}</a></li>
 </ul>
 </div>
 <div id="tabcontent1"><!--global:{block_entries}--></div>
@@ -152,11 +152,17 @@ $elements['displayfooter']=<<<eot
 		   </div><div id="ftopr"></div>
 	  </div>
 	   <div id="foot"><div id="footl"></div>
-	     <div id="footc"><div id="skin"><!-- 尊重作者劳动，请保留作者链接 --> Copyright© 2008 Xpbox Skin by <a href="http://www.wdsxp.com/blog/" target="_blank">China_Y</a></div>
-		 </div><div id="footr"></div>
+	     <div id="footc">
+		<div id="skin">
+			<!-- Respect the author's labor, please keep the author's link -->
+			Copyright &copy; 2008 Xpbox Skin by <a href="http://www.wdsxp.com/blog/" target="_blank">China_Y</a>
+		</div>
+		</div><div id="footr"></div>
 	   </div>
 		<div id="footer">
-		 <div id="footerl"></div><div id="footerc"></div><div id="footerr"></div>
+		 <div id="footerl"></div>
+		 <div id="footerc"></div>
+		 <div id="footerr"></div>
 		</div>
 	</div>
 </div>

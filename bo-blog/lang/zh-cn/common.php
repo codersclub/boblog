@@ -326,6 +326,7 @@ $lnc=array (
 320=>'所属分类',//'Category',
 321=>'其他',//'Other',
 322=>'输入关键词后回车',//'Enter keywords and press Enter',
+323=>'随机日志',//'Random article',
 );
 
 //农历用字
