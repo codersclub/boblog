@@ -17,7 +17,7 @@ body {
 	line-height:120%;
 	text-align:center;
 	color:#666;
-	font-family: 微软雅黑, msyh, Arial, Tahoma; 
+	font-family: Verdana, Tahoma, Arial, sans-serif; 
 	background:#999999 url("images/bg.png") repeat-y 50% 0%;
 }
 
@@ -69,7 +69,7 @@ input.button {
 	padding:0 3px;
 	border: 1px solid #ABABAB;
 	background:#fff;
-	font-family: Arial, Tahoma, 宋体; 
+	font-family: Verdana, Tahoma, Arial, sans-serif; 
 }
 textarea { 
 	border:1px solid #ABABAB;
@@ -400,7 +400,7 @@ h1 a:hover {
 	width: 95%; 
 	padding:0;
 	margin:0;
-	font-family:arial, 微软雅黑, msyh;
+	font-family: Verdana, Tahoma, Arial, sans-serif; 
 	line-height:100%;
 }
 .calendar-top {

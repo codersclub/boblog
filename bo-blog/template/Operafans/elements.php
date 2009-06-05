@@ -98,7 +98,7 @@ $elements['displayfooter']=<<<eot
 	</div>
 		<div id="footer">
 			<div id="innerFooter">
-			<!-- 请尊重他人劳动成果，保留作者版权 -->
+			<!-- Please respect the work results of others and retain the author's copyright -->
 				{section_foot_components} Designed By 404cn & Cheer for <a href="http://www.opera.com/" target="_blank">Opera</a> 9.5 released. 
 			<div id="processtime">
 			</div>
