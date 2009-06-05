@@ -171,7 +171,7 @@ $elements['excerpt']=<<<eot
 <div class="textboxcalendar">{entrydatey} {entrydatemnameshort}.{entrydated} {entrytime}</div>
 </div>
 
-<div class="textbox-label">所属分类:{entrycate} 所属标签:{alltags} 其他:{entrycomment} {entrytb} {entryviews} {ifadmin}</div>
+<div class="textbox-label">{$lnc[320]}: {entrycate} {$lnc[127]}: {alltags} {$lnc[321]}: {entrycomment} {entrytb} {entryviews} {ifadmin}</div>
 
 </div>
 
@@ -194,7 +194,7 @@ $elements['excerptontop']=<<<eot
 <div class="textboxcalendar">{entrydatey} {entrydatemnameshort}.{entrydated} {entrytime}</div>
 </div>
 
-<div class="textbox-label">所属分类:{entrycate} 所属标签:{alltags} 其他:{entrycomment} {entrytb} {entryviews} {ifadmin}</div>
+<div class="textbox-label">{$lnc[320]}: {entrycate} {$lnc[127]}: {alltags} {$lnc[321]}: {entrycomment} {entrytb} {entryviews} {ifadmin}</div>
 
 </div>
 
@@ -224,7 +224,7 @@ $elements['viewentry']=<<<eot
 <div class="textboxcalendar">{entrydatey} {entrydatemnameshort}.{entrydated} {entrytime}</div>
 </div>
 
-<div class="textbox-label">所属分类:{entrycate} 所属标签:{alltags} 其他:{entrycomment} {entrytb} {entryviews} {ifadmin}</div>
+<div class="textbox-label">{$lnc[320]}: {entrycate} {$lnc[127]}: {alltags} {$lnc[321]}: {entrycomment} {entrytb} {entryviews} {ifadmin}</div>
 
 </div>
 
