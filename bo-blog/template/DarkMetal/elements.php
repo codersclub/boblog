@@ -35,7 +35,7 @@ $elements['displayheader']=<<<eot
 <input name="job" type="hidden" value="search"/>
 <input name="searchmethod" type="hidden" value="2"/>
 <input name="keyword" value="" type="text"/>
-<input class="button" name="searchsubmit" value="搜索" type="submit"/>
+<input class="button" name="searchsubmit" value="{$lnc[128]}" type="submit"/>
 </form>
 </div>
 </div>
