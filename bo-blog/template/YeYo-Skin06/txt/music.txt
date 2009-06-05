@@ -1,0 +1,10 @@
+$info['name']="music";
+$info['author']="Bo-Blog";
+$info['intro']="Audio Video";
+$info['time']="2008/11/04";
+$info['newitemposition']="sidebar";
+$info['newitemactive']="1";
+$info['content']=<<<ENDMODULE
+\$blogitem['music']=array('type'=>'block', 'name'=>'music', 'title'=>'Music video', 'extend'=>'1', 'content'=>"<script type=\"text/javascript\"><!--\\nif (window == top) {\\ndocument.write (\"<a href='fmp.php' target='_top'><img src='template/YeYo-Skin06/images/open.gif' alt='Open the audio-video player' title='Open the audio-video player' border='0'/></a>\");\\n} else {\\ndocument.write (\"<a href=\" + window.location.href + \" target='_top'><img src='template/YeYo-Skin06/images/stop.gif' alt='Close the audio-video player' title='Close the audio-video player' border='0'/></a>\");\\n}\\n</script>");
+ENDMODULE;
+$a=0;

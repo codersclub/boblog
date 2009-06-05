@@ -1,0 +1,10 @@
+$info['name']="topads";
+$info['author']="Bo-Blog";
+$info['intro']="Top banner ads";
+$info['time']="2008/11/04";
+$info['newitemposition']="sidebar";
+$info['newitemactive']="1";
+$info['content']=<<<ENDMODULE
+\$blogitem['topads']=array('type'=>'block', 'name'=>'topads', 'title'=>'Top ad', 'extend'=>'1', 'content'=>"<a href=\"mailto:gw55@163.com?subject=Advertising at the top of the site\"><img src=\"template/YeYo-Skin06/images/top_ads.jpg\" width=\"960\" height=\"90\" title=\"At the top advertising\" alt=\"At the top advertising\"  border=\"0\" /></a>\\n<!--Can also be put here to provide ad code-->");
+ENDMODULE;
+$a=0;

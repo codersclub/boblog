@@ -1,0 +1,784 @@
+/*
+Bo-Blog V2.1
+Dx Skin
+By Ivy
+2008/10
+*/
+
+/****** General Styles ******/
+body {
+	font-size: 12px;
+	font-family: Tahoma, Arial;
+	margin: 0px 0px;
+	color: #000000;
+	padding: 0;
+	text-align: center;
+	background:#ffb022 url(images/bg.jpg) repeat-x;
+}
+* html body{
+	width: auto;
+	overflow-x: hidden;
+}
+td{
+	word-break: break-all;
+}
+a {
+	text-decoration: none;
+	color: #333;
+}
+a:hover {
+	text-decoration: none;
+	color:#000;
+}
+hr {
+	height: 1px;
+	border: 0;
+	border-top: 1px solid #ffb022;
+}
+acronym {
+	text-decoration: none;
+	border-bottom: 1px dotted #ffb022;
+	cursor: help;
+}
+
+/****** Form Controls Styles ******/
+form {
+	display: inline;
+}
+input {
+	font-family: Tahoma, Arial; 
+	font-size: 12px; 
+}
+input.text {
+	background: #fff;
+	border: 1px solid #ffb022;
+}
+input.button {
+	background: #fff;
+	border: 1px solid #ffb022;
+}
+textarea { 
+	background: #fff;
+	border: 1px solid #ffb022;
+}
+select { 
+	background: #fff;
+	border: 1px solid #ffb022;
+}
+/****** Main Layout Styles ******/
+#wrapper {
+	margin:0px auto;
+	width: 1004px;
+	text-align: left;
+	background-color: #ffb022;
+    background:url(images/middle.gif) repeat-y; 
+	overflow:hidden;
+
+}
+#innerWrapper {
+	width:100%;
+}
+#header {
+}
+#innerHeader {
+	padding: 0;
+	height:291px;
+}
+
+#footer {
+	clear: both;
+	background-repeat: no-repeat;
+	background-position: bottom;
+	height: 105px;
+	padding:45px 0px  0px 480px;
+	background:url(images/foot.jpg) no-repeat;
+	}
+#footer a{
+color: #000;
+}
+#innerFooter {
+	padding: 10px;
+	font-size: 12px;
+	text-align: center;
+}
+
+/****** Header Elements Styles ******/
+/* header title */
+.blog-header {
+	height:291px;
+    background:#ffb022 url(images/head.jpg) no-repeat;
+}
+h1 {
+	padding: 70px 0px 0px 420px;
+	margin: 0px;
+	color: #fff;
+	font-size: 30px;
+}
+h1 a {
+	color: #fff;
+}
+h1 a:hover {
+	color: #fff;
+}
+/* blog description */
+.blog-desc {
+	display:block;
+	padding: 10px 0px 0px 420px;
+	color:#FFF;
+}
+/* nav menu */
+#menu {
+	margin-top: -60px;
+	height: 32px;
+	padding-left:70px;
+}
+#menu ul{
+	margin: 0;
+	padding: 0;
+	height:32px;
+}
+#menu li{
+	margin: 0;
+	display: inline;
+	list-style: none;
+	text-align: center;
+	float: left;
+	width: 70px;
+	height:32px;
+	background:url(images/menu.png) no-repeat;
+}
+#menu a{
+	padding: 8px;
+	display: block;
+	color: #682400;
+	border-bottom: none;
+	font-weight: bold;
+}
+#menu a:hover, #menu .activepage a {
+	color: #000;
+	border: 1px solid #ffb022;
+	border-bottom: none;
+	background-color: #f3eae3;
+}
+
+/****** Content Layout ******/
+#mainWrapper {
+	clear:both;
+	overflow:hidden;
+	padding:0 70px;
+}
+
+/* sidebar */
+.sidebar {
+	float:right;
+	width: 220px;
+}
+
+* html .sidebar { /*IE6 absolute position+baseurl select bug fix */
+	position: static;
+	margin-top: 0px;
+}
+.sidebar-hide {
+	display: none;
+	float: left;
+}
+#innerSidebar {
+	padding: 0;
+}
+#innerSidebarOne {
+	width: 200px;
+	border: 1px solid #ffb022;
+	padding-left: 9px;
+}
+#innerSidebarTwo {
+}
+#innerSidebarSearch {
+	clear: both;
+	padding: 10px; 
+	color: #000;
+	background-color: #faf9f8;
+	margin-bottom: 10px;
+}
+#innerSidebarFooter {
+	margin-bottom: 10px;
+	clear: both;
+	padding: 10px; 
+}
+/* content */
+.content {
+	width: 634px;
+	float:left;
+}
+.content-wide {
+	width: auto;
+}
+.content-only {
+	width: auto;
+}
+#innerContent {
+	float:left;
+	overflow: hidden;
+}
+
+/* a style which makes mainWrapper touch the bottom of sidebar and content */
+.clear{
+	border-top:1px solid transparent !important;
+	margin-top:-1px !important;
+	border-top:0;
+	margin-top:0;
+	clear:both;
+	visibility:hidden;
+}
+
+/****** Sidebar Panels ******/
+.panel{
+	padding:0;
+}
+.panel h5 {
+	text-align: left;
+	color: #000;
+	font-size: 14px;
+	font-weight: bold;
+	cursor: pointer;
+	letter-spacing: 1.5pt;
+	margin: 0px;
+	padding-left:15px;
+	padding-top:8px;
+	height:42px;
+	background:url(images/title.gif) no-repeat;
+}
+.panel h5 a{
+	color: #000;
+}
+.panel-content{
+	width: 95%;
+	margin:0;
+	margin-bottom: 25px;
+	line-height: 150%;
+	color:#333;
+}
+.panel-content a{
+ 	color:#333;
+}
+.panel-content a:hover {
+ 	color:#ffb022;
+}
+
+.panel-content ul{
+	padding: 1px;
+	margin: 0px;
+	margin-left: 2px;
+}
+.panel-content li{
+	padding: 0px;
+	margin: 0px;
+	list-style: none;
+	border-bottom: 1px solid #ffb022;
+}
+
+
+.panel-content li.indent{
+	padding: 0px;
+	background-image: url("images/list.gif");
+	background-repeat: no-repeat;
+	text-indent: 15px;
+}
+
+/* user panel login form */
+#loginForm {
+	width: 95%;
+}
+
+/* calendar panel */
+#calendar {
+  width: 100%; 
+  margin-top:1px;
+}
+.calendar-top {
+  text-align: center;
+  padding:0px;
+}
+.calendar-year,
+.calendar-month {
+  font-weight: bold;
+}
+.calendar-weekdays {
+  color: #999;
+  font-size:11px;
+  text-align: center;
+  width: 14%;
+  padding:0px;
+}
+.calendar-weekday-cell {
+  color: #000;
+  font-size:11px;
+  text-align: center;
+  width: 14%;
+  padding:0px;
+  font-weight: bold;
+}
+.calendar-main {
+  background: #FFFFFF;
+}
+.calendar-day,
+.calendar-day-blank,
+.calendar-saturday,
+.calendar-sunday,
+.calendar-today{
+  text-align: center;
+  width: 14%;
+  padding:0px;
+}
+.calendar-saturday,
+.calendar-sunday {
+  color: #ffb022; 
+}
+.calendar-today { 
+  color: #000;
+  border: 1px solid #ffb022;
+}
+.calendar-day a, .calendar-saturday a, .calendar-sunday a {
+  color: #ffb022; 
+  text-decoration: underline;
+}
+.calendar-today a {
+  color: #ffb022;
+  text-decoration: underline;
+}
+
+/****** Search Panel ******/
+.search-field {
+	background: #fff;
+	border: 1px solid #ffb022;
+}
+
+/****** Announcement Box ******/
+.announce{
+	margin-bottom: 15px;
+}
+.announce-content{
+	padding: 10px; 
+	color: #000;
+	background: #faf9f8;
+}
+
+/****** Defaul Page Elements ******/
+.article-top {
+	padding: 5px;
+	margin-bottom: 15px;
+}
+.article-bottom {
+	padding: 5px;
+	margin-top: 15px;
+}
+
+/* page links */
+.pages {
+	color: #ffb022;
+	padding: 3px;
+	border: 1px solid #ffb022;
+}
+.pagelink-current {
+	font-weight: bold;
+}
+
+.listbox {
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+.listbox-table {
+	width: 99%;
+}
+.listbox-header {
+	font-weight: bold;
+	text-align: center;
+	background-color: #ffb022;
+	color: #333;
+	height: 25px;
+}
+.listbox-entry {
+	word-wrap: break-all;
+	border-bottom: 1px solid #ffb022;
+}
+.listbox-entry a{
+	word-wrap: break-all;
+}
+
+/* entry display box */
+.prev-article{ float: left; }
+.next-article{ float: right; }
+
+/* text box */
+.textbox{
+	padding-bottom: 25px;
+	margin-bottom: 5px;
+	clear: both;
+	background: url('images/dash.gif') no-repeat;
+	background-position: 50px 20px;
+}
+.textbox-calendar {
+	float: left;
+	height: 49px;
+	width: 46px;
+	text-align: center;
+}
+.textbox-calendar-day {
+	display: block;
+	font-family: Arial;
+	color: #333;
+	font-size: 25px;
+	padding: 1px;
+	border: 1px solid #ffb022;
+	background-color: #faf9f8;
+}
+.textbox-calendar-month {
+	border-bottom: 1px solid #ffb022;
+	margin: 0px;
+	margin-top: -8px;
+	display: block;
+	font-family: Arial;
+	font-size: 12px;
+	text-transform: uppercase;
+	color: #fff;
+	font-weight: bold;
+	background: #ffb022;
+}
+
+.textbox-calendar-month {
+	margin-top: 0px;
+}
+
+.textbox-title{
+	font-size: 16px;
+	height: 68px;
+	margin-left: 5px;
+}
+.textbox-title h4{
+	color: #ffb022;
+	font-size: 16px;
+	padding: 5px;
+	display: inline;
+	font-weight: bold;
+}
+.textbox-title h4 a {
+	font-weight: bold;
+	color: #ffb022;
+}
+.textbox-label{
+	padding-top: 10px;
+	padding-left: 15px;
+	font-size: 12px;
+	text-indent: 29px;
+}
+*+html .textbox-label{
+	text-indent: 15px;
+}
+* html .textbox-label{
+	text-indent: 15px;
+}
+.text-label-indented {
+	font-size: 12px;
+	display: block;
+	text-align: right;
+	float: right;
+	margin-top: -15px;
+}
+*+html .text-label-indented {margin-top: -20px;}
+.textbox-fontsize{
+	color: #979797;
+	float: right;
+	text-align: right;
+	padding: 3px;
+	font-size: 12px;
+}
+.textbox-fontsize a{
+	color: #979797;
+}
+.textbox-content{
+	clear: both;
+	word-wrap: break-word;
+	padding: 5px;
+	font-size: 14px;
+	line-height: 139%;
+}
+.textbox-bottom{
+	padding: 0px;
+	padding-top: 3px;
+	padding-bottom: 1px;
+	font-size: 12px;
+	color: #000;
+	text-align: left;
+}
+.textbox-bottom a {
+	color: #000;
+	text-decoration: none;
+}
+.textbox-bottom a:hover {
+	background-color: #000;
+	color: #ffffff;
+	text-decoration: none;
+}
+.textbox-adminbar {
+	padding: 0px;
+	font-size: 12px;
+	color: #000;
+	text-align: left;
+}
+.textbox-tburl {
+	padding-top: 3px;
+	font-size: 11px;
+	color: #000;
+	text-align:left;
+}
+.tags {
+	clear: both;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	font-size: 11px;
+	color: #333;
+	text-align:left;
+	background: #faf9f8;
+}
+.tags a {
+	color: #333;
+}
+/* comments wrapper */
+.comment-wrapper{}
+
+/* comments top box */
+.comment-top{
+	padding:5px;
+	padding-top: 0px;
+	margin: 5px;
+	color: #000;
+	text-align: right;
+}
+.comment-pages{
+	padding:5px;
+	margin: 5px;
+	color: #000;
+}
+
+/* commnet box */
+.commentbox, .trackbackbox {
+	word-wrap: break-word;
+	padding: 0px;
+	margin: 5px;
+}
+.commentbox-odd {
+	border-top: 1px solid #ffb022;
+	background-color: #faf9f8;
+}
+.commentbox-couple {
+	background: #fff;
+	border-top: 1px solid #ffb022;
+}
+.trackbackbox {
+	border-top: 1px solid #ffb022;
+	background-color: #faf9f8;
+}
+.commentbox-title, .trackbackbox-title{
+	padding: 5px;
+	font-size: 14px;
+	color: #ffb022;
+}
+.commentbox-title a, .trackbackbox-title a{
+ 	color: #ffb022;
+	font-weight: bold;
+}
+
+.commentbox-label, .trackbackbox-label{
+	display: block;
+	color: #000;
+	font-size: 12px;
+}
+.commentbox-label a, .trackbackbox-label a{
+	font-weight: normal;
+}
+
+.commentbox-content, .trackbackbox-content{
+	padding: 3px;
+	padding-bottom: 14px;
+}
+
+
+/* comment form wrapper */
+#commentForm {
+	width: auto;
+}
+
+/****** normal message box ******/
+.messagebox{
+ width: 550px;
+ margin-top: 120px;
+ border: 1px solid #ffb022; 
+ border-top: 0px; 
+ text-align: center; 
+ background-color: #ffb022;
+}
+.messagebox-title{
+ color: #FFFFFF; 
+ font-weight: bold; 
+ padding: 5px;
+}
+.messagebox-content{
+ color: #000; 
+ background:#FFFFFF;
+ padding: 10px; 
+ padding-bottom: 20px; 
+ text-align: left;
+}
+.messagebox-bottom{
+	color: #000;
+	background-color: #faf9f8;
+	padding: 5px;
+}
+
+
+/****** Input Form Styles (table) ******/
+.formbox{}
+.formbox-comment{
+	padding-top: 10px;
+	border-top: 10px solid #ffb022;
+}
+
+.formbox-title,
+.formbox-comment-title{
+	color: #000;
+	font-weight: bold;
+	font-size: 14px;
+}
+
+.formbox-rowheader {
+	padding: 5px;
+	font-weight: bold;
+}
+
+.formbox-content {
+	padding: 5px;
+}
+
+/* smilies list */
+.panel-smilies {
+	padding:5px;
+	text-align: center;
+}
+.panel-smilies-title {
+	color: #000;
+	text-align: left;
+	border-bottom: 1px solid #ffb022;
+}
+.panel-smilies-content {
+	padding: 5px;
+	line-height: 120%;
+}
+
+
+/****** UBB Code Custom Styles ******/
+/* IE fix for ul */
+.code {
+	word-wrap: break-all;
+	border-left: 4px solid #ffb022;
+	background-color: #faf9f8;
+	color: #000000;
+	margin: 5px;
+	padding: 10px;
+}
+
+.quote {
+	border-left: 0px solid #333;
+	margin: 10px;
+}
+.quote-title {
+	background-color: #faf9f8;
+	border-bottom: 2px solid #ffb022;
+	padding: 5px;
+	font-weight: bold;
+}
+.quote-title img {
+	padding-right: 3px;
+	margin-bottom: -4px;
+}
+.quote-content {
+	word-wrap: break-all;
+	color: #000000;
+	padding: 10px; 
+	background-color: #faf9f8;
+	border: 1px solid #ffb022;
+	border-top: 0px;
+}
+
+/****** Link ******/
+.linkover {
+	margin-bottom: 20px;
+	height: auto;
+	clear: both;
+}
+.linkbody {
+	float: left;
+	padding-bottom: 14px;
+}
+.linkimg {
+/*	width: 35%;*/
+	float: left;
+	text-align: right;
+	margin-right: 4px;
+}
+.linktxt {
+	float: left;
+}
+.linktitle a {
+	font-weight: bold;
+}
+.linkgroup {
+	font-weight: bold;
+	font-size: 14px;
+	color: #ffb022;
+	text-indent: 3px;
+}
+
+/*Page*/
+.pagebox {
+	padding-bottom: 25px;
+	margin-bottom: 5px;
+	clear: both;
+}
+.pagebox-title{
+	font-size: 16px;
+	height: 68px;
+	margin-left: 5px;
+}
+.pagebox-title h4{
+	color: #ffb022;
+	font-size: 16px;
+	padding: 0;
+	margin: 0;
+	display: block;
+	border-bottom: 3px solid #ffb022;
+	font-weight: bold;
+}
+.pagebox-content{
+	margin-top: -30px;
+	clear: both;
+	word-wrap: break-word;
+	padding: 0;
+	font-size: 14px;
+	line-height: 120%;
+}
+
+/* Emot Page Selection */
+#smileybuttons {
+	text-align: right;
+	margin-top: 9px;
+}
+
+.smileybut {
+	margin-right:3px;
+	padding: 3px;
+	vertical-align: middle;
+	font-weight: bold;
+}
+
+.smileybut  a{
+	border: 1px solid #ffb022;
+}
