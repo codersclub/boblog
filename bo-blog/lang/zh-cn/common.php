@@ -325,6 +325,7 @@ $lnc=array (
 319=>'OpenID已禁用。',
 320=>'所属分类',//'Category',
 321=>'其他',//'Other',
+322=>'输入关键词后回车',//'Enter keywords and press Enter',
 );
 
 //农历用字

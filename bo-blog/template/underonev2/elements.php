@@ -35,7 +35,7 @@ $elements['displayheader']=<<<eot
 				        </div>
                         </div>
 						<form id="searchform" method="post" action="visit.php">
-						<div><input type="text" id="s" name="keyword" value="Search" onclick="if (this.value=='Search') this.value=''" title="输入关键词后回车" onkeypress="livesearch(event)" onfocus="setbgin()" onblur="if (this.value == '') {this.value = 'Search';}"/>
+						<div><input type="text" id="s" name="keyword" value="Search" onclick="if (this.value=='Search') this.value=''" title="{$lnc[322]}" onkeypress="livesearch(event)" onfocus="setbgin()" onblur="if (this.value == '') {this.value = 'Search';}"/>
 						<input name="job" type="hidden" value="search"/><input type="hidden" name="searchmethod" value="1"/>
 						<input type="submit" id="minisearchSubmit" value="Search" /></div>
 						</form>
@@ -276,7 +276,7 @@ $elements['viewentry']=<<<eot
 		{toolbar}
 		</div>
 		<div class="textbox-label">
-		[{entrydate} {entrytime} | 分类: {entrycate} | by {entryauthor} ]
+		[{entrydate} {entrytime} | {$lnc[320]}: {entrycate} | by {entryauthor} ]
 		</div>
 	</div>
 	<div class="textbox-content" id="zoomtext">

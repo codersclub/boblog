@@ -325,6 +325,7 @@ $lnc=array (
 319=>'OpenID has been disabled.',
 320=>'Category',//'所属分类',
 321=>'Other',//'其他',
+322=>'Enter keywords and press Enter',//'输入关键词后回车',
 );
 
 //Chinese characters
