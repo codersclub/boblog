@@ -59,13 +59,13 @@ $elements['mainpage']=<<<eot
 					</div>
 					<div class="article-top" style="display: {iftoppage}">
 						<div class="pages">
-<a href="{previouspageurl}">« Previous Entries</a>&nbsp;&nbsp;&nbsp;<a href="{nextpageurl}">Next Entries »</a>
+<a href="{previouspageurl}">&laquo; Previous Entries</a>&nbsp;&nbsp;&nbsp;<a href="{nextpageurl}">Next Entries &raquo;</a>
 						</div>
 					</div>
 					{mainpart}
 					<div class="article-bottom" style="display: {ifbottompage}">
 						<div class="pages">
-<a href="{previouspageurl}">« Previous Entries</a>&nbsp;&nbsp;&nbsp;<a href="{nextpageurl}">Next Entries »</a>
+<a href="{previouspageurl}">&laquo; Previous Entries</a>&nbsp;&nbsp;&nbsp;<a href="{nextpageurl}">Next Entries &raquo;</a>
 						</div>
 					</div>
 				</div>
