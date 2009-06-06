@@ -30,7 +30,7 @@ $elements['displayheader']=<<<eot
 		<form method="post" action="visit.php">
 			<input name="job" type="hidden" value="search"/>
 			<input name="searchmethod" type="hidden" value="2"/>
-			<input name="keyword" type="text" id="search-text" alt="搜索" class="keyword" value="搜索..." onblur="if(this.value=='') this.value='搜索...';" onfocus="if(this.value=='搜索...') this.value='';" title="输入关键词后回车"/>
+			<input name="keyword" type="text" id="search-text" alt="{$lnc[128]}" class="keyword" value="{$lnc[128]}..." onblur="if(this.value=='') this.value='{$lnc[128]}...';" onfocus="if(this.value=='{$lnc[128]}...') this.value='';" title="{$lnc[322]}"/>
 		</form>
 	</div>
 	<div id="header">
@@ -48,7 +48,7 @@ $elements['displayheader']=<<<eot
 		<div id="block1">
 			<div id="top-ads">
 				<span class="top-ads-left"></span>
-				<div class="topAds"><div id="ads"><center><font color="#666666" size="4"><strong>内容正在载入中，请稍后……</strong></font></center></div></div>
+				<div class="topAds"><div id="ads"><center><font color="#666666" size="4"><strong>{$lnc[324]}</strong></font></center></div></div>
 				<span class="top-ads-right"></span>
 			</div>
 		</div>
@@ -72,17 +72,17 @@ $elements['mainpage']=<<<eot
 				<span class="side-left"></span>
 				<div id="page-header-inner">
 					<div id="tools">
-						<a href="#" onclick="mygrid.toggleBlock('block1');"><img src="{$template['images']}/close_top_ads.gif" alt="关闭横幅广告" title="关闭横幅广告" border="0"/></a> 
-						<a href="#" onclick="mygrid.toggleLeft();"><img src="{$template['images']}/close_left_sidebar.gif" alt="关闭左侧栏" title="关闭左侧栏" border="0"/></a> 
-						<a href="#" onclick="mygrid.toggleRight();"><img src="{$template['images']}/close_right_sidebar.gif" alt="关闭右侧栏" title="关闭右侧栏" border="0"/></a> 
-						<a href="#" onclick="mygrid.resize(860,'px');"><img src="{$template['images']}/small_screen.gif" alt="窄屏幕" title="窄屏幕" border="0"/></a> 
-						<a href="#" onclick="mygrid.resize(980,'px');"><img src="{$template['images']}/default_screen.gif" alt="默认屏幕" title="默认屏幕" border="0"/></a> 
-						<a href="#" onclick="mygrid.resize(1236,'px');"><img src="{$template['images']}/wide_screen.gif" alt="宽屏幕" title="宽屏幕" border="0"/></a> 
-						<a href="#" onclick="mygrid.resize(99,'%');"><img src="{$template['images']}/full_screen.gif" alt="自适应屏幕" title="自适应屏幕" border="0"/></a> 
-						<a href="#" onclick="mygrid.resizeFont(0.05);"><img src="{$template['images']}/increase_size.gif" alt="增加字号" title="增加字号" border="0"/></a> 
-						<a href="#" onclick="mygrid.resizeFont(-0.05);"><img src="{$template['images']}/reduction_size.gif" alt="减小字号" title="减小字号" border="0"/></a> 
+						<a href="#" onclick="mygrid.toggleBlock('block1');"><img src="{$template['images']}/close_top_ads.gif" alt="{$lnc[325]}" title="{$lnc[325]}" border="0"/></a> 
+						<a href="#" onclick="mygrid.toggleLeft();"><img src="{$template['images']}/close_left_sidebar.gif" alt="{$lnc[326]}" title="{$lnc[326]}" border="0"/></a> 
+						<a href="#" onclick="mygrid.toggleRight();"><img src="{$template['images']}/close_right_sidebar.gif" alt="{$lnc[327]}" title="{$lnc[327]}" border="0"/></a> 
+						<a href="#" onclick="mygrid.resize(860,'px');"><img src="{$template['images']}/small_screen.gif" alt="{$lnc[328]}" title="{$lnc[328]}" border="0"/></a> 
+						<a href="#" onclick="mygrid.resize(980,'px');"><img src="{$template['images']}/default_screen.gif" alt="{$lnc[329]}" title="{$lnc[329]}" border="0"/></a> 
+						<a href="#" onclick="mygrid.resize(1236,'px');"><img src="{$template['images']}/wide_screen.gif" alt="{$lnc[330]}" title="{$lnc[330]}" border="0"/></a> 
+						<a href="#" onclick="mygrid.resize(99,'%');"><img src="{$template['images']}/full_screen.gif" alt="{$lnc[331]}" title="{$lnc[331]}" border="0"/></a> 
+						<a href="#" onclick="mygrid.resizeFont(0.05);"><img src="{$template['images']}/increase_size.gif" alt="{$lnc[332]}" title="{$lnc[332]}" border="0"/></a> 
+						<a href="#" onclick="mygrid.resizeFont(-0.05);"><img src="{$template['images']}/reduction_size.gif" alt="{$lnc[333]}" title="{$lnc[333]}" border="0"/></a> 
 						<!--global:{block_music}--> 
-						<a href="feed.php"><img src="{$template['images']}/top_rss.gif" alt="订阅RSS" title="订阅RSS" border="0"/></a>
+						<a href="feed.php"><img src="{$template['images']}/top_rss.gif" alt="{$lnc[334]}" title="{$lnc[334]}" border="0"/></a>
 					</div>
 				</div>
 				<span class="side-right"></span>
@@ -133,11 +133,11 @@ $elements['displayfooter']=<<<eot
 		</script>
 		<div id="innerFooter">
 			<div id="skin">
-				Copyright © 2008 <!--global:{blogname}-->. All Rights Reserved. YeYo-Skin06 Skin Design by <a href="http://blog.nzye.com">YeYo</a>
+				Copyright &copy; 2008 <!--global:{blogname}-->. All Rights Reserved. YeYo-Skin06 Skin Design by <a href="http://blog.nzye.com">YeYo</a>
 			</div>
 			<div id="w3c">
-				<a href="feed.php"><img src="{$template['images']}/but-rss.gif" width="29" height="14" border="0" alt="feed" /></a>　
-				<a href="http://jigsaw.w3.org/css-validator/"><img src="{$template['images']}/css.gif" width="29" height="14" border="0" alt="Valid CSS!" /></a>　
+				<a href="feed.php"><img src="{$template['images']}/but-rss.gif" width="29" height="14" border="0" alt="feed" /></a>
+				<a href="http://jigsaw.w3.org/css-validator/"><img src="{$template['images']}/css.gif" width="29" height="14" border="0" alt="Valid CSS!" /></a>
 				<a href="http://validator.w3.org/check?uri=referer"><img src="{$template['images']}/xhtml10.gif" width="47" height="14" border="0" alt="Valid XHTML 1.0 Transitional" /></a>
 			</div>
 			{section_foot_components}
@@ -186,13 +186,13 @@ $elements['excerpt']=<<<eot
 	<div class="textbox-title">
 		<h4>{entrytitle} {entrystar} {entryicon} </h4>
 		<div class="textbox-label">
-			{$lnc[238]}: {entryauthor} &nbsp;&nbsp;{$lnc[96]}：{entrycate} &nbsp;&nbsp;{$lnc[72]}{entrysourcewithlink} &nbsp;&nbsp;{adminlink}
+			{$lnc[238]}: {entryauthor} &nbsp;&nbsp;{$lnc[96]}: {entrycate} &nbsp;&nbsp;{$lnc[72]}{entrysourcewithlink} &nbsp;&nbsp;{adminlink}
 		</div>
 	</div>
 	{adminbar}
 	<div class="textbox-content">{entrycontent}</div>
 	<div class="textbox-bottom">
-		{$lnc[73]}{entrytime}　{entrycomment}　{entrytb}　{entryviews}　{tags}{alltags}
+		{$lnc[73]}{entrytime} {entrycomment} {entrytb} {entryviews} {tags} {alltags}
 	</div>
 	{tbbar}
 </div>
@@ -209,7 +209,7 @@ $elements['excerptontop']=<<<eot
 			[{$lnc[33]}] <a href="javascript: showhidediv('{topid}');">{entrytitletext}</a> {entrystar} {entryicon}
 		</h4>
 		<div class="textbox-label">
-			{$lnc[238]}: {entryauthor} &nbsp;&nbsp;{$lnc[96]}：{entrycate} &nbsp;&nbsp;{$lnc[72]}{entrysourcewithlink} &nbsp;&nbsp;{adminlink}
+			{$lnc[238]}: {entryauthor} &nbsp;&nbsp;{$lnc[96]}: {entrycate} &nbsp;&nbsp;{$lnc[72]}{entrysourcewithlink} &nbsp;&nbsp;{adminlink}
 		</div>
 	</div>
 	{adminbar}
@@ -218,7 +218,7 @@ $elements['excerptontop']=<<<eot
 			{entrycontent}
 		</div>
 	<div class="textbox-bottom">
-		{$lnc[73]}{entrytime}　{entrycomment}　{entrytb}　{entryviews}　{tags}{alltags}
+		{$lnc[73]}{entrytime} {entrycomment} {entrytb} {entryviews} {tags} {alltags}
 	</div>
 	{tbbar}
 	</div>
@@ -238,7 +238,7 @@ $elements['viewentry']=<<<eot
 	<div class="textbox-title">
 		<h4>{entrytitle} {entrystar} {entryicon} </h4>
 		<div class="textbox-label">
-			{$lnc[238]}: {entryauthor} &nbsp;&nbsp;{$lnc[96]}：{entrycate} &nbsp;&nbsp;{$lnc[72]}{entrysourcewithlink} &nbsp;&nbsp;{adminlink}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{toolbar}
+			{$lnc[238]}: {entryauthor} &nbsp;&nbsp;{$lnc[96]}: {entrycate} &nbsp;&nbsp;{$lnc[72]}{entrysourcewithlink} &nbsp;&nbsp;{adminlink}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{toolbar}
 		</div>
 	</div>
 	{adminbar}
@@ -246,7 +246,7 @@ $elements['viewentry']=<<<eot
 	 	{entrycontent} {ifedited}
 	</div>
 	<div class="textbox-bottom">
-		{$lnc[73]}{entrytime}　{entrycomment}　{entrytb}　{entryviews}　{tags}{alltags}
+		{$lnc[73]}{entrytime} {entrycomment} {entrytb} {entryviews} {tags} {alltags}
 	</div>
 	{tbbar}
 </div>
@@ -342,8 +342,8 @@ $elements['form_reply']=<<<eot
 				</div>
 				<div class="formbox-comment-tool">
 					<div id="choose-options-panel">
-						<a onclick="showhidediv('commentbox-openid')" style="cursor:hand;cursor:pointer;"><img src="{$template['images']}/openid.png" alt="OpenID登入" title="OpenID登入" border="0"/></a>
-						<a onclick="showhidediv('set')" style="cursor:hand;cursor:pointer;"><img src="{$template['images']}/options.png" alt="权限选项" title="{$lnc[242]}, {$lnc[243]}, {$lnc[38]}{$lnc[245]}, {$lnc[284]}" border="0"/></a>
+						<a onclick="showhidediv('commentbox-openid')" style="cursor:hand;cursor:pointer;"><img src="{$template['images']}/openid.png" alt="OpenID {$lnc[89]}" title="OpenID {$lnc[89]}" border="0"/></a>
+						<a onclick="showhidediv('set')" style="cursor:hand;cursor:pointer;"><img src="{$template['images']}/options.png" alt="{$lnc[335]}" title="{$lnc[242]}, {$lnc[243]}, {$lnc[38]} {$lnc[245]}, {$lnc[284]}" border="0"/></a>
 						<a onclick="showhidediv('emots')" style="cursor:hand;cursor:pointer;"><img src="{$template['images']}/emots.png" alt="{$lnc[241]}" title="{$lnc[244]}" border="0"/></a>
 					</div>
 					<div id="set" class="choose-options" style="display: none;">
