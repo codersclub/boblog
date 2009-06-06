@@ -173,7 +173,7 @@ $elements['excerptontop']=<<<eot
 		[{$lnc[33]}] <a href="javascript: showhidediv('{topid}');">{entrytitletext}</a>
 		</h5>
 		<div class="textbox-label">
-		Posted in {entrycate} at {entrydate} / {entrycomment} » {adminlink}
+		Posted in {entrycate} at {entrydate} / {entrycomment} &raquo; {adminlink}
 		</div>
 		{adminbar}
 	</div>
@@ -323,7 +323,7 @@ eot;
 
 $elements['entryadditional']=<<<eot
 <div style="margin-top: 9px;">
-» {readmore}
+&raquo; {readmore}
 </div>
 eot;
 
