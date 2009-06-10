@@ -119,7 +119,7 @@ $elements['displayfooter']=<<<eot
 	</div>
 		<div id="footer">
 			<div id="innerFooter">
-			<!-- 请尊重劳动成果，保留作者及修改者版权 -->
+			<!-- Please respect the results of labor and retain the copyright of the author and modifier -->
 			    <div id="footer-title"><a href="index.php"><!--global:{blogname}--></a></div>
 				<div id="footer-other">{section_foot_components} Design by <a href=" http://blog.gluedideas.com/" target="_blank">Christopher Frazier </a> Transplant by <a href="http://www.404cn.com/" target="_blank">404cn</a></div>
 			<div id="processtime">

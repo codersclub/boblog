@@ -2,7 +2,7 @@
 $template['id']="gluedideas070213";
 $template['name']="gluedideas";
 $template['author']="Christopher Frazier";
-$template['intro']="transplant by 鬼火";
+$template['intro']="transplant by Wildfire";
 $template['dirname']="gluedideas";
 $template['thumbnail']="thumb.jpg";
 $template['structure']="template/gluedideas/elements.php";
