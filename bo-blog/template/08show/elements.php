@@ -103,8 +103,8 @@ $elements['displayfooter']=<<<eot
 	</div>
 		<div id="footer">
 			<div id="innerFooter">
-			<!-- 请尊重他人劳动成果，保留作者及修改者版权 -->
-				{section_foot_components} | Design by <a href="mailto:wangjun990830[at]gmail.com">乐天/wangjun</a> | Transplant by <a href="http://www.404cn.com/blog/" target="_blank">鬼火/404cn</a>
+			<!-- Please respect the work results of others and retain the copyright of the author and modifier -->
+				{section_foot_components} | Design by <a href="mailto:wangjun990830[at]gmail.com">Lotte/wangjun</a> | Transplant by <a href="http://www.404cn.com/blog/" target="_blank">Wildfire/404cn</a>
 			<div id="processtime">
 			</div>
 			</div>
