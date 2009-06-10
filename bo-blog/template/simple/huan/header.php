@@ -1,5 +1,5 @@
 <?php 
-// 百变图代码，版权归http://blog.nzye.com/index.php所有！！
+// Variety diagram code, copyright belongs to http://blog.nzye.com/index.php!
 $url='pic'; 
 $files=array(); 
 if ($handle=opendir("$url")) { 
@@ -12,5 +12,3 @@ if ($handle=opendir("$url")) {
 closedir($handle); 
 $random=rand(0,count($files)-1); 
 readfile("$url/$files[$random]"); 
-
-?> 

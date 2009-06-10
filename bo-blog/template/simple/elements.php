@@ -181,7 +181,7 @@ $elements['excerptontop']=<<<eot
 	{entrycontent}
 	</div>
 	<div class="textbox-bottom">
-	分类:{entrycateicon} {entrycate} | {entrycomment} | {entrytb} | {entryviews} {ifadmin}
+	{$lnc[320]}: {entrycateicon} {entrycate} | {entrycomment} | {entrytb} | {entryviews} {ifadmin}
 	</div>
 	{tbbar}
 	{adminbar}
@@ -489,4 +489,3 @@ $elements['tips']=<<<eot
 </body>
 </html>
 eot;
-?>
