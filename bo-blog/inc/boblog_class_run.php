@@ -279,7 +279,7 @@ class getblogs extends boblog {
 	}
 
 	function single_reply ($eachreply, $i=0) {
-		global $mbcon, $section_body, $permission, $adminlist, $userdetail, $config, $categories, $weather, $t, $section_bodys, $lnc, $nowtime, $flset;
+		global $mbcon, $section_body, $permission, $adminlist, $userdetail, $config, $categories, $weather, $t, $section_bodys, $lnc, $nowtime, $flset, $adminlogstat;
 		if (!@is_a($t, 'template')) {
 			$t=new template;
 		}
@@ -307,7 +307,7 @@ class getblogs extends boblog {
 			if ($eachreply['repemail']) $replieremail="<a href=\"mailto:{$eachreply['repemail']}\"><img src=\"{$mbcon['images']}/email.gif\" border=\"0\" alt=\"Email\" title=\"{$lnc[18]}\" /></a>";
 			if ($eachreply['repurl']) $replierhomepage="<a href=\"{$eachreply['repurl']}\" target=\"_blank\"><img src=\"{$mbcon['images']}/homepage.gif\" border=\"0\" alt=\"Homepage\" title=\"{$lnc[19]}\" /></a>";
 			$replytime=zhgmdate("{$mbcon['timeformat']} H:i", ($eachreply['reptime']+3600*$config['timezone'])); 
-			if ($permission['ReplyReply']==1) {
+			if ($permission['ReplyReply']==1 && $adminlogstat==1) {
 				$addadminreply="<a href=\"javascript: showadminreply('com_{$eachreply['repid']}');\">[{$lnc[20]}]</a>";
 				$deladminreply="<a href=\"javascript: showdeladminreply('{$eachreply['repid']}');\">[{$lnc[21]}]</a>";
 				$delreply="<a href=\"javascript: showdelreply('{$eachreply['repid']}', '{$eachreply['blogid']}');\">[{$lnc[22]}]</a>";
@@ -458,7 +458,7 @@ class getblogs extends boblog {
 	}
 
 	function output ($entry, $way='excerpt', $contentonly=false) {
-		global $mbcon, $section_body, $permission, $adminlist, $userdetail, $config, $categories, $weather, $t, $section_bodys, $part, $page, $template, $lnc, $tptvalue, $flset;
+		global $mbcon, $section_body, $permission, $adminlist, $userdetail, $config, $categories, $weather, $t, $section_bodys, $part, $page, $template, $lnc, $tptvalue, $flset, $adminlogstat;
 		if (!@is_a($t, 'template')) {
 			$t=new template;
 		}
@@ -515,9 +515,9 @@ class getblogs extends boblog {
 
 		if ($permission['EditEntry']!=1) $ifadmin='';
 		else {
-			$adminbar="<div id=\"admin{$entry['blogid']}\" style=\"display: none;\" class=\"textbox-adminbar\"><br/><strong>{$lnc[41]}</strong><a href=\"admin.php?go=edit_edit_{$entry['blogid']}\">{$lnc[42]}</a> | <a href=\"javascript: showdelblog('{$entry['blogid']}');\">{$lnc[43]}</a> | <a href=\"javascript: comfirmurl('admin.php?go=entry_ae_noreply&amp;tid={$entry['blogid']}');\">{$lnc[44]}</a> | <a href=\"javascript: comfirmurl('admin.php?go=entry_ae_notb&amp;tid={$entry['blogid']}');\">{$lnc[45]}</a><br/><strong>{$lnc[46]}</strong><a href=\"admin.php?go=entry_ae_lock&amp;tid={$entry['blogid']}\">{$lnc[47]}</a> | <a href=\"admin.php?go=entry_ae_unlock&amp;tid={$entry['blogid']}\">{$lnc[48]}</a> | <a href=\"admin.php?go=entry_ae_sticky1&amp;tid={$entry['blogid']}\">{$lnc[49]}</a> | <a href=\"admin.php?go=entry_ae_sticky2&amp;tid={$entry['blogid']}\">{$lnc[50]}</a> | <a href=\"admin.php?go=entry_ae_sticky0&amp;tid={$entry['blogid']}\">{$lnc[51]}</a><br/><strong>{$lnc[52]}</strong><a href=\"javascript: comfirmurl('admin.php?go=entry_ae_noread&amp;tid={$entry['blogid']}');\">{$lnc[53]}</a> | <a href=\"admin.php?go=entry_ae_recountrep&amp;tid={$entry['blogid']}\">{$lnc[54]}</a> | <a href=\"admin.php?go=entry_ae_recounttb&amp;tid={$entry['blogid']}\">{$lnc[55]}</a></div>";
-			$ifadmin=" | <a href='javascript: showhidediv(\"admin{$entry['blogid']}\");'>{$lnc[56]}</a>";
-			$adminlink="<a href='javascript: showhidediv(\"admin{$entry['blogid']}\");'>{$lnc[56]}</a>";
+			$adminbar=($adminlogstat==1) ? "<div id=\"admin{$entry['blogid']}\" style=\"display: none;\" class=\"textbox-adminbar\"><br/><strong>{$lnc[41]}</strong><a href=\"admin.php?go=edit_edit_{$entry['blogid']}\">{$lnc[42]}</a> | <a href=\"javascript: showdelblog('{$entry['blogid']}');\">{$lnc[43]}</a> | <a href=\"javascript: comfirmurl('admin.php?go=entry_ae_noreply&amp;tid={$entry['blogid']}');\">{$lnc[44]}</a> | <a href=\"javascript: comfirmurl('admin.php?go=entry_ae_notb&amp;tid={$entry['blogid']}');\">{$lnc[45]}</a><br/><strong>{$lnc[46]}</strong><a href=\"admin.php?go=entry_ae_lock&amp;tid={$entry['blogid']}\">{$lnc[47]}</a> | <a href=\"admin.php?go=entry_ae_unlock&amp;tid={$entry['blogid']}\">{$lnc[48]}</a> | <a href=\"admin.php?go=entry_ae_sticky1&amp;tid={$entry['blogid']}\">{$lnc[49]}</a> | <a href=\"admin.php?go=entry_ae_sticky2&amp;tid={$entry['blogid']}\">{$lnc[50]}</a> | <a href=\"admin.php?go=entry_ae_sticky0&amp;tid={$entry['blogid']}\">{$lnc[51]}</a><br/><strong>{$lnc[52]}</strong><a href=\"javascript: comfirmurl('admin.php?go=entry_ae_noread&amp;tid={$entry['blogid']}');\">{$lnc[53]}</a> | <a href=\"admin.php?go=entry_ae_recountrep&amp;tid={$entry['blogid']}\">{$lnc[54]}</a> | <a href=\"admin.php?go=entry_ae_recounttb&amp;tid={$entry['blogid']}\">{$lnc[55]}</a></div>" : '';
+			$ifadmin=($adminlogstat==1) ? " | <a href='javascript: showhidediv(\"admin{$entry['blogid']}\");'>{$lnc[56]}</a>" : '';
+			$adminlink=($adminlogstat==1) ? "<a href='javascript: showhidediv(\"admin{$entry['blogid']}\");'>{$lnc[56]}</a>" : '';
 		}
 		$tbauthentic=tbcertificate($entry['blogid'], $entry['pubtime']);
 		if ($mbcon['allowtrackback']==1) {

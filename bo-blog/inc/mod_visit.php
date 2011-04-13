@@ -1,15 +1,9 @@
 <?PHP
 /* -----------------------------------------------------
 Bo-Blog 2 : The Blog Reloaded.
-<<A Bluview Technology Product>>
-禁止使用Windows记事本修改文件，由此造成的一切使用不正常恕不解答！
 PHP+MySQL blog system.
-Code: Bob Shen
 Offical site: http://www.bo-blog.com
-Copyright (c) Bob Shen 中国－上海
-In memory of my university life
 ------------------------------------------------------- */
-//die (print_r($_COOKIE));
 if (!defined('VALIDREQUEST')) die ('Access Denied.');
 
 extract_forbidden();
@@ -19,7 +13,6 @@ if (!$job) {
 	@header("Location: index.php");
 	exit();
 }
-
 
 if ($job=='openidsubmit') {
 	if ($mbcon['enableopenid']!='1') catcherror($lnc[315].$lnc[319]);
@@ -33,13 +26,15 @@ if ($job=='openidsubmit') {
 	setcookie ('openid_url_id', $openidresult['openidurl']);
 }
 
+if ($flset['guestbook']==1 && ($job=='addmessage' || $job=='editmessage')) getHttp404($lnc[313]); //2011/2/20 Forgot to close this entry
+
 if ($job=='addreply' || $job=='addmessage' || $job=='editreply' || $job=='editmessage') {
 	if (check_ip ($userdetail['ip'], $forbidden['banip'])) catcherror($lnc[209]);
 	define('REPLYSPECIAL', 1);
 	
 	if ($job=='addreply' || $job=='addmessage') {
 		//Check post interval
-		$lastpost=$_COOKIE['lastpost'];
+		$lastpost=$_COOKIE['lastpost']; //2010/9/5 : We no longer use COOKIE, which can be manipulated by users.
 		if (($nowtime['timestamp']-$lastpost)<$permission['MinPostInterval']) catcherror($lnc[210]);
 		$findintable=($job=='addreply') ? 'replies' : 'messages';
 		$findreplies=$blog->getbyquery("SELECT * FROM `{$db_prefix}{$findintable}` WHERE `repip`='{$userdetail['ip']}' ORDER BY `reptime` DESC LIMIT 1");
@@ -52,6 +47,7 @@ if ($job=='addreply' || $job=='addmessage' || $job=='editreply' || $job=='editme
 	if ($v_contentc) $v_content=$v_contentc;
 	$v_id=intval(trimplus($v_id));
 	if ($job=='addreply') {
+		$pageKey='R'.$v_id;
 		checkpermission('Reply');
 		if ($v_id==='') $cancel=$lnc[211];
 		else {
@@ -64,8 +60,10 @@ if ($job=='addreply' || $job=='addmessage' || $job=='editreply' || $job=='editme
 			}
 		}
 	} elseif ($job=='addmessage' || $job=='editmessage') {
+		$pageKey='guestbook';
 		checkpermission('LeaveMessage');
 	} else {
+		$pageKey='R'.$v_id;
 		checkpermission('Reply');
 	}
 	catcherror ($cancel);
@@ -89,6 +87,7 @@ if ($job=='addreply' || $job=='addmessage' || $job=='editreply' || $job=='editme
 			session_start();
 			if ($v_security=='' || strtolower($v_security)!=strtolower($_SESSION['code'])) $cancel=$lnc[165];
 			else { //Delete current session
+				$_SESSION['code']=rand(1000, 2000); //Added on 2010/9/5, preventing unsuccessful destroy
 				session_destroy();
 			}
 		}
@@ -123,13 +122,27 @@ if ($job=='addreply' || $job=='addmessage' || $job=='editreply' || $job=='editme
 	}
 	$v_content=safe_convert(trimplus($v_content), $html);
 	if ($v_content=='') $cancel=$lnc[214];
-	if (strlen($v_content)>$permission['MaxPostLength']) $cancel=$lnc[214];
+	$lengthContent=strlen($v_content);
+	if ($lengthContent>$permission['MaxPostLength']) $cancel=$lnc[214];
 	if (preg_search($v_content, $forbidden['banword'])) $cancel=$lnc[214];
+
+	if ($job=='addreply' || $job=='addmessage') { //2011/2/20 LRSC function
+		$LRSC=LRSC_validate($pageKey, $lengthContent); 
+		if ($LRSC=='unlimited') { 
+			$cancel=$lnc[2];
+		} elseif ($LRSC) {
+			$cancel=$lnc[320].$LRSC;
+		}
+	}
+
 	catcherror ($cancel);
 
 	if ($mbcon['censorall']=='1') $suspectspam=1;
 	elseif ($mbcon['antispam']=='1' && $permission['NoSpam']!=1) {
 		//If the post contains more than X links, it may be a spam
+		if ($v_repurl) {
+			$mbcon['susurlnum']-=1; //2010/9/5: If the user leaves a website URL, it will be counted as well.
+		}
 		if (substr_count($v_content, 'http://')>=$mbcon['susurlnum']) $suspectspam=1;
 		if (substr_count($v_content, '[url')>=$mbcon['susurlnum']) $suspectspam=1;
 		if (substr_count($v_content, 'www.')>=$mbcon['susurlnum']) $suspectspam=1;
