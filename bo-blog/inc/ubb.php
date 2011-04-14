@@ -50,8 +50,7 @@ function convert_ubb ($str, $advanced=0, $inrss=0) {
 				"/\s*\[code\][\n\r]*(.+?)[\n\r]*\[\/code\]\s*/ie",
 				"/\[autourl\]([^\[]*)\[\/autourl\]/ie",
 				"/\[url\]([^\[]*)\[\/url\]/ie",
-				"/\[url=www.([^\[\"']+?)\](.+?)\[\/url\]/is",
-				"/\[url=([^\[]*)\](.+?)\[\/url\]/is",
+				"/\[url=([^\[]*)\](.+?)\[\/url\]/ie",
 				"/\[email\]([^\[]*)\[\/email\]/is",
 				"/\[acronym=([^\[]*)\](.+?)\[\/acronym\]/is",
 				"/\[color=([a-zA-Z0-9#]+?)\](.+?)\[\/color\]/i",
@@ -71,10 +70,9 @@ function convert_ubb ($str, $advanced=0, $inrss=0) {
 				"<div class=\"quote\"><div class=\"quote-title\">{$lnc[265]}</div><div class=\"quote-content\">\\1</div></div>",
 				"<div class=\"quote\"><div class=\"quote-title\">{$lnc[266]} \\1</div><div class=\"quote-content\">\\2</div></div>",
 				"makecode('\\1')",
-				"makeurl('\\1')",
-				"makeurl('\\1')",
-				"<a href=\"http://www.\\1\" target=\"_blank\">\\2</a>",
-				"<a href=\"\\1\" target=\"_blank\">\\2</a>",
+				"makeurl('\\1', {$advanced})",
+				"makeurl('\\1', {$advanced})",
+				"makeurl('\\1', {$advanced}, '\\2')",
 				"<a href=\"mailto:\\1\">\\1</a>",
 				"<acronym title=\"\\1\">\\2</acronym>",
 				"<span style=\"color: \\1;\">\\2</span>",
@@ -99,11 +97,24 @@ function convert_ubb ($str, $advanced=0, $inrss=0) {
 
 }
 
-function makeurl($url) {
-	global $mbcon;
-	$urllink="<a href=\"".(substr(strtolower($url), 0, 4) == 'www.' ? "http://$url" : $url).'" target="_blank">';
-	if($mbcon['shortenurl']=='1' && strlen($url) > $mbcon['urlmaxlen']) {
-		$url = substr($url, 0, $mbcon['urlmaxlen']).'...';
+function makeurl($url, $advanced=0, $linktext='') { //2011/2/20 Force admin quit
+	global $mbcon, $config;
+	if ($advanced==0) {
+		$gotoreallink="{$config['blogurl']}/urlredirect.php?go=".(substr(strtolower($url), 0, 4) == 'www.' ? urlencode("http://$url") : urlencode($url));
+	} else {
+		$gotoreallink=substr(strtolower($url), 0, 4) == 'www.' ? "http://$url" : $url;
+	}
+	
+	$urllink="<a href=\"{$gotoreallink}\" target=\"_blank\">";
+
+	if ($linktext) {
+		$url = $linktext;
+	}
+	else {
+		if($mbcon['shortenurl']=='1' && strlen($url) > $mbcon['urlmaxlen']) {
+			$halfmax=floor($mbcon['urlmaxlen']/2);
+			$url = substr($url, 0, $halfmax).'...'.substr($url, 0-$halfmax);
+		}
 	}
 	$urllink .= $url.'</a>';
 	return $urllink;

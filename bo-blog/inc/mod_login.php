@@ -17,19 +17,20 @@ acceptrequest('job', 1);
 if (!$job) {
 	$urlreturn=($_SERVER['HTTP_REFERER']=='') ? "index.php" : $_SERVER['HTTP_REFERER'];
 	$m_b=new getblogs;
-	$jobs="login.php?job=verify";
-	$actionnow="{$lnc[253]} [<a href=\"login.php?job=register\">{$lnc[254]}</a>]";
-	$formbody.=$t->set('form_eachline', array('text'=>"*{$lnc[132]}", 'formelement'=>"<input name='username' type='text' id='username' size='24' class='text' /><input type='hidden' name='urlreturn' value='{$urlreturn}' />"));
+	$jobs=($_GET['adminlogin']==1) ? "login.php?job=verifyadmin" : "login.php?job=verify";
+	$actionnow=($_GET['adminlogin']==1) ? "{$lnc[273]}" : "{$lnc[253]} [<a href=\"login.php?job=register\">{$lnc[254]}</a>]";
+	$plusadminname=($_GET['adminlogin']==1) ? $userdetail['username'] : '';
+	$formbody.=$t->set('form_eachline', array('text'=>"*{$lnc[132]}", 'formelement'=>"<input name='username' type='text' id='username' size='24' class='text' value='{$plusadminname}' /><input type='hidden' name='urlreturn' value='{$urlreturn}' />"));
 	$formbody.=$t->set('form_eachline', array('text'=>"*{$lnc[133]}", 'formelement'=>"<input type='password'  class='text' size='24' name='password' id='password' />"));
 
-	if ($mbcon['enableopenid']=='1') {
+	if ($mbcon['enableopenid']=='1' && $_GET['adminlogin']!=1) {
 		$formbody.=$t->set('form_eachline', array('text'=>"", 'formelement'=>"{$lnc[314]}:"));
 		$formbody.=$t->set('form_eachline', array('text'=>"OpenID", 'formelement'=>"<input name='openid_url' type='text' id='openid_url' size='32' class='text' />"));
 	}
 
-	$formbody.=$t->set('form_eachline', array('text'=>'&nbsp;', 'formelement'=>"<input name=\"savecookie\" type=\"checkbox\" id=\"savecookie\" value=\"1\" checked='checked' />{$lnc[284]}"));
+	if ($_GET['adminlogin']!=1) $formbody.=$t->set('form_eachline', array('text'=>'&nbsp;', 'formelement'=>"<input name=\"savecookie\" type=\"checkbox\" id=\"savecookie\" value=\"1\" checked='checked' />{$lnc[284]}"));
 	plugin_runphp('loginform');
-	if ($config['loginvalidation']==1) {
+	if ($config['loginvalidation']==1 && $_GET['adminlogin']!=1) {
 		$rand=rand (0,100000);
 		$formbody.=$t->set('form_eachline', array('text'=>"*{$lnc[249]}", 'formelement'=>"<span id='securityimagearea'><img src='inc/securitycode.php?rand={$rand}' alt='' title='{$lnc[250]}'/></span> <input name='securitycode' type='text' id='securitycode' size='16' class='text' /> {$lnc[251]} [<a href=\"javascript: refreshsecuritycode('securityimagearea', 'securitycode');\">{$lnc[283]}</a>]"));
 	}
@@ -237,6 +238,30 @@ if ($job=='verify') {
 	}
 }
 
+if ($job=='verifyadmin') {
+	acceptrequest('urlreturn');
+ 	$password=md5($_POST['password']);
+	$username=safe_convert(mystrtolower($_POST['username']));
+	$try=$blog->getbyquery("SELECT * FROM `{$db_prefix}user` WHERE LOWER(username)='{$username}' AND `userpsw`='{$password}'");
+	if (!is_array($try)) {
+		catcherror ($lnc[166]);
+	} else {
+		if ($try['userid']==$userdetail['userid'] && $try['userpsw']==$userdetail['userpsw']) {
+			setcookie ('adminuserid', $userid);
+			setcookie ('adminuserpsw', $password);
+			$redirection=array("{$lnc[309]}|{$urlreturn}", "{$lnc[163]}|index.php");
+			if ($try['usergroup']=='2') {
+				$redirection[]="{$lnc[107]}|admin.php";
+				$redirection[]="{$lnc[108]}|admin.php?act=edit";
+			}
+			catchsuccess ("{$lnc[167]} ".$username, $redirection);
+		} else {
+			catcherror ($lnc[166]);
+ 		}
+	}
+}
+
+
 if ($job=='openidverify') {
 	if ($mbcon['enableopenid']!='1') catcherror($lnc[315].$lnc[319]);
 	$openidresult=completeOpenID();
@@ -262,6 +287,8 @@ if ($job=='logout') {
 	define ('isLogout', 1);
 	setcookie ('userid', '', time()-3600);
 	setcookie ('userpsw', '', time()-3600);
+	setcookie ('adminuserid', '', time()-3600);
+	setcookie ('adminuserpsw', '', time()-3600);
 	setcookie ('openid_url_id', '', time()-3600);
 	setcookie ('bloglanguage', '', time()-3600);
 	setcookie ('blogtemplate', '', time()-3600);

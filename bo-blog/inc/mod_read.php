@@ -83,6 +83,7 @@ if ($is_preview) {
 else {
 	$order=($mbcon['replyorder']=='0') ? "DESC" : "ASC";
 	$start_id=($page-1)*$mbcon['replyperpage'];
+	$blogaliasp=safe_convert($blogaliasp);  //BTBSTDN
 	$querycondition=($use_blogalias) ? "`blogalias`='{$blogaliasp}'" : "`blogid`='{$itemid}'";
 	if ($permission['SeeHiddenEntry']!=1) {
 		$partialquery="SELECT * FROM `{$db_prefix}blogs` WHERE {$querycondition} AND `property`<'2' LIMIT 0, 1";
@@ -92,6 +93,7 @@ else {
 		$partialquery2=" WHERE property<'3'";
 	}
 	$records=$m_b->single_record($partialquery, $partialquery2);
+
 }
 
 
@@ -139,6 +141,7 @@ if (!$is_preview) {
 		$m_b->query("UPDATE LOW_PRIORITY `{$db_prefix}blogs` SET `views`=`views`+1 WHERE `blogid`='{$itemid}'");
 		@setcookie('readentry', $allreads."{$itemid},", time()+7200);
 	}
+	LRSC_init('R'.$records[0]['blogid']); //2011/2/20
 }
 
 
