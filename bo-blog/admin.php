@@ -12,6 +12,7 @@ In memory of my university life
 
 define('VALIDADMIN', 1);
 define ("noCounter", 1);
+$adminlogstat=0;
 require_once ("global.php");
 include_once ("lang/{$langback}/backend.php");
 include_once ("data/allmods.php");
@@ -21,6 +22,15 @@ require_once ("admin/cache_func.php");
 $blogplugin=$plugin_onload=$plugin_header=null;
 include_once("data/plugin_enabled.php");
 
+if ($logstat!==1) {
+	@header("Location: ./login.php");
+	exit();
+}
+
+if ($adminlogstat!==1) {
+	@header("Location: ./login.php?adminlogin=1");
+	exit();
+}
 
 acceptrequest('act,go,page');
 if (!isset($page) || !is_numeric($page) || $page<=0) $page=1;

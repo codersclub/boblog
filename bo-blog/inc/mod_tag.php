@@ -20,7 +20,7 @@ $itemid=safe_convert($itemid);
 
 acceptrequest('tag');
 if ($tag!=='') $job='show';
-$tag=addslashes(urldecode($tag));
+$tag=safe_convert(addslashes(urldecode($tag)));  //BTBSTDN
 if ($job=='default') {
 	$sequence=($mbcon['tagorder']=='1') ? 'tagcounter' : 'tagid';
 	$tagperpage=floor($mbcon['tagperpage']);

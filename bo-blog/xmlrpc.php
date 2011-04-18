@@ -18,7 +18,7 @@ require_once ("inc/boblog_class_run.php");
 define('VALIDADMIN', 1);
 require_once ("admin/cache_func.php");
 
-//$validuploadfiletype=array("");
+$validuploadfiletype=array('jpg', 'png', 'gif', 'zip', 'rar');
 
 $rawdata=get_http_raw_post_data();
 //writetofile ("text_".rand(0,500).".php", $rawdata); //For debug use
@@ -435,6 +435,9 @@ function metaWeblog_newMediaObject ($values) { //2006-12-2 add support for uploa
 		$writefilecontent=base64_decode($struct['bits']);
 		$ext=strtolower(strrchr($struct['name'],'.'));
 		$ext=str_replace(".", '', $ext);
+		if (!in_array($ext, $validuploadfiletype)) {
+			xml_error ("Sorry, uploading file ({$struct['name']}) failed because the file type is not allowed.");
+		}
 		$upload_filename=time().'_'.rand(1000, 9999).substr(md5($struct['name']), 0, 4).'.'.$ext;
 
 		if ($mbcon['uploadfolders']=='1') {

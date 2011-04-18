@@ -10,9 +10,9 @@ In memory of my university life
 
 /* Version and Copyright Declaration
     You are not allowed to change anything in this part. */
-$blogversion="2.1.1 Release";
-$codeversion="2.1.1.3626.0";
-$codename="pilot";
+$blogversion="2.1.2 beta 1";
+$codeversion="2.1.2.0220.0";
+$codename="swallow";
 //You can change anything below as you wish. Good Luck!
 
 if (file_exists('install/install.php')) {
@@ -105,9 +105,11 @@ else {
 }
 define ('elementfile', $template['structure']); //2006-7-2 Seurity Fix, 2006-7-5 modified
 
-acceptcookie("userid,userpsw");
+acceptcookie("userid,userpsw,adminuserid,adminuserpsw"); //2011/2/20 Separate admin cookie from front-end cookie
 $userid=safe_convert($userid);
 $userpsw=safe_convert($userpsw);
+$adminuserid=safe_convert($adminuserid);
+$adminuserpsw=safe_convert($adminuserpsw);
 
 $blog=new boblog;
 
@@ -129,11 +131,18 @@ else {
 		$userdetail['userid']=-1;
 		$logstat=0;
 	}
-	else $logstat=1;
+	else {
+  		$logstat=1;
+		if ($userid==$adminuserid && $userpsw==$adminuserpsw) {
+			$adminlogstat=1;
+		}
+	}
 }
 if ($mbcon['enableopenid']=='1') { 
 	$openidloginstat=($logstat==0 && $_COOKIE['openid_url_id']) ? 1 : 0;
 } else $openidloginstat=0;
+
+
 
 //Load User Group Permission Cache
 $permission=array();
@@ -150,10 +159,11 @@ if ($permission['CloseSecurityCode']==1 && !defined('VALIDADMIN')) { //Disable s
 
 //Get IP
 $ip_tmp=$_SERVER['REMOTE_ADDR'];
-$ip_tmp1 = $_SERVER['HTTP_X_FORWARDED_FOR'];
-if ($ip_tmp1!= "" && $ip_tmp1!= "unknown") $userdetail['ip']=$ip_tmp1;
-else $userdetail['ip']=$ip_tmp;
-$userdetail['ip']=addslashes($userdetail['ip']);
+//$ip_tmp1 = $_SERVER['HTTP_X_FORWARDED_FOR'];
+//if ($ip_tmp1!= "" && $ip_tmp1!= "unknown") $userdetail['ip']=$ip_tmp1;
+//else $userdetail['ip']=$ip_tmp;
+$userdetail['ip']=$ip_tmp;
+$userdetail['ip']=safe_convert(addslashes($userdetail['ip'])); //BTBSTDN
 
 //Get Statistics
 $statistics=$blog->getsinglevalue("{$db_prefix}counter");
@@ -356,7 +366,7 @@ function addbar ($barname, $actions) { //Generate a module
 
 function safe_convert($string, $html=0, $filterslash=0) { //Words Filter
 	if ($html==0) {
-		$string=htmlspecialchars($string, ENT_QUOTES);
+		$string=htmlspecialchars($string, ENT_QUOTES, 'UTF-8');
 		$string=str_replace("<","&lt;",$string);
 		$string=str_replace(">","&gt;",$string);
 		if ($filterslash==1) $string=str_replace("\\", '&#92;', $string);
@@ -1033,6 +1043,40 @@ function completeOpenID () {
 		return array('openidurl'=>$openid, 'sreg'=>$sreg);
 	} else {
 		catcherror($lnc[315].'OpenID Unknown Error.', false);
+	}
+}
+
+/*
+2011/2/20 - Experiemental feature:
+Length Related Spam Check
+*/
+$LRSC_PCD=0.3; //0.9 seconds for one Chinese character
+
+function LRSC_init($pageKey) {
+	$pageKey="LRSC_KEY_{$pageKey}";
+	global $nowtime, $db_defaultsessdir, $db_tmpdir;
+	if ($db_defaultsessdir!=1) @session_save_path("./{$db_tmpdir}");
+	@session_cache_limiter("private, must-revalidate");
+	@session_start();
+	$_SESSION[$pageKey]=$nowtime['timestamp'];
+}
+
+function LRSC_validate($pageKey, $strLength) {
+	$pageKey="LRSC_KEY_{$pageKey}";
+	global $nowtime, $db_defaultsessdir, $db_tmpdir, $LRSC_PCD;
+	if ($db_defaultsessdir!=1) @session_save_path("./{$db_tmpdir}");
+	@session_cache_limiter("private, must-revalidate");
+	@session_start();
+	if (empty($_SESSION[$pageKey])) return 'unlimited';
+	else {
+		$thisDuration=$nowtime['timestamp']-$_SESSION[$pageKey];
+		$validDuration=$strLength*$LRSC_PCD;
+		if ($thisDuration<$validDuration) {
+			return (($validDuration-$thisDuration).' s');
+		}
+		else {
+			return false;
+		}
 	}
 }
 
