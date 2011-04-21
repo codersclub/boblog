@@ -11,11 +11,11 @@ In memory of my university life
 ------------------------------------------------------- */
 
 
-/*本文件用于URL Rewrite
-$config['urlrewritemethod']的意义
-0：关闭，ugly url
-1：PHP URL Optimization
-2：Apache URL Rewrite
+/* This document is for URL Rewrite
+$config['urlrewritemethod'] Significant
+0: Closed, ugly url
+1: PHP URL Optimization
+2: Apache URL Rewrite
 */
 
 if (!defined('VALIDREQUEST')) die ('Access Denied.');
