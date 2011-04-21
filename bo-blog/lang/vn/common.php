@@ -324,7 +324,7 @@ $lnc=array (
 317=>'You are now logged in with limited permissions as ',
 318=>'OpenID',
 319=>'OpenID has been disabled.',
-320=>'You submitted the post too quick. You need to wait for another '
+320=>'You submitted the post too quick. You need to wait for another ',
 );
 
 //nhân vật Trung Quốc 

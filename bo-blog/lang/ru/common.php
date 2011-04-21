@@ -316,13 +316,21 @@ $lnc=array (
 310=>'Browser is redirecting, or you can click one of the following links:',
 311=>'Hidden content',
 312=>'You are not allowed to see this part. Please ',
+313=>'HTTP/1.1 404 Page Not Found.',
+314=>"You can also login with your <a href=\"http://openid.net\" target=\"_blank\">OpenID</a>",
+315=>'OpenID Error:<br/>',
+316=>'You have chosen to deny the OpenID authentification request.<br/>Please go back or <a href="javascript: history.go(-2)"><strong>Click Here</strong></a> to cancel the process, but you will lose the unsubmitted content.',
+317=>'You are now logged in with limited permissions as ',
+318=>'OpenID',
+319=>'OpenID has been disabled.',
+320=>'You submitted the post too quick. You need to wait for another ',
 );
 
 //Chinese characters
 $lnlunarcalendar=array(
 'tiangan'=>array("Unknown","Jia ","Yi ","Bing ","Ding ","Wu ","Ji ","Geng ","Xin ","Ren ","Gui "),
-'dizhi'=>array("Unknown","Zi (Mouse)","Chou (Ox)","Yin (Tiger)","Mao (Rabbit)","Chen (Dragon)",
-			   "Si (Snake)","Wu (Horse)","Wei (Sheep)","Shen (Monkey)","You (Chick)","Xu (Dog)","Hai (Swine)"),
+'dizhi'=>array("Unknown","Mouse","Ox","Tiger","Rabbit","Dragon",
+			   "Snake","Horse","Sheep","Monkey","Chick","Dog","Swine"),
 'month'=>array("Leap ","Jan","Feb","Mar","Apr","May","Jun",
 			  "Jul","Aug","Sep","Oct","Nov","Dec",""),
 'day'=>array("Unknown","1st","2nd","3rd","4th","5th","6th","7th","8th","9th","10th",

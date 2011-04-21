@@ -50,7 +50,7 @@ $lnc=array (
 44=>'Clear replies',
 45=>'Clear trackbacks',
 46=>'Property: ',
-47=>'Lock', //Verb, go to lock 
+47=>'Lock', //Verb, go to lock
 48=>'Unlock',
 49=>'Pin+unfold',
 50=>'Pin+fold',
@@ -323,14 +323,14 @@ $lnc=array (
 317=>'You are now logged in with limited permissions as ',
 318=>'OpenID',
 319=>'OpenID has been disabled.',
-320=>'You submitted the post too quick. You need to wait for another '
+320=>'You submitted the post too quick. You need to wait for another ',
 );
 
 //Chinese characters
 $lnlunarcalendar=array(
 'tiangan'=>array("Unknown","Jia ","Yi ","Bing ","Ding ","Wu ","Ji ","Geng ","Xin ","Ren ","Gui "),
-'dizhi'=>array("Unknown","Zi (Mouse)","Chou (Ox)","Yin (Tiger)","Mao (Rabbit)","Chen (Dragon)",
-			   "Si (Snake)","Wu (Horse)","Wei (Sheep)","Shen (Monkey)","You (Chick)","Xu (Dog)","Hai (Swine)"),
+'dizhi'=>array("Unknown","Mouse","Ox","Tiger","Rabbit","Dragon",
+			   "Snake","Horse","Sheep","Monkey","Chick","Dog","Swine"),
 'month'=>array("Leap ","Jan","Feb","Mar","Apr","May","Jun",
 			  "Jul","Aug","Sep","Oct","Nov","Dec",""),
 'day'=>array("Unknown","1st","2nd","3rd","4th","5th","6th","7th","8th","9th","10th",
