@@ -1,0 +1,14 @@
+AddDefaultCharset UTF-8
+DirectoryIndex index.php index.html index.htm
+Options -Indexes
+
+RewriteEngine On
+#RewriteBase /blog
+
+<IfModule mod_rewrite.c>
+RewriteEngine on
+ RewriteCond %{REQUEST_FILENAME} !-f
+ RewriteCond %{REQUEST_FILENAME} !-d
+ RewriteBase /
+ RewriteRule . /index.php [L]
+</IfModule>
