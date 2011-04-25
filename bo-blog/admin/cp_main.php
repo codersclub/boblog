@@ -102,7 +102,7 @@ $promptcleartmp
 <tr>
 <td colspan=2  class="sect">
 
-<b>{$lna[51]}</b> {$phpver} &nbsp;&nbsp;[<a href="admin.php?go=main_phpinfo" target="_blank">{$lna[55]}</a>]<br> 
+<b>{$lna[51]}</b> {$phpver} &nbsp;&nbsp;[<a href="admin.php?go=main_phpinfo" target="_blank">{$lna[55]}</a>]<br>
 <b>{$lna[52]}</b> {$phpos} <br>
 <b>{$lna[53]}</b> {$mysqlver} <br>
 <b>{$lna[54]}</b> {$gdver} <br>
@@ -132,6 +132,7 @@ $promptcleartmp
 <br>
 <b>Localization</b><br>
 <b>English:</b> Bob<br>
+<b>Russian:</b> Vot<br>
 <b>Traditional Chinese:</b> Mesak Chuan<br>
 <b>Vietnamese:</b> Meng Ling, kusanagi<br>
 <br>
@@ -202,7 +203,7 @@ if ($job=='dbstat') {
 		$table_infos .="<tr><td>{$line_t['Name']}</td><td>{$line_t['Rows']}</td>	<td>".round($line_t['Data_length']/1024, 2)." KB</td><td>".round($line_t['Index_length']/1024, 2)." KB</td></tr>";
 		$datalengthall+=$line_t['Data_length'];
 		$indexlengthall+=$line_t['Index_length'];
-	} 
+	}
 	$table_infos.="<tr class='sect'><td><b>{$lna[62]}</b></td><td>&nbsp;</td><td>".round($datalengthall/1024, 2)." KB</td><td>".round($indexlengthall/1024, 2)." KB</td></tr>";
 	$table_infos.="</table>";
 	$display_overall.=highlightadminitems('default', 'main');
@@ -497,7 +498,7 @@ if ($job=='modulenew' || $job=='moduledoedit') {
 
 	$newitemactive=floor($newitemactive);
 	$indexonly=floor($indexonly);
-	
+
 	acceptrequest('func_text,func_url,func_target,func_title,func_extend,func_content,func_code');
 	if (!$newitemname || !$newitemposition || !$newitemdesc) catcherror($lna[124]);
 	$try=$blog->getbyquery("SELECT * FROM `{$db_prefix}mods` WHERE `name`='$newitemname'");
@@ -597,14 +598,14 @@ if ($job=='automod') {
 	$checkmodp_try=$blog->getbyquery("SELECT * FROM `{$db_prefix}user` WHERE `userid`='{$userdetail['userid']}' AND `userpsw`='{$checkmodp}'");
 	if ($checkmodp_try['userid']!=$userdetail['userid']) catcherror($lna[965]);
 	if ($checkmodp_try['usergroup']!=2) catcherror($lna[965]);
-	
+
 	$newmodfile=$_FILES['newmodfile'];
 	if (!$newmodfile) catcherror($lna[128]);
 	$upload_file=$newmodfile['tmp_name'];
 	$upload_filename=urlencode($newmodfile['name']);
 	$ext=strtolower(strrchr($upload_filename,'.'));
 	if ($ext!='.blog' && $ext!='.txt') catcherror($lna[129]);
-	if (!move_uploaded_file ($upload_file,"{$db_tmpdir}/{$upload_filename}")) catcherror ($lna[130].'temp/'); 
+	if (!move_uploaded_file ($upload_file,"{$db_tmpdir}/{$upload_filename}")) catcherror ($lna[130].'temp/');
 	$filecontent=readfromfile("{$db_tmpdir}/{$upload_filename}");
 	$security_check=checksafe($filecontent);
 	if ($security_check) $warn="<font color=red>{$lna[932]}</font>";
@@ -768,6 +769,7 @@ Language/语言/語言
 <td class="sectend">Set blog language</td>
 </tr>
 </table>
+
 <table align=center class='tablewidth'>
 <form action="admin.php?go=main_dolangset" method="post">
 <tr>
@@ -836,7 +838,7 @@ if ($job=='funclock') {
 	}
 
 	$uidesc=array('tags'=>$lnc[288], 'weather'=>$lna[301], 'avatar'=>$lna[881], 'star'=>$lnc[93], 'guestbook'=>$lnc[91], 'modeselectable'=>"{$lnc[183]}/{$lnc[185]}");
-	
+
 	$pref_leftchar="200";
 	$pref_variable="flset";
 	foreach ($flset as $flkey => $flval) {

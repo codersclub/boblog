@@ -101,7 +101,7 @@ if ($mbcon['tbfilter']==3) { //如果人工审核
     if ($trytb > 0) {
         //如果发现在单位时间内同一IP发送次数大于0就扣一分，人工有这么快发送trackback的吗？
         $point -= 1;
-    } 
+    }
 
     if ($mbcon['tbfilter']==2) {
         // 防范强:最终分数少于1分就CUT！
@@ -191,9 +191,9 @@ function fopen_url($url, $convert_case = false) {
 			}
 		}
 		fclose($file);
-	} elseif (function_exists('file_get_contents')) {		
+	} elseif (function_exists('file_get_contents')) {
 		$file_content = @file_get_contents($url);
-	} 
+	}
 	elseif (function_exists('curl_init')) {
 		$curl_handle = curl_init();
 		curl_setopt($curl_handle, CURLOPT_URL, $url);
@@ -201,12 +201,12 @@ function fopen_url($url, $convert_case = false) {
 		curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER,1);
 		curl_setopt($curl_handle, CURLOPT_FAILONERROR,1);
   		curl_setopt($curl_handle, CURLOPT_USERAGENT, 'Trackback Spam Check');
-		$file_content = curl_exec($curl_handle);		
+		$file_content = curl_exec($curl_handle);
 		curl_close($curl_handle);
-	} 
+	}
 	else {
 		$file_content = '';
 	}
-*/	
+*/
 	return $file_content;
 }

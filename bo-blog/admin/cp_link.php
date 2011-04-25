@@ -305,7 +305,7 @@ $display_overall.= <<<eot
 <tr>
 <td width=160>{$lna[238]}</td>
 <td><select name="newisdisplay">
-	<option value='1' $sel1>{$lna[239]}</option> <option value='0' $sel2>{$lna[240]}</option> 
+	<option value='1' $sel1>{$lna[239]}</option> <option value='0' $sel2>{$lna[240]}</option>
 	</select>
 <input type=hidden name=go value="link_save">{$addhidden}</td>
 </tr>
@@ -642,7 +642,7 @@ if ($job=="batchpending") {
 		$blog->query("UPDATE `{$db_prefix}maxrec` SET `maxlinkid`='{$linkid}'");
 		$allnow=@implode('', $wlink);
 		if ($allnow=='') @unlink($filename);
-		else writetofile ($filename, $allnow);	
+		else writetofile ($filename, $allnow);
 		recache_links ();
 	}
 	if ($ajax=='on') {

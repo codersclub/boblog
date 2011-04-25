@@ -182,7 +182,7 @@ if ($job=='batch') {
 	if ($opt=='publish') {
 		recache_latestentries();
 	}
-	
+
 	if ($ajax=='on' && $opt!='del' && $opt!='deldraft') {
 		$fetchURL=($opt=='publish') ? 'admin.php?go=entry_draft' : 'admin.php?go=entry_default';
 		catchsuccessandfetch($finishok, $fetchURL);
@@ -211,7 +211,7 @@ if ($job=='deleteblog' || $job=='deletedraft') {
 		if ($detail['tags']) {
 			$oldtags=@explode('>', trim($detail['tags'], '>'));
 			$oldtags_query="'".@implode("', '", $oldtags)."'";
-			$blog->query("UPDATE `{$db_prefix}tags` SET tagentry=replace(tagentry, ',{$currentid},', ','), tagcounter=tagcounter-1 WHERE tagname in({$oldtags_query})"); //Remove 
+			$blog->query("UPDATE `{$db_prefix}tags` SET tagentry=replace(tagentry, ',{$currentid},', ','), tagcounter=tagcounter-1 WHERE tagname in({$oldtags_query})"); //Remove
 		}
 		$blog->query("DELETE FROM `{$db_prefix}blogs` WHERE `blogid`='{$itemid}'");
 		$blog->query("DELETE FROM `{$db_prefix}calendar` WHERE `cid`='{$itemid}'");

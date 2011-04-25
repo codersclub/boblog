@@ -108,7 +108,7 @@ else {
 	@list($currentpagelocation, $unused)=@explode('.', substr($currentpagelocation, 1));
 	if ($currentpagelocation=='') $currentpagelocation='index';
 }
-$headmenu_tmp=str_replace(array("<span id=\"nav_{$currentpagelocation}\">", "<span id=\"navitem_{$currentpagelocation}\">"), array("<span id=\"nav_{$currentpagelocation}\" class=\"activepage\">", "<span id=\"navitem_{$currentpagelocation}\" class=\"activepageitem\">"), $headmenu); 
+$headmenu_tmp=str_replace(array("<span id=\"nav_{$currentpagelocation}\">", "<span id=\"navitem_{$currentpagelocation}\">"), array("<span id=\"nav_{$currentpagelocation}\" class=\"activepage\">", "<span id=\"navitem_{$currentpagelocation}\" class=\"activepageitem\">"), $headmenu);
 $headmenu=($headmenu_tmp==$headmenu) ? str_replace(array("<span id=\"nav_index\">", "<span id=\"navitem_index\">"), array("<span id=\"nav_index\" class=\"activepage\">", "<span id=\"navitem_index\" class=\"activepageitem\">"), $headmenu) : $headmenu_tmp;
 //Assign an ID for current page
 $currentpage_cssid='pagelocation-'.$currentpagelocation;
@@ -186,7 +186,7 @@ if ($config['gzip']==1 && $act!='tag') ob_end_flush();
 
 
 function getmicrotime() { //Time Counting
-    list($usec, $sec) = explode(" ",microtime()); 
-    return ((float)$usec + (float)$sec); 
+    list($usec, $sec) = explode(" ",microtime());
+    return ((float)$usec + (float)$sec);
 }
 

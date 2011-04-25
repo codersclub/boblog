@@ -1,12 +1,13 @@
-     At the beginning of the installation and use of Bo-Blog before, be sure to carefully read this license document, in the sure that you understand and agree with all of the following terms before they are allowed to continue with the installation and use.
-     Bo-Blog Log Procedure (hereinafter referred to procedures) is developed by Bob single-user blog program, based on the PHP scripting and MySQL database. This procedure is free and open source, anyone can download from the Internet free of charge and can be subject to the provisions of this Agreement for distribution under the premise, and can not conduct commercial activities under the premise of free access without having to pay to use fee.
-     1. Use and copyright:
-     (1) A person can be the official website of the program website or download the latest version of the procedure and the possibility of providing a stable version of the beta version.
-     (2) No person except in the following cases can be free to set up in various host and the use of this procedure without having to pay royalties, which are not allowed include:
-       a. Records, released the law and bad information, state laws and regulations to prohibit the publication of information;
-       b. for the purpose of profit web site;
-     (3) to ensure that the integrity of the installation package, and maintain free of charge under the premise of all types of web sites and individuals can re-distribute the program.
-     2. Disclaimer:
-     (1) procedures for the author does not use the program caused by data loss, is responsible for password theft, not because of user published content is responsible for all the consequences arising.
-     (2) if the use of the confusion and problems, the authors will try to help, but this is not the author's obligations.
-     At this point, thank you for your choice of the Bo-Blog, when problems are detected, or have any suggestions for improvement can be in the official web site, forum messages, also available via e-mail channels. Let us join hands to blog for the best in the end!
+    At the beginning of the installation and use of Bo-Blog before, be sure to carefully read this license document, in the sure that you understand and agree with all of the following terms before they are allowed to continue with the installation and use.
+    Bo-Blog Log Procedure (hereinafter referred to procedures) is developed by Bob single-user blog program, based on the PHP scripting and MySQL database. This procedure is free and open source, anyone can download from the Internet free of charge and can be subject to the provisions of this Agreement for distribution under the premise, and can not conduct commercial activities under the premise of free access without having to pay to use fee.
+    1. Use and copyright:
+    (1) A person can be the official website of the program website or download the latest version of the procedure and the possibility of providing a stable version of the beta version.
+    (2) No person except in the following cases can be free to set up in various host and the use of this procedure without having to pay royalties, which are not allowed include:
+      a. Records, released the law and bad information, state laws and regulations to prohibit the publication of information;
+      b. for the purpose of profit web site;
+    (3) to ensure that the integrity of the installation package, and maintain free of charge under the premise of all types of web sites and individuals can re-distribute the program.
+    (4) It is not mandatory to retain the stated program copyright notice during use and modification. The copyright notices of plug-ins, templates or third-party add-on programs are not limited to this, and are subject to the wishes of the respective original authors.
+    2. Disclaimer:
+    (1) procedures for the author does not use the program caused by data loss, is responsible for password theft, not because of user published content is responsible for all the consequences arising.
+    (2) if the use of the confusion and problems, the authors will try to help, but this is not the author's obligations.
+    At this point, thank you for your choice of the Bo-Blog, when problems are detected, or have any suggestions for improvement can be in the official web site, forum messages, also available via e-mail channels. Let us join hands to blog for the best in the end!

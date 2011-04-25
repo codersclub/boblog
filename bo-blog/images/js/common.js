@@ -251,11 +251,11 @@ function ajax_submit (job) {
 		document.getElementById('visitorinput').submit();	
 	}
 
-	else {
-		if (v_replier=='' || v_content==''|| v_replier==' ' || v_content==' ' ) {
-			alert(jslang[11]);
-			return false;
-		}
+    else {
+      if (v_replier=='' || v_content==''|| v_replier==' ' || v_content==' '||v_repemail==''||v_repemail==' ' ) {
+       alert(jslang[11]);
+       return false;
+      }
 		document.getElementById('btnSubmit').value=jslang[12];
 		document.getElementById('btnSubmit').disabled='disabled';
 		if (shutajax==0) { //Currently for IE, Safari, Mozilla and Opera

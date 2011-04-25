@@ -93,9 +93,9 @@ if ($job=='show') {
 	$ifbottompage=($mbcon['pagebarposition']=='up') ? 'none' : 'block';
 
 	if ($mbcon['tagunderlinetospace']==1) 	$allentries[0]['tagname']=str_replace('_', ' ', $allentries[0]['tagname']);
-	if ($mbcon['tag_list']==1) $mainbody=$t->set('contentpage', array('title'=>"Tags：{$allentries[0]['tagname']}",  'contentbody'=>@implode('', $section_body_main)));
+	if ($mbcon['tag_list']==1) $mainbody=$t->set('contentpage', array('title'=>"Tags: {$allentries[0]['tagname']}",  'contentbody'=>@implode('', $section_body_main)));
 	else $mainbody=@implode('', $section_body_main);
- 	$pagetitle="Tags：{$allentries[0]['tagname']} - ";
+ 	$pagetitle="Tags: {$allentries[0]['tagname']} - ";
 	announcebar();
 	$bodymenu=$t->set('mainpage', array('pagebar'=>$pagebar, 'iftoppage'=>$iftoppage, 'ifbottompage'=>$ifbottompage, 'ifannouncement'=>$ifannouncement, 'topannounce'=>$topannounce, 'mainpart'=>$mainbody, 'currentpage'=>$pageitems['currentpage'], 'previouspageurl'=>$pageitems['previouspageurl'], 'nextpageurl'=>$pageitems['nextpageurl'], 'turningpages'=>$pageitems['turningpages'], 'totalpages'=>$pageitems['totalpages'], 'previouspageexists'=>'', 'nextpageexists'=>''));
 }

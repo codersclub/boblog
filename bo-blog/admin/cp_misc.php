@@ -352,7 +352,7 @@ if ($job=='importforbidden') {
 	$upload_filename=urlencode($importfile['name']);
 	$ext=strtolower(strrchr($upload_filename,'.'));
 	if ($ext!='.txt') catcherror($lna[412]);
-	if (!move_uploaded_file ($upload_file,"{$db_tmpdir}/{$upload_filename}")) catcherror ($lna[130].'temp/'); 
+	if (!move_uploaded_file ($upload_file,"{$db_tmpdir}/{$upload_filename}")) catcherror ($lna[130].'temp/');
 	$filecontent=@file("{$db_tmpdir}/{$upload_filename}");
 	$item=trim(@implode(",", $filecontent));
 	$item=safe_convert($item);
@@ -426,7 +426,7 @@ $display_overall.= <<<eot
 <br>
 {$lna[1002]}<br><input type=button onclick="document.getElementById('ifa').src='data/tmpsesstest2.php'" value='{$lna[1003]}'><br><br>
 {$lna[1004]}<br>
-<input type=button onclick="document.getElementById('ifb').innerHTML='<b><font color=green>{$lna[1005]}</font></b>'" value='{$lna[1006]}'>  
+<input type=button onclick="document.getElementById('ifb').innerHTML='<b><font color=green>{$lna[1005]}</font></b>'" value='{$lna[1006]}'>
 <input type=button onclick="document.getElementById('ifb').innerHTML='<b><font color=red>{$lna[1007]}</font></b>'" value='{$lna[1008]}'>
 <br><div id='ifb'></div>
 </td></tr></table>

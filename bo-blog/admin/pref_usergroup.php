@@ -9,6 +9,7 @@ addpref("r", "SeeSecretCategory|{$lna[640]}|{$lna[609]}|{$lna[610]}");
 addpref("r", "SeeHiddenEntry|{$lna[641]}|{$lna[609]}|{$lna[610]}");
 addpref("r", "SeeHiddenReply|{$lna[642]}|{$lna[609]}|{$lna[610]}");
 addpref("r", "SeeIP|{$lna[643]}|{$lna[609]}|{$lna[610]}");
+addpref("r", "SeeEMAIL|{$lna[1198]}|{$lna[609]}|{$lna[610]}");
 addpref("r", "ViewUserList|{$lna[644]}|{$lna[609]}|{$lna[610]}");
 addpref("r", "ViewUserDetail|{$lna[645]}|{$lna[609]}|{$lna[610]}");
 addpref("r", "SeeAllProtectedEntry|{$lna[1082]}|{$lna[609]}|{$lna[610]}");

@@ -8,60 +8,75 @@ Code: Bob Shen
 Offical site: http://www.bo-blog.com
 Copyright (c) Bob Shen
 In memory of my university life
-This file is used for URL optimization based on PHP 
+This file is used for URL optimization based on PHP
 ------------------------------------------------------- */
 
 @error_reporting(E_ERROR | E_WARNING | E_PARSE);
+include_once("./data/config.php");
+if ($config['urlrewritemethod']!='1') {
+	die("ACCESS DENIED.");
+}
 
 $q_url=$_SERVER["REQUEST_URI"];
 @list($relativePath, $rawURL)=@explode('/go.php/', $q_url);
-$rewritedURL=$rawURL;
+$rewritedURL=false;
+$includeFile='';
+
 
 $RewriteRules=$RedirectTo=array();
 
-$RewriteRules[]="/page\/([0-9]+)\/([0-9]+)\/?/";
-$RewriteRules[]="/starred\/([0-9]+)\/?([0-9]+)?\/?/";
-$RewriteRules[]="/category\/([^\/]+)\/?([0-9]+)?\/?([0-9]+)?\/?/";
-$RewriteRules[]="/archiver\/([0-9]+)\/([0-9]+)\/?([0-9]+)?\/?([0-9]+)?\/?/";
-$RewriteRules[]="/date\/([0-9]+)\/([0-9]+)\/([0-9]+)\/?([0-9]+)?\/?([0-9]+)?\/?/";
-$RewriteRules[]="/user\/([0-9]+)\/?/";
-$RewriteRules[]="/tags\/([^\/]+)\/?([0-9]+)?\/?([0-9]+)?\/?/";
-$RewriteRules[]="/component\/id\/([0-9]+)\/?/";
-$RewriteRules[]="/component\/([^\/]+)\/?/";
+$RewriteRules[]="/page\/([0-9]+)\/([0-9]+)\/?/e";
+$RewriteRules[]="/starred\/([0-9]+)\/?([0-9]+)?\/?/e";
+$RewriteRules[]="/category\/([a-z|A-Z|0-9|_|-]+)\/?([0-9]+)?\/?([0-9]+)?\/?/e";
+$RewriteRules[]="/archiver\/([0-9]+)\/([0-9]+)\/?([0-9]+)?\/?([0-9]+)?\/?/e";
+$RewriteRules[]="/date\/([0-9]+)\/([0-9]+)\/([0-9]+)\/?([0-9]+)?\/?([0-9]+)?\/?/e";
+$RewriteRules[]="/user\/([0-9]+)\/?/e";
+$RewriteRules[]="/component\/id\/([0-9]+)\/?/e";
+$RewriteRules[]="/component\/([a-z|A-Z|0-9|_|-]+)\/?/e";
+$RewriteRules[]="/tags\/([a-z|A-Z|0-9|_|-|%]+)\/?([0-9]+)?\/?([0-9]+)?\/?/e";
 
-$RedirectTo[]="index.php?mode=\\1&page=\\2";
-$RedirectTo[]="star.php?mode=\\1&page=\\2";
-$RedirectTo[]="index.php?go=category_\\1&mode=\\2&page=\\3";
-$RedirectTo[]="index.php?go=archive&cm=\\1&cy=\\2&mode=\\3&page=\\4";
-$RedirectTo[]="index.php?go=showday_\\1-\\2-\\3&mode=\\4&page=\\5";
-$RedirectTo[]="view.php?go=user_\\1";
-$RedirectTo[]="tag.php?tag=\\1&mode=\\2&page=\\3";
-$RedirectTo[]="page.php?pageid=\\1";
-$RedirectTo[]="page.php?pagealias=\\1";
+$RedirectTo[]="loadURL('index.php', array('mode'=>'\\1', 'page'=>'\\2'));";
+$RedirectTo[]="loadURL('star.php', array('mode'=>'\\1', 'page'=>'\\2'));";
+$RedirectTo[]="loadURL('index.php', array('go'=>'category_\\1', 'mode'=>'\\2', 'page'=>'\\3'));";
+$RedirectTo[]="loadURL('index.php', array('go'=>'archive', 'cm'=>'\\1', 'cy'=>'\\2', 'mode'=>'\\3', 'page'=>'\\4'));";
+$RedirectTo[]="loadURL('index.php', array('go'=>'showday_\\1-\\2-\\3', 'mode'=>'\\4', 'page'=>'\\5'));";
+$RedirectTo[]="loadURL('view.php', array('go'=>'user_\\1'));";
+$RedirectTo[]="loadURL('page.php', array('pageid'=>'\\1'));";
+$RedirectTo[]="loadURL('page.php', array('pagealias'=>'\\1'));";
+$RedirectTo[]="loadURL('tag.php', array('tag'=>'\\1', 'mode'=>'\\2', 'page'=>'\\3'));";
+
+function loadURL($url, $pref) {
+	global $includeFile;
+	if (!is_array($pref)) {
+		return false;
+	}
+	$includeFile=basename($url);
+	foreach ($pref as $p=>$v) {
+		global $$p;
+		$$p=$v;
+	}
+	return true;
+}
 
 $i=0;
 foreach ($RewriteRules as $rule) {
-	if (preg_match($rule, $rewritedURL)) {
-		$tmp_rewritedURL=preg_replace($rule, '<'.$RedirectTo[$i].'<', $rewritedURL, 1);
-		$tmp_rewritedURL=@explode('<', $tmp_rewritedURL);
-		$rewritedURL=($tmp_rewritedURL[2]) ? false : $tmp_rewritedURL[1];
+	if (preg_match($rule, $rawURL)) {
+		$rewritedURL=preg_replace($rule, $RedirectTo[$i], $rawURL, 1);
 		break;
 	}
 	$i+=1;
 }
 
-if ($rewritedURL==$rawURL || !$rewritedURL) {
-	include_once("./data/config.php");
+if (!$rewritedURL || !$includeFile) {
 	@header ("HTTP/1.1 404 Not Found");
 	if ($config['customized404']) {
 		@header ("Location: {$config['customized404']}");
+		exit();
 	}
 	else {
 		die("<html><head><title>Not Found</title></head><body><h1>HTTP/1.1 404 Not Found</h1></body></html>");
 	}
 }
 
-$parsedURL=parse_url ($rewritedURL);
-parse_str($parsedURL['query']);
-include(basename($parsedURL['path']));
+include($includeFile);
 

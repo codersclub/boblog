@@ -42,11 +42,11 @@ for ($i=0; $i<$len; $i++) {
     $code .= $randtext;
 }
 $textColor = imageColorAllocate($image, 0, 0, 0);
-imagestring($image, $size, 0, 0, $code, $textColor); 
+imagestring($image, $size, 0, 0, $code, $textColor);
 
 if($noise == true) setnoise();
 $_SESSION['code'] = $code;
-$bordercolor = getcolor($bordercolor); 
+$bordercolor = getcolor($bordercolor);
 if($border==true) imageRectangle($image, 0, 0, $width-1, $height-1, $bordercolor);
 header("Content-type: image/png");
 imagePng($image);
@@ -61,14 +61,14 @@ function getcolor($color)
      $b = hexdec ($b);
      $g = $color[4].$color[5];
      $g = hexdec ($g);
-     $color = imagecolorallocate ($image, $r, $b, $g); 
+     $color = imagecolorallocate ($image, $r, $b, $g);
      return $color;
 }
 function setnoise()
 {
 	global $image, $width, $height, $back, $noisenum;
 	for ($i=0; $i<$noisenum; $i++){
-		$randColor = imageColorAllocate($image, rand(0, 255), rand(0, 255), rand(0, 255));  
+		$randColor = imageColorAllocate($image, rand(0, 255), rand(0, 255), rand(0, 255));
 		imageSetPixel($image, rand(0, $width), rand(0, $height), $randColor);
-	} 
+	}
 }

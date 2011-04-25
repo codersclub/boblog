@@ -63,13 +63,10 @@ if ($job=='category' || $job=='main') {
 		$rssbody.=$m_b->rss_entry($entry);
 	}
 } elseif ($job=='entry') {
-	if ($records[0]['replies']<1) $records[0]['blogid']=$itemid;
 	$rssbody.=$m_b->rss_entry($records[0]);
-	if ($records[0]['replies']>0) {
-		foreach ($records as $entry) {
-			$rssbody.=$m_b->rss_replies($entry);
-			$seed+=1;
-		}
+	foreach ($records as $entry) {
+		$rssbody.=$m_b->rss_replies($entry);
+		$seed+=1;
 	}
 } elseif ($job=='comment') {
 	foreach ($records as $entry) {

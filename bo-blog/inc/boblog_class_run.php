@@ -304,7 +304,7 @@ class getblogs extends boblog {
 				}
 			}
 			if ($permission['SeeIP']==1) $replierip="<a href=\"{$mbcon['ipsearch']}{$eachreply['repip']}\" target=\"_blank\"><img src=\"{$mbcon['images']}/ip.gif\" border=\"0\" alt=\"IP\" title=\"IP: {$eachreply['repip']}\" /></a>";
-			if ($eachreply['repemail']) $replieremail="<a href=\"mailto:{$eachreply['repemail']}\"><img src=\"{$mbcon['images']}/email.gif\" border=\"0\" alt=\"Email\" title=\"{$lnc[18]}\" /></a>";
+			if ($eachreply['repemail'] and $permission['SeeEMAIL']==1) $replieremail="<a href=\"mailto:{$eachreply['repemail']}\"><img src=\"{$mbcon['images']}/email.gif\" border=\"0\" alt=\"Email\" title=\"{$lnc[18]}\" /></a>";
 			if ($eachreply['repurl']) $replierhomepage="<a href=\"{$eachreply['repurl']}\" target=\"_blank\"><img src=\"{$mbcon['images']}/homepage.gif\" border=\"0\" alt=\"Homepage\" title=\"{$lnc[19]}\" /></a>";
 			$replytime=zhgmdate("{$mbcon['timeformat']} H:i", ($eachreply['reptime']+3600*$config['timezone'])); 
 			if ($permission['ReplyReply']==1 && $adminlogstat==1) {
@@ -406,7 +406,7 @@ class getblogs extends boblog {
 		}
 		if ($permission['SeeIP']==1) $replierip="<a href=\"{$mbcon['ipsearch']}{$eachreply['repip']}\" target=\"_blank\"><img src=\"{$mbcon['images']}/ip.gif\" border=\"0\" alt=\"IP\" title=\"IP: {$eachreply['repip']}\" /></a>";
 		$replytime=zhgmdate("{$mbcon['timeformat']} H:i", ($eachreply['reptime']+3600*$config['timezone'])); //Need Further Change
-		if ($eachreply['repemail']) $replieremail="<a href=\"mailto:{$eachreply['repemail']}\"><img src=\"{$mbcon['images']}/email.gif\" border=\"0\" alt=\"Email\" title=\"{$lnc[18]}\" /></a>";
+	    if ($eachreply['repemail'] and $permission['SeeEMAIL']==1) $replieremail="<a href=\"mailto:{$eachreply['repemail']}\"><img src=\"{$mbcon['images']}/email.gif\" border=\"0\" alt=\"Email\" title=\"{$lnc[18]}\" /></a>";
 		if ($eachreply['repurl']) $replierhomepage="<a href=\"{$eachreply['repurl']}\" target=\"_blank\"><img src=\"{$mbcon['images']}/homepage.gif\" border=\"0\" alt=\"Homepage\" title=\"{$lnc[19]}\" /></a>";
 		if ($permission['ReplyReply']==1) {
 			$addadminreply="<a href=\"javascript: showadminreplyformessage('com_{$eachreply['repid']}');\">[{$lnc[20]}]</a>";
@@ -825,7 +825,7 @@ class getblogs extends boblog {
 		$conxer=(strstr($returnurl, '?'))? '&amp;' : '?';
 		$totalvolume=($totalvolume=='auto') ? ($this->total_rows) : $totalvolume;
 
- 		if(!$perpagevolume) $perpagevolume = 20; // vot !!!
+/*vot*/ if(!$perpagevolume) $perpagevolume = 20;
 
 		$this->total_pages=floor(($totalvolume-1)/$perpagevolume)+1;
 		checkPageValidity ($page, $this->total_pages); //2008/5/25 Block abnormal pages

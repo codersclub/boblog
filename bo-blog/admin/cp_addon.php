@@ -137,7 +137,7 @@ if ($job=='addskin') {
 }
 
 if ($job=='setskin') {
-	if (!$itemid || !file_exists("template/".basename($itemid)."/info.php")) catcherror($lna[176]); 
+	if (!$itemid || !file_exists("template/".basename($itemid)."/info.php")) catcherror($lna[176]);
 	$content=readfromfile ("template/".basename($itemid)."/info.php");
 	if (!writetofile("data/mod_template.php", $content)) catcherror($lna[66]."data/mod_template.php");
 	else {

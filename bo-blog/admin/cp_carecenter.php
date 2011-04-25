@@ -142,10 +142,10 @@ if ($job=='refreshcounter') {
 	acceptrequest('selid2');
 	if (!is_array($selid2)) catcherror($lna[205]);
 	$countsql=array(
-		'entries'=>"SELECT COUNT(blogid) FROM `{$db_prefix}blogs`", 
-		'replies'=>"SELECT COUNT(repid) FROM `{$db_prefix}replies` WHERE `reproperty`<=1", 
-		'tb'=>"SELECT COUNT(repid) FROM `{$db_prefix}replies` WHERE `reproperty`=4", 
-		'messages'=>"SELECT COUNT(repid) FROM `{$db_prefix}messages` WHERE `reproperty`<=1", 
+		'entries'=>"SELECT COUNT(blogid) FROM `{$db_prefix}blogs`",
+		'replies'=>"SELECT COUNT(repid) FROM `{$db_prefix}replies` WHERE `reproperty`<=1",
+		'tb'=>"SELECT COUNT(repid) FROM `{$db_prefix}replies` WHERE `reproperty`=4",
+		'messages'=>"SELECT COUNT(repid) FROM `{$db_prefix}messages` WHERE `reproperty`<=1",
 		'users'=>"SELECT COUNT(userid) FROM `{$db_prefix}user`"
 	);
 	for ($i=0; $i<count($selid2); $i++) {
@@ -159,11 +159,11 @@ if ($job=='refreshcounter') {
 	if (in_array('max', $selid2)) {
 		$maxsql=array(
 			"SELECT MAX(blogid) FROM `{$db_prefix}blogs`",
-			"SELECT MAX(userid) FROM `{$db_prefix}user`", 
+			"SELECT MAX(userid) FROM `{$db_prefix}user`",
 			"SELECT MAX(cateid) FROM `{$db_prefix}categories`",
-			"SELECT MAX(repid) FROM `{$db_prefix}replies`", 
-			"SELECT MAX(repid) FROM `{$db_prefix}messages`", 
-			"SELECT MAX(linkgpid) FROM `{$db_prefix}linkgroup`", 
+			"SELECT MAX(repid) FROM `{$db_prefix}replies`",
+			"SELECT MAX(repid) FROM `{$db_prefix}messages`",
+			"SELECT MAX(linkgpid) FROM `{$db_prefix}linkgroup`",
 			"SELECT MAX(linkid) FROM `{$db_prefix}links`"
 		);
 		$max2ar=array('maxblogid','maxuserid','maxcateid','maxrepid','maxmessagepid','maxlinkgpid','maxlinkid');
@@ -173,7 +173,7 @@ if ($job=='refreshcounter') {
 			$query_sql[]="`{$max2ar[$i]}`={$resultmax}";
 		}
 		$all_sql="UPDATE `{$db_prefix}maxrec` SET ".@implode(',', $query_sql);
-		$blog->query($all_sql);	
+		$blog->query($all_sql);
 	}
 	catchsuccess ($finishok3, $backtocache);
 }
@@ -235,7 +235,7 @@ if ($job=='adminattach') {
 		$finishtimestamp=mktime(23, 59, 59, $uploadmonth+1, 0, $uploadyear);
 		$queryplus="WHERE `uploadtime`>={$starttimestamp} AND `uploadtime`<={$finishtimestamp} ";
 	}
-	
+
 	$detail_array=$blog->getgroupbyquery("SELECT * FROM `{$db_prefix}upload` {$queryplus} ORDER BY `uploadtime` DESC LIMIT {$start_id}, 51");
 	$numenries=$blog->countbyquery("SELECT COUNT(*) FROM `{$db_prefix}upload` {$queryplus}");
 
@@ -387,7 +387,7 @@ if ($job=='replaceattachment') {
 	if (!$newupfile['name']) catcherror ($lna[418]);
 
 	//die(print_r($newupfile));
-	
+
 	$targetfolder=dirname($detail_array['filepath']);
 	$targetname=basename($detail_array['filepath']);
 
@@ -484,12 +484,12 @@ if ($job=='mysqlquery') {
 	$sqlinput=str_replace('[db]', $db_prefix, $sqlinput);
 	$result=db_query($sqlinput);
 	if (@db_num_rows($result)>0) {
-		$table_infos.="<table width=\"100%\"><tr><td><b>SQL: {$qinput[$i]}</b></td></tr></table><table width=\"100%\">";            	
+		$table_infos.="<table width=\"100%\"><tr><td><b>SQL: {$qinput[$i]}</b></td></tr></table><table width=\"100%\">";
 		$columns=mysql_num_fields($result);
 		$table_infos.="<tr class='admintitle'><td>";
 		for ($s = 0; $s < $columns; $s++) {
 			$table_infos .= mysql_field_name($result, $s) . "</td><td>\n";
-		} 
+		}
 		$table_infos .= "</td></tr>";
 		while (false !== ($tmpline = db_fetch_array($result))) {
 			$table_infos .= "<tr><td class='visibleitem'>". implode("</td><td class='visibleitem'>", $tmpline) ."</td></tr>";
@@ -550,7 +550,7 @@ function swapdiv(opt) {
 	}  else {
 		document.getElementById("showrange1").style.display="none";
 		document.getElementById("showrange2").style.display="block";
-	} 
+	}
 }
 setCookie ('exrange','',null,null, null, false);
 setCookie ('iszip','',null,null, null, false);
@@ -722,7 +722,7 @@ eot;
 				$i+=1;
 			}
 		}
-	
+
 		$out_importantfile.="\$additional['counter']='{$statistics['total']}';\n";
 
 		writetofile("bak/textfile_".$filename, $out_importantfile);
@@ -865,7 +865,7 @@ function swapdiv(opt) {
 	}  else {
 		document.getElementById("showrange1").style.display="none";
 		document.getElementById("showrange2").style.display="block";
-	} 
+	}
 }
 setCookie ('endnumber','',null,null, null, false);
 setCookie ('impause','',null,null, null, false);
@@ -1021,10 +1021,10 @@ if ($job=='rollback') {
 		}
 
 		$countsql=array(
-			'entries'=>"SELECT COUNT(blogid) FROM `{$db_prefix}blogs`", 
-			'replies'=>"SELECT COUNT(repid) FROM `{$db_prefix}replies` WHERE `reproperty`<=1", 
-			'tb'=>"SELECT COUNT(repid) FROM `{$db_prefix}replies` WHERE `reproperty`=4", 
-			'messages'=>"SELECT COUNT(repid) FROM `{$db_prefix}messages` WHERE `reproperty`<=1", 
+			'entries'=>"SELECT COUNT(blogid) FROM `{$db_prefix}blogs`",
+			'replies'=>"SELECT COUNT(repid) FROM `{$db_prefix}replies` WHERE `reproperty`<=1",
+			'tb'=>"SELECT COUNT(repid) FROM `{$db_prefix}replies` WHERE `reproperty`=4",
+			'messages'=>"SELECT COUNT(repid) FROM `{$db_prefix}messages` WHERE `reproperty`<=1",
 			'users'=>"SELECT COUNT(userid) FROM `{$db_prefix}user`"
 		);
 		foreach ($countsql as $key=>$value) {
@@ -1039,11 +1039,11 @@ if ($job=='rollback') {
 
 		$maxsql=array(
 			"SELECT MAX(blogid) FROM `{$db_prefix}blogs`",
-			"SELECT MAX(userid) FROM `{$db_prefix}user`", 
+			"SELECT MAX(userid) FROM `{$db_prefix}user`",
 			"SELECT MAX(cateid) FROM `{$db_prefix}categories`",
-			"SELECT MAX(repid) FROM `{$db_prefix}replies`", 
-			"SELECT MAX(repid) FROM `{$db_prefix}messages`", 
-			"SELECT MAX(linkgpid) FROM `{$db_prefix}linkgroup`", 
+			"SELECT MAX(repid) FROM `{$db_prefix}replies`",
+			"SELECT MAX(repid) FROM `{$db_prefix}messages`",
+			"SELECT MAX(linkgpid) FROM `{$db_prefix}linkgroup`",
 			"SELECT MAX(linkid) FROM `{$db_prefix}links`"
 		);
 		$max2ar=array('maxblogid','maxuserid','maxcateid','maxrepid','maxmessagepid','maxlinkgpid','maxlinkid');
@@ -1198,15 +1198,15 @@ function backup_rssbody($entry) {
 	$rss=<<<eot
 <item>
 <link>{$entryurl}</link>
-<title>{$entrytitle}</title> 
+<title>{$entrytitle}</title>
 <author>{$entryauthor} &lt;{$entryemail}&gt;</author>
 <category>{$entrycate}</category>
-<pubDate>{$entrytime}</pubDate> 
-<guid>{$entryid}</guid> 
+<pubDate>{$entrytime}</pubDate>
+<guid>{$entryid}</guid>
 <description>
-<![CDATA[ 
+<![CDATA[
 	{$entrycontent}
-]]> 
+]]>
 </description>
 </item>
 eot;
@@ -1219,10 +1219,10 @@ function backup_rsswhole($rssbody) {
 	$out.=<<<eot
 <rss version="2.0">
 <channel>
-<title>{$config['blogname']}</title> 
-<link>{$config['blogurl']}/index.php</link> 
-<description>{$config['blogdesc']}</description> 
-<language>zh-cn</language> 
+<title>{$config['blogname']}</title>
+<link>{$config['blogurl']}/index.php</link>
+<description>{$config['blogdesc']}</description>
+<language>zh-cn</language>
 <copyright>Powered by Bo-blog {$blogversion}</copyright>
 {$rssbody}
 </channel>

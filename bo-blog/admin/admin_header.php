@@ -68,16 +68,16 @@ $editorjs
 <div id="adminheader">
 <div id="adminheaderbar">
 <ul>
-<span class="ahb{$adminclassshow['main']}"><li class="firstitem" onmouseover="adminitemhover('main',this)"><a href="admin.php?act=main">{$lna[2]}</a></li></span>
-<span class="ahb{$adminclassshow['entry']}"><li onmouseover="adminitemhover('entry',this)"><a href="admin.php?act=entry">{$lna[3]}</a></li></span>
-<span class="ahb{$adminclassshow['category']}"><li onmouseover="adminitemhover('category',this)"><a href="admin.php?act=category">{$lna[4]}</a></li></span>
-<span class="ahb{$adminclassshow['link']}"><li onmouseover="adminitemhover('link',this)"><a href="admin.php?act=link">{$lna[5]}</a></li></span>
-<span class="ahb{$adminclassshow['reply']}"><li onmouseover="adminitemhover('reply',this)"><a href="admin.php?act=reply">{$lna[6]}</a></li></span>
+<span class="ahb{$adminclassshow['main']}"><li class="firstitem" onmouseover="adminitemhover('main',this)"><a href="#">{$lna[2]}</a></li></span>
+<span class="ahb{$adminclassshow['entry']}"><li onmouseover="adminitemhover('entry',this)"><a href="#">{$lna[3]}</a></li></span>
+<span class="ahb{$adminclassshow['category']}"><li onmouseover="adminitemhover('category',this)"><a href="#">{$lna[4]}</a></li></span>
+<span class="ahb{$adminclassshow['link']}"><li onmouseover="adminitemhover('link',this)"><a href="#">{$lna[5]}</a></li></span>
+<span class="ahb{$adminclassshow['reply']}"><li onmouseover="adminitemhover('reply',this)"><a href="#">{$lna[6]}</a></li></span>
 $messageblock
-<span class="ahb{$adminclassshow['user']}"><li onmouseover="adminitemhover('user',this)"><a href="admin.php?act=user">{$lna[8]}</a></li></span>
-<span class="ahb{$adminclassshow['addon']}"><li onmouseover="adminitemhover('addon',this)"><a href="admin.php?act=addon">{$lna[9]}</a></li></span>
-<span class="ahb{$adminclassshow['misc']}"><li onmouseover="adminitemhover('misc',this)"><a href="admin.php?act=misc">{$lna[10]}</a></li></span>
-<span class="ahb{$adminclassshow['carecenter']}"><li onmouseover="adminitemhover('carecenter',this)"><a href="admin.php?act=carecenter">{$lna[11]}</a></li></span>
+<span class="ahb{$adminclassshow['user']}"><li onmouseover="adminitemhover('user',this)"><a href="#">{$lna[8]}</a></li></span>
+<span class="ahb{$adminclassshow['addon']}"><li onmouseover="adminitemhover('addon',this)"><a href="#">{$lna[9]}</a></li></span>
+<span class="ahb{$adminclassshow['misc']}"><li onmouseover="adminitemhover('misc',this)"><a href="#">{$lna[10]}</a></li></span>
+<span class="ahb{$adminclassshow['carecenter']}"><li onmouseover="adminitemhover('carecenter',this)"><a href="#">{$lna[11]}</a></li></span>
 </ul>
 </div>
 </div>

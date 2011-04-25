@@ -41,7 +41,7 @@ function convert_ubb ($str, $advanced=0, $inrss=0) {
 	//Auto add url link
 	if ($mbcon['autoaddlink']==1) $str=preg_replace("/(?<=[^\]a-z0-9-=\"'\\/])((https?|ftp|gopher|news|telnet|rtsp|mms|callto|ed2k):\/\/|www\.)([a-z0-9\/\-_+=.~!%@?#%&;:$\\()|]+)/i", "[autourl]\\1\\3[/autourl]", $str);
 
-	
+
 	$regubb_search = array(
 				"/\[size=([^\[\<]+?)\](.+?)\[\/size\]/ie",
 				"/\[tbl( width=[0-9]+)?(%)?( bgcolor=[^ ]*)?( border=[^ ]*)?\](.+?)\[\/tbl\]/ise",
@@ -83,7 +83,7 @@ function convert_ubb ($str, $advanced=0, $inrss=0) {
 				"<u>\\1</u>",
 				"<del>\\1</del>",
 				"<sup>\\1</sup>",
-				"<sub>\\1</sub>",				
+				"<sub>\\1</sub>",
 				"xhtmlHighlightString('\\1')"
 	);
 	$str=preg_replace($regubb_search, $regubb_replace, $str);
@@ -104,7 +104,7 @@ function makeurl($url, $advanced=0, $linktext='') { //2011/2/20 Force admin quit
 	} else {
 		$gotoreallink=substr(strtolower($url), 0, 4) == 'www.' ? "http://$url" : $url;
 	}
-	
+
 	$urllink="<a href=\"{$gotoreallink}\" target=\"_blank\">";
 
 	if ($linktext) {
@@ -122,7 +122,7 @@ function makeurl($url, $advanced=0, $linktext='') { //2011/2/20 Force admin quit
 
 function makefontsize ($size, $word) {
 	$word=stripslashes($word);
-	$sizeitem=array (0, 8, 10, 12, 14, 18, 24, 36); 
+	$sizeitem=array (0, 8, 10, 12, 14, 18, 24, 36);
 	$size=$sizeitem[$size];
 	return "<span style=\"font-size: {$size}px;\">{$word}</span>";
 }
@@ -181,7 +181,7 @@ function makeimgwithurl ($url, $aligncode, $widthcode, $heightcode, $src, $inrss
 function makeimginrss($src) {
 	global $config, $lnc, $template;
 	$src=(substr(strtolower($src), 0, 4) == 'http') ? $src : $config['blogurl'].'/'.$src;
-	$str="<br/><img src=\"{$config['blogurl']}/{$template['images']}/viewimage.gif\" alt=\"\"/><a href=\"{$src}\" target=\"_blank\">{$lnc[231]}</a><br/>[url]{$src}[/url]<br/>";
+	$str="<br/><img src=\"{$config['blogurl']}/{$template['images']}/viewimage.gif\" alt=\"\"/>{$lnc[231]}<br/>[url]{$src}[/url]<br/>";
 	return $str;
 }
 

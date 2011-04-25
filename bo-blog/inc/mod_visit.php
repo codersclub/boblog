@@ -31,7 +31,7 @@ if ($flset['guestbook']==1 && ($job=='addmessage' || $job=='editmessage')) getHt
 if ($job=='addreply' || $job=='addmessage' || $job=='editreply' || $job=='editmessage') {
 	if (check_ip ($userdetail['ip'], $forbidden['banip'])) catcherror($lnc[209]);
 	define('REPLYSPECIAL', 1);
-	
+
 	if ($job=='addreply' || $job=='addmessage') {
 		//Check post interval
 		$lastpost=$_COOKIE['lastpost']; //2010/9/5 : We no longer use COOKIE, which can be manipulated by users.
@@ -39,7 +39,7 @@ if ($job=='addreply' || $job=='addmessage' || $job=='editreply' || $job=='editme
 		$findintable=($job=='addreply') ? 'replies' : 'messages';
 		$findreplies=$blog->getbyquery("SELECT * FROM `{$db_prefix}{$findintable}` WHERE `repip`='{$userdetail['ip']}' ORDER BY `reptime` DESC LIMIT 1");
 		if ($findreplies['repip']==$userdetail['ip']) {
-			if (($nowtime['timestamp']-$findreplies['reptime'])<$permission['MinPostInterval']) catcherror($lnc[210]); 
+			if (($nowtime['timestamp']-$findreplies['reptime'])<$permission['MinPostInterval']) catcherror($lnc[210]);
 		}
 	}
 	acceptrequest('v_replier,v_password,stat_html,stat_ubb,stat_emot,stat_property,v_repurl,v_repemail,v_content,v_id,v_security,onetimecounter,v_reppsw,v_contentc');
@@ -88,7 +88,6 @@ if ($job=='addreply' || $job=='addmessage' || $job=='editreply' || $job=='editme
 			if ($v_security=='' || strtolower($v_security)!=strtolower($_SESSION['code'])) $cancel=$lnc[165];
 			else { //Delete current session
 				$_SESSION['code']=rand(1000, 2000); //Added on 2010/9/5, preventing unsuccessful destroy
-				session_destroy();
 			}
 		}
 		$v_repurl=safe_convert(trimplus($v_repurl));
@@ -127,8 +126,8 @@ if ($job=='addreply' || $job=='addmessage' || $job=='editreply' || $job=='editme
 	if (preg_search($v_content, $forbidden['banword'])) $cancel=$lnc[214];
 
 	if ($job=='addreply' || $job=='addmessage') { //2011/2/20 LRSC function
-		$LRSC=LRSC_validate($pageKey, $lengthContent); 
-		if ($LRSC=='unlimited') { 
+		$LRSC=LRSC_validate($pageKey, $lengthContent);
+		if ($LRSC=='unlimited') {
 			$cancel=$lnc[2];
 		} elseif ($LRSC) {
 			$cancel=$lnc[320].$LRSC;
@@ -242,7 +241,7 @@ if ($job=='search') {
 		case 1:
 			$target_table="{$db_prefix}blogs";
 			$target_id="blogid";
-			$extralimit=($permission['SeeHiddenEntry']==1) ? " AND `property`<>'3'" : " AND `property`<=1"; 
+			$extralimit=($permission['SeeHiddenEntry']==1) ? " AND `property`<>'3'" : " AND `property`<=1";
 			foreach ($keywordgroup as $keyword) {
 				$sqlconditions[]="`title` LIKE '%{$keyword}%'";
 			}
@@ -251,7 +250,7 @@ if ($job=='search') {
 		case 2:
 			$target_table="{$db_prefix}blogs";
 			$target_id="blogid";
-			$extralimit=($permission['SeeHiddenEntry']==1) ? " AND `property`<>'3'" : " AND `property`<=1"; 
+			$extralimit=($permission['SeeHiddenEntry']==1) ? " AND `property`<>'3'" : " AND `property`<=1";
 			foreach ($keywordgroup as $keyword) {
 				$sqlconditions[]="(`content` LIKE '%{$keyword}%'  OR `title` LIKE '%{$keyword}%')";
 			}
@@ -260,7 +259,7 @@ if ($job=='search') {
 		case 3:
 			$target_table="{$db_prefix}replies";
 			$target_id="repid";
-			$extralimit=($permission['SeeHiddenReply']==1) ? " AND `reproperty`<=1" : " AND `reproperty`='0'"; 
+			$extralimit=($permission['SeeHiddenReply']==1) ? " AND `reproperty`<=1" : " AND `reproperty`='0'";
 			foreach ($keywordgroup as $keyword) {
 				$sqlconditions[]="`repcontent` LIKE '%{$keyword}%'";
 			}
@@ -269,7 +268,7 @@ if ($job=='search') {
 		case 4:
 			$target_table="{$db_prefix}messages";
 			$target_id="repid";
-			$extralimit=($permission['SeeHiddenReply']==1) ? " AND `reproperty`<=1" : " AND `reproperty`='0'"; 
+			$extralimit=($permission['SeeHiddenReply']==1) ? " AND `reproperty`<=1" : " AND `reproperty`='0'";
 			foreach ($keywordgroup as $keyword) {
 				$sqlconditions[]="`repcontent` LIKE '%{$keyword}%'";
 			}
@@ -286,7 +285,7 @@ if ($job=='search') {
 		default:
 			$target_table="{$db_prefix}blogs";
 			$target_id="blogid";
-			$extralimit=($permission['SeeHiddenEntry']==1) ? " AND `property`<>'3'" : " AND `property`<=1"; 
+			$extralimit=($permission['SeeHiddenEntry']==1) ? " AND `property`<>'3'" : " AND `property`<=1";
 			foreach ($keywordgroup as $keyword) {
 				$sqlconditions[]="`title` LIKE '%{$keyword}%'";
 			}
@@ -357,7 +356,7 @@ if ($job=='viewresult') {
 
 	if ($searchmethod==5) {
 		$alltags=$blog->getarraybyquery("SELECT * FROM `{$db_prefix}tags` WHERE `tagname` in ({$result})");
-		for ($i=0; $i<count($alltags['tagname']); $i++) {	
+		for ($i=0; $i<count($alltags['tagname']); $i++) {
 			$eachtag_encoded=urlencode(urlencode($alltags['tagname'][$i]));
 			$urlref=getlink_tags($eachtag_encoded);
 			if ($mbcon['tagunderlinetospace']==1) 	$alltags['tagname'][$i]=str_replace('_', ' ', $alltags['tagname'][$i]);
@@ -421,7 +420,7 @@ if ($job=='openidaddreply' || $job=='openidaddmessage') {
 	$findintable=($job=='openidaddreply') ? 'replies' : 'messages';
 	$findreplies=$blog->getbyquery("SELECT * FROM `{$db_prefix}{$findintable}` WHERE `repip`='{$userdetail['ip']}' ORDER BY `reptime` DESC LIMIT 1");
 	if ($findreplies['repip']==$userdetail['ip']) {
-		if (($nowtime['timestamp']-$findreplies['reptime'])<$permission['MinPostInterval']) catcherror($lnc[210]); 
+		if (($nowtime['timestamp']-$findreplies['reptime'])<$permission['MinPostInterval']) catcherror($lnc[210]);
 	}
 
 	acceptrequest('openid_url,stat_html,stat_ubb,stat_emot,stat_property,v_content,v_id,v_security,onetimecounter');
