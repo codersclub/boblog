@@ -4,14 +4,14 @@ error_reporting(E_ERROR | E_WARNING | E_PARSE);
 include ('db.php');
 $mqgpc_status=get_magic_quotes_gpc();
 if ($mqgpc_status==0) $_POST=addsd($_POST);
-@extract($_POST, EXTR_SKIP); 
-@extract($_GET, EXTR_SKIP); 
+@extract($_POST, EXTR_SKIP);
+@extract($_GET, EXTR_SKIP);
 if (isset($password)) $password=md5($password);
 $ts=time();
 $ip=$_SERVER['REMOTE_ADDR'];
 
 if (!$v) {
-	template("<div class='log'>Select Language</div><form action='install.php?v=setlang' method='post'><div class='mes'><div align='center'><select style=\"width: 50%;\" name='slang'><option value='en'>English</option><option value='zh-cn' selected='selected'>Simplified Chinese (简体中文)</option><option value='zh-tw'>Traditional Chinese (正體中文)</option><option value='vn'>Vietnamese (Tiếng Việt)</option></select></div><br/><div align='center'><input type='submit' value='OK' class='inbut'></div></form></div>");
+	template("<div class='log'>Select Language</div><form action='install.php?v=setlang' method='post'><div class='mes'><div align='center'><select style=\"width: 50%;\" name='slang'><option value='en'>English</option><option value='ru'>Russian</option><option value='zh-cn' selected='selected'>Simplified Chinese (简体中文)</option><option value='zh-tw'>Traditional Chinese (正體中文)</option><option value='vn'>Vietnamese (Tiếng Việt)</option></select></div><br/><div align='center'><input type='submit' value='OK' class='inbut'></div></form></div>");
 }
 
 if ($v=='setlang') {
@@ -136,7 +136,7 @@ if ($v=='3') {
 	  KEY `pubtime` (`pubtime`),
 	  KEY `views` (`views`),
 	  KEY `sticky` (`sticky`)
-	) TYPE=MyISAM{$sqlcharset}";
+	) ENGINE=MyISAM{$sqlcharset}";
 	$result=db_query($setup_query);
 	if (!$result) template("<div class='log'>{$lang[1]}</div><div class='mes'>{$errmsg}</div>");
 
@@ -150,7 +150,7 @@ if ($v=='3') {
 	`cday` INT( 2 ) DEFAULT '1' NOT NULL ,
 	`cid` INT( 8 ) DEFAULT '0' NOT NULL ,
 	`cevent` TEXT NULL
-	) TYPE = MyISAM{$sqlcharset}";
+	) ENGINE=MyISAM{$sqlcharset}";
 	$result=db_query($setup_query);
 	if (!$result) template("<div class='log'>{$lang[1]}</div><div class='mes'>{$errmsg}</div>");
 
@@ -168,7 +168,7 @@ if ($v=='3') {
 	  `empty2` text NULL,
 	  `empty3` text NULL,
 	  KEY `cateorder` (`cateorder`)
-	) TYPE=MyISAM{$sqlcharset}";
+	) ENGINE=MyISAM{$sqlcharset}";
 	$result=db_query($setup_query);
 	if (!$result) template("<div class='log'>{$lang[1]}</div><div class='mes'>{$errmsg}</div>");
 	$setup_query="INSERT INTO `{$db_prefix}categories` VALUES (0, '{$lang[32]}', '{$lang[33]}', 0, 0, 0, '', '', '', '', '')";
@@ -188,7 +188,7 @@ if ($v=='3') {
 	  `empty1` int(20) NOT NULL default '0',
 	  `empty2` int(20) NOT NULL default '0',
 	  `empty3` int(20) NOT NULL default '0'
-	) TYPE=MyISAM{$sqlcharset}";
+	) ENGINE=MyISAM{$sqlcharset}";
 	$result=db_query($setup_query);
 	if (!$result) template("<div class='log'>{$lang[1]}</div><div class='mes'>{$errmsg}</div>");
 	$setup_query="INSERT INTO `{$db_prefix}counter` VALUES (0, 0, 0, 1, 0, 0, 0, 0, {$ts}, 0, 0)";
@@ -205,7 +205,7 @@ if ($v=='3') {
 	  `empty1` text NULL,
 	  `empty2` text NULL,
 	  `empty3` text NULL
-	) TYPE=MyISAM{$sqlcharset}";
+	) ENGINE=MyISAM{$sqlcharset}";
 	$result=db_query($setup_query);
 	if (!$result) template("<div class='log'>{$lang[1]}</div><div class='mes'>{$errmsg}</div>");
 	$setup_query="INSERT INTO `{$db_prefix}forbidden` VALUES ('', '', '', '', '', '', '', '')";
@@ -216,7 +216,7 @@ if ($v=='3') {
 	CREATE TABLE `{$db_prefix}history` (
 	  `hisday` int(8) NOT NULL default '0',
 	  `visit` int(8) NOT NULL default '0'
-	) TYPE=MyISAM{$sqlcharset}";
+	) ENGINE=MyISAM{$sqlcharset}";
 	$result=db_query($setup_query);
 	if (!$result) template("<div class='log'>{$lang[1]}</div><div class='mes'>{$errmsg}</div>");
 
@@ -229,7 +229,7 @@ if ($v=='3') {
 	  `empty1` text NULL,
 	  `empty2` text NULL,
 	  KEY `linkgporder` (`linkgporder`)
-	) TYPE=MyISAM{$sqlcharset}";
+	) ENGINE=MyISAM{$sqlcharset}";
 	$result=db_query($setup_query);
 	if (!$result) template("<div class='log'>{$lang[1]}</div><div class='mes'>{$errmsg}</div>");
 	$setup_query="INSERT INTO `{$db_prefix}linkgroup` VALUES (0, '{$lang[34]}', 1, 0, '', '')";
@@ -249,7 +249,7 @@ if ($v=='3') {
 	  `empty1` text NULL,
 	  `empty2` text NULL,
 	  KEY `linkorder` (`linkorder`)
-	) TYPE=MyISAM{$sqlcharset}";
+	) ENGINE=MyISAM{$sqlcharset}";
 	$result=db_query($setup_query);
 	if (!$result) template("<div class='log'>{$lang[1]}</div><div class='mes'>{$errmsg}</div>");
 	$setup_query="INSERT INTO `{$db_prefix}links` VALUES (0, 'Bo-Blog', 'http://www.bo-blog.com', '', 'Bo-Blog Official Site', 0, 0, 1, '', ''), (1, 'BMForum', 'http://www.bmforum.com', '', 'BMForum - {$lang[71]}', 0, 0, 1, '', '')";
@@ -270,7 +270,7 @@ if ($v=='3') {
 	  `empty1` int(8) NOT NULL default '0',
 	  `empty2` int(8) NOT NULL default '0',
 	  `empty3` int(8) NOT NULL default '0'
-	) TYPE=MyISAM{$sqlcharset}";
+	) ENGINE=MyISAM{$sqlcharset}";
 	$result=db_query($setup_query);
 	if (!$result) template("<div class='log'>{$lang[1]}</div><div class='mes'>{$errmsg}</div>");
 	$setup_query="INSERT INTO `{$db_prefix}maxrec` VALUES (0, 1, 0, 3, 0, 0, 0, 0, 1, 0, 0, 0)";
@@ -308,7 +308,7 @@ if ($v=='3') {
 	  `empty8` text NULL,
 	  KEY `repid` (`repid`),
 	  KEY `reptime` (`reptime`)
-	) TYPE=MyISAM{$sqlcharset}";
+	) ENGINE=MyISAM{$sqlcharset}";
 	$result=db_query($setup_query);
 	if (!$result) template("<div class='log'>{$lang[1]}</div><div class='mes'>{$errmsg}</div>");
 
@@ -345,7 +345,7 @@ if ($v=='3') {
 	  KEY `repid` (`repid`),
 	  KEY `reptime` (`reptime`),
 	  KEY `blogid` (`blogid`)
-	) TYPE=MyISAM{$sqlcharset}";
+	) ENGINE=MyISAM{$sqlcharset}";
 	$result=db_query($setup_query);
 	if (!$result) template("<div class='log'>{$lang[1]}</div><div class='mes'>{$errmsg}</div>");
 
@@ -356,7 +356,7 @@ if ($v=='3') {
 	  `tagcounter` int(8) NOT NULL default '0',
 	  `tagentry` text NULL,
 	  `tagrelate` text NULL
-	) TYPE=MyISAM{$sqlcharset}";
+	) ENGINE=MyISAM{$sqlcharset}";
 	$result=db_query($setup_query);
 	if (!$result) template("<div class='log'>{$lang[1]}</div><div class='mes'>{$errmsg}</div>");
 
@@ -381,7 +381,7 @@ if ($v=='3') {
 	  `avatar` text NULL,
 	  KEY `userid` (`userid`),
 	  KEY `usergroup` (`usergroup`)
-	) TYPE=MyISAM{$sqlcharset}";
+	) ENGINE=MyISAM{$sqlcharset}";
 	$result=db_query($setup_query);
 	if (!$result) template("<div class='log'>{$lang[1]}</div><div class='mes'>{$errmsg}</div>");
 	$setup_query="INSERT INTO `{$db_prefix}user` VALUES (1, '{$username}', '{$password}', {$ts}, 2, 'admin@yourname.com', 'http://www.yourname.com', 0, '', '', 0, '', '', 0, '{$ip}', '')";
@@ -402,7 +402,7 @@ if ($v=='3') {
 	`emotstat` TINYINT( 1 ) NOT NULL DEFAULT '0',
 	`pagealias` VARCHAR( 255 ) NULL,
 	INDEX ( `pageauthor` )
-	) TYPE=MyISAM{$sqlcharset}";
+	) ENGINE=MyISAM{$sqlcharset}";
 	$result=db_query($setup_query);
 	if (!$result) template("<div class='log'>{$lang[1]}</div><div class='mes'>{$errmsg}</div>");
 
@@ -414,7 +414,7 @@ if ($v=='3') {
 	`active` INT( 1 ) DEFAULT '1' NOT NULL ,
 	`modorder` INT( 5 ) NOT NULL ,
 	`func` TEXT NULL
-	) TYPE = MyISAM{$sqlcharset}";
+	) ENGINE=MyISAM{$sqlcharset}";
 	$result=db_query($setup_query);
 	if (!$result) template("<div class='log'>{$lang[1]}</div><div class='mes'>{$errmsg}</div>");
 	$setup_query="INSERT INTO `{$db_prefix}mods` VALUES ('header', 'index', '{$lang[35]}', '1', '1', 'system'), ('header', 'customrss', '{$lang[36]}', '0', '2', 'system'), ('header', 'login', '{$lang[37]}', '0', '3', 'system'), ('header', 'modpro', '{$lang[38]}', '0', '4', 'system'), ('header', 'alltags', '{$lang[39]}', '1', '5', 'system'), ('header', 'guestbook', '{$lang[40]}', '1', '6', 'system'), ('header', 'togglesidebar', '{$lang[41]}', '1', '7', 'system'), ('header', 'starred', '{$lang[42]}', '1', '20', 'system')";
@@ -436,12 +436,12 @@ if ($v=='3') {
 	`active` TINYINT( 1 ),
 	`pladmin` TINYINT( 1 ),
 	`plregister` TINYTEXT
-	) TYPE = MyISAM{$sqlcharset}";
+	) ENGINE=MyISAM{$sqlcharset}";
 	$result=db_query($setup_query);
 	if (!$result) template("<div class='log'>{$lang[1]}</div><div class='mes'>{$errmsg}</div>");
-	$setup_query="INSERT INTO `{$db_prefix}plugins` VALUES (1, 'viewstat', 'Bob', '{$lang[69]}', '1.0', 'http://www.bo-blog.com', '2.0.1', 1, 1, '')"; 
+	$setup_query="INSERT INTO `{$db_prefix}plugins` VALUES (1, 'viewstat', 'Bob', '{$lang[69]}', '1.0', 'http://www.bo-blog.com', '2.0.1', 1, 1, '')";
 	$result=db_query($setup_query);
-	$setup_query="INSERT INTO `{$db_prefix}plugins` VALUES (2, 'ccunion', 'Bob', 'CC Video Union plugin for Bo-Blog.', '1.1', 'http://www.bo-blog.com', '2.0.2', 0, 1, 'ubbeditor,ubbanalyseadvance,page')"; 
+	$setup_query="INSERT INTO `{$db_prefix}plugins` VALUES (2, 'ccunion', 'Bob', 'CC Video Union plugin for Bo-Blog.', '1.1', 'http://www.bo-blog.com', '2.0.2', 0, 1, 'ubbeditor,ubbanalyseadvance,page')";
 	$result=db_query($setup_query);
 	if (!$result) template("<div class='log'>{$lang[1]}</div><div class='mes'>{$errmsg}</div>");
 
@@ -454,10 +454,10 @@ if ($v=='3') {
 	  `uploadtime` int(11) default NULL,
 	  `uploaduser` int(6) NOT NULL default '0',
 	  PRIMARY KEY  (`fid`)
-	) TYPE=MyISAM";
+	) ENGINE=MyISAM";
 	$result=db_query($setup_query);
 	if (!$result) template("<div class='log'>{$lang[1]}</div><div class='mes'>{$errmsg}</div>");
-	
+
 	template("<div class='log'>{$lang[56]}</div><div class='mes'><form action='install.php?v=4' method='post' id='frm1'>{$lang[57]}<br>{$lang[58]}<br><input type='hidden' value='{$db_server}' name='db_server'><input type='hidden' value='{$db_username}' name='db_username'><input type='hidden' value='{$db_password}' name='db_password'><input type='hidden' value='{$db_name}' name='db_name'><input type='hidden' value='{$db_prefix}' name='db_prefix'><input type='hidden' name='blogurlpath' value='{$blogurlpath}'><input type='hidden' value='{$db_410}' name='db_410'><input type='hidden' value='{$username}' name='username'><input type='hidden' value='{$password}' name='password'><input type='hidden' value='{$blogname}' name='blogname'><input type='hidden' value='".addslashes($blogdesc)."' name='blogdesc'><br><br><div align='center'><input type='hidden' value='{$newinstall}' name='newinstall'><input type='button' id='btn1' value='{$lang[21]}' onclick='submitit();' class='inbut'> <input type='reset' value='{$lang[22]}'  class='inbut'></div></form></div>");
 }
 
@@ -496,11 +496,11 @@ if ($v=='4') {
 ";
 	writetofile('../data/config.php', $config_data);
 
-	if ($newinstall!=1) 	{ //Quit	
+	if ($newinstall!=1) 	{ //Quit
 		if (file_exists("copy/mod_config.php")) { //Repair mod_config.php
 			$orgin=readfromfile("copy/mod_config.php");
 			writetofile("../data/mod_config.php", $orgin);
-		}	
+		}
 		@rename ("install.php", "install.bak"); //Try to rename install.php
 		template("<div class='log'>{$lang[61]}</div><div class='mes'><form action='' method='post' id='frm1'>{$lang[78]}<br>{$lang[79]}<br><br><div align=center><input type='button' value='{$lang[64]}' onclick='window.location=\"../index.php\";' class='inbut'></div>");
 	}
@@ -511,7 +511,7 @@ if ($v=='4') {
 	writetofile('../data/modules.php', "<?PHP\n/*--PREPENDAREA--*/\n/*--APPENDAREA--*/\n\$blogitem['announcement']=array('type'=>'block',	'name'=>'announcement', 'title'=>'{$lang[59]}', 'content'=>'{$lang[60]}', 'extend'=>1);\n\$blogitem['archivelink']=array('type'=>'link', 'url'=>'archive.php', 'text'=>'{$lang[49]}');\n");
 
 	writetofile('../data/cache_categories.php', "<?PHP exit;?><|>0<|>{$lang[32]}<|>{$lang[33]}<|>0<|>0<|>0<|><|><|>1<|>-1<|>\n");
-	
+
 	writetofile('../data/online.php', "");
 
 	writetofile('../data/cache_tags.php', "");
@@ -562,7 +562,7 @@ function submitit(){
 }
 function checkandsubmit(){
 	if (document.getElementById('password') && document.getElementById('confirmpassword')) {
-		if (document.getElementById('password').value != document.getElementById('confirmpassword').value || document.getElementById('password').value=='' || document.getElementById('confirmpassword').value=='') { 
+		if (document.getElementById('password').value != document.getElementById('confirmpassword').value || document.getElementById('password').value=='' || document.getElementById('confirmpassword').value=='') {
 			alert("{$lang[81]}");
 			document.getElementById('password').value='';
 			document.getElementById('confirmpassword').value='';
