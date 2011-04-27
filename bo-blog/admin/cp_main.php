@@ -762,42 +762,55 @@ if ($job=='langset') {
 
 	$display_overall.= <<<eot
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
-<tr>
-<td width=160 class="sectstart">
-Language/语言/語言
-</td>
-<td class="sectend">Set blog language</td>
-</tr>
+  <tr>
+    <td width=160 class="sectstart">
+      {$lna['language']}
+    </td>
+    <td class="sectend">
+      {$lna['language_intro']}
+    </td>
+  </tr>
 </table>
 
 <table align=center class='tablewidth'>
 <form action="admin.php?go=main_dolangset" method="post">
-<tr>
-<td class='sect'>
-<table align=center class='tablewidth'>
-<tr>
-<td class='sect'>
-Current Language Pack/当前语言包/當前語言包<br><br>
-<b>Front-End/前台/前臺</b> {$langname['front']}<br>
-<b>Back-End/后台/後臺</b> {$langname['back']}
-
-<br><br><hr><br>
-Set Language Pack Location/更改语言包为/更改語言包為<br><br>
-<b>Front-End/前台/前臺</b>  
-<br><select name='newlangf'>
-$selectbody
-</select>
-<br><br>
-<b>Back-End/后台/後臺</b>  
-<br><select name='newlangb'>
-$selectbody
-</select>
-<br>
-<br>
-<input type='submit' value='OK' class='formbutton'> <input type='reset' value='Cancel' class='formbutton'><br>
-</td></tr>
-</table>
-</td></tr>
+  <tr>
+    <td class='sect'>
+      <table align=center class='tablewidth'>
+        <tr>
+          <td class='sect'>
+            {$lna['current_language']}
+            <br><br>
+            {$lna['frontend']}: <b>{$langname['front']}</b>
+            <br>
+            {$lna['backend']}: <b>{$langname['back']}</b>
+            <br>
+            <br>
+            <hr>
+            <br>
+            {$lna['select_language']}
+            <br><br>
+            <b>{$lna['frontend_language']}</b>
+            <br>
+            <select name='newlangf'>
+              $selectbody
+            </select>
+            <br><br>
+            <b>{$lna['backend_language']}</b>
+            <br>
+            <select name='newlangb'>
+            $selectbody
+            </select>
+            <br>
+            <br>
+            <input type='submit' value='OK' class='formbutton'>
+            <input type='reset' value='Cancel' class='formbutton'>
+            <br>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
 </form>
 </table>
 eot;
@@ -809,7 +822,7 @@ if ($job=='dolangset') {
 	if (!file_exists("lang/{$newlangb}/backend.php")) catcherror("Back-end langauge pack does not exist. 后台语言包不存在。 後臺語言包不存在。");
 	$newcontent="<?PHP\n\$langfront=\"{$newlangf}\";\n\$langback=\"{$newlangb}\";\n@include_once (\"lang/{$newlangf}/common.php\");";
 	writetofile ("data/language.php", $newcontent);
-	catchsuccess("Language set has been changed. 语言包设置完成。 語言包設置完成。");
+/*vot*/	catchsuccess("{$lna['language_updated']}");
 }
 
 if ($job=='refreshadminskinlist' || $job=='selectadminskin') {

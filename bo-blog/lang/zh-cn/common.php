@@ -324,6 +324,10 @@ $lnc=array (
 318=>'OpenID页',
 319=>'OpenID已禁用。',
 320=>'您提交的内容输入用时太短，系统认为是机器人自动发言，拒绝接受。还需等待：',
+
+'tips'		 => 'Tips',
+//global.php:20
+'install_remove' => 'WARNING: Installation file: install/install.php is still on your server. Please DELETE or RENAME it now.<br>警告：安装文件install/install.php仍然在您的服务器上，请立刻将其改名或删除！<br>警告：安裝程式install/install.php仍然在您的伺服器上，請立刻將其改名或刪除！',
 );
 
 //农历用字

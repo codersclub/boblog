@@ -122,7 +122,11 @@ $elements['displayall']=<<<eot
 eot;
 
 $elements['msgbox']=<<<eot
-<div class="tips">Tips:<br/>{message}</div>
+<div class="tips">
+  {$lnc['tips']}:
+  <br/>
+  {message}
+</div>
 eot;
 
 $elements['sideblock']=<<<eot
