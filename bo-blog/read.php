@@ -2,7 +2,7 @@
 // Prohibition of the Use Windows Notepad to modify the file,
 // all the resulting answer will not be the use of non-normal!
 
-@error_reporting(E_ERROR | E_WARNING | E_PARSE);
+/*vot*/ error_reporting(E_ALL);
 require_once ("data/config.php");
 
 //Auto detect mirror site

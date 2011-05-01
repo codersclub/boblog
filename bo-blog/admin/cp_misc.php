@@ -399,14 +399,14 @@ eot;
 if ($job=='testsession') {
 	$testcontent1=<<<eot
 <?php
-error_reporting(0);
+error_reporting(E_ALL);
 session_cache_limiter("private, must-revalidate");
 session_start();
 \$_SESSION['testboblogsess']='This is a test string.';
 eot;
 	$testcontent2=<<<eot
 <?php
-error_reporting(0);
+error_reporting(E_ALL);
 session_cache_limiter("private, must-revalidate");
 session_start();
 die (\$_SESSION['testboblogsess']);

@@ -11,7 +11,7 @@ In memory of my university life
 This file is used for URL optimization based on PHP
 ------------------------------------------------------- */
 
-@error_reporting(E_ERROR | E_WARNING | E_PARSE);
+error_reporting(E_ALL);
 include_once("./data/config.php");
 if ($config['urlrewritemethod']!='1') {
 	die("ACCESS DENIED.");

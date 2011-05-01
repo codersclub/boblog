@@ -1,5 +1,5 @@
 <?PHP
-error_reporting(E_ALL & ~E_NOTICE);
+error_reporting(E_ALL);
 include("include.php");
 include($file['list']);
 $id=$_GET['id'];
