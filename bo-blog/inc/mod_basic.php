@@ -49,13 +49,13 @@ else {
 }
 
 
-if ($flset['tags']!=1) $blogitem['alltags']+=array('type'=>'link', 'url'=>'tag.php', 'text'=>$lnc[288]);
+if (@$flset['tags']!=1) $blogitem['alltags']+=array('type'=>'link', 'url'=>'tag.php', 'text'=>$lnc[288]);
 
-if ($flset['guestbook']!=1) $blogitem['guestbook']+=array('type'=>'link', 'url'=>'guestbook.php', 'text'=>$lnc[91]);
+if (@$flset['guestbook']!=1) $blogitem['guestbook']+=array('type'=>'link', 'url'=>'guestbook.php', 'text'=>$lnc[91]);
 
-if ($plugin_closesidebar!=1) $blogitem['togglesidebar']+=array('type'=>'link', 'url'=>'javascript:showHideSidebar();', 'text'=>$lnc[92]);
+if (@$plugin_closesidebar!=1) $blogitem['togglesidebar']+=array('type'=>'link', 'url'=>'javascript:showHideSidebar();', 'text'=>$lnc[92]);
 
-if ($flset['star']!=1) $blogitem['starred']+=array('type'=>'link', 'url'=>'star.php', 'text'=>$lnc[93]);
+if (@$flset['star']!=1) $blogitem['starred']+=array('type'=>'link', 'url'=>'star.php', 'text'=>$lnc[93]);
 
 $blogitem['viewlinks']+=array('type'=>'link', 'url'=>'links.php', 'text'=>$lnc[94]);
 
@@ -123,16 +123,18 @@ if (in_array('link', $allopenmods)) {
 }
 //[End]link
 
+/*vot*/ $statshow = '';
+
 //[Start]statistics
 if (in_array('statistics', $allopenmods)) {
-	if ($mbcon['stattotal']=='1') $statshow.="{$lnc[97]} {$statistics['total']}<br/>";
-	if ($mbcon['stattoday']=='1') $statshow.="{$lnc[98]} {$statistics['today']}<br/>";
-	if ($mbcon['statentries']=='1') $statshow.="{$lnc[99]} {$statistics['entries']}<br/>";
-	if ($mbcon['statreplies']=='1') $statshow.="<a href=\"view.php?go=comment\">{$lnc[100]} {$statistics['replies']}</a><br/>";
-	if ($mbcon['stattb']=='1') $statshow.="<a href=\"view.php?go=tb\">{$lnc[101]} {$statistics['tb']}</a><br/>";
-	if ($flset['guestbook']!=1 && $mbcon['statmessages']=='1') $statshow.="<a href=\"guestbook.php\">{$lnc[102]} {$statistics['messages']}</a><br/>";
-	if ($mbcon['statusers']=='1') $statshow.="<a href=\"view.php?go=userlist\">{$lnc[103]} {$statistics['users']}</a><br/>";
-	if ($mbcon['statonline']=='1' && !defined('noCounter')) $statshow.="{$lnc[104]} {$statistics['nowusers']}<br/>";
+	if (@$mbcon['stattotal']=='1') $statshow.="{$lnc[97]} {$statistics['total']}<br/>";
+	if (@$mbcon['stattoday']=='1') $statshow.="{$lnc[98]} {$statistics['today']}<br/>";
+	if (@$mbcon['statentries']=='1') $statshow.="{$lnc[99]} {$statistics['entries']}<br/>";
+	if (@$mbcon['statreplies']=='1') $statshow.="<a href=\"view.php?go=comment\">{$lnc[100]} {$statistics['replies']}</a><br/>";
+	if (@$mbcon['stattb']=='1') $statshow.="<a href=\"view.php?go=tb\">{$lnc[101]} {$statistics['tb']}</a><br/>";
+	if (@$flset['guestbook']!=1 && $mbcon['statmessages']=='1') $statshow.="<a href=\"guestbook.php\">{$lnc[102]} {$statistics['messages']}</a><br/>";
+	if (@$mbcon['statusers']=='1') $statshow.="<a href=\"view.php?go=userlist\">{$lnc[103]} {$statistics['users']}</a><br/>";
+	if (@$mbcon['statonline']=='1' && !defined('noCounter')) $statshow.="{$lnc[104]} {$statistics['nowusers']}<br/>";
 	plugin_runphp('sidebarstatistics');
 	$blogitem['statistics']+=array(
 		'type'=>'block',
@@ -231,7 +233,7 @@ if (in_array('replies', $allopenmods)) {
 	if ($tmpreplies[0]) {
 		foreach ($tmpreplies as $tmpsinglereply) {
 			$tmpsinglereplyarray=@explode('<|>', $tmpsinglereply);
-			if (!$tmpsinglereplyarray[1]) break;
+			if (!@$tmpsinglereplyarray[1]) break;
 			$replyarrayasigned=array('blogid'=>$tmpsinglereplyarray[2], 'repcontent'=>stripslashes($tmpsinglereplyarray[3]), 'replier'=>$tmpsinglereplyarray[4], 'repid'=>$tmpsinglereplyarray[5], 'title'=>$tmpsinglereplyarray[6], 'blogalias'=>$tmpsinglereplyarray[7]);
 			if ($tmpsinglereplyarray[1]=='limit') $cache_replies_limit[]=$replyarrayasigned;
 			elseif ($tmpsinglereplyarray[1]=='all') $cache_replies_all[]=$replyarrayasigned;
@@ -283,7 +285,7 @@ if (in_array('calendar', $allopenmods)) {
 	} else {
 		$cm_s=($cm<10) ? ('0'.$cm) : $cm;
 		$month_calendars=$blog->getarraybyquery("SELECT cday FROM `{$db_prefix}calendar` WHERE `cyearmonth`='{$cy}{$cm_s}'");
-		$month_calendar=(is_array($month_calendars['cday'])) ? array_unique($month_calendars['cday']) : array();
+		$month_calendar=(is_array(@$month_calendars['cday'])) ? array_unique($month_calendars['cday']) : array();
 		if ($mbcon['lunarcalendar']!=0) {
 			$lunarstream=lunarcalendar($cm, $cy);
 			$lunarym="<br/>{$lunarstream['year']}";
@@ -342,12 +344,12 @@ eot;
 
 //[Start]Search
 if ($mbcon['searchon']==1) {
-	$addtagsearch=($flset['tags']==0) ? '' : "<option value=\"5\">{$lnc[127]}</option>";
+	$addtagsearch=(@$flset['tags']==0) ? '' : "<option value=\"5\">{$lnc[127]}</option>";
 	$searchbox=<<<eot
 	<form method="post" action="visit.php">
 	<input name="job" type="hidden" value="search"/>
 	<input name="keyword" class="search-field" type="text"/>
-	<select name="searchmethod"><option value="1">{$lnc[123]}</option><option value="2">{$lnc[124]}</option><option value="3">{$lnc[125]}</option><option value="4">{$lnc[126]}</option>{$$addtagsearch}</select>
+	<select name="searchmethod"><option value="1">{$lnc[123]}</option><option value="2">{$lnc[124]}</option><option value="3">{$lnc[125]}</option><option value="4">{$lnc[126]}</option>{$addtagsearch}</select>
 	<input value="{$lnc[128]}" class="button" type="submit"/>
 	</form>
 eot;

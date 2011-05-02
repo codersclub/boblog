@@ -22,11 +22,12 @@ if ($config['blogopen']!=1 && $act!='login') {
 }
 
 if ($go) @list($job, $itemid)=@explode('_', basename($go));
-if (!$job) $job='main';
+if (!@$job) $job='main';
 else $job=basename($job);
 
-$itemid=floor($itemid);
+$itemid=floor(@$itemid);
 $seed=0;
+/*vot*/ $rssbody = '';
 
 //Begin get email address
 $admin_ids=@implode(',', array_keys($adminlist));

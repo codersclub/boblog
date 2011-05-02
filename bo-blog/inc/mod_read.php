@@ -24,6 +24,8 @@ $itemid=floor($itemid);
 
 $m_b=new getblogs;
 
+/*vot*/ $blogaliasp = '';
+
 if ($is_preview) {
 	checkpermission('AddEntry');
 	acceptrequest('title,property,category,tags,sticky,html,ubb,emot,sweather,permitgp,pinged,changemytime,resend,autoping,starred,blogpsw,useeditor,summaryway,blogalias,originsrc,comefrom,forcedraft,clearautosaver', 0, 'post');
@@ -109,6 +111,7 @@ if (is_array($records)) {
 $section_body_main[0]=plugin_get('entrybegin').$section_body_main[0];
 $section_body_main[]=plugin_get('commentbegin');
 
+/*vot*/ $innerpages = '';
 
 if ($records[0]['replies']!=0 || $records[0]['tbs']!=0)  {
 	if ($mbcon['avatar']==1 || $mbcon['usergravatar']==1 || $mbcon['visitorgravatar']==1) {
@@ -136,7 +139,7 @@ $section_body_main[]=$t->set('endviewentry', array('form_reply'=>$form_reply, 'i
 
 if (!$is_preview) {
 	//Read counter
-	$allreads=$_COOKIE['readentry'];
+	$allreads=@$_COOKIE['readentry'];
 	if (!strstr($allreads, "{$itemid},")) {
 		$m_b->query("UPDATE LOW_PRIORITY `{$db_prefix}blogs` SET `views`=`views`+1 WHERE `blogid`='{$itemid}'");
 		@setcookie('readentry', $allreads."{$itemid},", time()+7200);

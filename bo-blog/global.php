@@ -33,7 +33,7 @@ if (!defined('allowCache')) {
 }
 if (stristr($_SERVER['SCRIPT_FILENAME'], 'global.php')) die ("Access Denied.");
 
-$ajax=$_REQUEST['ajax']; //If the page is in Ajax request mode
+$ajax=@$_REQUEST['ajax']; //If the page is in Ajax request mode
 
 require_once ("data/mod_config.php");
 require_once ("data/config.php");
@@ -46,11 +46,11 @@ require_once ("inc/boblog_class_run.php");
 
 //Load language
 if (defined('isIndex')) {
-	if ($_REQUEST['lang']) {
+	if (@$_REQUEST['lang']) {
 		$customlang=basename($_REQUEST['lang']);
 		setcookie('bloglanguage', $customlang);
 	}
-	else $customlang=basename($_COOKIE['bloglanguage']);
+	else $customlang=basename(@$_COOKIE['bloglanguage']);
 	if (!empty($customlang) && file_exists("lang/{$customlang}/common.php")) {
 		include_once ("lang/{$customlang}/common.php");
 		$langfront=$customlang;
@@ -92,11 +92,11 @@ if (!$mbcon['entrynum'] && !defined('VALIDADMIN') && !defined('isLogin')) {
 
 
 //Load template
-if ($_REQUEST['tem']) {
+if (@$_REQUEST['tem']) {
 	$customtemplate=basename($_REQUEST['tem']);
 	setcookie('blogtemplate', $customtemplate);
 }
-else $customtemplate=basename($_COOKIE['blogtemplate']);
+else $customtemplate=basename(@$_COOKIE['blogtemplate']);
 if (!empty($customtemplate) && file_exists("template/{$customtemplate}/info.php")) {
 	require ("template/{$customtemplate}/info.php");
 }
@@ -138,7 +138,7 @@ else {
 		}
 	}
 }
-if ($mbcon['enableopenid']=='1') {
+if (@$mbcon['enableopenid']=='1') {
 	$openidloginstat=($logstat==0 && $_COOKIE['openid_url_id']) ? 1 : 0;
 } else $openidloginstat=0;
 
@@ -171,6 +171,7 @@ $statistics=$blog->getsinglevalue("{$db_prefix}counter");
 
 //Who's online
 if (!defined('noCounter')) { //trackback, rss, sitemap are not regarded as normal visits
+/*vot*/	$tmp_checked_current = 0;
 	$afilename="data/online.php";
 	$onlineusers=$nowonline=array(); //2006-11-22 Security fix, 2006-11-25 modified
 	$online_all=@file($afilename);
@@ -238,7 +239,7 @@ function acceptcookie($valuedesc, $overwrite=0) {
 	foreach ($values as $valuename) {
 		global $$valuename;
 		if ($overwrite==0 && isset($$valuename)) continue;
-		if ($mqgpc_status==0) $$valuename=addsd($_COOKIE[$valuename]);
+		if ($mqgpc_status==0) $$valuename=addsd(@$_COOKIE[$valuename]);
 		else $$valuename=$_COOKIE[$valuename];
 		$$valuename=str_replace('`', '&#96;', $$valuename);
 	}
@@ -252,14 +253,14 @@ function acceptrequest($valuedesc, $overwrite=0, $type="both") {
 		global $$valuename;
 		if ($overwrite==0 && isset($$valuename)) continue;
 		if ($mqgpc_status==0) {
-			if ($type=="both") $$valuename=addsd($_REQUEST[$valuename]);
-			elseif ($type=="post") $$valuename=addsd($_POST[$valuename]);
-			else $$valuename=addsd($_GET[$valuename]);
+			if ($type=="both") $$valuename=addsd(@$_REQUEST[$valuename]);
+			elseif ($type=="post") $$valuename=addsd(@$_POST[$valuename]);
+			else $$valuename=addsd(@$_GET[$valuename]);
 		}
 		else {
-			if ($type=="both") $$valuename=$_REQUEST[$valuename];
-			elseif ($type=="post") $$valuename=$_POST[$valuename];
-			else $$valuename=$_GET[$valuename];
+			if ($type=="both") $$valuename=@$_REQUEST[$valuename];
+			elseif ($type=="post") $$valuename=@$_POST[$valuename];
+			else $$valuename=@$_GET[$valuename];
 		}
 		$$valuename=str_replace('`', '&#96;', $$valuename);
 	}
@@ -336,16 +337,16 @@ function addbar ($barname, $actions) { //Generate a module
 		return;
 	}
 	foreach ($actions as $eachitem) {
-		if ($blogitem[$eachitem]['permitgp']!='') {
+		if (@$blogitem[$eachitem]['permitgp']!='') {
 			$allowedgp=@explode('|', $blogitem[$eachitem]['permitgp']);
 			if (!in_array($userdetail['usergroup'], $allowedgp)) continue;
 		}
-		if (($blogitem[$eachitem]['indexonly']==1 && !strstr($_SERVER['SCRIPT_FILENAME'], 'index.php')) || ($blogitem[$eachitem]['indexonly']==2 && strstr($_SERVER['SCRIPT_FILENAME'], 'index.php'))) continue;
+		if ((@$blogitem[$eachitem]['indexonly']==1 && !strstr($_SERVER['SCRIPT_FILENAME'], 'index.php')) || (@$blogitem[$eachitem]['indexonly']==2 && strstr($_SERVER['SCRIPT_FILENAME'], 'index.php'))) continue;
 		if ($blogitem[$eachitem]['type']=='link') {
 			$plus='';
-			if ($blogitem[$eachitem]['target']) $plus.=" target=\"".$blogitem[$eachitem]['target']."\"";
-			if ($blogitem[$eachitem]['title']) $plus.=" title=\"".$blogitem[$eachitem]['title']."\"";
-			if ($blogitem[$eachitem]['onclick']) $plus.=" onclick=\"".$blogitem[$eachitem]['onclick']."\"";
+			if (@$blogitem[$eachitem]['target']) $plus.=" target=\"".$blogitem[$eachitem]['target']."\"";
+			if (@$blogitem[$eachitem]['title']) $plus.=" title=\"".$blogitem[$eachitem]['title']."\"";
+			if (@$blogitem[$eachitem]['onclick']) $plus.=" onclick=\"".$blogitem[$eachitem]['onclick']."\"";
 			$spanid=str_replace('%', '_', urlencode(str_replace('.php', '', $blogitem[$eachitem]['url'])));
 			${$addto}[]="<span id=\"nav_{$spanid}\"><a href=\"{$blogitem[$eachitem]['url']}\" {$plus}><span id=\"navitem_{$spanid}\">{$blogitem[$eachitem]['text']}</span></a></span>";
 		} elseif  ($blogitem[$eachitem]['type']=='function') {
@@ -514,6 +515,7 @@ function makecalendar ($month, $year, $month_calendar, $lunarstream='') {
 	global $nowtime, $mbcon, $config;
 	$all_date=monthly($month, $year);
 	$weekline=count($all_date)/7;
+/*vot*/	$chart = '';
 	for ($i=0; $i<$weekline; $i++) {
 		$chart.="<tr class=\"calendar-weekdays\">";
 		for ($j=0; $j<7; $j++) {
@@ -525,6 +527,7 @@ function makecalendar ($month, $year, $month_calendar, $lunarstream='') {
 			if (@in_array($currentdate, $month_calendar)) $ca_sh="<a href=\"{$outurl}\" rel=\"noindex,nofollow\">{$currentdate}</a>";
 			else $ca_sh=$currentdate;
 			if (is_array($lunarstream)) {
+/*vot*/			if (!isset($lunarstream[$currentdate])) {$lunarstream[$currentdate] = '';}
 				if ($mbcon['lunarcalendar']==2) $ca_sh="<span title='{$lunarstream[$currentdate]}'>{$ca_sh}</span>";
 				else $ca_sh.='<br/>'.$lunarstream[$currentdate];
 			}
@@ -565,6 +568,7 @@ function lunarcalendar ($month, $year) {
 	//用农历的天数累加来判断是否超过阳历的天数
 	$flag1=0; //判断跳出循环的条件
 	$lcj=0;
+	$mtotal = 0;
 	while ($lcj<=120){
 		$lci=1;
 		while ($lci<=13){
@@ -618,7 +622,7 @@ function lunarcalendar ($month, $year) {
 				$monthss=$lci;
 				$monthssshow=$mmonth[$monthss];
 			}
-			if ($monthss<=10 && $runyue!=1) $monthssshow.=$mmonth[13]; //只有1个字的月加上‘月’字
+			if ($monthss<=10 && @$runyue!=1) $monthssshow.=$mmonth[13]; //只有1个字的月加上‘月’字
 			$results[$i]=$monthssshow;
 		}
 	}
@@ -704,7 +708,8 @@ function get_gravatar ($email) { //Get gravatar address
 
 function plugin_get ($pluginpart) { //Load plugins and return results
 	global $blogplugin;
-	if ($blogplugin[$pluginpart]) {
+/*vot*/	$result = '';
+	if (@$blogplugin[$pluginpart]) {
 		$valid_plugins=@explode(',', $blogplugin[$pluginpart]);
 		foreach ($valid_plugins as $loadplugin) {
 			$loadplugin=basename($loadplugin);
@@ -720,7 +725,7 @@ function plugin_get ($pluginpart) { //Load plugins and return results
 
 function plugin_walk ($pluginpart, $str) { //Load plugins, compute and return results
 	global $blogplugin;
-	if ($blogplugin[$pluginpart]) {
+	if (@$blogplugin[$pluginpart]) {
 		$valid_plugins=@explode(',', $blogplugin[$pluginpart]);
 		foreach ($valid_plugins as $loadplugin) {
 			$loadplugin=basename($loadplugin);
@@ -736,7 +741,8 @@ function plugin_walk ($pluginpart, $str) { //Load plugins, compute and return re
 
 function plugin_runphp ($pluginpart) { //Load plugins, execute the php code
 	global $blogplugin;
-	if ($blogplugin[$pluginpart]) {
+/*vot*/	$str = '';
+	if (@$blogplugin[$pluginpart]) {
 		$valid_plugins=@explode(',', $blogplugin[$pluginpart]);
 		foreach ($valid_plugins as $loadplugin) {
 			$loadplugin=basename($loadplugin);
@@ -984,7 +990,7 @@ function checkPageValidity($page, $total) {
 function getHttp404($errormsg) {
 	global $config;
 	@header ("HTTP/1.1 404 Not Found");
-	if ($config['customized404']) {
+	if (@$config['customized404']) {
 		@header ("Location: {$config['customized404']}");
 		exit();
 	}

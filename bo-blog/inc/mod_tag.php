@@ -12,9 +12,9 @@ In memory of my university life
 
 if (!defined('VALIDREQUEST')) die ('Access Denied.');
 
-if ($flset['tags']==1) getHttp404($lnc[313]);
+if (@$flset['tags']==1) getHttp404($lnc[313]);
 
-if (!$job) $job='default';
+if (!@$job) $job='default';
 else $job=basename($job);
 $itemid=safe_convert($itemid);
 
@@ -28,7 +28,7 @@ if ($job=='default') {
 	$alltags=$blog->getarraybyquery("SELECT tagid,tagname,tagcounter FROM `{$db_prefix}tags` ORDER BY {$sequence} DESC LIMIT {$start_id}, {$tagperpage}");
 	$maxtagcounter=$blog->countbyquery("SELECT MAX(tagcounter) FROM `{$db_prefix}tags`");
 	$alltagcounter=$blog->countbyquery("SELECT COUNT(tagcounter) FROM `{$db_prefix}tags`");
-	for ($i=0; $i<count($alltags['tagid']); $i++) {
+	for ($i=0; $i<count(@$alltags['tagid']); $i++) {
 		$bit_tag_size=get_tag_size($alltags['tagcounter'][$i], $maxtagcounter);
 		if ($mbcon['tagunderlinetospace']==1) $eachtag=str_replace('_', ' ', $alltags['tagname'][$i]);
 		else $eachtag=$alltags['tagname'][$i];
@@ -36,7 +36,7 @@ if ($job=='default') {
 		if ($alltags['tagcounter'][$i]<0) $alltags['tagcounter'][$i]='?';
 		$tag_show[]="<a href=\"{$urlref}\" title=\"{$lnc[188]}{$alltags['tagcounter'][$i]}\"><span style=\"font-size: {$bit_tag_size}px;\">{$eachtag}</span></a>";
 	}
-	if (is_array($tag_show)) {
+	if (is_array(@$tag_show)) {
 		if ($mbcon['tagorder']=='0') shuffle($tag_show);
 		$tagshow=@implode(" &nbsp; ", $tag_show);
 	}

@@ -12,6 +12,8 @@ In memory of my university life
 
 if (!defined('VALIDREQUEST')) die ('Access Denied.');
 
+/*vot*/ $formbody = '';
+
 if ($job=='user') {
 	checkpermission('ViewUserDetail');
 	include_once("data/cache_usergroup.php");
@@ -51,6 +53,7 @@ if ($job=='links') {
 		foreach ($links as $linkeachitem) {
 			unset ($tmp_gp, $tmp_displayitem);
 			$tmp_gp=$linkeachitem['linkgptoid'];
+/*vot*/			$alllinks[$tmp_gp] = '';
 			if ($linkeachitem['linklogo']) $displayitemlogo="<img src=\"{$linkeachitem['linklogo']}\" alt=\"{$linkeachitem['linkname']}\" border=\"0\" />";
 			else $displayitemlogo='';
 			if (empty($rowcount[$tmp_gp])) {
@@ -174,6 +177,7 @@ if ($job=='archivelist') {
 		foreach ($allvaliddates as $time) {
 			$y=gmdate('Y', $time+3600*$config['timezone']);
 			$m=gmdate('n', $time+3600*$config['timezone']);
+			if(!isset($resultdates[$y][$m])) {$resultdates[$y][$m] = 0;};
 			$resultdates[$y][$m]+=1;
 		}
 
@@ -182,6 +186,7 @@ if ($job=='archivelist') {
 			$y=$uniquedates[$i];
 			$result.="<tr><td colspan=\"4\"><strong>{$y}{$lnc[299]}</strong></td></tr>\n<tr>";
 			for ($j=1; $j<13; $j++) {
+/*vot*/				if(!isset($resultdates[$y][$j])) {$resultdates[$y][$j] = 0;}
 				$resultdates[$y][$j]=floor($resultdates[$y][$j]);
 				$result.="<td><a href=\"".getlink_archive($j, $y)."\" rel=\"noindex,nofollow\"><strong>{$j}{$lnc[298]}</strong></a> ({$resultdates[$y][$j]})</td>"; 
 				if ($j%4==0) $result.="</tr><tr>";

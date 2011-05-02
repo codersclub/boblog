@@ -14,6 +14,10 @@ if (!defined('VALIDREQUEST')) die ('Access Denied.');
 
 acceptrequest('job', 1);
 
+/*vot*/ $formbody = '';
+/*vot*/ $bodyofselctavatar = '';
+/*vot*/ $pagebar = '';
+
 if (!$job) {
 	$urlreturn=($_SERVER['HTTP_REFERER']=='') ? "index.php" : $_SERVER['HTTP_REFERER'];
 	$m_b=new getblogs;

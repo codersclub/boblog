@@ -35,7 +35,7 @@ if (!$check_ok) {
 }
 else {
 	$exitcount=0;
-	$dl=$_COOKIE['filedownloaded'];
+	$dl=@$_COOKIE['filedownloaded'];
 	if ($dl) {
 		$all_dl=@explode(',', $dl);
 		if (@in_array($fid, $all_dl)) $exitcount=1;

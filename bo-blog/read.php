@@ -23,6 +23,7 @@ elseif (isset($_REQUEST['entryid'])) {
 }
 
 if ($itemid===false) {
+/*vot*/	$blogalias = '';
 	if (isset($_REQUEST['blogalias'])) $blogalias=$_REQUEST['blogalias'];
 	if ($blogalias) {
 		$blogaliasp=addslashes($blogalias);
