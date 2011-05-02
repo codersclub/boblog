@@ -23,11 +23,11 @@ td{
 	word-break: break-all;
 }
 a {
-	text-decoration: none;
+*	text-decoration: none;
 	color: #333;
 }
 a:hover {
-	text-decoration: none;
+*	text-decoration: none;
 	color:#000;
 }
 hr {
@@ -183,15 +183,15 @@ h1 a:hover {
 	padding: 0;
 }
 #innerSidebarOne {
-	float: right;
-	width: 201px;
+*	float: right;
+*	width: 201px;
 	border: 1px solid #9EC9FF;
 	background: #F5FBFE;
 	padding-left: 9px;
 }
 #innerSidebarTwo {
-	float: left;
-	width: 140px;
+*	float: left;
+	min-width: 140px;
 }
 #innerSidebarSearch {
 	clear: both;
@@ -503,6 +503,9 @@ h1 a:hover {
 	padding: 5px;
 	font-size: 14px;
 	line-height: 139%;
+}
+.textbox-content .insertimage {
+	margin: 0 0.5em 0.5em 0;
 }
 .textbox-bottom{
 	padding: 0px;
