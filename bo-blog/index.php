@@ -110,8 +110,10 @@ if (defined('whereAmI')) $currentpagelocation=whereAmI;
 else {
 	$nav=$_SERVER["REQUEST_URI"];
 	$currentpagelocation=strrchr($nav, '/');
+/*vot*/ $spanid=str_replace('%', '_', urlencode(str_replace('.php', '', ltrim($currentpagelocation, '/'))));
 	@list($currentpagelocation, $unused)=@explode('.', substr($currentpagelocation, 1));
 	if ($currentpagelocation=='') $currentpagelocation='index';
+/*vot*/ $currentpagelocation = $spanid;
 }
 $headmenu_tmp=str_replace(array("<span id=\"nav_{$currentpagelocation}\">", "<span id=\"navitem_{$currentpagelocation}\">"), array("<span id=\"nav_{$currentpagelocation}\" class=\"activepage\">", "<span id=\"navitem_{$currentpagelocation}\" class=\"activepageitem\">"), $headmenu);
 $headmenu=($headmenu_tmp==$headmenu) ? str_replace(array("<span id=\"nav_index\">", "<span id=\"navitem_index\">"), array("<span id=\"nav_index\" class=\"activepage\">", "<span id=\"navitem_index\" class=\"activepageitem\">"), $headmenu) : $headmenu_tmp;
