@@ -27,7 +27,7 @@ if (!$job) {
 	$formbody.=$t->set('form_eachline', array('text'=>"*{$lnc[132]}", 'formelement'=>"<input name='username' type='text' id='username' size='24' class='text' value='{$plusadminname}' /><input type='hidden' name='urlreturn' value='{$urlreturn}' />"));
 	$formbody.=$t->set('form_eachline', array('text'=>"*{$lnc[133]}", 'formelement'=>"<input type='password'  class='text' size='24' name='password' id='password' />"));
 
-	if ($mbcon['enableopenid']=='1' && $_GET['adminlogin']!=1) {
+	if (@$mbcon['enableopenid']=='1' && $_GET['adminlogin']!=1) {
 		$formbody.=$t->set('form_eachline', array('text'=>"", 'formelement'=>"{$lnc[314]}:"));
 		$formbody.=$t->set('form_eachline', array('text'=>"OpenID", 'formelement'=>"<input name='openid_url' type='text' id='openid_url' size='32' class='text' />"));
 	}
@@ -217,8 +217,8 @@ if ($job=='verify') {
 		exit();
 	}
 
-	$password=md5($_POST['password']);
-	$username=safe_convert(mystrtolower($_POST['username']));
+	$password=md5(@$_POST['password']);
+	$username=safe_convert(mystrtolower(@$_POST['username']));
 	plugin_runphp('loginprocess');
 	$try=$blog->getbyquery("SELECT * FROM `{$db_prefix}user` WHERE LOWER(username)='{$username}' AND `userpsw`='{$password}'");
 	if (!is_array($try)) {
