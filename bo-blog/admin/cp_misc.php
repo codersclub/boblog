@@ -16,6 +16,9 @@ include_once ("data/cache_emot.php");
 checkpermission('CP');
 confirmpsw(); //Re-check password
 
+/*vot*/ $savetext = '';
+/*vot*/ $checksta1 = $checksta2 = $checksta4 = '';
+
 //Define some senteces
 $finishok=$lna[360];
 $backtoemot="{$lna[29]}|admin.php?go=misc_emot";
@@ -136,6 +139,7 @@ if ($job=='weatherdel') {
 	}
 }
 
+/*vot*/ $notopen = '';
 if ($job=='avatar') {
 	if ($itemid=='open') {
 		 changesingleconfig ('avatar', '1');

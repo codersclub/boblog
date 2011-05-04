@@ -13,6 +13,12 @@ In memory of my university life
 if (!defined('VALIDADMIN')) die ('Access Denied.');
 checkpermission('CP');
 confirmpsw(); //Re-check password
+
+/*vot*/ $tablebody = '';
+/*vot*/ $puttinggp = $puttinggp3 = '';
+/*vot*/ $cancel = '';
+/*vot*/ $addhidden = '';
+/*vot*/ $sel1 = $sel2 = '';
 $linkgp=$blog->getgroupbyquery("SELECT * FROM `{$db_prefix}linkgroup` ORDER BY `linkgporder`");
 for ($i=0; $i<sizeof($linkgp); $i++) {
 	$tmp_id=$linkgp[$i]['linkgpid'];
@@ -242,10 +248,14 @@ if ($job=='delgp' || $job=='combinegp') {
 
 if ($job=='add' || $job=='modify' || $job=='approve') {
 	if ($job=='modify') {
-		if ($itemid=='') $cancel=$lna[230];
+		if ($itemid=='') {
+			$cancel=$lna[230];
+		}
 		else {
 			$linkvalue=$blog->getbyquery("SELECT * FROM `{$db_prefix}links` WHERE `linkid`='{$itemid}'");
-			if (!is_array($linkvalue) || !($linkvalue)) $cancel=$lna[230];
+			if (!is_array($linkvalue) || !($linkvalue)) {
+				$cancel=$lna[230];
+			}
 		}
 		catcherror ($cancel);
 		$tmp_gp=$linkvalue['linkgptoid'];
@@ -269,6 +279,15 @@ if ($job=='add' || $job=='modify' || $job=='approve') {
 		$addhidden="<input type='hidden' name='alsodel' value='{$itemid}'/>";
 	}
 	$display_overall.=highlightadminitems('add', 'link');
+
+/*vot*/ if(empty($linkvalue)) {
+/*vot*/     $linkvalue = array(
+		'linkname' => '',
+		'linkurl' => '',
+		'linklogo' => '',
+		'linkdesc' => '',
+	    );
+	}
 $display_overall.= <<<eot
 <form action="admin.php" method="post" id="ajaxForm1">
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
@@ -536,6 +555,7 @@ if ($job=='saveorder') {
 
 if ($job=="pending") {
 	$filename="data/cache_applylinks.php";
+/*vot*/	$totoshow = 0;
 	if (!file_exists($filename)) $tablebody="<tr><td colspan=10 align=center><br><br>{$lna[254]}<br><br></td></tr>";
 	else {
 		$wlinks=@file($filename);

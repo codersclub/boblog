@@ -15,6 +15,9 @@ checkpermission('CP');
 confirmpsw(); //Re-check password
 if (!$job) $job='recache';
 
+/*vot*/ $tablebody = '';
+/*vot*/ $queryplus = '';
+
 //Define some senteces
 $finishok=$lna[753];
 $finishok3=$lna[754];

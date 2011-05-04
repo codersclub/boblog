@@ -19,7 +19,7 @@ acceptrequest('job', 1);
 /*vot*/ $pagebar = '';
 
 if (!$job) {
-	$urlreturn=($_SERVER['HTTP_REFERER']=='') ? "index.php" : $_SERVER['HTTP_REFERER'];
+	$urlreturn=(empty($_SERVER['HTTP_REFERER'])) ? "index.php" : $_SERVER['HTTP_REFERER'];
 	$m_b=new getblogs;
 	$jobs=($_GET['adminlogin']==1) ? "login.php?job=verifyadmin" : "login.php?job=verify";
 	$actionnow=($_GET['adminlogin']==1) ? "{$lnc[273]}" : "{$lnc[253]} [<a href=\"login.php?job=register\">{$lnc[254]}</a>]";

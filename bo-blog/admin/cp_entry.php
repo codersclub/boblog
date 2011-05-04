@@ -19,6 +19,9 @@ if ($job=='write') {
 
 checkpermission('CP');
 confirmpsw(); //Re-check password
+
+/*vot*/ $tablebody = '';
+
 //Define some senteces
 $finishok=$lna[323];
 $backtodefault="{$lna[324]}|admin.php?go=entry_default";
@@ -39,9 +42,22 @@ if ($job=='' || $job=="default") {
 	}
 	$adminselection.="</select>";
 
-	$propertysel=$timeperiodsel=array();
+/*vot*/	$propertysel= array(
+		0  => '',
+		1  => '',
+		2  => '',
+		10 => '',
+	);
+/*vot*/	$timeperiodsel=array(
+		0   => '',
+		7   => '',
+		30  => '',
+		90  => '',
+		180 => '',
+		365 => '',
+	);
 
-	$propertysel[$property]="selected";
+	$propertysel[$property]='selected="selected"';
 	$adminselection2="<select name=\"property\"><option value='10' {$propertysel[10]}>{$lna[1130]}</option><option value=0 {$propertysel[0]}>{$lna[269]}</option><option value=1 {$propertysel[1]}>{$lna[270]}</option><option value=2 {$propertysel[2]}>{$lna[271]}</option></select>";
 
 	$timeperiodsel[$timeperiod]="selected";

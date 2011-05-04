@@ -37,6 +37,7 @@ class boblog {
 
 	function getgroupbyquery($query) {
 		$result=db_query($query);
+/*vot*/		$fetchresult = array();
 		$i=0;
 		while ($row=db_fetch_array($result)) {
 			while (@list($key, $val)=@each($row)) {

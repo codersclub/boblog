@@ -25,10 +25,10 @@ if ($act=='edit' || $act=='page') {
 
 $adminclassshow[$act]='_active';
 
-$shutajax=($config['closeadminajax']=='1') ? 1 : 0;
+$shutajax=(@$config['closeadminajax']=='1') ? 1 : 0;
 
-
-$messageblock=($flset['guestbook']!=1) ? "<span class=\"ahb{$adminclassshow['message']}\"><li onmouseover=\"adminitemhover('message',this)\"><a href=\"admin.php?act=message\">{$lna[7]}</a></li></span>" : '';
+$adminclass = @$adminclassshow['message'];
+$messageblock=(@$flset['guestbook']!=1) ? "<span class=\"ahb{$adminclass}\"><li onmouseover=\"adminitemhover('message',this)\"><a href=\"admin.php?act=message\">{$lna[7]}</a></li></span>" : '';
 $display_overall.=<<<eot
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="UTF-8">
@@ -89,25 +89,25 @@ eot;
 $admin_item["main"]=array("default"=>$lna[12], "config"=>$lna[13], "mbcon"=>$lna[14], "funclock"=>$lna[1194], "module"=>$lna[15], "update"=>$lna[16], "langset"=>"Language");
 
 $admin_item["category"]=array("default"=>$lna[4]);
-if ($flset['tags']!=1)  $admin_item["category"]["tags"]=$lna[17];
+if (@$flset['tags']!=1)  $admin_item["category"]["tags"]=$lna[17];
 
 $admin_item["link"]=array("default"=>$lna[18], "detail"=>$lna[19], "groupsorting"=>$lna[252], "add"=>$lna[20], "pending"=>$lna[21]);
 $admin_item["entry"]=array("default"=>$lna[3], "write"=>$lna[22], "draft"=>$lna[23], "pagewrite"=>$lna[1056], "pagemanage"=>$lna[1057]);
 $admin_item["reply"]=array("default"=>$lna[6], "censor"=>$lna[24], "tb"=>$lna[25], "tbcensor"=>$lna[947]);
 
-if ($flset['guestbook']!=1) {
+if (@$flset['guestbook']!=1) {
 	$admin_item["message"]=array("default"=>$lna[7], "censor"=>$lna[26]);
 }
 
 $admin_item["addon"]=array("skin"=>$lna[27], "plugin"=>$lna[28], "langspec"=>$lna[1101]);
 
 $admin_item["misc"]=array("forbidden"=>$lna[30], "emot"=>$lna[29]);
-if ($flset['weather']!=1)  $admin_item["misc"]["weatherset"]=$lna[31];
-if ($flset['avatar']!=1)  $admin_item["misc"]["avatar"]=$lna[32];
+if (@$flset['weather']!=1)  $admin_item["misc"]["weatherset"]=$lna[31];
+if (@$flset['avatar']!=1)  $admin_item["misc"]["avatar"]=$lna[32];
 $admin_item["misc"]+=array("sessiondir"=>$lna[935], "urlrewrite"=>$lna[527]);
 
 $admin_item["user"]=array("usergroup"=>$lna[33], "users"=>$lna[8], "add"=>$lna[34]);
-$admin_item["carecenter"]=array("recache"=>$lna[35], "adminattach"=>$lna[36], "mysql"=>MySQL, "export"=>$lna[37], "import"=>$lna[38]);
+$admin_item["carecenter"]=array("recache"=>$lna[35], "adminattach"=>$lna[36], "mysql"=>'MySQL', "export"=>$lna[37], "import"=>$lna[38]);
 
 
 foreach ($admin_item as $k=>$v) {

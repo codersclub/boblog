@@ -309,6 +309,7 @@ if (in_array('calendar', $allopenmods)) {
 
 		$thisyearurl="archive.php";
 		$cal_body=<<<eot
+11111111111111111111111111111111111111111
 <table id="calendar" cellspacing="1" width="100%">
 <tbody><tr><td colspan="7" class="calendar-top">
 <a href="{$lastyearurl}" rel="noindex,nofollow">&lt;</a>

@@ -13,6 +13,26 @@ In memory of my university life
 define('VALIDADMIN', 1);
 define ("noCounter", 1);
 $adminlogstat=0;
+/*vot*/ $initialjs = '';
+/*vot*/ $editorjs = '';
+/*vot*/ $onloadjs = '';
+/*vot*/ $display_overall = '';
+/*vot*/ $admskinsel = '';
+/*vot*/ $puttingcates = '';
+/*vot*/ $puttingdetail = '';
+/*vot*/ $formbody = '';
+/*vot*/ $section = '';
+/*vot*/ $adminclassshow = array(
+	'entry'      => '',
+	'category'   => '',
+	'link'       => '',
+	'reply'      => '',
+	'user'       => '',
+	'addon'      => '',
+	'misc'       => '',
+	'main'       => '',
+	'carecenter' => '',
+	);
 require_once ("global.php");
 include_once ("lang/{$langback}/backend.php");
 include_once ("data/allmods.php");
@@ -84,10 +104,17 @@ function highlightadminitems ($itemhighlight, $itemsrow) {
 
 function addpref ($pref_type, $pref_content) { //This will generate the complete config form body
 	global $pref_leftchar, $pref_variable, $pref_result, $pref_quicksel, $prefseccounter;
+//dump($pref_content, '$pref_content');
 	if ($pref_leftchar=='') $pref_leftchar=200;
 	global $$pref_variable;
 	$prefvalue=$$pref_variable;
 	$prefs=@explode("|", $pref_content);
+/*vot*/ if (!isset($prefs[1])) {$prefs[1] = '';}
+/*vot*/ if (!isset($prefs[2])) {$prefs[2] = '';}
+/*vot*/ if (!isset($prefs[3])) {$prefs[3] = '';}
+/*vot*/ if (!isset($prefs[4])) {$prefs[4] = '';}
+//dump($prefs, '$prefs');
+/*vot*/ if (!isset($prefvalue[$prefs[0]])) {$prefvalue[$prefs[0]] = '';}
 	switch ($pref_type) {
 		case 't': //text input
 			$output="<tr><td class=\"prefleft\" valign=\"top\" width='$pref_leftchar'>{$prefs[1]}</td><td class=\"prefright\"><input type='text' name='prefconfig[{$prefs[0]}]' id='{$prefs[0]}' value=\"".stripslashes($prefvalue[$prefs[0]])."\" size='40'>  {$prefs[2]}</td></tr>";
@@ -194,6 +221,7 @@ function gen_page ($page, $numperline, $returnurl, $totalvolume, $perpagevolume)
 	$conxer=(strstr($returnurl, '?'))? '&amp;' : '?';
 	$total_pages=floor(($totalvolume-1)/$perpagevolume)+1;
 	if (empty($total_pages)) return '';
+/*vot*/ $pagebar = '';
 	$firstindexpage=floor($page/$numperline)*$numperline+1;
 	$lastindexpage=min(($firstindexpage+$numperline-1), $total_pages);
 	$pagebar.=" {$lnc[8]} {$page}/{$total_pages} ";

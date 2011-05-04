@@ -12,6 +12,9 @@ In memory of my university life
 
 if (!defined('VALIDADMIN')) die ('Access Denied.');
 
+/*vot*/ $tablebody = '';
+/*vot*/ $censorclearall = '';
+
 //Define some senteces
 $finishok=$lna[351];
 $finishok2=$lna[352];
@@ -222,7 +225,7 @@ if ($job=='tb' || $job=='tbcensor') {
 		$titlem=$lna[25];
 		$titler=$lna[359];
 		$actionurl="admin.php?go=reply_tb";
-		$countnum=$blog->$statistics['tb'];
+/*vot*/		$countnum=$statistics['tb'];
 	}
 	$pagebar=gen_page ($page, 5, $actionurl, $countnum, $adminitemperpage);
 	$display_overall.=highlightadminitems($job, 'reply');

@@ -22,7 +22,7 @@ $backtomodule="{$lna[15]}|admin.php?go=main_module";
 $backtorefreshcache="{$lna[866]}|admin.php?go=carecenter";
 $prefseccounter=0;
 
-if (!$job) $job='default';
+if (!@$job) $job='default';
 
 if ($job=='default') {
 	$phpver=PHP_VERSION;
@@ -41,7 +41,7 @@ if ($job=='default') {
 
 	//Begin check unapproved comments and messages
 	$pending_replies=$blog->countbyquery("SELECT COUNT(repid) FROM `{$db_prefix}replies` WHERE `reproperty`=2 OR `reproperty`=3");
-	if ($flset['guestbook']!=1) $pending_messages=$blog->countbyquery("SELECT COUNT(repid) FROM `{$db_prefix}messages` WHERE `reproperty`=2 OR `reproperty`=3");
+	if (@$flset['guestbook']!=1) $pending_messages=$blog->countbyquery("SELECT COUNT(repid) FROM `{$db_prefix}messages` WHERE `reproperty`=2 OR `reproperty`=3");
 	$pending_tbs=$blog->countbyquery("SELECT COUNT(repid) FROM `{$db_prefix}replies` WHERE `reproperty`=5");
 	if (file_exists("data/cache_applylinks.php")) {
 		$tmps=@file("data/cache_applylinks.php");
@@ -50,7 +50,7 @@ if ($job=='default') {
 		unset ($tmps);
 	} else $pending_links=0;
 	$pending_replies_show=(empty($pending_replies)) ? " (0 {$lna[45]})" : " (<b><font color=red>{$pending_replies}</font> {$lna[45]}</b>)";
-	if ($flset['guestbook']!=1) {
+	if (@$flset['guestbook']!=1) {
 		$pending_messages_show=(empty($pending_messages)) ? " (0 {$lna[45]})" : " (<b><font color=red>{$pending_messages}</font> {$lna[45]}</b>)";
 		$pending_messages_shows="<li><a href=\"admin.php?go=message_censor\">{$lna[26]}</a> $pending_messages_show</li>";
 	}

@@ -13,6 +13,10 @@ In memory of my university life
 if (!defined('VALIDADMIN')) die ('Access Denied.');
 checkpermission('CP');
 confirmpsw(); //Re-check password
+
+/*vot*/ $tablebody = '';
+/*vot*/ $puttingcates_after = '';
+
 //Define some senteces
 $finishok=$lna[177];
 $backtodefault="{$lna[4]}|admin.php?go=category_default";
