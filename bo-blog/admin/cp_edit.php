@@ -12,8 +12,6 @@ In memory of my university life
 
 if (!defined('VALIDADMIN')) die ('Access Denied.');
 
-/*vot*/ $cancel = '';
-
 //Define some senteces
 $finishok=$lna[265];
 $partbacktoart=$lna[266];
@@ -22,6 +20,7 @@ $backtodraft="{$lna[325]}|admin.php?go=entry_draft";
 
 if (!$job) $job='add';
 $id=$itemid;
+//dump($id, '$id');
 
 include_once ("data/cache_emot.php");
 if (@$flset['weather']!=1) {
@@ -43,8 +42,9 @@ if ($job=='add' || $job=='store') { //Permission check
 } 
 
 if ($job!='add' && $job!='store' && $job!='sendtb') {
-	if ($id=="") $cancel=$lna[268];
-	else {
+	if ($id=="") {
+		$cancel=$lna[268];
+	} else {
 		if ($permission['SeeHiddenEntry']!=1) {
 			$partialquery="SELECT * FROM `{$db_prefix}blogs` WHERE `blogid`='{$id}'  AND `property`<>'2'";
 		} else {
@@ -114,7 +114,7 @@ if ($job=='add' || $job=='edit') { //Initialize public items
 }
 
 if ($job=='edit') { //Initialize Edit only items
-	if ($flset['weather']!=1) $selectedid_weather=array_search($records['weather'], $arrayvalue_weather); //selected weather
+	if (@$flset['weather']!=1) $selectedid_weather=array_search($records['weather'], $arrayvalue_weather); //selected weather
 	$selectedid_category=array_search($records['category'], $arrayvalue_categories); //selected category
 	$selectedid_sticky=array_search($records['sticky'], $arrayvalue_sticky); //if pinned
 	$records['tags']=str_replace('>', ' ', trim($records['tags'],'>'));
@@ -191,8 +191,8 @@ if ($job=='add' || $job=='edit') { //Initialize public items
 	else $puttingstarred='';
 
 	$hiddenareas.="<input type='hidden' name='forcedraft' id='forcedraft' value='0'/>";
-	if ($disableinvert!=1) $records['content']=safe_invert($records['content'], $records['htmlstat']);
-	$records['content']=preg_replace("/\[php\](.+?)\[\/php\]/ise", "phpcode4('\\1')", $records['content']);
+	if ($disableinvert!=1) $records['content']=safe_invert(@$records['content'], @$records['htmlstat']);
+	$records['content']=preg_replace("/\[php\](.+?)\[\/php\]/ise", "phpcode4('\\1')", @$records['content']);
 	$records['content']=stripslashes($records['content']);
 	if ($editorbody!='PHP_INCLUDE') $editorbody=str_replace("{content}", $records['content'], $editorbody);
 
@@ -656,9 +656,9 @@ function autoradio ($type, $name, $arraylabel, $arrayvalue, $arraychecked=array(
 /*vot*/ $formcontent = '';
 	if ($type!='checkbox' && $type!='radio') return;
 	for ($i=0; $i<count($arraylabel); $i++) {
-		if ($arraychecked[$i]==1) $addcheck="checked='checked'";
+		if (@$arraychecked[$i]==1) $addcheck="checked='checked'";
 		else $addcheck='';
-		if ($arraydisabled[$i]==1) $disabled="disabled='disabled'";
+		if (@$arraydisabled[$i]==1) $disabled="disabled='disabled'";
 		else $disabled='';
 		if ($type=='checkbox') $disabled.=" id='{$name}' ";
 		$formcontent.="<label><input type='{$type}' name='{$name}' value='{$arrayvalue[$i]}' {$addcheck} class='formradiobox' {$disabled}/>{$arraylabel[$i]}</label> ";

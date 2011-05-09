@@ -18,6 +18,7 @@ confirmpsw(); //Re-check password
 
 /*vot*/ $savetext = '';
 /*vot*/ $checksta1 = $checksta2 = $checksta4 = '';
+/*vot*/ $conout = '';
 
 //Define some senteces
 $finishok=$lna[360];

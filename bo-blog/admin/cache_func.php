@@ -44,6 +44,7 @@ function recache_links () {
 
 function recache_emotselection () {
 	global $mbcon;
+/*vot*/	$selbody = '';
 	include("data/cache_emot.php");
 	$perline=floor($mbcon['emotperline']);
 	$perpage=floor($mbcon['emotperpage']);
@@ -158,6 +159,7 @@ function recache_latestentries () {
 
 function recache_latestreplies () {
 	global $blog, $db_prefix, $mbcon, $lna;
+/*vot*/	$outcache_limit = '';
 	$mbcon['replylength']=($mbcon['replylength']==0) ? 9999 : $mbcon['replylength'];
 	$result_limit=$blog->getgroupbyquery("SELECT t1.*, t2.title, t2.blogalias FROM `{$db_prefix}replies` t1 INNER JOIN `{$db_prefix}blogs` t2 ON t2.blogid=t1.blogid WHERE (t1.reproperty='0' OR t1.reproperty='4') AND t2.property<2 ORDER BY t1.reptime DESC LIMIT 0, {$mbcon['replynum']}");
 	$result_all=$blog->getgroupbyquery("SELECT t1.*, t2.title, t2.blogalias FROM `{$db_prefix}replies` t1 INNER JOIN `{$db_prefix}blogs` t2 ON t2.blogid=t1.blogid WHERE t1.reproperty<>'2'  AND t1.reproperty<>'3' AND t1.reproperty<>'5' AND t2.property<3 ORDER BY t1.reptime DESC LIMIT 0, {$mbcon['replynum']}");

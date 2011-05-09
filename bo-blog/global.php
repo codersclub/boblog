@@ -342,24 +342,24 @@ function addbar ($barname, $actions) { //Generate a module
 			if (!in_array($userdetail['usergroup'], $allowedgp)) continue;
 		}
 		if ((@$blogitem[$eachitem]['indexonly']==1 && !strstr($_SERVER['SCRIPT_FILENAME'], 'index.php')) || (@$blogitem[$eachitem]['indexonly']==2 && strstr($_SERVER['SCRIPT_FILENAME'], 'index.php'))) continue;
-		if ($blogitem[$eachitem]['type']=='link') {
+		if (@$blogitem[$eachitem]['type']=='link') {
 			$plus='';
 			if (@$blogitem[$eachitem]['target']) $plus.=" target=\"".$blogitem[$eachitem]['target']."\"";
 			if (@$blogitem[$eachitem]['title']) $plus.=" title=\"".$blogitem[$eachitem]['title']."\"";
 			if (@$blogitem[$eachitem]['onclick']) $plus.=" onclick=\"".$blogitem[$eachitem]['onclick']."\"";
 			$spanid=str_replace('%', '_', urlencode(str_replace('.php', '', $blogitem[$eachitem]['url'])));
 			${$addto}[]="<span id=\"nav_{$spanid}\"><a href=\"{$blogitem[$eachitem]['url']}\" {$plus}><span id=\"navitem_{$spanid}\">{$blogitem[$eachitem]['text']}</span></a></span>";
-		} elseif  ($blogitem[$eachitem]['type']=='function') {
+		} elseif  (@$blogitem[$eachitem]['type']=='function') {
 			eval("\${$addto}[]={$blogitem[$eachitem]['userfunction']}();");
-		} elseif  ($blogitem[$eachitem]['type']=='html') {
+		} elseif  (@$blogitem[$eachitem]['type']=='html') {
 			$tmp_code=evalmycode($blogitem[$eachitem]['code']);
 			${$addto}[]=$tmp_code;
 			unset ($tmp_code);
-		} elseif  ($blogitem[$eachitem]['type']=='block') {
+		} elseif  (@$blogitem[$eachitem]['type']=='block') {
 			${$addto}[]=$blogitem[$eachitem];
-		} elseif  ($blogitem[$eachitem]['type']=='extraheader') {
+		} elseif  (@$blogitem[$eachitem]['type']=='extraheader') {
 			${$addto}[]=evalmycode($blogitem[$eachitem]['code']);
-		} elseif  ($blogitem[$eachitem]['type']=='plugin') {
+		} elseif  (@$blogitem[$eachitem]['type']=='plugin') {
 			$eachitem=basename($eachitem);
 			if (file_exists("plugin/{$eachitem}/source.php")) include ("plugin/{$eachitem}/source.php");
 		}

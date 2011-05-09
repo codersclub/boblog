@@ -147,6 +147,7 @@ function makecode ($str) {
 
 function makeimg ($aligncode, $widthcode, $heightcode, $src, $inrss=0) {
 	global $lnc, $mbcon, $config;
+/*vot*/	$show = '';
 	$align=str_replace(' align=', '', strtolower($aligncode));
 	if ($align=='l') $show=' align="left"';
 	elseif ($align=='r') $show=' align="right"';

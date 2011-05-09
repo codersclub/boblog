@@ -12,16 +12,76 @@ In memory of my university life
 
 define('VALIDADMIN', 1);
 define ("noCounter", 1);
+
+// Init variables
 $adminlogstat=0;
-/*vot*/ $initialjs = '';
-/*vot*/ $editorjs = '';
-/*vot*/ $onloadjs = '';
-/*vot*/ $display_overall = '';
+
 /*vot*/ $admskinsel = '';
-/*vot*/ $puttingcates = '';
-/*vot*/ $puttingdetail = '';
+/*vot*/ $arraychecked_permitgp = '';
+/*vot*/ $blogalias = '';
+/*vot*/ $blogpsw = '';
+/*vot*/ $cancel = '';
+/*vot*/ $comefrom = '';
+/*vot*/ $disableinvert = '';
+/*vot*/ $display_overall = '';
+/*vot*/ $editorjs = '';
+/*vot*/ $editwarntime = '';
+/*vot*/ $entrysummary = '';
+/*vot*/ $entrysummaryplus0 = '';
+/*vot*/ $entrysummaryplus1 = '';
+/*vot*/ $entrysummaryplus2 = '';
+/*vot*/ $flset = array();
 /*vot*/ $formbody = '';
+/*vot*/ $initialjs = '';
+/*vot*/ $onloadjs = '';
+/*vot*/ $originsrc = '';
+/*vot*/ $pinged = '';
+/*vot*/ $puttingcates = '';
+/*vot*/ $puttingcates_after = '';
+/*vot*/ $puttingdetail = '';
+/*vot*/ $resendping = '';
 /*vot*/ $section = '';
+/*vot*/ $selectedid_category = '';
+/*vot*/ $selectedid_sticky = '';
+/*vot*/ $selectedid_weather = '';
+/*vot*/ $submitjs = '';
+/*vot*/ $tags = '';
+/*vot*/ $tagdisable = '';
+
+// Init the blog record
+$records = array (
+  'blogid'	 => '0',
+  'title'	 => '',
+  'pubtime'	 => '0',
+  'authorid'	 => '',
+  'replies'	 => '',
+  'tbs'		 => '',
+  'views'	 => '0',
+  'property'	 => '0',
+  'category'	 => '0',
+  'tags'	 => '',
+  'sticky'	 => '0',
+  'htmlstat'	 => '1',
+  'ubbstat'	 => '1',
+  'emotstat'	 => '1',
+  'content'	 => '',
+  'editorid'	 => '1',
+  'edittime'	 => '0',
+  'weather'	 => '',
+  'mobile'	 => '0',
+  'pinged'	 => '0',
+  'permitgp'	 => '0',
+  'starred'	 => '0',
+  'blogpsw'	 => '',
+  'frontpage'	 => '0',
+  'entrysummary' => '',
+  'comefrom'	 => '',
+  'originsrc'	 => '',
+  'blogalias'	 => '',
+  'pagetitle'	 => '',
+  'pagealias'	 => '',
+);
+
 /*vot*/ $adminclassshow = array(
 	'entry'      => '',
 	'category'   => '',

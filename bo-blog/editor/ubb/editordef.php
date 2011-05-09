@@ -1,6 +1,8 @@
 <?PHP
 if (!defined('VALIDADMIN')) die ('Access Denied.');
 $plugin_ubbeditor_buttons=$plugin_ubbeditor_functions='';
+/*vot*/ $editoreditmodeonly = $editoreditmodeonly2 = '';
+
 plugin_runphp('ubbeditor');
 
 $srcHTML="data/cache_emsel.php";
@@ -8,7 +10,6 @@ $srcHTML="data/cache_emsel.php";
 @include ($srcHTML);
 $emots=str_replace("<br/>", ' ', $emots);
 $emots=str_replace("</a>", '</a> ', $emots);
-
 
 if ($act=='edit') {
 	$editoreditmodeonly=<<<eot
