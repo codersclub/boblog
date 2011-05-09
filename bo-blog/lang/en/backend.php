@@ -1010,7 +1010,7 @@ $lna=array (
 997=>'Opacity',
 998=>'Enter a number between 1 - 100. The larger the lighter.',
 999=>'Watermark result|Watermark image does not exist.|GD is not available.|PHP version is lower than 4.3.0.|Too small an image, which need no watermark.|Your GD does not support GIF files.|Unknown image format.|Watermark added.|Failed!|',
-1000=>'Defualt sytem session path',
+1000=>'Default sytem session path',
 1001=>'<font color=red>Have a test first if you want to use a default system session path.</font><br><a href="admin.php?go=misc_testsession" target=_blank>[Test now]</a>',
 1002=>'Click the button',
 1003=>'Click here',
