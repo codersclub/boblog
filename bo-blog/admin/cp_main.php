@@ -818,8 +818,8 @@ eot;
 
 if ($job=='dolangset') {
 	acceptrequest('newlangf,newlangb');
-	if (!file_exists("lang/{$newlangf}/common.php")) catcherror("Front-end langauge pack does not exist. 前台语言包不存在。 前臺語言包不存在。");
-	if (!file_exists("lang/{$newlangb}/backend.php")) catcherror("Back-end langauge pack does not exist. 后台语言包不存在。 後臺語言包不存在。");
+	if (!file_exists("lang/{$newlangf}/common.php")) catcherror($lna['front_lang_not_found']);
+	if (!file_exists("lang/{$newlangb}/backend.php")) catcherror($lna['admin_lang_not_found']);
 	$newcontent="<?PHP\n\$langfront=\"{$newlangf}\";\n\$langback=\"{$newlangb}\";\n@include_once (\"lang/{$newlangf}/common.php\");";
 	writetofile ("data/language.php", $newcontent);
 /*vot*/	catchsuccess("{$lna['language_updated']}");

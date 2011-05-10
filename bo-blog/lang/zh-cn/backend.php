@@ -2,13 +2,15 @@
 //Prohibition of the Use Windows Notepad to modify the file, all the resulting answer will not be the use of non-normal!
 $langname['back']="简体中文";
 $lna=array (
-'language' => 'Language',//'语言/語言',
+'language' => '语言',//'Language',
 'language_intro'=>'Set blog language',
-'current_language'=>'Current Language Pack',//'/当前语言包/當前語言包',
-'frontend'=>'Front-End',//'前台/前臺',
-'backend'=>'Back-End',//'后台/後臺',
-'select_language'=>'Set the Language Pack Location',//'更改语言包为/更改語言包為',
-'language_updated'=>'Language Pack has been changed.',//'语言包设置完成。/語言包設置完成。',
+'current_language'=>'当前语言包',//'Current Language Pack',
+'frontend'=>'前台',//'Front-End',
+'backend'=>'后台',//'Back-End',
+'select_language'=>'更改语言包为',//'Set the Language Pack Location',
+'language_updated'=>'语言包设置完成。',//'Language Pack has been changed.',
+'front_lang_not_found'=>'前台语言包不存在。',//'Front-end langauge pack does not exist.',
+'admin_lang_not_found'=>'后台语言包不存在。',//'Back-end langauge pack does not exist.',
 
 0=>'管理',
 1=>'你知道吗:',

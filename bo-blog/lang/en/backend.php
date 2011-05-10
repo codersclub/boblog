@@ -9,6 +9,8 @@ $lna=array (
 'backend'=>'Back-End',//'后台/後臺',
 'select_language'=>'Set the Language Pack Location',//'更改语言包为/更改語言包為',
 'language_updated'=>'Language Pack has been changed.',//'语言包设置完成。/語言包設置完成。',
+'front_lang_not_found'=>'Front-end langauge pack does not exist.',//'前台语言包不存在。/前臺語言包不存在。',
+'admin_lang_not_found'=>'Back-end langauge pack does not exist.',//'后台语言包不存在。/後臺語言包不存在。',
 
 0=>'Admin',
 1=>'Do you know:',
