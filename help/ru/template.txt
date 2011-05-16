@@ -1,0 +1,85 @@
+2.03 to 2.10 Style Upgrade Manual [07.08.29 Update]
+Acknowledgements Yin Ghost Fire (http://404cn.com) for finishing
+
+ The 2.10 style maintains backward compatibility, so the old style can be used normally even if it is not upgraded.
+Please use an editor that supports UTF-8, such as Editplus, to modify the following operations, and pay attention to the choice of encoding when saving.
+
+elements.php section
+
+1. New module viewpage
+This module is used to display custom pages
+
+Open elements.php and insert after eot; in $elements['linkdiv']
+$elements['viewpage']=<<<eot
+<div class="pagebox">
+ <div class="pagebox-title">
+   <h4>
+   {entrytitle}
+   </h4>
+ </div>
+ <div class="pagebox-content">
+   {entrycontent}
+ </div>
+</div>
+eot;
+
+Save
+
+2. New label (not required, please add selectively)
+
+$elements['excerpt'], $elements['excerptontop'], $elements['viewentry'] area
+{entrysourcewithlink} source with link
+{entrysource} source name /*a bug,may fix*/
+{entrysourcelink} source link /*a bug,may fix*/
+{entrytbnumwithlink} Clickable number of pure log citations
+{adminlink} output without | management
+
+$elements['displayside'] area
+{section_side_components_one} Output the content of the first sidebar
+{section_side_components_two} Output the content of the second sidebar
+
+Global area, need to add global when using
+{categoryplainshow} output the classification of plain text
+
+Special label
+{pageID} can fine-tune the css of different pages, only the following usage
+<body id="{pageID}">
+
+
+Forgotten label
+entrydatemnamefull output log English month in complete form
+entrydatemnameshort abbreviated form to output log English month
+
+info.php section
+This line is used to identify the old and new templates (the old template will be filled in by the program). You can also use new tags like entrysource without making changes here, but the new parts in page and css will be invalid, and the system default will always be used.
+
+Open and insert at the end
+$template['sysver']='5.2';
+
+save
+
+styles.css section
+Add the emoticon page selection style, insert the following content at the end of the file, please adjust the style content yourself
+/* Emot Page Selection */
+#smileybuttons {
+ text-align: right;
+ margin-top: 9px;
+}
+
+.smileybut {
+ margin-right:3px;
+ padding: 3px;
+ vertical-align: middle;
+ font-weight: bold;
+ color: #666666;
+ text-align: center;
+ background-color: #EFEFEF;
+}
+
+.smileybut a{
+}
+
+
+CSS increase paging span style (optional)
+.pagebar-mainbody The span of the pure paging part in the paging bar
+.pagebar-selections The span of the pure progress bar in the paging bar

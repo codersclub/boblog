@@ -1,0 +1,522 @@
+Changelog:
+2011/02/26 V2.1.2.0226.0 (2.1.2 beta 2)
+*Fix a security hole.
+
+2011/02/20 V2.1.2.0220.0 (2.1.2 beta 1)
+*The administrator password needs to be verified for the first login in the background of each session.
+*Modified some filtering methods to avoid certain security issues.
+*Experimental spam detection methods related to content length.
+
+2008/12/26 V2.1.1.3526.0 (2.1.1 Release)
+*You cannot post comments after you modify the front desk shortcut to select the language.
+*Modify that the auto-save function cannot be used normally when writing logs after disabling stars and/or weather.
+*Fixed the problem that the co-author cannot work. It is recommended that the co-authors disable the auto-save function.
+*Fixed a low-risk safety hazard related to real playback.
+*Clear temporary skin and language information when logging out.
+
+2008/11/2 V2.1.1.3502.0 (2.1.1 RC 1)
+*Add "Preview" button, click to preview the log currently being written.
+* "Function lock" function allows users to block a certain function of the program with one key.
+*The authorization instructions have been modified.
+*Modify the error in the return information of the newly added link in Ajax mode.
+*If you modify the link in the code tag of UBB, it will be automatically recognized.
+*Allow visitors to change the language pack called by the front desk in the form of ?lang=xxx.
+*It is forbidden to delete users themselves through the user management function.
+*Modify the problem that the function of saving as txt file is wrong.
+
+2008/8/10 V2.1.1.3216.0 (2.1.1 pre RC)
+*Ajax technology is fully enabled for background operations, which greatly improves work efficiency.
+*Fixed the problem of incorrect links in tags search results.
+*A 404 error will appear if the archive month entry with the modified log number is 0.
+*Fixed the issue of language packs not supporting HTML special characters and quotation marks.
+
+2008/7/13 V2.1.1.3113.0 (2.1.1 beta 3)
+*Added OpenID limited login support.
+*Added to directly update the attachment in the attachment management.
+*Add a designated custom 404 page.
+*Modify the Google Sitemap prompts that all pages have the same priority.
+*Support RSD (Really Simple Discoverability).
+
+2008/7/5 V2.1.1.3105.0 (2.1.1 beta 2) Codename: pilot
+*Modify the problem that the ubb interface plug-in does not affect the rss output.
+*Modify the anti-hotlink setting, and open it directly, it will not be regarded as hotlink (to prevent RSS from capturing hotlink pictures, such as Douban).
+*Fixed the problem that the first log with id 0 could not be opened.
+*Improved search, multiple keywords separated by spaces can be searched at the same time instead of being regarded as a complete keyword.
+*Modify the problem that the full text search cannot find the title.
+*Improved the tag adding mechanism when writing logs, and added features similar to Auto Complete.
+* "Fix tag count" function now allows multiple selections.
+
+2008/5/25 V2.1.1.2925.0 (2.1.1 beta 1)
+*Modification: When editing a published log, the count of each tag contained in the log is abnormally reduced every time the log is automatically saved.
+*Modification: Users in the non-administrator group cannot see the reply button when they are given the right to reply to messages.
+*Modification: prohibit access to some abnormal requests to reduce the infinite loop of search engine crawling.
+*Modification: Multimedia cannot be played in full screen.
+*Modify: The position of the message avatar is wrong.
+*Modification: The registered address is incorrect when prompted to download after registration.
+*Add folds to the composing log interface to initially hide the infrequently used options.
+
+2007/12/31 V2.1.0.2431.0 (official version 2.1.0)
+* Modify the batch log deletion error.
+*Modify using "{host}" as the blog url, the redirection error occurs after the quote is sent.
+* Modify the avatar size setting, the position setting is invalid or incorrectly displayed.
+*Modify the right to modify the comment. After the administrator responds to the comment, the comment can no longer be modified.
+*Fixed the problem of incorrect list and summary status when turning the tag log page.
+*Modify the unsynchronized parts of language packs other than simplified Chinese.
+
+2007/12/08 V2.1.0.2408.0 (2.1.0 rc 3)
+*Fixed the problem that the entity file cannot be automatically generated when PHP advanced optimization is enabled.
+*Modify because the Apache .htaccess file rules given in the background are incomplete, the new page link after URL optimization is invalid (please go to the background to regenerate the .htaccess file rules after the update).
+* Modify the problem of automatically jumping to the background after deleting the log from the front desk (please refresh the browser javascript cache after the update).
+*After modifying the background homepage and cleaning up temporary files according to the prompts, there is no problem of automatically jumping back to the background homepage.
+*The "Save as Draft" button in the modification log composing interface automatically judges whether it is currently in draft editing status, and if it is, it will automatically change this button to "Publish Now".
+*Modify the language selection interface as a drop-down menu.
+*Modify the tags management interface, add the function of re-counting the number of logs under a certain tag.
+*Modify the emoji problem after new installation.
+*Modified the process of PHP sending attachment files, adding Mime Type information to the browser.
+
+2007/11/04 V2.1.0.2304.0 (2.1.0 rc 2)
+*Fix some bugs such as the js issue of the player.
+
+2007/10/03 V2.1.0.2203.0 (2.1.0 rc 1)
+*Modify the problems that are not displayed in the log on the homepage and are not displayed in the category.
+* Modify the problem that the "From" item in the user information cannot be displayed.
+* Correct and upgrade the fmplayer plug-in and flash player script.
+*Fixed some other minor bugs.
+
+2007/09/15 V2.1.0.2115.0 (2.1.0 beta 3)
+*URL optimization is further strengthened, with customizable categories and URL aliases for custom pages.
+*In the user group, certain user groups can be given the right to always avoid entering the verification code.
+* Modified the field names that conflict with system reserved words in the data table.
+*Allows to modify part of the settings of the necessary modules of the system.
+*Added back and improved the automatic save function that was temporarily removed in the UBB editor.
+*Fixed some minor issues.
+
+2007/08/30 V2.1.0.2030.0 (2.1.0 beta 2)
+Added:
+*You can choose a log not to appear in the summary and list modes.
+*You can customize the summary content for a single log that is different from the content of the log body.
+*Custom page function, you can write a simple, independent page.
+*You can specify whether the log is "original" and set the source of the log. －－Note: template cooperation is required. Add entrysourcewithlink (source with link) or entrysource (source link) or entrysourcelink (source name) tags in the relevant block to display these contents.
+* Comprehensively improve the URL rewriting mechanism. Supports setting aliases to personalize log URLs and fully path internal URL links. (This function requires server support, please check the official website for more information)
+*Improve the upload mechanism and increase the attachment anti-theft chain function. When the uploaded file is being read, downloaded and displayed, it can be checked whether the requested origin is an allowed domain name.
+*If the publication time of a post is changed to a time in the future, its attribute can be set to the draft status of "automatically published after expiration", and the post will be automatically published after that time.
+*Language pack fine-tuning function: For the words in the front-end language pack, you can set some words to replace the words originally set in the language pack.
+*Tag (tag gathering place) pagination.
+*Greatly enhance the filtering function of the background log management interface to help you quickly locate the logs you need to manage.
+*The search range can be set for the previous/next log: search in all logs or only in the category of the current log.
+*You can directly add the current blog search to the search bar in a browser that supports the OpenSearch specification.
+*The tags of the log will be automatically added to the Meta Keyword of this log page.
+*You can turn off the Ajax feature, and use traditional data submission methods to perform most common functions (such as replies, comments, etc.).
+*Add a "copy" shortcut button next to the dynamically generated Trackback address.
+*It is forbidden for the ID of anonymous commenters to be duplicated with registered users.
+*After logging in, you can choose to return to the page you were browsing before logging in.
+*The emoticon selection box can be set to page.
+*Realize the automatic jump of the information prompt box.
+*Modules may not be displayed on pages other than the log summary (list) page.
+*The front-end default template is replaced with a new three-column adaptive template.
+*Support two sidebars. Adjust the position of the dividing line of the dual sidebar in the backend sidebar module to complete the column assignment of the dual sidebar. In the case of template support, it can show double-sided effects. (Double sidebar template: $elements['displayside'] area supports {section_side_components_one} and {section_side_components_two} two new tags, which output the content of the first and second sidebars respectively. Of course, for single-side sidebar templates, The original {section_side_components} is still valid. In this case, the content of the second sidebar will be added under the first and output together.) For more changes to the template, please refer to the template upgrade instructions.
+*The plug-in's back-end management interface supports multiple pages, which can be called by the plug-in folder name:: the main file name of the plug-in management page. For example, admin.php?act=test::home can automatically load plugin/test/home.php as the current page. The default call is still admin.php under the plugin folder.
+
+modify:
+*When installing a module project, some servers cannot upload .blog files, you can change the extension to .txt and try to install again.
+*Tag search can not find the BUG of the result.
+*The reserved words of the template tag in the body of the blog will also be explained.
+*The statistics department of the total number of logs in the sidebar will no longer include the number of logs that the current visitor does not have permission to view.
+*The problem of unable to turn pages in encrypted logs.
+
+
+2007/02/18 V2.0.3.1421.0
+Function improvements:
+*Visual editor integrates TinyMCE.
+* Sort out the code of the summary output to reduce or avoid page display errors caused by unmatched html tags.
+*The plug-in management page can use $plugin_header to define the content inserted in the <head> area.
+*The background management page of the plug-in can use $plugin_onload to define the content at the beginning of <body>, such as onload.
+*Improved the way to advance the paging bar, and put the current page in the center of the paging bar as much as possible.
+* Perform the same ip restriction when checking whether the two response times are too short.
+*After the new installation, the initial template is changed to living. (Thanks to Bathing Fox)
+*Upgrade the built-in FLV player to release the latest version for the author, which supports full-screen playback.
+
+bug fix:
+* Several security issues have been fixed.
+*The log download function may lead to the disclosure of encrypted logs.
+*xml-rpc upload cannot add watermark normally.
+*The generated iis rewrite rules may be incorrect.
+*Stop rewriting a single tag during rewrite to avoid the problem of inaccessible tags in some cases.
+*The image content contained in the size in UBB is not displayed correctly.
+*Some terms in the Traditional Chinese package have been revised. (Thanks to Mesak)
+*The problem of sending email link with one more space.
+*When viewing a single tag, the list/summary mode parameters are not passed when turning the page.
+
+Integration:
+*Built-in Vietnamese language pack. (Thanks to Meng Ling)
+*Built-in CC Video Alliance plug-in.
+*Built-in sidebar Flash music player. (Thanks to Mesak)
+
+2007/01/19 V2.0.3.1319.1
+*Fix a security vulnerability.
+
+2007/01/19 V2.0.3.1319
+*Fix some bugs.
+*Add plug-in interface: ubbanalyzeadvance (define a ubb available only to administrators).
+
+2006/12/29 V2.0.3.1229
+*Comprehensive Apache/IIS URL rewrite support.
+*Fix some bugs.
+
+2006/12/23 V2.0.3.1223
+*Fix the problem of switching the visual editor.
+*Management options automatically expand sub-projects when hovering over the mouse to improve efficiency.
+*Fix an error in the tag page.
+*Fix many spelling errors in the English language pack.
+*Add plug-in interface: firstheader (head), sidebarcategory (insert into the category list), sidebarentries (insert into the log list), sidebarreplies (insert into the comment list), ubbeditor (when loading the UBB editor).
+*Fixed the problem that the page number of comments in the log may be incorrect.
+*The default start page of miscellaneous settings has been changed to block word settings.
+
+2006/12/16 V2.0.3.1217
+*Built-in almost complete English installation, front-end and back-end language packs.
+*Fixed the issue of reverting the single quotes of blog name and blog description.
+*Fixed the problem of two sidebar search modules after installation.
+*Fixed an error that may cause incorrect log replies after batch operations.
+*Try to use the function to simulate the environment of global_registers=Off when the server global_registers=On.
+*Fixed a problem that may cause the visual editor not to be loaded.
+*Fixed the error that the file cannot be found when the uploaded file contains a plus sign.
+*Some other minor issues.
+
+2006/12/9 V2.0.3.1209 Codename: Sun
+New and improved:
+*After users post comments and messages, if the IP remains unchanged, they can modify their comments or messages within the time limit set in the background.
+*A password is required to hide the message and hide the reply. You can only see the content and the reply made by the administrator when the correct password is entered in the next visit.
+*You can set a log to be viewed with a password.
+*The current editor can be temporarily changed on the log composing page.
+*The plug-in "interface" is newly added: sidebarstatistics (inserted in the statistics column), sidebarmisc (inserted in the miscellaneous column), storecontent (when storing logs).
+* Added a separate archive list summary page archive.php.
+*Remove the brackets in the pagination.
+*XMLRPC interface supports file upload.
+*The template tag supports global reference, and several practical tags have been added (for details, please refer to the template production manual VOL7).
+* Added visual editor.
+*Add option in blog settings: fill in the verification code when registering.
+*Add option in blog setting: fill in the verification code when applying for friendship link.
+* Added verification code refresh function. (The old template needs to be upgraded to match)
+*Visitors can choose to remember current information.
+*You can add or subtract stars while writing a log.
+*You can easily add categories while writing the log.
+* All pending comments, quotes and messages can be emptied at one time (spam is resolved quickly, but it may be manslaughter).
+*You can adjust the order at the same time when creating a new category.
+* Output the RSS of the latest comments.
+*Remove unnecessary restrictions on the number of emoticons, category description html, etc.
+*Improved the backup and import procedures, which can back up part of the data stored in the text.
+*COOKIE access is all realized by javascript, to prevent some software (such as notepads) from leaving the UTF-8 BOM after modification, causing the problem of not being able to send COOKIE.
+* Sort the links into a separate column for novices to see; when editing the link, you can view it in pages.
+*The title of the previous/next post can be intercepted according to the number of words; the title of the latest post/comment/upper and lower post is allowed to fill in 0 to indicate no interception.
+*The lunar calendar can be displayed.
+*The background homepage shows the number of link applications pending review.
+* Plugins can be sorted.
+*You can use js to generate the reference address, and you can set the visitor to get the trackback address after answering the right questions.
+**The trackback address can be set to expire on the next day.
+*You can customize the format of the front desk date display with the parameters of PHP's date() function, and expand the Chinese date and week support.
+*You can block a message or comment at the front desk.
+*It is no longer mandatory to keep the copyright module at the bottom.
+*Module type newly added <head> module, you can add content between <head></head> by means of module.
+*The template list is automatically paginated to avoid the long list and slow opening when too many templates are installed.
+* Added the function "This module is hidden from a specific user group" in the module configuration.
+*Avoid too long tags list on the log composing page.
+*You can set the underline in the tag to be displayed as a space.
+*The installation file adds the repair installation function, and the language packs some content that was not originally included in the language pack.
+CSS and template changes:
+*rowcouple/rowodd: The even/odd rows of the comment and the latest log list are defined separately.
+*In the single comment and quotation block, you can use the tag {oddorcouplecss} to know whether the comment/quotation is singular (get odd) or odd (get couple), which is convenient for making interval display effects.
+*Support to use <!--global:{block_moduleid}--> to call the content of the module.
+*The template author should pay attention to the css settings in the relevant area of ​​the calendar. The total width should not be too narrow, and the padding should not be too large, so as not to display the lunar calendar.
+*Star pattern and arrow pattern can be specified in the template information folder ($template['moreimages']), if not specified, the default is used.
+*Add the tag {blockreply} to the comment block to display the link to quickly block a single comment and message.
+* Added support for .activepage in the navigation bar at the top of the page. This class can define the link style of the currently active page.
+Bug fix:
+*The administrator's reply to the comment is incorrectly re-edited by wrapping and returning.
+*The compatibility issue between upload box and IE 7.0.
+*Fixed some minor issues in RSS output.
+*Fixed an issue where users with the permission to reply to messages could not see the reply link.
+*Fixed the problem that the background style cannot be changed.
+*Fixed the problem that the blocked messages and comments can still be seen, and the blocking becomes Trackback again.
+*Fixed the problem of abnormal log classification settings published by the XMLRPC interface.
+*Fixed the problem of not checking forbidden words and spam feature words when submitting a friendship link application.
+
+2006/11/22 V2.0.2.1004.1
+Fix a security hole.
+
+2006/10/4 V2.0.2.1004.0
+Replace the FLV player with a more ideal one. (Thanks to mesa)
+Change the file uploader to be embedded again.
+Modify a nesting problem in UBB parsing.
+Modified the problem of incorrect conversion of the and symbol in the HTML mode of the UBB editor.
+Allow to close the "click to save as txt file" button on the log reading interface separately.
+All Trackbacks are allowed and prohibited.
+Fixed the problem that the volume of jpg pictures increased sharply after adding watermark.
+
+2006/9/9 V2.0.2.0909.0
+UBB adds support for playing flv files. (Thanks to neten.de)
+Fix a hidden safety hazard. (Thanks to msxcms)
+Modify the file uploader to display on the top of the page, compatible with IE7. (Powered by Thickbox)
+Fix the error that users do not have permission to log in when there is no browsing permission and the blog is closed.
+Fix the error that the user group setting is cleared after modification.
+
+2006/7/1 V2.0.2.0715.0
+Fixed several bugs that have been found.
+This is the official version of 2.0.2.
+
+2006/7/1 V2.0.2.0701.1
+Fix a file containing a vulnerability.
+
+2006/7/1 V2.0.2.0701.0
+-Statistics of download times of open attachments;
+-Background verification is changed from mandatory to optional;
+-The automatic saving of UBB editor can be turned off.
+-Comes with a historical access data viewing plug-in.
+-Fixed: Check the log of a certain day without calculating the time difference;
+-Fixed: When Apache URL Rewrite is opened, there is a paging error in the text.
+
+2006/6/17 V2.0.2.0617.0
+-Cancel the space filter at the beginning of the text to facilitate typesetting;
+-Allow to display the page bar up and down;
+-You can upload attachments in batches;
+-Upload pictures to add watermark function (PHP4.3+GD);
+-Attachments can be set to be stored in different folders on a monthly basis;
+-Tag page can set random/use frequency/creation time sorting;
+-Allow to change the location of the temporary folder (located in the miscellaneous settings);
+-Forced to verify the password for the first management operation of each browsing process;
+-The password must be entered for the background installation module;
+-Fix the bug that the trackback to be reviewed can still be seen by the administrator in the sidebar;
+-You can choose whether the number of logs in the secondary classification is counted in the upper classification.
+
+2006/5/5 V2.0.2.0505.0
+Added:
+-Trackback spam defense mechanism;
+-Support secondary classification;
+-Blog path automatically recognizes the current domain name (can be used for multi-mirror websites);
+-The timing save of the UBB editor can be freely switched;
+
+2006/4/8 V2.0.2.0408.0 Codename: Sponge
+Added:
+-Officially support plug-ins, plug-in management center;
+-The category list can display the number of logs under category;
+-UBB editor adds the function of timing automatic saving;
+-Session verification can be used when entering the background (recommended to open);
+-Add an attribute to the module project: hide it from non-registered users;
+
+change:
+-Change the default database connection mode to non-persistent connection;
+-Multi-byte characters and special characters are not allowed in the project name of the module;
+-UBB editor font, font size and color drop-down boxes are automatically reset after selection;
+-Carry out a preliminary safety inspection when adding a module project;
+-Improve the click and add method when entering tags
+
+Fix the problem:
+-The Email link code in UBB is invalid;
+-Multiple escapes of quotation marks in messages and comments;
+-When the hidden classification and the public classification are transformed into each other, the log attributes in the classification are not changed accordingly;
+-XML-RPC does not refresh the latest log list synchronously when publishing logs;
+-The calendar will lose the week line when it is automatically updated
+
+2006/2/26 V2.0.1.0226.0
+Fix the problem:
+-Several problems in UBB;
+-The problem of clicking the wrong page link when viewing Chinese tags;
+-Problems with backslashes and quotation marks;
+-Xhtml verification problem of runtime code;
+-Display problem of Default template in Traditional Chinese version;
+-Some other questions.
+
+2006/2/11 V2.0.1.0211.0
+Improve:
+*When using img map in RSS, the local image will be output as an absolute path;
+*RSS template is separated from system template;
+*More free definition of img tag width and height;
+*The entire calendar can be rebuilt in the background;
+*UBB editor multi-language
+Fix the problem:
+-The link group cannot be deleted;
+-Logs without comments cannot be read when the avatar system is not turned on;
+-Do not display references in comments;
+-Failed to pass xhtml verification when displaying the running time;
+-The permission of replying to comments and messages conflicts with the permission of the background;
+-The problem of missing backslash characters was partially solved;
+-Import data does not remove duplicate tags;
+-Some unclosed UBBs will affect the format below;
+-The link address below is incorrect when the archive is displayed;
+-The calendar cannot display the days with diary for months before October;
+-The calendar is not adjusted for the time difference;
+-The statistics of the day are abnormal on some hosts;
+-The log date was changed incorrectly on some hosts;
+-RSS standardization;
+-Some other questions.
+
+
+
+2006/1/21 V2.0.1.0121.0
+Avatar system;
+Fix some bugs and improve some details;
+The backup part is rewritten to avoid repeated import and possible failures when importing with gz files;
+The installer adds the option of automatically deleting old data;
+The default template Ctrl+enter to quickly comment and leave a message;
+You can set the maximum width of the picture, and it will automatically shrink if it exceeds this width.
+This version provides a direct upgrade package from 2.0.1 RC 1 & 2.
+
+Attachment: Fixed Bugs:
+-The module item sorting does not start from the result of the last sorting;
+-The problem that the prompts of the module items are fixed and unchanging;
+-Access to non-existent logs does not give an error message;
+-After the draft is completed, return to the problem that there is no log;
+-The problem of unfiltered reserved characters (underscores) in the module project;
+-The custom trim function does not filter the problem of spaces;
+-The problem that the verification code is not displayed on some servers;
+-After the attachment is uploaded, the ubb given by automatically inserting the video file is incorrect;
+-The problem of emoji deletion;
+-The problem that the xml-rpc interface can never be accessed;
+-When opening a beautified URL, the default template cannot select text in IE;
+-When opening the beautified URL, the jump address in js is abnormal under IE;
+-When the database gives an error message, the data table prefix is ​​not filtered;
+-Fix a problem that may cause login errors;
+-The copyright statement says "The program is based on PHP+text";
+-Some other questions.
+
+
+2006/1/9 V2.0.1.0109.0
+Fix a serious security problem;
+[img] Support to define the height and width of the picture;
+Prompt when the log title is not filled in;
+Fix the problem of importing data, RSS title problem, encrypted download address leakage problem, and some characters ajax reply error problem;
+The module project title tries to be compatible with Chinese;
+Verification code modification (still to be further tested).
+This version provides a direct upgrade package from 2.0.1 RC 1.
+
+
+2006/1/1 V2.0.1.0101.0 Codename: Nuyear
+All the expected functions of 2.0.1 are completed. Release RC1 for debugging. More new features will be added in 2.0.2.
+Can block PHP's error message for a user group;
+Added option: all comments need to be reviewed;
+Data backup and import;
+The sidebar supports encoded PHP code;
+Support the method of ?tem=skinname to change the style (valid for the current browsing);
+Fix some bugs;
+Rewrite the installer;
+The background supports skinning;
+Log management allows batch modification of authors;
+Allow to set the number of emoticons per line;
+The style list can be refreshed directly on the style selection page without manual addition.
+
+
+2005/12/22 V2.0.0.9.1222.0
+The language file is basically separated from the program, and two program language packs and installation programs have been provided in simplified and traditional languages;
+Continue to fix some problems;
+RSS can also output tags;
+Data export, import is still lacking.
+
+2005/12/11 V2.0.0.9.1211.0
+Comments, messages, and replies posted/modified/deleted by the administrator all use Ajax technology, without the need to refresh the page;
+Correct 90% of known bugs;
+You can set whether to open the verification code for speaking and logging in separately;
+Re-statistics of each statistics can be performed;
+Allows to set custom code in the head area of ​​the template;
+Contains the upgrade program from 1.7 (install/updates/).
+
+
+2005/12/4 V2.0.0.9.1204.0
+Set upload permissions, file upload, upload management;
+Enable new original style;*
+Template selection and management;
+MySQL query and optimization can be executed in the background;
+Tags can be deleted;
+Strengthen the function of the friendly link application management office;
+Added UBB: [file]: file download box; [acronym]: acronym tag equivalent to html;
+Fix the bug that some UBB codes in the log are valid only when html is turned on;
+The automatic recognition link option is already valid.
+Note: *All picture source files of this template are in the template/default/source folder, open with Fireworks and can be modified at will.
+
+2005/11/27 V2.0.0.9.1127.0 Codename: Prelude
+Can send and receive trackbacks, complete front and back-end operations related to references; (*)
+Search function, you can set search authority by user group;
+Increase the bulletin board at the top of the page (recommended to use this bulletin method, set in the background parameter settings);
+Shield the speaking authority of the specified IP;
+Change the link point of the calendar, now you can view the archive by flipping through the calendar;
+New ubb code: [sfile] file address[/sfile], this code will generate a download link, and it can only be downloaded by registered users;
+Fully compatible with MySQL 5.0;
+Solve the garbled problem of MySQL 4.1;
+Fix a permission conflict, fix an error in the verification code, and fix some other bugs.
+Note:
+*Different from the 1.x version, sending references starting from 2.0 requires the server to open the fsockopen function. (Except for individual virtual hosts, most servers support)
+
+2005/11/20 V2.0.0.9.1120.0
+Module items can be sorted freely;
+You can set and import blocking words, blocking ID and advertising message characteristic words; (*)
+Remember the switch status of the sidebar in one visit;
+The front desk can view all comments by time;
+The log can be part of the page, please use the page break [newpage];
+Can view user information, can view user list;
+New user group permissions: allow to create tags, allow to view user lists, and allow to view user information;
+Add/de-star operation adopts Ajax asynchronous refresh technology; (**)
+View all links;
+Add a link to write a log in the Miscellaneous sidebar;
+The sidebar adds a deleteable item in the bulletin board by default.
+Note:
+There is a demo-suspect.zip character vocabulary file demo-suspect.zip under the *install/ folder. After decompression, there is a text file inside, you can try to import it.
+**Compatible with IE, Firefox, and may be compatible with Opera, Safari, etc.
+
+
+2005/11/13 V2.0.0.9.1113.0
+Add calendar, latest log, latest comment;
+Improve the background selection of list mode and summary mode;
+Fix some bugs;
+Automatic installation of module projects (*);
+Support steering classification;
+Select the release time of the change log;
+Support small icons before classification;
+Optimized log article view link: url/read.php/10.htm form (**);
+The log is marked with a star function, which is convenient for collection and promotion;
+Batch management of users;
+Friendship link application and approval;
+Cache refresh function;
+Note:
+There is an automatic installation file demo-flashclock.zip in the *install/ folder for the demo module project. Try to unzip it to your hard drive and follow the instructions inside.
+**Requires server support: Unix server is basically available, and WINDOWS server requires PHP version 5.0 or higher.
+***The visual editor has been temporarily removed. In the future, the visual editor will be provided as a plug-in, possibly using fck or TinyMCE.
+
+2005/11/06 V2.0.0.9.1106.0
+Convenient management menu at the front desk, two ways to top;
+Graphical easy installation program;
+User group setting, user management completed;
+Message management, comment management completed;
+Module setting is complete (sequence missing);
+Automatic update completed (in trial);
+Archive display is complete;
+UBB editor for message and comment boxes;
+UBB editor completed;
+Reduce the number of queries once;
+Fix many bugs;
+
+2005/10/30 V2.0.0.9.1030.0
+Support MetaWeblog API interface, use this interface to write logs successfully in Zoundry Editor, Flock and Flickr;
+Integrated visual editor;
+UBB analysis is completed, and the multimedia files are automatically folded and unfolded;
+The home page and category browsing of RSS is complete;
+Change the separator from <separator> back to [separator];
+
+2005/10/23 V2.0.0.9.1023.0
+Integrate QuickTags editor;
+Complete user registration and data modification;
+Complete the expression system;
+tags improved structure;
+The avatar is automatically refreshed;
+Pseudo secondary classification;
+User email and url view buttons in the reply;
+Switch between list mode and summary mode;
+Switch between showing and hiding the sidebar;
+Fix BUG: pagination error; garbled code in a permission prompt; click to view more invalid; etc.
+
+2005/10/16 V2.0.0.9.1016.0
+Add and modify Tags when writing and editing the log;
+Check tags at the front desk;
+Miscellaneous settings-weather settings are complete;
+Fix the bug that the database password is not written during installation;
+
+2005/10/07 V2.0.0.9.1007.0  Codename: Prepreview
+Complete the most basic and basic part of the content and functions, and send the installation package to the alpha tester.
+

@@ -1,0 +1,30 @@
+Bo-Blog 2.0 is a single-user blog (web log) based on PHP and MySQL.
+
+Bo-Blog 2.0 main features:
+* Based on the template structure of XHTML+CSS+div layout, the changeable and gorgeous templates can make your blog unique;
+* Freely customizable page modules, add code without modifying the program, and you can also add new module items through automatic installation files;
+* Use Ajax-based message and comment addition and management methods;
+* Tags function;
+* Compared with the 1.x version, greatly improved customization and ease of use;
+* Recognize advertising message/comment information from multiple conditions such as keywords, number of links, and number of words;
+* Fully support the batch operation for blog posts, users, links and other content in the background, saving time and effort;
+* Customizable expression system, customizable weather system, customizable avatar system;
+* User group management system, which can set various use and management authority of each group of users in detail;
+* It can automatically check whether there is an updated program;
+* Support XML-RPC interface;
+* Link grouping function, built-in link application and approval system;
+* Multi-language pack, built-in four language packs: simplified and traditional Chinese, English and Russian;
+* Supports the direct import of blog content via RSS, which can be converted in an emergency when there is no conversion program;
+* Compatible with PHP5, MySQL5;
+* Hidden categories can be set, hidden blogs can be written, drafts can be written;
+* Optional custom editor;
+* Two ways to top a blog post, you can lock a blog post, and add a star to the blog post;
+* Support Trackback, support RSS 2.0 (all new blog posts, single post or a certain category can be tracked);
+* Visual link and sort order adjustment method;
+* Two viewing methods of list or summary can be set freely;
+* Freely switch blogs, switch registration, and set reasons;
+* Time difference adjustment function;
+* Verification code (captcha) based on GD;
+* Words that are restricted or blocked can be imported;
+* Attachment upload and management system;
+* Import and export special backup format or RSS format.
