@@ -1,15 +1,15 @@
-2.03 to 2.10风格升级手册[07.08.29 Update] 
-鸣谢阴·鬼火（http://404cn.com）整理
+2.03 to 2.10 Style Upgrade Manual [07.08.29 Update]
+Acknowledgements Yin Ghost Fire (http://404cn.com) for finishing
 
- 2.10风格保持了向下兼容的特性，所以旧风格即使没有升级也能正常使用。
-以下操作请使用Editplus等支持UTF-8的编辑器进行修改，保存时注意编码的选择。
+ The 2.10 style maintains backward compatibility, so the old style can be used normally even if it is not upgraded.
+Please use an editor that supports UTF-8, such as Editplus, to modify the following operations, and pay attention to the choice of encoding when saving.
 
-elements.php部分
+elements.php section
 
-1.新增模块viewpage
-本模块作用为自定义页面的显示
+1. New module viewpage
+This module is used to display custom pages
 
-打开elements.php，在$elements['linkdiv']的eot;后插入
+Open elements.php and insert after eot; in $elements['linkdiv']
 $elements['viewpage']=<<<eot
 <div class="pagebox">
  <div class="pagebox-title">
@@ -23,43 +23,43 @@ $elements['viewpage']=<<<eot
 </div>
 eot;
 
-保存
+Save
 
-2.新增标签（非必须，请选择性添加）
+2. New label (not required, please add selectively)
 
-$elements['excerpt']，$elements['excerptontop']，$elements['viewentry']区域
-{entrysourcewithlink} 带链接的来源
-{entrysource} 来源名称 /*a bug,may fix*/
-{entrysourcelink} 来源链接 /*a bug,may fix*/
-{entrytbnumwithlink} 可点击的纯日志引用数量
-{adminlink} 输出不带|的管理
+$elements['excerpt'], $elements['excerptontop'], $elements['viewentry'] area
+{entrysourcewithlink} source with link
+{entrysource} source name /*a bug,may fix*/
+{entrysourcelink} source link /*a bug,may fix*/
+{entrytbnumwithlink} Clickable number of pure log citations
+{adminlink} output without | management
 
-$elements['displayside']区域
-{section_side_components_one} 输出第一个侧边栏的内容
-{section_side_components_two} 输出第二个侧边栏的内容
+$elements['displayside'] area
+{section_side_components_one} Output the content of the first sidebar
+{section_side_components_two} Output the content of the second sidebar
 
-global区域，使用时需要加上global
-{categoryplainshow} 输出纯文字的分类
+Global area, need to add global when using
+{categoryplainshow} output the classification of plain text
 
-特殊标签
-{pageID} 可进行不同页面的css微调，只有如下用法
+Special label
+{pageID} can fine-tune the css of different pages, only the following usage
 <body id="{pageID}">
 
 
-被遗忘的标签
-entrydatemnamefull 完整形式输出日志英文月份
-entrydatemnameshort 缩写形式输出日志英文月份
+Forgotten label
+entrydatemnamefull output log English month in complete form
+entrydatemnameshort abbreviated form to output log English month
 
-info.php部分
-本行用于新旧模板的识别（旧模板将由程序补齐残缺的部分）。不进行此处的修改也可以使用entrysource之类的新标签，但page和css里新增的部分将无效，总是使用系统默认。
+info.php section
+This line is used to identify the old and new templates (the old template will be filled in by the program). You can also use new tags like entrysource without making changes here, but the new parts in page and css will be invalid, and the system default will always be used.
 
-打开于末尾插入
+Open and insert at the end
 $template['sysver']='5.2';
 
-保存
+save
 
-styles.css部分
-增加表情分页选择样式，于文件末尾插入如下内容，样式内容请自行调整
+styles.css section
+Add the emoticon page selection style, insert the following content at the end of the file, please adjust the style content yourself
 /* Emot Page Selection */
 #smileybuttons {
  text-align: right;
@@ -76,10 +76,10 @@ styles.css部分
  background-color: #EFEFEF;
 }
 
-.smileybut  a{
+.smileybut a{
 }
 
 
-CSS增加分页span样式（可选）
-.pagebar-mainbody 分页条里纯分页部分的span
-.pagebar-selections 分页条里纯进度条的span
+CSS increase paging span style (optional)
+.pagebar-mainbody The span of the pure paging part in the paging bar
+.pagebar-selections The span of the pure progress bar in the paging bar

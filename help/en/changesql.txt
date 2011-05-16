@@ -23,7 +23,7 @@ CREATE TABLE `boblog_upload` (
   PRIMARY KEY  (`fid`)
 ) ENGINE=MyISAM;
 
-INSERT INTO `boblog_mods` VALUES ('sidebar', 'columnbreak', '侧边栏一与侧边栏二的分割线', '1', '1', 'system');
+INSERT INTO `boblog_mods` VALUES ('sidebar', 'columnbreak', 'The dividing line between sidebar-1 and sidebar-2', '1', '1','system');
 
 ALTER TABLE `boblog_blogs` ADD `entrysummary` TEXT NULL ,
 ADD `comefrom` VARCHAR( 255 ) NULL ,
@@ -181,23 +181,23 @@ CHANGE `empty8` `empty8` TEXT NULL
 
 ====2.0.0.9.1127.0->2.0.0.9.1204.0
 SQL:
-无
+none
 
 ====2.0.0.9.1120.0->2.0.0.9.1127.0
 SQL:
-INSERT INTO `boblog_mods` VALUES ('sidebar', 'search', '侧边搜索框', '1', '10', 'system')
+INSERT INTO `boblog_mods` VALUES ('sidebar', 'search', 'Side search box', '1', '10', 'system')
 
-文件：
-删除 data/cache_applylinks.php
+File:
+delete: data/cache_applylinks.php
 
 ====2.0.0.9.1113.0->2.0.0.9.1120.0
 SQL:
 INSERT INTO `boblog_forbidden` VALUES ('', '', '', '', '', '', '', '')
-INSERT INTO `boblog_mods` VALUES ('sidebar', 'announcement', '侧边公告栏', '1', '0', 'custom'), ('header', 'viewlinks', '查看所有链接的链接', '1', '7', 'system')
+INSERT INTO `boblog_mods` VALUES ('sidebar', 'announcement', 'Side bulletin board', '1', '0', 'custom'), ('header', 'viewlinks', 'View all linked links', '1', '7', 'system')
 
-其它：
-data/modules 增加以下一行内容
-$blogitem['announcement']=array('type'=>'block',	'name'=>'announcement', 'title'=>'公告', 'content'=>'一条测试公告', 'extend'=>1);
+Other:
+data/modules Add the following line of content:
+$blogitem['announcement']=array('type'=>'block',	'name'=>'announcement', 'title'=>'Announcement', 'content'=>'A test announcement', 'extend'=>1);
 
 ====2.0.0.9.1106.0->2.0.0.9.1113.0
 SQL:
@@ -211,7 +211,7 @@ ALTER TABLE `boblog_blogs` CHANGE `content` `content` MEDIUMTEXT NOT NULL
 ALTER TABLE `boblog_blogs` CHANGE `weather` `weather` TINYTEXT NOT NULL 
 ALTER TABLE `boblog_categories` ADD `cateicon` TINYTEXT NOT NULL AFTER `catemode` , ADD `cateurl` TEXT NOT NULL AFTER `cateicon`
 ALTER TABLE `boblog_blogs` CHANGE `empty1` `starred` INT( 5 ) NOT NULL DEFAULT '0'
-INSERT INTO `boblog_mods` ( `position` , `name` , `desc` , `active` , `order` , `func` ) VALUES ('header', 'starred', '查看已加星标日志', '1', '20', 'system')
+INSERT INTO `boblog_mods` ( `position` , `name` , `desc` , `active` , `order` , `func` ) VALUES ('header', 'starred', 'View starred posts', '1', '20', 'system')
 
 ====2.0.0.9.1030.0->2.0.0.9.1106.0
 SQL:
@@ -225,11 +225,11 @@ CREATE TABLE `boblog_mods` (
 `order` INT( 5 ) NOT NULL ,
 `func` TEXT NOT NULL
 ) TYPE = MYISAM
-INSERT INTO `boblog_mods` VALUES ('header', 'index', '首页链接', '1', '1', 'system'), ('header', 'customrss', 'RSS链接', '1', '2', 'system'), ('header', 'login', '登入/登出链接', '1', '3', 'system'), ('header', 'modpro', '编辑个人资料链接', '1', '4', 'system'), ('header', 'alltags', '查看Tags列表链接', '1', '5', 'system'), ('header', 'guestbook', '留言本链接', '1', '6', 'system'), ('header', 'togglesidebar', '开关侧边栏链接', '1', '7', 'system')
-INSERT INTO `boblog_mods` VALUES ('sidebar', 'category', '分类列表', '1', '8', 'system'), ('sidebar', 'calendar', '日历', '1', '9', 'system'), ('sidebar', 'statistics', '简易统计数据', '1', '10', 'system'), ('sidebar', 'entries', '最新日志', '1', '11', 'system'), ('sidebar', 'replies', '最新评论', '1', '12', 'system'), ('sidebar', 'link', '链接组和链接', '1', '13', 'system'), ('sidebar', 'archive', '归档', '1', '14', 'system'), ('sidebar', 'misc', '杂项与其它信息', '1', '15', 'system')
-INSERT INTO `boblog_mods` VALUES ('footer', 'copyright', '程序版权', '1', '16', 'system'), ('footer', 'mii', '信息产业部网站备案号', '1', '17', 'system')
+INSERT INTO `boblog_mods` VALUES ('header', 'index', 'Home link', '1', '1', 'system'), ('header', 'customrss', 'RSS Feed', '1', '2', 'system'), ('header', 'login', 'Login/Logout link', '1', '3', 'system'), ('header', 'modpro', 'Edit profile link', '1', '4', 'system'), ('header', 'alltags', 'View the tag list link', '1', '5', 'system'), ('header', 'guestbook', 'Guestbook link', '1', '6', 'system'), ('header', 'togglesidebar', 'Toggle sidebar link', '1', '7', 'system')
+INSERT INTO `boblog_mods` VALUES ('sidebar', 'category', 'Category List', '1', '8', 'system'), ('sidebar', 'calendar', 'Calendar', '1', '9', 'system'), ('sidebar', 'statistics', 'Simple statistics', '1', '10', 'system'), ('sidebar', 'entries', 'Latest posts', '1', '11', 'system'), ('sidebar', 'replies', 'latest comments', '1', '12', 'system'), ('sidebar', 'link', 'Link groups and links', '1', '13', 'system'), ('sidebar', 'archive', 'Archive', '1', '14', 'system'), ('sidebar', 'misc', 'Other information', '1', '15', 'system')
+INSERT INTO `boblog_mods` VALUES ('footer', 'copyright', 'Program copyright', '1', '16', 'system'), ('footer', 'mii', 'Ministry of Information Industry website record number', '1', '17', 'system')
 
-data/下新增
+data/Add under
 usergroup3.php
 cache_categories.php
 modules.php
@@ -250,4 +250,4 @@ TRUNCATE TABLE `boblog_tags`
 
 FILE:
 unlink ("data/cache_tags.php");
-上传 "data/cache_emot.php" CHMOD 777
+Upload "data/cache_emot.php" CHMOD 777

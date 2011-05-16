@@ -1,12 +1,13 @@
-感谢以下网友的协助。（按字母顺序+汉字笔画数排序）
+Thanks to the following netizens for their assistance. (Sorted in alphabetical order + number of strokes of Chinese characters)
 
 * msxcms (http://www.bmforum.com)
 * Nicky (http://www.osxcn.com)
 * totti (http://www.ittot.com)
-* 剑心 (http://www.loveshell.net)
-* 浅蓝色的辐射鱼 (http://www.51shell.cn)
+* Jianxin (http://www.loveshell.net)
+* Light blue radiant fish (http://www.51shell.cn)
 
-This program contains codes from the following projects. Copyrights of these parts belong to their perspective authors.
+This program contains codes from the following projects.
+Copyrights of these parts belong to their perspective authors.
 
 * TinyMCE (http://tinymce.moxiecode.com)
 * Lunar Calendar original code by S&S Lab
