@@ -71,7 +71,7 @@ if (!defined('VALIDADMIN')) {
 		@header("Content-Type: text/html; charset=utf-8");
 		die ($lnc[292]);
 	} else {
-		$config['blogurl']=str_replace('{host}', $_SERVER['HTTP_HOST'], $config['blogurl']);
+		$config['blogurl']=str_replace('{host}', @$_SERVER['HTTP_HOST'], $config['blogurl']);
 	}
 	$baseurl="<base href=\"{$config['blogurl']}/\" />";
 }
