@@ -1,6 +1,9 @@
 <?PHP
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
-@set_magic_quotes_runtime (0);
+
+if(function_exists('set_magic_quotes_runtime')) {
+	@set_magic_quotes_runtime(0);
+}
 
 $v=$_REQUEST['v'];
 
