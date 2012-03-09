@@ -11,19 +11,19 @@ if ($v!=2 && $v!=3) {
 	@header("Content-Type: text/html; charset=utf-8");
 	print<<<eot
 
-Bo-Blog 2.0.1 应急恢复程序<br>
-<B><font color='red'>警告：本程序相当危险，请只在应急状态下上传使用，使用完毕立刻删除！</font></B><br>
+Bo-Blog 2.0.1 Emergency recovery procedure<br>
+<B><font color='red'>Warning: This program is quite dangerous, please upload and use it only in an emergency state, and delete it immediately after use!</font></B><br>
 <br><br><form action='emergency.php' method='post'><input type='hidden' value='3' name='v'>
-<b>用户组：重置管理员组和游客组的一切权限为默认状态</b><br>
+<b>User Group: reset all the permissions of Administrator and Guest group to default</b><br>
 <input type='submit' value='Start'>
 </form>
 <hr>
 <form action='emergency.php' method='post'><input type='hidden' value='2' name='v'>
-<b>常规：请在需要执行的操作前打勾并填写必要的选项</b><br>
-<input type='checkbox' name='act[]' value='psw'> 恢复管理员<input type='text' name='oldadmin'>的密码为<input type='text' name='newpsw'><br>
-<input type='checkbox' name='act[]' value='nologinval'> 取消登陆时需要验证码<br>
-<input type='checkbox' name='act[]' value='changeuser'> 重置以下用户的身份为管理员 用户名：<input type='text' name='newadmin'> 大小写需正确<br>
-<input type='checkbox' name='act[]' value='open'> 恢复blog状态为打开<br>
+<b>General: Please tick and fill in the necessary options before the operation that needs to be performed</b><br>
+<input type='checkbox' name='act[]' value='psw'> Restore for admin: <input type='text' name='oldadmin'> Password: <input type='text' name='newpsw'><br>
+<input type='checkbox' name='act[]' value='nologinval'> Require verification code when canceling login<br>
+<input type='checkbox' name='act[]' value='changeuser'> Reset the identity of the following user as an administrator, username: <input type='text' name='newadmin'> Use correct capitalization!<br>
+<input type='checkbox' name='act[]' value='open'> Restore the blog status to open<br>
 <input type='submit' value='OK'>
 </form>
 eot;
@@ -66,13 +66,13 @@ if ($v==2) {
 
 	writetofile("data/config.php", $content);
 	@header("Content-Type: text/html; charset=utf-8");
-	die ("Bo-Blog 2.0.1 应急恢复程序完成了请求的动作。<br><B><font color='red'>警告：请立即删除本文件！！");
+	die ("Bo-Blog 2.0.1 emergency recovery procedure completed the requested action.<br><B><font color='red'>Warning: Please delete this file immediately!!");
 }
 
 if ($v==3) {
 $usorigin0=<<<eot
 <?PHP
-\$permission['gpname']='游客';
+\$permission['gpname']='Guest';
 \$permission['visit']='1';
 \$permission['ViewPHPError']='0';
 \$permission['SeeSecretCategory']='0';
@@ -107,7 +107,7 @@ $usorigin0=<<<eot
 eot;
 $usorigin2=<<<eot
 <?PHP
-\$permission['gpname']='管理员';
+\$permission['gpname']='Administrator';
 \$permission['visit']='1';
 \$permission['ViewPHPError']='1';
 \$permission['SeeSecretCategory']='1';
@@ -143,7 +143,7 @@ eot;
 	writetofile2("data/usergroup0.php", $usorigin0);
 	writetofile2("data/usergroup2.php", $usorigin2);
 	@header("Content-Type: text/html; charset=utf-8");
-	die ("Bo-Blog 2.0.1 应急恢复程序完成了请求的动作。<br><B><font color='red'>警告：请立即删除本文件！！");
+	die ("Bo-Blog 2.0.1 emergency recovery procedure completed the requested action.<br><B><font color='red'>Warning: Please delete this file immediately!!");
 }
 
 function writetofile2 ($filename, $data) {
