@@ -120,6 +120,8 @@ function recache_adminlist () {
 
 function recache_categories () {
 	global $db_prefix, $lna;
+/*vot*/	$plusquery = '';
+/*vot*/	$writeout = '';
 	$result=db_query("SELECT * FROM `{$db_prefix}categories` {$plusquery} ORDER BY `cateorder`");
 	$result2=db_query("SELECT category,COUNT(*) FROM `{$db_prefix}blogs` GROUP BY `category`");
 	while ($row=db_fetch_array($result2)) {
@@ -128,6 +130,9 @@ function recache_categories () {
 	$previousid=-1;
 	while ($row=db_fetch_array($result)) {
 		$i=$row['cateid'];
+/*vot*/		if(!isset($result3[$i])) {
+/*vot*/		    $result3[$i] = 0;
+/*vot*/		}
 		$row['parentcate']=($row['catemode']==1) ? $previousid : -1;
 		$writeout.="<?PHP exit;?><|>{$row['cateid']}<|>".stripslashes($row['catename'])."<|>".stripslashes($row['catedesc'])."<|>{$row['cateproperty']}<|>{$row['cateorder']}<|>{$row['catemode']}<|>{$row['cateurl']}<|>{$row['cateicon']}<|>{$result3[$i]}<|>{$row['parentcate']}<|>{$row['cateurlname']}<|>\n";
 		if ($row['catemode']==0) $previousid=$row['cateid']; //Change parent id now
@@ -137,6 +142,7 @@ function recache_categories () {
 
 function recache_latestentries () {
 	global $blog, $db_prefix, $mbcon, $lna;
+/*vot*/	$outcache_limit = '';
 	$mbcon['entrylength']=($mbcon['entrylength']==0) ? 9999 : $mbcon['entrylength'];
 	$result_limit=$blog->getgroupbyquery("SELECT * FROM `{$db_prefix}blogs` WHERE `property`<2 ORDER BY `pubtime` DESC LIMIT 0, {$mbcon['entrynum']}");
 	$result_all=$blog->getgroupbyquery("SELECT * FROM `{$db_prefix}blogs` WHERE `property`<3 ORDER BY `pubtime` DESC LIMIT 0, {$mbcon['entrynum']}");

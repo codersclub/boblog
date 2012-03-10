@@ -47,6 +47,7 @@ $adminlogstat=0;
 /*vot*/ $submitjs = '';
 /*vot*/ $tags = '';
 /*vot*/ $tagdisable = '';
+/*vot*/ $callaftersubmit = '';
 
 // Init the blog record
 $records = array (
