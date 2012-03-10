@@ -13,6 +13,7 @@ $elements['rss']=<<<eot
 ]]>
 </description>
 </item>
+
 eot;
 
 $elements['rssbody']=<<<eot
