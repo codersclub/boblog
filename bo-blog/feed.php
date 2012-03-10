@@ -28,6 +28,7 @@ else $job=basename($job);
 $itemid=floor(@$itemid);
 $seed=0;
 /*vot*/ $rssbody = '';
+/*vot*/ $order = '';
 
 //Begin get email address
 $admin_ids=@implode(',', array_keys($adminlist));
