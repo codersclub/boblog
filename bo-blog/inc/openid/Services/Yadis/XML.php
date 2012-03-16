@@ -340,6 +340,7 @@ function &Services_Yadis_getXMLParser()
     foreach ($extensions as $name => $params) {
         if (!extension_loaded($name)) {
             foreach ($params['libname'] as $libname) {
+//vot: ToDo: Remove obsolete dl() !!!!
                 if (@dl($libname)) {
                     $classname = $params['classname'];
                 }
