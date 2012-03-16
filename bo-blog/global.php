@@ -22,13 +22,7 @@ if (file_exists('install/install.php')) {
 
 error_reporting(E_ALL);
 unregister_GLOBALS(); //When register_globals=On
-$mqgpc_status=FALSE;
-if(function_exists('set_magic_quotes_runtime')) {
-	@set_magic_quotes_runtime(0);
-}
-if(function_exists('get_magic_quotes_gpc')) {
-	$mqgpc_status=@get_magic_quotes_gpc();
-}
+$mqgpc_status=0;
 define("VALIDREQUEST",1);
 if (!defined('allowCache')) {
 	@header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");

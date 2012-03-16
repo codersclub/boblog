@@ -1,8 +1,7 @@
 <?PHP
-error_reporting(E_ERROR | E_WARNING | E_PARSE);
-@set_magic_quotes_runtime (0);
+error_reporting(E_ALL);
 include ('db.php');
-$mqgpc_status=get_magic_quotes_gpc();
+$mqgpc_status=0;
 if ($mqgpc_status==0) $_POST=addsd($_POST);
 @extract($_POST, EXTR_SKIP);
 @extract($_GET, EXTR_SKIP);
