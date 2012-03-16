@@ -54,7 +54,7 @@ imagedestroy($image);
 function getcolor($color)
 {
      global $image;
-     $color = eregi_replace ("^#","",$color);
+/*vot*/ $color = preg_replace ('/^#/','',$color);
      $r = $color[0].$color[1];
      $r = hexdec ($r);
      $b = $color[2].$color[3];
