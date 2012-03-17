@@ -467,7 +467,7 @@ if ($v=='4') {
 \$db_password='$db_password';
 \$db_name='$db_name';
 \$db_prefix='$db_prefix';
-\$db_410='$db_410';
+\$db_410=intval(mysql_get_server_info()>=\'4.1.0\');
 \$db_tmpdir='temp';
 \$db_defaultsessdir='0';
 \$config['blogname']='$blogname';

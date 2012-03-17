@@ -239,7 +239,7 @@ eot;
 }
 
 if ($job=='configsave') {
-	$savetext="<?PHP\n\$db_server='{$db_server}';\n\$db_username='{$db_username}';\n\$db_password='{$db_password}';\n\$db_name='{$db_name}';\n\$db_prefix='{$db_prefix}';\n\$db_410='{$db_410}';\n\$db_tmpdir='{$db_tmpdir}';\n\$db_defaultsessdir='{$db_defaultsessdir}';\n";
+	$savetext="<?PHP\n\$db_server='{$db_server}';\n\$db_username='{$db_username}';\n\$db_password='{$db_password}';\n\$db_name='{$db_name}';\n\$db_prefix='{$db_prefix}';\n\$db_410=intval(mysql_get_server_info()>=\'4.1.0\');\n\$db_tmpdir='{$db_tmpdir}';\n\$db_defaultsessdir='{$db_defaultsessdir}';\n";
 	$save_config=$_POST['prefconfig'];
 	//catcherror (print_r($save_config, true));
 	if (count($save_config)<=1) catcherror ($lna[1013]);
