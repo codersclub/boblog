@@ -540,32 +540,32 @@ function makecalendar ($month, $year, $month_calendar, $lunarstream='') {
 
 function lunarcalendar ($month, $year) {
 	global $lnlunarcalendar;
-	/*Lunar calendar 博大精深的农历
-	原始数据和算法思路来自 S&S Lab http://www.focus-2000.com 可惜网站好像关了
+	/*Lunar calendar - A broad and profound lunar calendar
+	The original data and algorithm ideas come from S&S Lab http://www.focus-2000.com, but the website seems to be closed
 	*/
-	//农历每月的天数。每个元素为一年。每个元素中的数据为：[0]是闰月在哪个月，0为无闰月；[1]到[13]是每年12或13个月的每月天数；[14]是当年的天干次序，[15]是当年的地支次序
+	//The number of days in a month in the lunar calendar. Each element is one year. The data in each element is: [0] is the month in which the leap month is, and 0 is the month without leap; [1] to [13] are the number of days per month for 12 or 13 months each year; [14] is the order of the sun’s rays in the current year, [15] is the order of the earthly branches of the year
 	$everymonth=array( 0=>array(8,0,0,0,0,0,0,0,0,0,0,0,29,30,7,1), 1=>array(0,29,30,29,29,30,29,30,29,30,30,30,29,0,8,2), 2=>array(0,30,29,30,29,29,30,29,30,29,30,30,30,0,9,3), 3=>array(5,29,30,29,30,29,29,30,29,29,30,30,29,30,10,4), 4=>array(0,30,30,29,30,29,29,30,29,29,30,30,29,0,1,5), 5=>array(0,30,30,29,30,30,29,29,30,29,30,29,30,0,2,6), 6=>array(4,29,30,30,29,30,29,30,29,30,29,30,29,30,3,7), 7=>array(0,29,30,29,30,29,30,30,29,30,29,30,29,0,4,8), 8=>array(0,30,29,29,30,30,29,30,29,30,30,29,30,0,5,9), 9=>array(2,29,30,29,29,30,29,30,29,30,30,30,29,30,6,10), 10=>array(0,29,30,29,29,30,29,30,29,30,30,30,29,0,7,11), 11=>array(6,30,29,30,29,29,30,29,29,30,30,29,30,30,8,12), 12=>array(0,30,29,30,29,29,30,29,29,30,30,29,30,0,9,1), 13=>array(0,30,30,29,30,29,29,30,29,29,30,29,30,0,10,2), 14=>array(5,30,30,29,30,29,30,29,30,29,30,29,29,30,1,3), 15=>array(0,30,29,30,30,29,30,29,30,29,30,29,30,0,2,4), 16=>array(0,29,30,29,30,29,30,30,29,30,29,30,29,0,3,5), 17=>array(2,30,29,29,30,29,30,30,29,30,30,29,30,29,4,6), 18=>array(0,30,29,29,30,29,30,29,30,30,29,30,30,0,5,7), 19=>array(7,29,30,29,29,30,29,29,30,30,29,30,30,30,6,8), 20=>array(0,29,30,29,29,30,29,29,30,30,29,30,30,0,7,9), 21=>array(0,30,29,30,29,29,30,29,29,30,29,30,30,0,8,10), 22=>array(5,30,29,30,30,29,29,30,29,29,30,29,30,30,9,11), 23=>array(0,29,30,30,29,30,29,30,29,29,30,29,30,0,10,12), 24=>array(0,29,30,30,29,30,30,29,30,29,30,29,29,0,1,1), 25=>array(4,30,29,30,29,30,30,29,30,30,29,30,29,30,2,2), 26=>array(0,29,29,30,29,30,29,30,30,29,30,30,29,0,3,3), 27=>array(0,30,29,29,30,29,30,29,30,29,30,30,30,0,4,4), 28=>array(2,29,30,29,29,30,29,29,30,29,30,30,30,30,5,5), 29=>array(0,29,30,29,29,30,29,29,30,29,30,30,30,0,6,6), 30=>array(6,29,30,30,29,29,30,29,29,30,29,30,30,29,7,7), 31=>array(0,30,30,29,30,29,30,29,29,30,29,30,29,0,8,8), 32=>array(0,30,30,30,29,30,29,30,29,29,30,29,30,0,9,9), 33=>array(5,29,30,30,29,30,30,29,30,29,30,29,29,30,10,10), 34=>array(0,29,30,29,30,30,29,30,29,30,30,29,30,0,1,11), 35=>array(0,29,29,30,29,30,29,30,30,29,30,30,29,0,2,12), 36=>array(3,30,29,29,30,29,29,30,30,29,30,30,30,29,3,1), 37=>array(0,30,29,29,30,29,29,30,29,30,30,30,29,0,4,2), 38=>array(7,30,30,29,29,30,29,29,30,29,30,30,29,30,5,3), 39=>array(0,30,30,29,29,30,29,29,30,29,30,29,30,0,6,4), 40=>array(0,30,30,29,30,29,30,29,29,30,29,30,29,0,7,5), 41=>array(6,30,30,29,30,30,29,30,29,29,30,29,30,29,8,6), 42=>array(0,30,29,30,30,29,30,29,30,29,30,29,30,0,9,7), 43=>array(0,29,30,29,30,29,30,30,29,30,29,30,29,0,10,8), 44=>array(4,30,29,30,29,30,29,30,29,30,30,29,30,30,1,9), 45=>array(0,29,29,30,29,29,30,29,30,30,30,29,30,0,2,10), 46=>array(0,30,29,29,30,29,29,30,29,30,30,29,30,0,3,11), 47=>array(2,30,30,29,29,30,29,29,30,29,30,29,30,30,4,12), 48=>array(0,30,29,30,29,30,29,29,30,29,30,29,30,0,5,1), 49=>array(7,30,29,30,30,29,30,29,29,30,29,30,29,30,6,2), 50=>array(0,29,30,30,29,30,30,29,29,30,29,30,29,0,7,3), 51=>array(0,30,29,30,30,29,30,29,30,29,30,29,30,0,8,4), 52=>array(5,29,30,29,30,29,30,29,30,30,29,30,29,30,9,5), 53=>array(0,29,30,29,29,30,30,29,30,30,29,30,29,0,10,6), 54=>array(0,30,29,30,29,29,30,29,30,30,29,30,30,0,1,7), 55=>array(3,29,30,29,30,29,29,30,29,30,29,30,30,30,2,8), 56=>array(0,29,30,29,30,29,29,30,29,30,29,30,30,0,3,9), 57=>array(8,30,29,30,29,30,29,29,30,29,30,29,30,29,4,10), 58=>array(0,30,30,30,29,30,29,29,30,29,30,29,30,0,5,11), 59=>array(0,29,30,30,29,30,29,30,29,30,29,30,29,0,6,12), 60=>array(6,30,29,30,29,30,30,29,30,29,30,29,30,29,7,1), 61=>array(0,30,29,30,29,30,29,30,30,29,30,29,30,0,8,2), 62=>array(0,29,30,29,29,30,29,30,30,29,30,30,29,0,9,3), 63=>array(4,30,29,30,29,29,30,29,30,29,30,30,30,29,10,4), 64=>array(0,30,29,30,29,29,30,29,30,29,30,30,30,0,1,5), 65=>array(0,29,30,29,30,29,29,30,29,29,30,30,29,0,2,6), 66=>array(3,30,30,30,29,30,29,29,30,29,29,30,30,29,3,7), 67=>array(0,30,30,29,30,30,29,29,30,29,30,29,30,0,4,8), 68=>array(7,29,30,29,30,30,29,30,29,30,29,30,29,30,5,9), 69=>array(0,29,30,29,30,29,30,30,29,30,29,30,29,0,6,10), 70=>array(0,30,29,29,30,29,30,30,29,30,30,29,30,0,7,11), 71=>array(5,29,30,29,29,30,29,30,29,30,30,30,29,30,8,12), 72=>array(0,29,30,29,29,30,29,30,29,30,30,29,30,0,9,1), 73=>array(0,30,29,30,29,29,30,29,29,30,30,29,30,0,10,2), 74=>array(4,30,30,29,30,29,29,30,29,29,30,30,29,30,1,3), 75=>array(0,30,30,29,30,29,29,30,29,29,30,29,30,0,2,4), 76=>array(8,30,30,29,30,29,30,29,30,29,29,30,29,30,3,5), 77=>array(0,30,29,30,30,29,30,29,30,29,30,29,29,0,4,6), 78=>array(0,30,29,30,30,29,30,30,29,30,29,30,29,0,5,7), 79=>array(6,30,29,29,30,29,30,30,29,30,30,29,30,29,6,8), 80=>array(0,30,29,29,30,29,30,29,30,30,29,30,30,0,7,9), 81=>array(0,29,30,29,29,30,29,29,30,30,29,30,30,0,8,10), 82=>array(4,30,29,30,29,29,30,29,29,30,29,30,30,30,9,11), 83=>array(0,30,29,30,29,29,30,29,29,30,29,30,30,0,10,12), 84=>array(10,30,29,30,30,29,29,30,29,29,30,29,30,30,1,1), 85=>array(0,29,30,30,29,30,29,30,29,29,30,29,30,0,2,2), 86=>array(0,29,30,30,29,30,30,29,30,29,30,29,29,0,3,3), 87=>array(6,30,29,30,29,30,30,29,30,30,29,30,29,29,4,4), 88=>array(0,30,29,30,29,30,29,30,30,29,30,30,29,0,5,5), 89=>array(0,30,29,29,30,29,29,30,30,29,30,30,30,0,6,6), 90=>array(5,29,30,29,29,30,29,29,30,29,30,30,30,30,7,7), 91=>array(0,29,30,29,29,30,29,29,30,29,30,30,30,0,8,8), 92=>array(0,29,30,30,29,29,30,29,29,30,29,30,30,0,9,9), 93=>array(3,29,30,30,29,30,29,30,29,29,30,29,30,29,10,10), 94=>array(0,30,30,30,29,30,29,30,29,29,30,29,30,0,1,11), 95=>array(8,29,30,30,29,30,29,30,30,29,29,30,29,30,2,12), 96=>array(0,29,30,29,30,30,29,30,29,30,30,29,29,0,3,1), 97=>array(0,30,29,30,29,30,29,30,30,29,30,30,29,0,4,2), 98=>array(5,30,29,29,30,29,29,30,30,29,30,30,29,30,5,3), 99=>array(0,30,29,29,30,29,29,30,29,30,30,30,29,0,6,4), 100=>array(0,30,30,29,29,30,29,29,30,29,30,30,29,0,7,5), 101=>array(4,30,30,29,30,29,30,29,29,30,29,30,29,30,8,6), 102=>array(0,30,30,29,30,29,30,29,29,30,29,30,29,0,9,7), 103=>array(0,30,30,29,30,30,29,30,29,29,30,29,30,0,10,8), 104=>array(2,29,30,29,30,30,29,30,29,30,29,30,29,30,1,9), 105=>array(0,29,30,29,30,29,30,30,29,30,29,30,29,0,2,10), 106=>array(7,30,29,30,29,30,29,30,29,30,30,29,30,30,3,11), 107=>array(0,29,29,30,29,29,30,29,30,30,30,29,30,0,4,12), 108=>array(0,30,29,29,30,29,29,30,29,30,30,29,30,0,5,1), 109=>array(5,30,30,29,29,30,29,29,30,29,30,29,30,30,6,2), 110=>array(0,30,29,30,29,30,29,29,30,29,30,29,30,0,7,3), 111=>array(0,30,29,30,30,29,30,29,29,30,29,30,29,0,8,4), 112=>array(4,30,29,30,30,29,30,29,30,29,30,29,30,29,9,5), 113=>array(0,30,29,30,29,30,30,29,30,29,30,29,30,0,10,6), 114=>array(9,29,30,29,30,29,30,29,30,30,29,30,29,30,1,7), 115=>array(0,29,30,29,29,30,29,30,30,30,29,30,29,0,2,8), 116=>array(0,30,29,30,29,29,30,29,30,30,29,30,30,0,3,9), 117=>array(6,29,30,29,30,29,29,30,29,30,29,30,30,30,4,10), 118=>array(0,29,30,29,30,29,29,30,29,30,29,30,30,0,5,11), 119=>array(0,30,29,30,29,30,29,29,30,29,29,30,30,0,6,12), 120=>array(4,29,30,30,30,29,30,29,29,30,29,30,29,30,7,1) );
-	//农历天干
+	//Lunar calendar
 	$mten=$lnlunarcalendar['tiangan'];
-	//农历地支
+	//Earthly Branches of the Lunar Calendar
 	$mtwelve=$lnlunarcalendar['dizhi'];
-	//农历月份
+	//Lunar month
 	$mmonth=$lnlunarcalendar['month'];
-	//农历日
+	//Lunar day
 	$mday=$lnlunarcalendar['day'];
-	//阳历总天数 至1900年12月21日
-	$total=69*365+17+11; //1970年1月1日前的就不算了
-	if ($year=="" || $month=="" || ($year<1970 or $year>2020)) return ''; //超出这个范围不计算
-	//计算到所求日期阳历的总天数-自1900年12月21日始
-	//先算年的和
+	//The total number of days in the Gregorian calendar until December 21, 1900
+	$total=69*365+17+11; //Those before January 1, 1970 don’t count.
+	if ($year=="" || $month=="" || ($year<1970 or $year>2020)) return ''; //No calculation beyond this range
+	//Calculate the total number of days in the Gregorian calendar of the requested date-since December 21, 1900
+	//Calculate the sum of the years first
 	for ($y=1970; $y<$year;$y++){
 		$total+=365;
 		if ($y%4==0) $total ++;
 	}
-	//再加当年的几个月
+	//Plus the months of the year
 	$total+=gmdate("z",gmmktime(0,0,0,$month,1,$year));
-	//用农历的天数累加来判断是否超过阳历的天数
-	$flag1=0; //判断跳出循环的条件
+	//Use the cumulative number of days in the lunar calendar to determine whether it exceeds the number of days in the solar calendar
+	$flag1=0; //Check the conditions for jumping out of the loop
 	$lcj=0;
 	$mtotal = 0;
 	while ($lcj<=120){
@@ -581,38 +581,38 @@ function lunarcalendar ($month, $year) {
 		if ($flag1==1) break;
 		$lcj++;
 	}
-	//由上，得到的 $lci 为当前农历月， $lcj 为当前农历年
-	//计算所求月份1号的农历日期
+	//From the above, the obtained $lci is the current lunar month, and $lcj is the current lunar year
+	//Calculate the lunar date on the 1st of the requested month
 	$fisrtdaylunar=$everymonth[$lcj][$lci]-($mtotal-$total);
-	$results['year']=$mten[$everymonth[$lcj][14]].$mtwelve[$everymonth[$lcj][15]]; //当前是什么年
-	$daysthismonth=gmdate("t",gmmktime(0,0,0,$month,1,$year)); //当前月共几天
+	$results['year']=$mten[$everymonth[$lcj][14]].$mtwelve[$everymonth[$lcj][15]]; //What year is it now
+	$daysthismonth=gmdate("t",gmmktime(0,0,0,$month,1,$year)); //A few days in the current month
 	$op=1;
 	for ($i=1; $i<=$daysthismonth; $i++) {
-		$possiblelunarday=$fisrtdaylunar+$op-1; //理论上叠加后的农历日
-		if ($possiblelunarday<=$everymonth[$lcj][$lci]) { //在本月的天数范畴内
+		$possiblelunarday=$fisrtdaylunar+$op-1; //Theoretically superimposed lunar day
+		if ($possiblelunarday<=$everymonth[$lcj][$lci]) { //Within the scope of the number of days in the month
 			$results[$i]=$mday[$possiblelunarday];
 			$op+=1;
 		}
-		else { //不在本月的天数范畴内
-			$results[$i]=$mday[1]; //退回到1日
+		else { //Not within the scope of the number of days in the month
+			$results[$i]=$mday[1]; //Back to 1st
 			$fisrtdaylunar=1;
 			$op=2;
-			$curmonthnum=($everymonth[$lcj][0]!=0) ? 13 : 12; //当年有几个月
-			if ($lci+1>$curmonthnum) { //第13/14个月了，转到下一年
+			$curmonthnum=($everymonth[$lcj][0]!=0) ? 13 : 12; //There were a few months in the year
+			if ($lci+1>$curmonthnum) { //The 13th/14th month, move on to the next year
 				$lci=1;
 				$lcj=$lcj+1;
-				//换年头了，把新一年的天干地支也写上
+				//It’s a new year, and write the zodiac for the new year
 				$results['year'].='/'.$mten[$everymonth[$lcj][14]].$mtwelve[$everymonth[$lcj][15]];
-			} else { //还在这年里
+			} else { //Still in this year
 				$lci=$lci+1;
 				$lcj=$lcj;
 			}
 		}
-		if ($results[$i]==$mday[1]) { //每月的初一应该显示当月是什么月
-			if ($everymonth[$lcj][0]!=0) { //有闰月的年
-				$monthss=($lci>$everymonth[$lcj][0]) ? ($lci-1) : $lci; //闰月后的月数-1
-				if ($lci==$everymonth[$lcj][0]+1) { //这个月正好是闰月
-					$monthssshow=$mmonth[0].$mmonth[$monthss]; //前面加个闰字
+		if ($results[$i]==$mday[1]) { //The first day of each month should show what month the current month is
+			if ($everymonth[$lcj][0]!=0) { //Years with leap months
+				$monthss=($lci>$everymonth[$lcj][0]) ? ($lci-1) : $lci; //Number of months after leap month-1
+				if ($lci==$everymonth[$lcj][0]+1) { //This month happens to be a leap month
+					$monthssshow=$mmonth[0].$mmonth[$monthss]; //Add a leap in front
 					$runyue=1;
 				} else {
 					$monthssshow=$mmonth[$monthss];
@@ -621,7 +621,7 @@ function lunarcalendar ($month, $year) {
 				$monthss=$lci;
 				$monthssshow=$mmonth[$monthss];
 			}
-			if ($monthss<=10 && @$runyue!=1) $monthssshow.=$mmonth[13]; //只有1个字的月加上‘月’字
+			if ($monthss<=10 && @$runyue!=1) $monthssshow.=$mmonth[13]; //Add the word "month" to the month with only 1 word
 			$results[$i]=$monthssshow;
 		}
 	}
@@ -768,9 +768,13 @@ function zhgmdate ($timeformat, $timestamp) {
 		global $mbcon;
 		$timeformat=str_replace('custom', $mbcon['customtimeformat'], $timeformat);
 	}
+    // Digits: '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'
 	$zh_numbers=array('零','一','二','三','四','五','六','七','八','九','十');
+    //Year, Month, Day
 	$zh_sybols=array('年','月','日');
+    //zh-cn: 'Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'
 	$zh_weeks=array('星期日','星期一','星期二','星期三','星期四','星期五','星期六');
+    //zh-tw: 'Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'
 	$ja_weeks=array('日曜日','月曜日','火曜日','水曜日','木曜日','金曜日 ','土曜日');
 	$result=gmdate ($timeformat, $timestamp);
 	$fact=getdate($timestamp);
