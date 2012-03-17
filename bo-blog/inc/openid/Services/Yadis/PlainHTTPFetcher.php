@@ -244,5 +244,3 @@ class Services_Yadis_PlainHTTPFetcher extends Services_Yadis_HTTPFetcher {
                                                $headers, $response_body);
     }
 }
-
-?>

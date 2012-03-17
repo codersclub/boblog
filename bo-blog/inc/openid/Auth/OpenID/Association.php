@@ -306,5 +306,3 @@ class Auth_OpenID_Association {
         return ($request_sig == $expected_sig);
     }
 }
-
-?>

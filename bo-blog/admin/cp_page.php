@@ -264,6 +264,3 @@ function autoradio ($type, $name, $arraylabel, $arrayvalue, $arraychecked=array(
 	}
 	return $formcontent;
 }
-
-
-?>

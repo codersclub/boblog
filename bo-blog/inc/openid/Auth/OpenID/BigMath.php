@@ -443,5 +443,3 @@ function &Auth_OpenID_getMathLib()
 
     return $lib;
 }
-
-?>

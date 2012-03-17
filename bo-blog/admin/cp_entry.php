@@ -427,5 +427,3 @@ if ($job=="deletepage") {
 	}
 	catcherror($lna[965]);
 }
-
-?>

@@ -112,6 +112,3 @@ function db_halt($message = '', $sql = '') {
 	$errmsg .= "<b>Errno. </b>:  $dberrno<br>";
 	return false;
 }
-
-
-?>

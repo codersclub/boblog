@@ -64,5 +64,3 @@ class Services_Yadis_ProxyResolver {
         return array($canonicalID, $services);
     }
 }
-
-?>

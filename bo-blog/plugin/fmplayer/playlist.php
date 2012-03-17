@@ -24,4 +24,3 @@ $addto
 </playlist>
 eot;
 echo $addto;
-?>

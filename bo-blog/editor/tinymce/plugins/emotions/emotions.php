@@ -38,5 +38,3 @@ $selbody
 </body>
 </html>
 eot;
-
-?>

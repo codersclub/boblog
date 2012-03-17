@@ -405,5 +405,3 @@ if ($job=='batchtags') {
 	}
 	else catchsuccess($finishok2, $backtotag);
 }
-
-?>

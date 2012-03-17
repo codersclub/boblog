@@ -82,4 +82,3 @@ dyn_t = document.getElementById("tbl_setList");
 </script>
 <div id="copyright" align="right">$lanfp[76]</div>
 eot;
-?>

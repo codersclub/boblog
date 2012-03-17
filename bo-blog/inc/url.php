@@ -120,5 +120,3 @@ function getlink_pages ($id, $alias) {
 	else $outurl=($alias) ? "go.php/component/{$alias}" : "go.php/component/id/{$id}/";
 	return $outurl;
 }
-
-?>

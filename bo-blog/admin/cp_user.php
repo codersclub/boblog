@@ -416,5 +416,3 @@ if ($job=='batchusers') {
 	}
 	else catchsuccess ($finishok2, array($backtouseradmin,$backtoaddnew));
 }
-
-?>

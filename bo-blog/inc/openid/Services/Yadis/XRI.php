@@ -230,5 +230,3 @@ function Services_Yadis_getCanonicalID($iname, $xrds)
 
     return $canonicalID;
 }
-
-?>

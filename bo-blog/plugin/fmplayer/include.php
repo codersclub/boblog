@@ -12,4 +12,3 @@ $page=array(
 	"home" => "fmplayer::home",
 	"list" => "fmplayer::playlist",
 );
-?>

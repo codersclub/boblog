@@ -240,5 +240,3 @@ class Services_Yadis_ParseHTML {
         return null;
     }
 }
-
-?>

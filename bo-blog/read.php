@@ -62,4 +62,3 @@ if ($itemid===false && !$use_blogalias) {
 //Very Simple Re-direct
 $act='read';
 require ("index.php");
-?>

@@ -32,4 +32,3 @@ $langstat = array
 	28=>'online list',
 	29=>'Show visitors IP list'
 );
-

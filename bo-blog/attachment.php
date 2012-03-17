@@ -123,4 +123,3 @@ function browserdetection() {
 
 	return $browser;
 }
-

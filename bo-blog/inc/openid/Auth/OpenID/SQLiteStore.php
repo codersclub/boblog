@@ -64,5 +64,3 @@ class Auth_OpenID_SQLiteStore extends Auth_OpenID_SQLStore {
             "DELETE FROM %s WHERE nonce = ?";
     }
 }
-
-?>

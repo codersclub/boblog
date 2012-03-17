@@ -374,4 +374,3 @@ if ($job=='ajaxloginsuccess') {
 	else $destine="{$lnc[163]}|index.php";
 	catchsuccess("{$lnc[167]} ".$userdetail['username'], $destine);
 }
-

@@ -495,4 +495,3 @@ $elements['tips']=<<<eot
 </body>
 </html>
 eot;
-?>

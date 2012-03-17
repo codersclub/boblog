@@ -29,4 +29,3 @@ $elements['rssbody']=<<<eot
 </channel>
 </rss>
 eot;
-?>

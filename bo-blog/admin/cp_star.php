@@ -29,5 +29,3 @@ if ($ajax!='on') {
 } else {
 	die('ok');
 }
-
-?>

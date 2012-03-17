@@ -13,6 +13,3 @@ $elements['viewpage']=<<<eot
 	</div>
 </div>
 eot;
-
-
-?>

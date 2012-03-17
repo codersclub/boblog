@@ -151,6 +151,3 @@ echo nl2br($errmsg);
 echo '</p>';
 exit;
 }
-
-
-?>

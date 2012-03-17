@@ -240,4 +240,3 @@ class Auth_OpenID_TrustRoot {
                 $url_parsed['port'] === $trust_root_parsed['port']);
     }
 }
-?>

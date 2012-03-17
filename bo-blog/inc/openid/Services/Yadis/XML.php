@@ -362,5 +362,3 @@ function &Services_Yadis_getXMLParser()
 
     return $p;
 }
-
-?>

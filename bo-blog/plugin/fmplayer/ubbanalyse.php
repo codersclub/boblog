@@ -24,4 +24,3 @@ function makeFMPlayer($tid, $url, $str) {
 	}
 	return $fmp_put;
 }
-?>

@@ -310,5 +310,3 @@ class Services_Yadis_Yadis {
         return null;
     }
 }
-
-?>

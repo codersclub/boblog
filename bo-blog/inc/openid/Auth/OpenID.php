@@ -410,5 +410,3 @@ class Auth_OpenID {
         return $url;
     }
 }
-
-?>

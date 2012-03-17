@@ -671,6 +671,3 @@ if ($job=="batchpending") {
 	}
 	else catchsuccess ($finishok, $backtopending);
 }
-
-
-?>

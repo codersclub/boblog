@@ -118,5 +118,3 @@ foreach ($admin_item as $k=>$v) {
 	$rollall.='</ul>';
 	$display_overall.="<div id=\"hoveritem_{$k}\" style=\"display: none;\">{$rollall}</div>\n";
 }
-
-?>

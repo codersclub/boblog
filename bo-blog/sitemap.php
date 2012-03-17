@@ -26,4 +26,3 @@ $outputxml.="</urlset>";
 
 @header("Content-Type: application/xml; charset=utf-8");
 die ($outputxml);
-?>

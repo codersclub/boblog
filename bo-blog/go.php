@@ -79,4 +79,3 @@ if (!$rewritedURL || !$includeFile) {
 }
 
 include($includeFile);
-

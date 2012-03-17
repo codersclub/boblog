@@ -70,4 +70,3 @@ $pref_result_show
 
 <div id="copyright" align="right">{$lanfp[99]}<br/>{$lanfp[76]}</div>
 eot;
-?>

@@ -423,5 +423,3 @@ class Services_Yadis_XRDS {
         return $result;
     }
 }
-
-?>

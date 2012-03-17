@@ -176,5 +176,3 @@ class Services_Yadis_ParanoidHTTPFetcher extends Services_Yadis_HTTPFetcher {
                                                $new_headers, $body);
     }
 }
-
-?>

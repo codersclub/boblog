@@ -196,4 +196,3 @@ function getmicrotime() { //Time Counting
     list($usec, $sec) = explode(" ",microtime());
     return ((float)$usec + (float)$sec);
 }
-

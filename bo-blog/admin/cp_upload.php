@@ -242,4 +242,3 @@ $display_overall.=<<<eot
 eot;
 @header("Content-Type: text/html; charset=utf-8");
 die ($display_overall);
-}

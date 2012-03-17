@@ -1179,4 +1179,3 @@ function backtrace() {
 
   echo '</table>', "\n";
 }
-

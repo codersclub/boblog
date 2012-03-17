@@ -972,4 +972,3 @@ class getblogs extends boblog {
 		return $outhtml;
 	}
 }
-

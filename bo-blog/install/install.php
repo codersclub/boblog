@@ -637,5 +637,3 @@ function addsd($array) { //Auto Adding Slashes
 	} else $array=addslashes($array);
 	return $array;
 }
-
-?>

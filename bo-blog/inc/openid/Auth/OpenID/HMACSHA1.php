@@ -68,5 +68,3 @@ function Auth_OpenID_HMACSHA1($key, $text)
     $hmac = Auth_OpenID_SHA1(($key ^ $opad) . $hash1, true);
     return $hmac;
 }
-
-?>

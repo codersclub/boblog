@@ -1183,5 +1183,3 @@ class Auth_OpenID_SetupNeededResponse extends Auth_OpenID_ConsumerResponse {
         $this->setup_url = $setup_url;
     }
 }
-
-?>

@@ -496,5 +496,3 @@ function blogger_getTemplate ($values) {
 function blogger_setTemplate ($values) {
 	xml_error ("Sorry, this method is not supported yet.");
 }
-
-?>

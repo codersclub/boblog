@@ -492,5 +492,3 @@ class Services_Yadis_Discovery {
         }
     }
 }
-
-?>

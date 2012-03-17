@@ -1375,5 +1375,3 @@ function gzreadfromfile ($gzfilename) {
    }
    return $data;
 }
-
-?>

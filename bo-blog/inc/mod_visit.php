@@ -456,4 +456,3 @@ if ($job=='openidaddreply' || $job=='openidaddmessage') {
 	$process_url = "{$config['blogurl']}/visit.php?job=openidsubmit&todojob={$openidtojob}&ajax=off&v_replier={$v_replier}&stat_html={$stat_html}&stat_ubb={$stat_ubb}&stat_emot={$stat_emot}&stat_property={$stat_property}&v_id={$v_id}&onetimecounter={$onetimecounter}&v_security={$v_security}&v_content={$v_content}";
 	prepareOpenID($openid, $process_url);
 }
-

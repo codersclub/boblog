@@ -3,4 +3,3 @@
 $act='tag';
 define ('whereAmI', 'tag');
 require ("index.php");
-?>

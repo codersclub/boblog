@@ -5,4 +5,3 @@
 $act='visit';
 define ("noCounter", 1);
 require ("index.php");
-?>
