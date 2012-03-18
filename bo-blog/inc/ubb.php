@@ -30,7 +30,7 @@ function convert_ubb ($str, $advanced=0, $inrss=0) {
 		$str=preg_replace("/\[url=([^\[]*)\]\[img( align=L| align=M| align=R)?( width=[0-9]+)?( height=[0-9]+)?\]\s*(\S+?)\s*\[\/img\]\[\/url\]/ise","makeimgwithurl('\\1', '\\2', '\\3', '\\4', '\\5', {$inrss})",$str);
 		$str=preg_replace("/\[img( align=L| align=M| align=R)?( width=[0-9]+)?( height=[0-9]+)?\]\s*(\S+?)\s*\[\/img\]/ise","makeimg('\\1', '\\2', '\\3', '\\4', {$inrss})",$str);
 	} else {
-		$str=preg_replace_callback("/\[img( align=L| align=M| align=R)?( width=[0-9]+)?( height=[0-9]+)?\]\s*(\S+?)\s*\[\/img\]/ise","makeimginrss",$str);
+		$str=preg_replace_callback("/\[img( align=L| align=M| align=R)?( width=[0-9]+)?( height=[0-9]+)?\]\s*(\S+?)\s*\[\/img\]/is","makeimginrss",$str);
 	}
 
 	if ($mbcon['countdownload']=='1' && $inrss==0) $str=preg_replace(array("/\[sfile\]\s*\[attach\]([0-9]+)\[\/attach\]\s*\[\/sfile\]/ise", "/\[file\]\s*\[attach\]([0-9]+)\[\/attach\]\s*\[\/file\]/ise"), array("makedownload('\\1', 1, 0, true)", "makedownload('\\1', 0, 0, true)"), $str);
