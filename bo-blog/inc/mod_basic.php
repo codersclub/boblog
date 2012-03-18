@@ -288,7 +288,7 @@ if (in_array('calendar', $allopenmods)) {
 		$month_calendar=(is_array(@$month_calendars['cday'])) ? array_unique($month_calendars['cday']) : array();
 		if ($mbcon['lunarcalendar']!=0) {
 			$lunarstream=lunarcalendar($cm, $cy);
-			$lunarym="<br/>{$lunarstream['year']}";
+/*vot*/			$lunarym="<br/>".@$lunarstream['year'];
 		}
 		else $lunarstream='';
 		$calendarbody=makecalendar ($cm, $cy, $month_calendar, $lunarstream);
