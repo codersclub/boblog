@@ -56,7 +56,7 @@ if ($job!='add' && $job!='store' && $job!='sendtb') {
 			$cancel=$lna[268];
 		}
 		$records['entrysummary']=safe_invert($records['entrysummary'], $records['htmlstat']);
-		$records['entrysummary']=preg_replace("/\[php\](.+?)\[\/php\]/ise", "phpcode4('\\1')", $records['entrysummary']);
+/*vot*/		$records['entrysummary']=preg_replace_callback("/\[php\](.+?)\[\/php\]/is", "phpcode4", $records['entrysummary']);
 		$displaysummary=($records['entrysummary']) ? 'block' : 'none';
 	}
 }
@@ -192,7 +192,7 @@ if ($job=='add' || $job=='edit') { //Initialize public items
 
 	$hiddenareas.="<input type='hidden' name='forcedraft' id='forcedraft' value='0'/>";
 	if ($disableinvert!=1) $records['content']=safe_invert(@$records['content'], @$records['htmlstat']);
-	$records['content']=preg_replace("/\[php\](.+?)\[\/php\]/ise", "phpcode4('\\1')", @$records['content']);
+/*vot*/	$records['content']=preg_replace_callback("/\[php\](.+?)\[\/php\]/is", "phpcode4", @$records['content']);
 	$records['content']=stripslashes($records['content']);
 	if ($editorbody!='PHP_INCLUDE') $editorbody=str_replace("{content}", $records['content'], $editorbody);
 
@@ -440,12 +440,12 @@ if ($job=='store' || $job=='restore') {
 		$content=call_user_func ($callaftersubmit, $content);
 	}
 
-	$content=preg_replace("/\[php\](.+?)\[\/php\]/ise", "phpcode3('\\1')", $content);
+/*vot*/	$content=preg_replace_callback("/\[php\](.+?)\[\/php\]/is", "phpcode3", $content);
 	if ($htmlstat!=1 || $permission['Html']!=1) {
-		$content=preg_replace("/\[code\](.+?)\[\/code\]/ise", "phpcode2('\\1')", $content);
+/*vot*/		$content=preg_replace_callback("/\[code\](.+?)\[\/code\]/is", "phpcode2", $content);
 		$content=safe_convert($content, 0, 1);
 	} else {
-		$content=preg_replace("/\[code\](.+?)\[\/code\]/ise", "phpcode('\\1')", $content);
+/*vot*/		$content=preg_replace_callback("/\[code\](.+?)\[\/code\]/is", "phpcode", $content);
 		$content=safe_convert($content, 1, 1);
 	}
 
@@ -460,12 +460,12 @@ if ($job=='store' || $job=='restore') {
 		if ($callaftersubmit) {
 			$entrysummary=call_user_func ($callaftersubmit, $entrysummary);
 		}
-		$entrysummary=preg_replace("/\[php\](.+?)\[\/php\]/ise", "phpcode3('\\1')", $entrysummary);
+/*vot*/		$entrysummary=preg_replace_callback("/\[php\](.+?)\[\/php\]/is", "phpcode3", $entrysummary);
 		if ($htmlstat!=1 || $permission['Html']!=1) {
-			$entrysummary=preg_replace("/\[code\](.+?)\[\/code\]/ise", "phpcode2('\\1')", $entrysummary);
+/*vot*/			$entrysummary=preg_replace_callback("/\[code\](.+?)\[\/code\]/is", "phpcode2", $entrysummary);
 			$entrysummary=safe_convert($entrysummary, 0, 1);
 		} else {
-			$entrysummary=preg_replace("/\[code\](.+?)\[\/code\]/ise", "phpcode('\\1')", $entrysummary);
+/*vot*/			$entrysummary=preg_replace_callback("/\[code\](.+?)\[\/code\]/is", "phpcode", $entrysummary);
 			$entrysummary=safe_convert($entrysummary, 1, 1);
 		}
 	} else $entrysummary='';

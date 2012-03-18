@@ -30,7 +30,7 @@ function convert_ubb ($str, $advanced=0, $inrss=0) {
 		$str=preg_replace("/\[url=([^\[]*)\]\[img( align=L| align=M| align=R)?( width=[0-9]+)?( height=[0-9]+)?\]\s*(\S+?)\s*\[\/img\]\[\/url\]/ise","makeimgwithurl('\\1', '\\2', '\\3', '\\4', '\\5', {$inrss})",$str);
 		$str=preg_replace("/\[img( align=L| align=M| align=R)?( width=[0-9]+)?( height=[0-9]+)?\]\s*(\S+?)\s*\[\/img\]/ise","makeimg('\\1', '\\2', '\\3', '\\4', {$inrss})",$str);
 	} else {
-		$str=preg_replace("/\[img( align=L| align=M| align=R)?( width=[0-9]+)?( height=[0-9]+)?\]\s*(\S+?)\s*\[\/img\]/ise","makeimginrss('\\4')",$str);
+		$str=preg_replace_callback("/\[img( align=L| align=M| align=R)?( width=[0-9]+)?( height=[0-9]+)?\]\s*(\S+?)\s*\[\/img\]/ise","makeimginrss",$str);
 	}
 
 	if ($mbcon['countdownload']=='1' && $inrss==0) $str=preg_replace(array("/\[sfile\]\s*\[attach\]([0-9]+)\[\/attach\]\s*\[\/sfile\]/ise", "/\[file\]\s*\[attach\]([0-9]+)\[\/attach\]\s*\[\/file\]/ise"), array("makedownload('\\1', 1, 0, true)", "makedownload('\\1', 0, 0, true)"), $str);
@@ -127,7 +127,11 @@ function makefontsize ($size, $word) {
 	return "<span style=\"font-size: {$size}px;\">{$word}</span>";
 }
 
-function makemedia ($mediatype, $url, $width, $height) {
+function makemedia ($match) {
+/*vot*/	$mediatype=$match[1];
+/*vot*/	$url=$match[4];
+/*vot*/	$width=$match[2];
+/*vot*/	$height==$match[3];
 	global $template, $lnc, $config;
 	$mediatype=strtolower($mediatype);
 	$id=rand(1000, 99999);
@@ -179,7 +183,8 @@ function makeimgwithurl ($url, $aligncode, $widthcode, $heightcode, $src, $inrss
 }
 
 
-function makeimginrss($src) {
+function makeimginrss($match) {
+/*vot*/	$src = $match[4];
 	global $config, $lnc, $template;
 	$src=(substr(strtolower($src), 0, 4) == 'http') ? $src : $config['blogurl'].'/'.$src;
 	$str="<br/><img src=\"{$config['blogurl']}/{$template['images']}/viewimage.gif\" alt=\"\"/>{$lnc[231]}<br/>[url]{$src}[/url]<br/>";

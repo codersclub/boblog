@@ -394,7 +394,9 @@ function safe_invert($string, $html=0) { //Transfer the converted words into edi
 		$string = str_replace("<br/>","\r",$string);
 		$string = str_replace("&nbsp;"," ",$string);
 		$string = str_replace("&","&amp;",$string);
-		$string=preg_replace("/\[code\](.+?)\[\/code\]/ise", "'[code]'.str_replace('&amp;', '&', '\\1').'[/code]'", $string);
+/*vot*/         $string=preg_replace_callback("/\[code\](.+?)\[\/code\]/is", function ($match) {
+/*vot*/			return '[code]'.str_replace('&amp;', '&', $match[1]).'[/code]';
+/*vot*/		}, $string);
 	}
 	$string = str_replace("&nbsp;"," ",$string);
 	return $string;

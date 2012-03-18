@@ -307,9 +307,10 @@ function check_upload_file ($filename) { //Check if the file contains dangerous 
 	return $content;
 }
 
-function phpcode ($str) { //Convert HTML chars into entities for [CODE]
+function phpcode ($match) { //Convert HTML chars into entities for [CODE]
 	//Note: string in the result of preg_match will be partly escaped
 	//Strangely, only double quotes are added with a slash
+	$str=$match[1];
 	$str=str_replace("\\\"", '"', $str);
 
 	//Now continue to escape other characters
@@ -319,20 +320,23 @@ function phpcode ($str) { //Convert HTML chars into entities for [CODE]
 	return "[code]{$str}[/code]";
 }
 
-function phpcode2 ($str) { //Convert HTML chars into entities for [CODE]
+function phpcode2 ($match) { //Convert HTML chars into entities for [CODE]
+	$str=$match[1];
 	$str=str_replace("\\\"", '"', $str);
 	$str=str_replace('[', '&#91;', $str);
 	$str=str_replace(']', '&#93;', $str);
 	return "[code]{$str}[/code]";
 }
 
-function phpcode3 ($str) { //Encode the code for highlight purpose
+function phpcode3 ($match) { //Encode the code for highlight purpose
+	$str=$match[1];
 	$str=str_replace("\\\"", '"', $str);
 	$str=base64_encode($str);
 	return "[php]{$str}[/php]";
 }
 
-function phpcode4 ($str) { //Encode the code for highlight purpose
+function phpcode4 ($match) { //Encode the code for highlight purpose
+	$str=$match[1];
 	$str=base64_decode($str);
 	$str=htmlspecialchars($str);
 	return "[php]{$str}[/php]";

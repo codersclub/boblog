@@ -1,9 +1,12 @@
 <?php
 function plugin_fmplayer_run($str) { 
-  $str=preg_replace("/\s*\[fmp(,id=.+?)?(,url=.+?)?\](.*?)\[\/fmp\]\s*/ise", "makeFMPlayer('\\1', '\\2', '\\3')", $str);
+/*vot*/  $str=preg_replace_callback("/\s*\[fmp(,id=.+?)?(,url=.+?)?\](.*?)\[\/fmp\]\s*/is", "makeFMPlayer", $str);
   return $str;
 }
-function makeFMPlayer($tid, $url, $str) {
+function makeFMPlayer($match) {
+/*vot*/	$tid=$match[1];
+/*vot*/	$url=$match[2];
+/*vot*/	$str=$match[3];
 	$RunID = 0;
 	if (!empty($tid)) {$RunID+=2;}
 	if (!empty($url)) {$RunID+=4;}

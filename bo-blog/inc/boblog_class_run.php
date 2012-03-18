@@ -119,7 +119,9 @@ class template {
 	function publish ($contentstr, $screen=false) {
 		global $tptvalue;
 		$globalvar=array();
-		preg_replace("/<!--global:{(.+?)}-->/ie", "\$globalvar['\\1']=@\$tptvalue['\\1']", $contentstr);
+/*vot*/		preg_replace_callback("/<!--global:{(.+?)}-->/i", function ($match) {
+/*vot*/			return "\$globalvar['".$match[1]."']=@\$tptvalue['".$match[1]."']";
+/*vot*/			}, $contentstr);
 		while (@list($parser, $value) = @each ($globalvar)) {
 			$contentstr=str_replace("<!--global:{".$parser."}-->", $value, $contentstr);
 		}
