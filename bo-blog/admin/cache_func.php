@@ -67,6 +67,7 @@ function recache_emotselection () {
 
 function recache_mods () {
 	global $blog, $db_prefix, $lna;
+/*vot*/	$writeout = '';
 	$allmods_active=$blog->getgroupbyquery("SELECT * FROM `{$db_prefix}mods` WHERE `active`=1 ORDER BY  `modorder`");
 	if (is_array($allmods_active)) {
 		for ($i=0; $i<count($allmods_active); $i++) {
@@ -199,10 +200,10 @@ function recache_currentmonthentries () {
 	$cm=$nowtime['month'];
 	$cy=$nowtime['year'];
 	$result=$blog->getarraybyquery("SELECT (cday) FROM `{$db_prefix}calendar` WHERE `cyearmonth`='{$nowtime['Ym']}'");
-	$month_calendar=(is_array($result['cday'])) ? array_unique($result['cday']) : array();
+/*vot*/	$month_calendar=(is_array(@$result['cday'])) ? array_unique($result['cday']) : array();
 	if ($mbcon['lunarcalendar']!=0) {
 		$lunarstream=lunarcalendar($cm, $cy);
-		$lunarym="<br/>{$lunarstream['year']}";
+/*vot*/		$lunarym="<br/>" . @$lunarstream['year'];
 	}
 	else $lunarstream='';
 	$calendarbody=makecalendar ($cm, $cy, $month_calendar, $lunarstream);
@@ -266,6 +267,7 @@ function recache_cleartemp () {
 
 function recache_plugins () {
 	global $blog, $db_prefix, $lna;
+/*vot*/	$out = '';
 	$all_pl=$blog->getgroupbyquery("SELECT * FROM `{$db_prefix}plugins` WHERE `active`=1 ORDER BY `plid` ASC");
 	if (is_array($all_pl)) {
 		foreach ($all_pl as $plugin) {
@@ -277,7 +279,7 @@ function recache_plugins () {
 			}
 		}
 	}
-	if (is_array($blogplugin)) {
+	if (is_array(@$blogplugin)) {
 		foreach ($blogplugin as $typename=>$plugins) {
 			$pluginline='"'.@implode(',', $plugins).'"';
 			$plugwrt[]="\$blogplugin['{$typename}']={$pluginline};\r\n";

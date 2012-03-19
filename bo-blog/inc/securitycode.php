@@ -19,13 +19,14 @@ require_once ("../data/config.php");
 if ($db_defaultsessdir!=1) session_save_path("../{$db_tmpdir}");
 session_cache_limiter("private, must-revalidate");
 session_start();
+/*vot*/ $code = '';
 $_SESSION['code'] = "";
 $width = "40";//Picture width
 $height = "15";//Picture height
 $len = "4";//Generated a number of verification code
 $bgcolor = "#ffffff";//Background Color
 $noise = true;//Miscellaneous points generated
-$noisenum = 10;//Number of miscellaneous points
+$noisenum = 100;//Number of miscellaneous points
 $border = false;//Border
 $bordercolor = "#000000";
 $image = imageCreate($width, $height);
