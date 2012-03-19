@@ -312,7 +312,7 @@ if ($job=='applylink') {
 	$formbody.=$t->set('form_eachline', array('text'=>"*{$lnc[170]}", 'formelement'=>"<input type='text'  class='text' size='30' name='siteurl' />"));
 	$formbody.=$t->set('form_eachline', array('text'=>$lnc[171], 'formelement'=>"<input type='text'  class='text' size='30' name='sitelogo' /> {$lnc[172]}"));
 	$formbody.=$t->set('form_eachline', array('text'=>$lnc[173], 'formelement'=>"<input type='text'  class='text' size='30' name='siteintro' /> {$lnc[174]}"));
-	$formbody.=$t->set('form_eachline', array('text'=>$lnc[175], 'formelement'=>"{$lnc[176]}<br/><ul><li>{$lnc[177]}<br/><textarea class='text' cols='40' rows='2' name='sitemycode1'>{$mycode1}</textarea></li><li>{$lnc[178]}<br/><textarea class='text' cols='40' rows='2' name='sitemycode2'>{$mycode2}</textarea></li></ul>"));
+	$formbody.=$t->set('form_eachline', array('text'=>$lnc[175], 'formelement'=>"{$lnc[176]}<br/><ul><li>{$lnc[177]}<br/><textarea class='text' cols='60' rows='4' name='sitemycode1'>{$mycode1}</textarea></li><li>{$lnc[178]}<br/><textarea class='text' cols='60' rows='4' name='sitemycode2'>{$mycode2}</textarea></li></ul>"));
 	if ($config['applylinkvalidation']==1) {
 		$rand=rand (0,100000);
 		$formbody.=$t->set('form_eachline', array('text'=>$lnc[249], 'formelement'=>"<span id='securityimagearea'><img src='inc/securitycode.php?rand={$rand}' alt='' title='{$lnc[250]}'/></span> <input name='securitycode' type='text' id='securitycode' size='16' class='text' /> {$lnc[251]} [<a href=\"javascript: refreshsecuritycode('securityimagearea', 'securitycode');\">{$lnc[283]}</a>]"));
