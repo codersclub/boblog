@@ -93,19 +93,19 @@ input, textarea, select {
 #dropmenudiv {
 	border-top: 1px solid #999999;
 	background: #fff;
-	width: 120px;
+*	width: 120px;
 	text-align: left;
 }
 #dropmenudiv ul {
 	list-style: none;
 	margin: 0;	padding: 0;
-	width: 120px;
+*	width: 120px;
 	height: 30px;
 }
 #dropmenudiv li {
 	display: block;
 	margin: 0;	padding: 0;
-	width: 120px;
+*	width: 120px;
 	height: 30px;
 	background: url('bg_titlebar.png') repeat-x;
 	border: 1px solid #999999;
@@ -113,8 +113,8 @@ input, textarea, select {
 }
 #dropmenudiv li a{
 	display: block;
-	padding-top: 8px;
-	padding-left: 15px;
+	padding: 8px 15px 0 15px;
+*	padding-left: 15px;
 	height: 22px;
 	color: #333;
 	text-decoration: none;
