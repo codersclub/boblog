@@ -368,13 +368,15 @@ class getblogs extends boblog {
 			$tbtitle=$eachreply['repemail'];
 			$tbtime=zhgmdate("{$mbcon['timeformat']} H:i", ($eachreply['reptime']+3600*$config['timezone']));
 			$tburl=$eachreply['repurl'];
+			$repip=$eachreply['repip'];
 			$tbblogname=$eachreply['replier'];
+/*vot*/			if(empty($tbblogname)) {$tbblogname=$tburl;}
 			$tbcontent=$eachreply['repcontent'];
 			if ($permission['ReplyReply']==1) {
 				$delreply="<a href=\"javascript: comfirmurl('admin.php?go=reply_deltb_{$eachreply['repid']}-{$eachreply['blogid']}');\">[{$lnc[31]}]</a>";
 			}
-			$output_single=$t->set('trackback', array('tbtitle'=>$tbtitle, 'tbtime'=>$tbtime, 'tburl'=>$tburl,'tbblogname'=>$tbblogname,'tbcontent'=>$tbcontent, 'delreply'=>$delreply, 'oddorcouplecss'=>$oddorcouplecss));
-			$output_single=plugin_get('eachtbbegin').$output_single.plugin_get('eachtbend'); //Added on 2008/10/2
+/*vot*/			$output_single=$t->set('trackback', array('tbtitle'=>$tbtitle, 'tbtime'=>$tbtime, 'tburl'=>$tburl,'tbblogname'=>$tbblogname,'tbcontent'=>$tbcontent, 'repip'=> $repip, 'delreply'=>$delreply, 'oddorcouplecss'=>$oddorcouplecss));
+    			$output_single=plugin_get('eachtbbegin').$output_single.plugin_get('eachtbend'); //Added on 2008/10/2
 		}
 		return $output_single;
 	}

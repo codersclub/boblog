@@ -292,6 +292,7 @@ $elements['trackback']=<<<eot
 			</div>
 		</div>
 		<div class="trackbackbox-content">
+		 IP: {repip}<br/>
 		 {$lnc[240]}<a href="{tburl}" target="_blank">{tbblogname}</a><br/>
 		 {$lnc[76]}{tbcontent}
 		</div>
