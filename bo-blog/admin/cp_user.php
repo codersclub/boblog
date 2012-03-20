@@ -39,7 +39,7 @@ if ($job=='' || $job=="usergroup") {
 $display_overall_plus= <<<eot
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[437]}
 </td>
 <td class="sectend">{$lna[438]}</td>
@@ -54,7 +54,7 @@ $display_overall_plus= <<<eot
 <form action="admin.php?go=user_newgp" method="post">
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[441]}
 </td>
 <td class="sectend">{$lna[442]}</td>
@@ -98,7 +98,7 @@ if ($job=='newgp' || $job=='editgp') {
 $display_overall.= <<<eot
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[451]}
 </td>
 <td class="sectend">{$lna[452]}</td>
@@ -207,7 +207,7 @@ if ($job=='users') {
 $display_overall_plus= <<<eot
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[8]}
 </td>
 <td class="sectend">{$lna[456]}</td>
@@ -238,7 +238,7 @@ $display_overall_plus= <<<eot
 <form action="admin.php?go=user_finduser" method="post">
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[467]}
 </td>
 <td class="sectend">{$lna[468]}</td>
@@ -316,7 +316,7 @@ if ($job=='add' || $job=='edituser') {
 $display_overall.= <<<eot
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 $showword
 </td>
 <td class="sectend">{$lna[494]}</td>

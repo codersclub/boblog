@@ -42,7 +42,7 @@ $display_overall.= <<<eot
 <form action="admin.php?go=carecenter_refreshcache" method="post"  id='f_s' name='f_s'>
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[35]}
 </td>
 <td class="sectend">{$lna[760]}</td>
@@ -83,7 +83,7 @@ $display_overall.= <<<eot
 <form action="admin.php?go=carecenter_refreshcounter" method="post" id='ajaxForm1' name='ajaxForm1'>
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[773]}
 </td>
 <td class="sectend">{$lna[774]}</td>
@@ -115,7 +115,7 @@ $display_overall.= <<<eot
 <br>
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[894]}
 </td>
 <td class="sectend">{$lna[895]}</td>
@@ -271,7 +271,7 @@ if ($job=='adminattach') {
 $display_overall_plus= <<<eot
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[36]}
 </td>
 <td class="sectend">{$lna[783]}</td>
@@ -358,7 +358,7 @@ if ($job=='updateattachment') {
 $display_overall.= <<<eot
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[36]}
 </td>
 <td class="sectend">{$lna[783]}</td>
@@ -438,7 +438,7 @@ if ($job=='mysql') {
 $display_overall.= <<<eot
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 MySQL
 </td>
 <td class="sectend">{$lna[798]}</td>
@@ -459,7 +459,7 @@ MySQL
 <form action="admin.php?go=carecenter_optimize" method='post' id="ajaxForm1">
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[803]}
 </td>
 <td class="sectend">{$lna[804]}</td>
@@ -503,7 +503,7 @@ if ($job=='mysqlquery') {
 $display_overall.= <<<eot
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 MySQL
 </td>
 <td class="sectend">{$lna[798]}</td>
@@ -567,7 +567,7 @@ setCookie ('batchid','',null,null, null, false);
 <form action="admin.php?go=carecenter_doexport" method="post" id='f_s' name='f_s'>
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[817]}
 </td>
 <td class="sectend">{$lna[818]}</td>
@@ -667,7 +667,7 @@ setCookie ('batchid', "{$nowtime['timestamp']}", dateObjexp, null, null, false);
 </script>
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[817]}
 </td>
 <td class="sectend">{$lna[818]}</td>
@@ -695,7 +695,7 @@ if ($job=='xmlbackup') {
 $display_overall.= <<<eot
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[817]}
 </td>
 <td class="sectend">{$lna[818]}</td>
@@ -773,7 +773,7 @@ $jssetcookie
 </script>
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[817]}
 </td>
 <td class="sectend">{$lna[818]}</td>
@@ -801,7 +801,7 @@ if ($job=='rssbackup') {
 $display_overall.= <<<eot
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[817]}
 </td>
 <td class="sectend">{$lna[818]}</td>
@@ -840,7 +840,7 @@ $jssetcookie
 </script>
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[817]}
 </td>
 <td class="sectend">{$lna[818]}</td>
@@ -879,7 +879,7 @@ setCookie ('nonstop','',null,null, null, false);
 <form action="admin.php?go=carecenter_doimport" method="post" enctype='multipart/form-data'>
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[844]}
 </td>
 <td class="sectend">{$lna[845]}</td>
@@ -962,7 +962,7 @@ setCookie ('changevisittotal','',null,null, null, false);
 </script>
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[844]}
 </td>
 <td class="sectend">{$lna[845]}</td>
@@ -994,7 +994,7 @@ setCookie ('endnumber', '$targetcate', dateObjexp, null, null, false);
 </script>
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[844]}
 </td>
 <td class="sectend">{$lna[845]}</td>
@@ -1085,7 +1085,7 @@ setCookie ('changevisittotal','',null,null, null, false);
 </script>
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[844]}
 </td>
 <td class="sectend">{$lna[845]}</td>
@@ -1127,7 +1127,7 @@ $jssetcookie
 </script>
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[844]}
 </td>
 <td class="sectend">{$lna[845]}</td>
@@ -1162,7 +1162,7 @@ if ($job=='rssrollback') {
 $display_overall.= <<<eot
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[844]}
 </td>
 <td class="sectend">{$lna[845]}</td>

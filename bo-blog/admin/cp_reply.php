@@ -175,7 +175,7 @@ if ($job=='censor' || $job=='default') {
 $display_overall_plus= <<<eot
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 $titlem
 </td>
 <td class="sectend">{$titler}</td>
@@ -232,7 +232,7 @@ if ($job=='tb' || $job=='tbcensor') {
 $display_overall_plus= <<<eot
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$titlem}
 </td>
 <td class="sectend">{$titler}</td>

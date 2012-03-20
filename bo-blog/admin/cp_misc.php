@@ -47,7 +47,7 @@ if ($job=='weatherset') {
 $display_overall_plus= <<<eot
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[31]}
 </td>
 <td class="sectend">{$lna[369]}</td>
@@ -159,7 +159,7 @@ eot;
 $display_overall_plus= <<<eot
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[32]}
 </td>
 <td class="sectend">{$lna[375]}</td>
@@ -227,7 +227,7 @@ if ($job=='emot') {
 $display_overall_plus= <<<eot
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[29]}
 </td>
 <td class="sectend">{$lna[381]}</td>
@@ -291,7 +291,7 @@ if ($job=='forbidden') {
 $display_overall_plus= <<<eot
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[30]}
 </td>
 <td class="sectend">{$lna[403]}</td>
@@ -307,7 +307,7 @@ $selbody_all
 <form action="admin.php?go=misc_importforbidden" method="post" enctype='multipart/form-data'>
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[406]}
 </td>
 <td class="sectend">{$lna[407]}</td>
@@ -379,7 +379,7 @@ $display_overall_plus= <<<eot
 <form action="admin.php?go=misc_changesessiondir" method="post" id="ajaxForm1">
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[935]}
 </td>
 <td class="sectend">{$lna[936]}</td>
@@ -422,7 +422,7 @@ eot;
 $display_overall.= <<<eot
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[935]}
 </td>
 <td class="sectend">{$lna[936]}</td>
@@ -495,7 +495,7 @@ $display_overall_plus= <<<eot
 <form action="admin.php?go=misc_urlrewritesave" method="post" id="ajaxForm1">
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[527]}
 </td>
 <td class="sectend">{$lna[528]}</td>

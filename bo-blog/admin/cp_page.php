@@ -108,7 +108,7 @@ function chktitle() {
 <form name='editentry' id='editentry' action='admin.php' method='post' enctype='multipart/form-data' 	{$submitjs}>{$hiddenareas}
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[1056]}
 </td>
 <td class="sectend">{$lna[1058]}</td>

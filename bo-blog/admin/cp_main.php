@@ -69,7 +69,7 @@ $display_overall_plus= <<<eot
 <form action='admin.php?go=main_selectadminskin' method='post'>
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[47]}
 </td>
 <td class="sectend">{$lna[48]}</td>
@@ -94,7 +94,7 @@ $promptcleartmp
 
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[49]}
 </td>
 <td class="sectend">{$lna[50]}</td>
@@ -150,7 +150,7 @@ msxcms, Nicky, Loveshell, 4ngel, and many more...
 <br><br>
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[46]}
 </td>
 <td class="sectend">&nbsp;</td>
@@ -176,7 +176,7 @@ if ($job=='update') {
 $display_overall.= <<<eot
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[16]}
 </td>
 <td class="sectend">{$lna[57]}</td>
@@ -219,7 +219,7 @@ if ($job=='config') {
 $display_overall.= <<<eot
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[13]}
 </td>
 <td class="sectend">{$lna[63]}</td>
@@ -273,7 +273,7 @@ if ($job=='mbcon') {
 $display_overall.= <<<eot
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[14]}
 </td>
 <td class="sectend">{$lna[67]}</td>
@@ -442,7 +442,7 @@ if ($job=='module') {
 $display_overall_plus= <<<eot
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[15]}
 </td>
 <td class="sectend">{$lna[123]}</td>
@@ -615,7 +615,7 @@ $display_overall.= <<<eot
 <form action="admin.php?go=main_automod2" method="post">
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[136]}
 </td>
 <td class="sectend">{$lna[137]}</td>
@@ -649,7 +649,7 @@ $display_overall.= <<<eot
 <form action="admin.php?go=main_autoaddmodule" method="post">
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[136]}
 </td>
 <td class="sectend">{$lna[137]}</td>
@@ -699,7 +699,7 @@ $display_overall.= <<<eot
 <form action="admin.php?go=main_doordermodule" method="post">
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[139]}
 </td>
 <td class="sectend">{$lna[140]}</td>
@@ -763,7 +763,7 @@ if ($job=='langset') {
 	$display_overall.= <<<eot
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
   <tr>
-    <td width=160 class="sectstart">
+    <td class="sectstart">
       {$lna['language']}
     </td>
     <td class="sectend">
@@ -862,7 +862,7 @@ if ($job=='funclock') {
 $display_overall.= <<<eot
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[1194]}
 </td>
 <td class="sectend">{$lna[1195]}</td>

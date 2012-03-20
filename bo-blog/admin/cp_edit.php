@@ -235,7 +235,7 @@ $tag_js
 <form name='editentry' id='editentry' action='admin.php' method='post' enctype='multipart/form-data' 	{$submitjs}>{$hiddenareas}
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[22]} <a href="#" onclick="dohs()"><img align="absmiddle" src="admin/theme/{$themename}/more.gif" alt="More" border="0"/></a>
 </td>
 <td class="sectend">{$lna[283]}</td>

@@ -44,7 +44,7 @@ $display_overall_plus=<<<eot
 <form action="admin.php?go=link_newgp" method="post" id="ajaxForm1">
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[216]}
 </td>
 <td class="sectend">{$lna[217]}</td>
@@ -74,7 +74,7 @@ $display_overall_plus=<<<eot
 <form action="" method="post" >
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[222]}
 </td>
 <td class="sectend">{$lna[223]}</td>
@@ -97,7 +97,7 @@ $puttinggp
 <form action="admin.php" method="post" id="ajaxForm2">
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[224]}
 </td>
 <td class="sectend">{$lna[225]}</td>
@@ -166,7 +166,7 @@ $display_overall.= <<<eot
 <form action="admin.php" method="post" id='ajaxForm1'>
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[224]}
 </td>
 <td class="sectend">{$lna[225]}</td>
@@ -292,7 +292,7 @@ $display_overall.= <<<eot
 <form action="admin.php" method="post" id="ajaxForm1">
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[19]}
 </td>
 <td class="sectend">{$lna[232]}</td>
@@ -415,7 +415,7 @@ if ($job=='detail') {
 $display_overall_plus= <<<eot
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[5]}
 </td>
 <td class="sectend">{$lna[242]}</td>
@@ -472,7 +472,7 @@ $display_overall.=<<<eot
 <form action="admin.php?go=link_order" method="post" >
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[252]}
 </td>
 <td class="sectend">{$lna[253]}</td>
@@ -514,7 +514,7 @@ $display_overall_plus=<<<eot
 <form action="" method="post" >
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[252]}
 </td>
 <td class="sectend">{$lna[253]}</td>
@@ -573,7 +573,7 @@ if ($job=="pending") {
 $display_overall_plus=<<<eot
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[21]}
 </td>
 <td class="sectend">{$lna[258]}</td>

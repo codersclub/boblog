@@ -78,7 +78,7 @@ function statgraphic($visitnum, $ruler) {
 $plugin_return=<<<eot
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 $langstat[21]
 </td>
 <td class="sectend">$langstat[22]</td>
@@ -100,7 +100,7 @@ $langstat[21]
 
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 $langstat[13]
 </td>
 <td class="sectend">$langstat[14]</td>
@@ -126,7 +126,7 @@ $putgraph
 
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 $langstat[28]
 </td>
 <td class="sectend">$langstat[29]</td>

@@ -95,7 +95,7 @@ if ($job=='' || $job=="default") {
 $display_overall_plus= <<<eot
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[3]}
 </td>
 <td class="sectend">{$lna[327]}</td>
@@ -263,7 +263,7 @@ if ($job=='draft') {
 $display_overall_plus= <<<eot
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[23]}
 </td>
 <td class="sectend">{$lna[341]}</td>
@@ -373,7 +373,7 @@ if ($job=="pagemanage") {
 $display_overall_plus= <<<eot
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[1057]}
 </td>
 <td class="sectend">{$lna[1058]}</td>

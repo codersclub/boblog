@@ -49,7 +49,7 @@ if ($job=='skin') {
 $display_overall_plus= <<<eot
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[169]}
 </td>
 <td class="sectend">{$lna[170]}</td>
@@ -64,7 +64,7 @@ $display_overall_plus= <<<eot
 <form action="admin.php?go=addon_addskin" method="post" id="ajaxForm1">
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[171]}
 </td>
 <td class="sectend">{$lna[172]}
@@ -79,7 +79,7 @@ $display_overall_plus= <<<eot
 <form action="admin.php?go=addon_scanskin" method="post" id="ajaxForm2">
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[748]}
 </td>
 <td class="sectend">{$lna[749]}
@@ -202,7 +202,7 @@ if ($job=='plugin') {
 $display_overall_plus= <<<eot
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[28]}
 </td>
 <td class="sectend">{$lna[911]}</td>
@@ -223,7 +223,7 @@ $formbody
 <form action="admin.php?go=addon_addplugin" method="post">
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[912]}
 </td>
 <td class="sectend">{$lna[913]}
@@ -239,7 +239,7 @@ $formbody
 <form action="admin.php?go=addon_pluginsort" method="post">
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[1033]}
 </td>
 <td class="sectend">{$lna[1034]}
@@ -276,7 +276,7 @@ $display_overall.= <<<eot
 <form action="admin.php?go=addon_autoaddplugin" method="post">
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[912]}
 </td>
 <td class="sectend">{$lna[913]}</td>
@@ -445,7 +445,7 @@ function sresetldata() {
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
 <form action="admin.php?go=addon_savelangspec" method="post" id="ldata">
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[1101]}
 </td>
 <td class="sectend">{$lna[1102]}</td>

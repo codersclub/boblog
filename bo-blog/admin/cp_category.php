@@ -34,7 +34,7 @@ $display_overall_plus=<<<eot
 <form action="admin.php?go=category_new" method="post" id="ajaxForm1">
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[180]}
 </td>
 <td class="sectend">{$lna[181]}</td>
@@ -78,7 +78,7 @@ $puttingcates_after
 <form action="" method="post" >
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[195]}
 </td>
 <td class="sectend">{$lna[196]}</td>
@@ -102,7 +102,7 @@ $puttingcates
 <form action="admin.php" method="post" id="ajaxForm2">
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[197]}
 </td>
 <td class="sectend">{$lna[198]}</td>
@@ -185,7 +185,7 @@ function catchusefuldata() {
 <form action="admin.php" method="post" id='f_s'>
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[197]}
 </td>
 <td class="sectend">{$lna[198]}</td>
@@ -355,7 +355,7 @@ $display_overall_plus= <<<eot
 <form action="admin.php?go=category_batchtags" method='post' id="ajaxForm1">
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
 <tr>
-<td width=160 class="sectstart">
+<td class="sectstart">
 {$lna[17]}
 </td>
 <td class="sectend">{$lna[210]}</td>
