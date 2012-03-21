@@ -176,7 +176,7 @@ $tt=$t->publish($tt); //2006-10-20 Add global setting support
 //die($tt);
 
 @header("Content-Type: text/html; charset=utf-8");
-if ($config['gzip']==1 && $act!='tag') ob_start("ob_gzhandler");
+//vot if ($config['gzip']==1 && $act!='tag') ob_start("ob_gzhandler");
 
 //Running time
 if ($mbcon['runtime']==1) {
@@ -189,7 +189,7 @@ if ($mbcon['runtime']==1) {
 }
 echo $tt;
 
-if ($config['gzip']==1 && $act!='tag') ob_end_flush();
+//vot if ($config['gzip']==1 && $act!='tag') ob_end_flush();
 
 
 function getmicrotime() { //Time Counting
