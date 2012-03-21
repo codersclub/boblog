@@ -286,9 +286,9 @@ eot;
 $elements['trackback']=<<<eot
 	<div class="trackbackbox">
 		<div class="trackbackbox-title">
-		 {tbtitle} 
+		 {tbtitle}
 			<div class="trackbackbox-label">
-			[{tbtime}] {delreply}
+			{$lnc[73]}{tbtime} {delreply}
 			</div>
 		</div>
 		<div class="trackbackbox-content">
