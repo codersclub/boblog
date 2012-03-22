@@ -62,52 +62,52 @@ if ($mbcon['antispam']=='1') {
 }
 
 
-//Trackback评分式的防御机制
-//此部分的思路是与安全天使（www.4ngel.net）讨论的结果。原始代码由4ngel原创。
+//Trackback scoring defense mechanism
+//The idea of this part is the result of discussion with Security Angel (www.4ngel.net). The original code was originally created by 4ngel.
 //Under test
 $point=0;
-if ($mbcon['tbfilter']==3) { //如果人工审核
+if ($mbcon['tbfilter']==3) { //If manual review
     $setspam = 1;
-} elseif ($mbcon['tbfilter']!=0) { //如果不是不打开
+} elseif ($mbcon['tbfilter']!=0) { //If not open
 
     if ($mbcon['tbfilter']==2) {
-        // 防范强:检查来路
+        // Strong prevention: check the way
 		$source_content = '';
 		if (!empty($sourceforcheck['url'])) {
 		 $source_content = @fopen_url($sourceforcheck['url'], true);
 		}
 		if (empty($source_content)) {
-			//没有获得原代码就-1分
+			//-1 point if you don't get the original code
 		 $point -= 1;
 		} else {
 			if (strpos(strtolower($source_content), strtolower($this_server)) !== FALSE) {
-            //对比链接，如果原代码中包含本站的hostname就+1分，这个未必成立
+            //Comparing the link, if the hostname of this site is included in the original code then add +1 point, this may not be true
 				$point += 1;
 			}
 			if (strpos(strtolower($source_content), strtolower($sourceforcheck['title'])) !== FALSE) {
-            //对比标题，如果原代码中包含发送来的title就+1分，这个基本可以成立
+            //Comparing the title, if the original code contains the sent title, it will be +1 point, this basically can be established
 				$point += 1;
 			}
 			if (strpos(strtolower($source_content), strtolower($sourceforcheck['excerpt'])) !== FALSE) {
-				//对比内容，如果原代码中包含发送来的excerpt就+1分，这个由于标签或者其他原因，未必成立
+				//Comparing the content, if the original code contains the sent excerpt, then +1 point, this may not be true due to tags or other reasons
 				$point += 1;
 			}
 		}
     }
     $tbinterval = ($mbcon['tbfilter']==1) ? '30' : '60';
-    //根据防范强度设置时间间隔，强的话在30内发现有同一IP发送。弱的话就是60秒内发现有同一IP发送.
+    //Set the time interval according to the defense strength. If it is strong, it is found that the same IP is sent within 30 seconds. If it is weak, it is found that the same IP is sent within 60 seconds.
     $trytb=$blog->countbyquery("SELECT COUNT(*) FROM `{$db_prefix}replies` WHERE `repip`='{$userdetail['ip']}' AND `reproperty`>=4 AND `reptime`+{$tbinterval}>='".time()."'");
-    //在单位时间内发送的次数
+    //Number of times sent in the time period
     if ($trytb > 0) {
-        //如果发现在单位时间内同一IP发送次数大于0就扣一分，人工有这么快发送trackback的吗？
+        //If it is found that the number of times the same IP is sent in a unit time is greater than 0, one point will be deducted. Is there any manual sending of trackbacks so quickly?
         $point -= 1;
     }
 
     if ($mbcon['tbfilter']==2) {
-        // 防范强:最终分数少于1分就CUT！
+        // Strong prevention: CUT if the final score is less than 1 point!
         $setspam = (($point < 1) ? 1 : 0);
     } else {
-        // 防范弱:最终分数少于0分才CUT！
+        // Weak prevention: CUT is only when the final score is less than 0 points!
         $setspam = (($point < 0) ? 1 : 0);
     }
 }
