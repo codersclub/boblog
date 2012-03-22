@@ -790,13 +790,13 @@ if ($job=='langset') {
             <br>
             {$lna['select_language']}
             <br><br>
-            <b>{$lna['frontend_language']}</b>
+            <b>{$lna['frontend']}</b>
             <br>
             <select name='newlangf'>
               $selectbody
             </select>
             <br><br>
-            <b>{$lna['backend_language']}</b>
+            <b>{$lna['backend']}</b>
             <br>
             <select name='newlangb'>
             $selectbody
