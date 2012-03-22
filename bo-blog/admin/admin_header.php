@@ -59,7 +59,7 @@ $editorjs
 <div id='adminoverall'>
 <div id="bloginfo">
 <div id="bloginfoimg">
-<img src="admin/theme/{$themename}/logo.gif" alt="Bo-Blog" />
+<img src="admin/theme/{$themename}/logo.png" alt="Bo-Blog" />
 </div>
 <div id="bloginfotext">
 {$lna[1]} {$daytip}
