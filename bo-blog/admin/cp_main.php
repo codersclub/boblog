@@ -40,9 +40,9 @@ if ($job=='default') {
 	} else $promptcleartmp='';
 
 	//Begin check unapproved comments and messages
-	$pending_replies=$blog->countbyquery("SELECT COUNT(repid) FROM `{$db_prefix}replies` WHERE `reproperty`=2 OR `reproperty`=3");
-	if (@$flset['guestbook']!=1) $pending_messages=$blog->countbyquery("SELECT COUNT(repid) FROM `{$db_prefix}messages` WHERE `reproperty`=2 OR `reproperty`=3");
-	$pending_tbs=$blog->countbyquery("SELECT COUNT(repid) FROM `{$db_prefix}replies` WHERE `reproperty`=5");
+	$pending_replies=$blog->countbyquery("SELECT COUNT(*) FROM `{$db_prefix}replies` WHERE `reproperty`=2 OR `reproperty`=3");
+	if (@$flset['guestbook']!=1) $pending_messages=$blog->countbyquery("SELECT COUNT(*) FROM `{$db_prefix}messages` WHERE `reproperty`=2 OR `reproperty`=3");
+	$pending_tbs=$blog->countbyquery("SELECT COUNT(*) FROM `{$db_prefix}replies` WHERE `reproperty`=5");
 	if (file_exists("data/cache_applylinks.php")) {
 		$tmps=@file("data/cache_applylinks.php");
 		if ($tmps[0]=='') $pending_links=0;

@@ -175,7 +175,7 @@ if ($job=='batch') {
 		if ($opt=='del') {
 			$queryact="DELETE FROM `{$db_prefix}replies` WHERE {$batch_id}";
 			$blog->query($queryact);
-			$countreps=$blog->countbyquery("SELECT COUNT(repid) FROM `{$db_prefix}replies` WHERE `reproperty`<>2 AND `reproperty`<>3 AND `reproperty`<>4");
+			$countreps=$blog->countbyquery("SELECT COUNT(*) FROM `{$db_prefix}replies` WHERE `reproperty`<>2 AND `reproperty`<>3 AND `reproperty`<>4");
 			$blog->query("UPDATE `{$db_prefix}counter` SET `replies`='{$countreps}'");
 			recache_latestentries();
 			if ($opt=='del') {
@@ -188,7 +188,7 @@ if ($job=='batch') {
 		//exit();
 	}
 	if ($opt=='noreply') {
-		$countreps=$blog->countbyquery("SELECT COUNT(repid) FROM `{$db_prefix}replies` WHERE `reproperty`<=1");
+		$countreps=$blog->countbyquery("SELECT COUNT(*) FROM `{$db_prefix}replies` WHERE `reproperty`<=1");
 		$blog->query("UPDATE `{$db_prefix}counter` SET `replies`='{$countreps}'");
 		recache_latestreplies();
 	}
@@ -221,7 +221,7 @@ if ($job=='deleteblog' || $job=='deletedraft') {
 		}
 		if ($job=='deleteblog') {
 			$blog->query("DELETE FROM `{$db_prefix}replies` WHERE `blogid`='{$itemid}'");
-			$countreps=$blog->countbyquery("SELECT COUNT(repid) FROM `{$db_prefix}replies` WHERE `reproperty`<=1");
+			$countreps=$blog->countbyquery("SELECT COUNT(*) FROM `{$db_prefix}replies` WHERE `reproperty`<=1");
 			$blog->query("UPDATE `{$db_prefix}counter` SET `replies`='{$countreps}'");
 		}
 		if ($detail['tags']) {
@@ -327,23 +327,23 @@ if ($job=='ae') {
 			$queryact="UPDATE `{$db_prefix}blogs` SET `views`=0 WHERE `blogid`='{$tid}'";
 			break;
 		case 'recountrep':
-			$countreps=$blog->countbyquery("SELECT COUNT(repid) FROM `{$db_prefix}replies` WHERE `reproperty`<=1 AND `blogid`='{$tid}'");
+			$countreps=$blog->countbyquery("SELECT COUNT(*) FROM `{$db_prefix}replies` WHERE `reproperty`<=1 AND `blogid`='{$tid}'");
 			$queryact="UPDATE `{$db_prefix}blogs` SET `replies`='{$countreps}' WHERE `blogid`='{$tid}'";
 			break;
 		case 'recounttb':
-			$countreps=$blog->countbyquery("SELECT COUNT(repid) FROM `{$db_prefix}replies` WHERE `reproperty`=4 AND `blogid`='{$tid}'");
+			$countreps=$blog->countbyquery("SELECT COUNT(*) FROM `{$db_prefix}replies` WHERE `reproperty`=4 AND `blogid`='{$tid}'");
 			$queryact="UPDATE `{$db_prefix}blogs` SET `tbs`='{$countreps}' WHERE `blogid`='{$tid}'";
 			break;
 	}
 	$blog->query($queryact);
 	if ($itemid=='noreply') {
-		$countreps=$blog->countbyquery("SELECT COUNT(repid) FROM `{$db_prefix}replies` WHERE `reproperty`<=1");
+		$countreps=$blog->countbyquery("SELECT COUNT(*) FROM `{$db_prefix}replies` WHERE `reproperty`<=1");
 		$blog->query("UPDATE `{$db_prefix}counter` SET `replies`='{$countreps}'");
 		$blog->query("UPDATE `{$db_prefix}blogs` SET `replies`=0 WHERE `blogid`='{$tid}'");
 		recache_latestreplies();
 	}
 	if ($itemid=='notb') {
-		$countreps=$blog->countbyquery("SELECT COUNT(repid) FROM `{$db_prefix}replies` WHERE `reproperty`=4");
+		$countreps=$blog->countbyquery("SELECT COUNT(*) FROM `{$db_prefix}replies` WHERE `reproperty`=4");
 		$blog->query("UPDATE `{$db_prefix}counter` SET `tb`='{$countreps}'");
 		$blog->query("UPDATE `{$db_prefix}blogs` SET `tbs`=0 WHERE `blogid`='{$tid}'");
 		recache_latestreplies();

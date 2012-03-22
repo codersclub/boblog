@@ -83,7 +83,7 @@ if ($job=='delreply') {
 	$querydel=@implode(' OR ', $delrange);
 	if (count($repid)>0) {
 		$blog->query("DELETE FROM `{$db_prefix}messages` WHERE {$querydel}");
-		$countreps=$blog->countbyquery("SELECT COUNT(repid) FROM `{$db_prefix}messages` WHERE `reproperty`<>2");
+		$countreps=$blog->countbyquery("SELECT COUNT(*) FROM `{$db_prefix}messages` WHERE `reproperty`<>2");
 		$blog->query("UPDATE `{$db_prefix}counter` SET `messages`='{$countreps}'");
 	}
 	if ($ajax=='on') {
@@ -102,7 +102,7 @@ if ($job=='censor' || $job=='default') {
 		$titlem=$lna[26];
 		$titler=$lna[347];
 		$param2=5;
-		$totalvolume=$blog->countbyquery("SELECT COUNT(repid) FROM `{$db_prefix}messages` WHERE `reproperty`=2 OR `reproperty`=3");
+		$totalvolume=$blog->countbyquery("SELECT COUNT(*) FROM `{$db_prefix}messages` WHERE `reproperty`=2 OR `reproperty`=3");
 		$censorclearall="<br><br>[<a href=\"javascript: redirectcomfirm('admin.php?go=message_messageclearall');\">{$lna[1021]}</a>]";
 	}
 	else 	{

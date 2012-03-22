@@ -145,11 +145,11 @@ if ($job=='refreshcounter') {
 	acceptrequest('selid2');
 	if (!is_array($selid2)) catcherror($lna[205]);
 	$countsql=array(
-		'entries'=>"SELECT COUNT(blogid) FROM `{$db_prefix}blogs`",
-		'replies'=>"SELECT COUNT(repid) FROM `{$db_prefix}replies` WHERE `reproperty`<=1",
-		'tb'=>"SELECT COUNT(repid) FROM `{$db_prefix}replies` WHERE `reproperty`=4",
-		'messages'=>"SELECT COUNT(repid) FROM `{$db_prefix}messages` WHERE `reproperty`<=1",
-		'users'=>"SELECT COUNT(userid) FROM `{$db_prefix}user`"
+		'entries'=>"SELECT COUNT(*) FROM `{$db_prefix}blogs`",
+		'replies'=>"SELECT COUNT(*) FROM `{$db_prefix}replies` WHERE `reproperty`<=1",
+		'tb'=>"SELECT COUNT(*) FROM `{$db_prefix}replies` WHERE `reproperty`=4",
+		'messages'=>"SELECT COUNT(*) FROM `{$db_prefix}messages` WHERE `reproperty`<=1",
+		'users'=>"SELECT COUNT(*) FROM `{$db_prefix}user`"
 	);
 	for ($i=0; $i<count($selid2); $i++) {
 		if ($selid2[$i]=='max') continue;
@@ -1024,11 +1024,11 @@ if ($job=='rollback') {
 		}
 
 		$countsql=array(
-			'entries'=>"SELECT COUNT(blogid) FROM `{$db_prefix}blogs`",
-			'replies'=>"SELECT COUNT(repid) FROM `{$db_prefix}replies` WHERE `reproperty`<=1",
-			'tb'=>"SELECT COUNT(repid) FROM `{$db_prefix}replies` WHERE `reproperty`=4",
-			'messages'=>"SELECT COUNT(repid) FROM `{$db_prefix}messages` WHERE `reproperty`<=1",
-			'users'=>"SELECT COUNT(userid) FROM `{$db_prefix}user`"
+			'entries'=>"SELECT COUNT(*) FROM `{$db_prefix}blogs`",
+			'replies'=>"SELECT COUNT(*) FROM `{$db_prefix}replies` WHERE `reproperty`<=1",
+			'tb'=>"SELECT COUNT(*) FROM `{$db_prefix}replies` WHERE `reproperty`=4",
+			'messages'=>"SELECT COUNT(*) FROM `{$db_prefix}messages` WHERE `reproperty`<=1",
+			'users'=>"SELECT COUNT(*) FROM `{$db_prefix}user`"
 		);
 		foreach ($countsql as $key=>$value) {
 			$result_num=$blog->countbyquery($value);

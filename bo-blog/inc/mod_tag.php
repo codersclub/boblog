@@ -27,7 +27,7 @@ if ($job=='default') {
 	$start_id=($page-1)*$tagperpage;
 	$alltags=$blog->getarraybyquery("SELECT tagid,tagname,tagcounter FROM `{$db_prefix}tags` ORDER BY {$sequence} DESC LIMIT {$start_id}, {$tagperpage}");
 	$maxtagcounter=$blog->countbyquery("SELECT MAX(tagcounter) FROM `{$db_prefix}tags`");
-	$alltagcounter=$blog->countbyquery("SELECT COUNT(tagcounter) FROM `{$db_prefix}tags`");
+	$alltagcounter=$blog->countbyquery("SELECT COUNT(*) FROM `{$db_prefix}tags`");
 	for ($i=0; $i<count(@$alltags['tagid']); $i++) {
 		$bit_tag_size=get_tag_size($alltags['tagcounter'][$i], $maxtagcounter);
 		if ($mbcon['tagunderlinetospace']==1) $eachtag=str_replace('_', ' ', $alltags['tagname'][$i]);
@@ -84,7 +84,7 @@ if ($job=='show') {
 			$section_body_main=$m_b->make_excerption($records);
 			$perpagevalue=$mbcon['exceptperpage'];
 		}
-		$counter_now=$blog->countbyquery("SELECT COUNT(blogid) FROM `{$db_prefix}blogs` WHERE `blogid` IN ({$entries_query}) AND `property`<'2'");
+		$counter_now=$blog->countbyquery("SELECT COUNT(*) FROM `{$db_prefix}blogs` WHERE `blogid` IN ({$entries_query}) AND `property`<'2'");
 		$urlref=getlink_tags(str_replace('%', '%%', urlencode(urlencode($tag))), $mode, '%s');
 		$pagebar=$m_b->make_pagebar($page, $mbcon['pagebaritems'], $urlref, $counter_now, $perpagevalue, '1');
 /*vot*/		if (@$flset['modeselectable']!=1) $pagebar.=" [ {$lnc[181]} <a href=\"".getlink_tags(urlencode(urlencode($tag)), '1')."\" title=\"{$lnc[182]}\">{$lnc[183]}</a> | <a href=\"".getlink_tags(urlencode(urlencode($tag)), '2')."\" title=\"{$lnc[184]}\">{$lnc[185]}</a> ]";
