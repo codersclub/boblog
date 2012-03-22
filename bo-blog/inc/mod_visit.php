@@ -26,7 +26,7 @@ if ($job=='openidsubmit') {
 	setcookie ('openid_url_id', $openidresult['openidurl']);
 }
 
-if ($flset['guestbook']==1 && ($job=='addmessage' || $job=='editmessage')) getHttp404($lnc[313]); //2011/2/20 Forgot to close this entry
+/*vot*/ if (@$flset['guestbook']==1 && ($job=='addmessage' || $job=='editmessage')) getHttp404($lnc[313]); //2011/2/20 Forgot to close this entry
 
 if ($job=='addreply' || $job=='addmessage' || $job=='editreply' || $job=='editmessage') {
 	if (check_ip ($userdetail['ip'], $forbidden['banip'])) catcherror($lnc[209]);

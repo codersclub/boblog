@@ -755,7 +755,7 @@ if ($job=='langset') {
 
 	$lnc=$lnc_tmp;
 	$langname=$langname_tmp;
-
+/*vot*/	$selectbody='';
 	foreach ($alllanglist as $eachlang) {
 		$selectbody.="<option value=\"{$eachlang['ldir']}\">{$eachlang['lname']}</option>\n";
 	}

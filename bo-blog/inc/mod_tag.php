@@ -87,7 +87,7 @@ if ($job=='show') {
 		$counter_now=$blog->countbyquery("SELECT COUNT(blogid) FROM `{$db_prefix}blogs` WHERE `blogid` IN ({$entries_query}) AND `property`<'2'");
 		$urlref=getlink_tags(str_replace('%', '%%', urlencode(urlencode($tag))), $mode, '%s');
 		$pagebar=$m_b->make_pagebar($page, $mbcon['pagebaritems'], $urlref, $counter_now, $perpagevalue, '1');
-		if ($flset['modeselectable']!=1) $pagebar.=" [ {$lnc[181]} <a href=\"".getlink_tags(urlencode(urlencode($tag)), '1')."\" title=\"{$lnc[182]}\">{$lnc[183]}</a> | <a href=\"".getlink_tags(urlencode(urlencode($tag)), '2')."\" title=\"{$lnc[184]}\">{$lnc[185]}</a> ]";
+/*vot*/		if (@$flset['modeselectable']!=1) $pagebar.=" [ {$lnc[181]} <a href=\"".getlink_tags(urlencode(urlencode($tag)), '1')."\" title=\"{$lnc[182]}\">{$lnc[183]}</a> | <a href=\"".getlink_tags(urlencode(urlencode($tag)), '2')."\" title=\"{$lnc[184]}\">{$lnc[185]}</a> ]";
 	}
 	$iftoppage=($mbcon['pagebarposition']=='down') ? 'none' : 'block';
 	$ifbottompage=($mbcon['pagebarposition']=='up') ? 'none' : 'block';

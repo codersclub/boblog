@@ -161,7 +161,7 @@ switch ($job) {
 		$timeperiod_end=gmmktime(0, 0, 0, $month, $day+1, $year)-$config['timezone']*3600;
 		$counter_now=$blog->countbyquery("SELECT COUNT(blogid) FROM `{$db_prefix}blogs` {$limitation2}  `pubtime`>'{$timeperiod_start}' AND `pubtime`<'{$timeperiod_end}' ORDER BY `pubtime` DESC");
 		$urlpattern=getlink_date($year, $month, $day, '%s', '1');
-		if ($flset['modeselectable']!=1) $pagebaritem=" [ {$lnc[181]} <a href=\"".sprintf($urlpattern, 1)."\" title=\"{$lnc[182]}\">{$lnc[183]}</a> | <a href=\"".sprintf($urlpattern, 2)."\" title=\"{$lnc[184]}\">{$lnc[185]}</a> ]";
+/*vot*/		if (@$flset['modeselectable']!=1) $pagebaritem=" [ {$lnc[181]} <a href=\"".sprintf($urlpattern, 1)."\" title=\"{$lnc[182]}\">{$lnc[183]}</a> | <a href=\"".sprintf($urlpattern, 2)."\" title=\"{$lnc[184]}\">{$lnc[185]}</a> ]";
 		$pagetitle="{$year}/{$month}/{$day} {$lnc[106]} - ";
 		$partialquery="{$limitation2} `pubtime`>'{$timeperiod_start}' AND `pubtime`<'{$timeperiod_end}' ORDER BY `pubtime` DESC";
 		if ($mbcon['showday_list']==1) {

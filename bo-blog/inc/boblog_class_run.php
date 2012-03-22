@@ -297,7 +297,7 @@ class getblogs extends boblog {
 /*vot*/			$addadminreply = $deladminreply = $editadminreply = $delreply = $blockreply = $adminrepliershow = $adminreplycontent = $adminreplybody = $replieremail = $replierhomepage = '';
 			if ($eachreply['replierid']==-1) {
 				$replier=$eachreply['replier'];
-				if ($flset['avatar']!=1 && $mbcon['visitorgravatar']=='1' && !empty($eachreply['repemail'])) { //Avatars for nonusers
+/*vot*/				if (@$flset['avatar']!=1 && $mbcon['visitorgravatar']=='1' && !empty($eachreply['repemail'])) { //Avatars for nonusers
 					$avataraddress=get_gravatar($eachreply['repemail']);		
 				}
 			}
@@ -402,7 +402,7 @@ class getblogs extends boblog {
 /*vot*/		$replieremail = $replierhomepage = '';
 		if ($eachreply['replierid']==-1) {
 			$replier=$eachreply['replier'];
-			if ($flset['avatar']!=1 && $mbcon['visitorgravatar']=='1' && !empty($eachreply['repemail'])) { //Avatars for nonusers
+/*vot*/			if (@$flset['avatar']!=1 && $mbcon['visitorgravatar']=='1' && !empty($eachreply['repemail'])) { //Avatars for nonusers
 				$avataraddress=get_gravatar($eachreply['repemail']);		
 			}
 		}
