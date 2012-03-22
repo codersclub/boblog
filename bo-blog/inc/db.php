@@ -27,31 +27,42 @@ function db_connect($dbhost, $dbuser, $dbpw, $dbname='') {
 	global $db_410, $db_connected, $persistant_connect;
 	if ($db_connected==1) return;
 	if ($persistant_connect==1) {
-		if(!@mysql_pconnect($dbhost, $dbuser, $dbpw)) {
-			db_halt('Can not connect to MySQL server');
-		}
+		$dbh=mysql_pconnect($dbhost, $dbuser, $dbpw);
 	} else {
-		if(!@mysql_connect($dbhost, $dbuser, $dbpw)) {
-			db_halt('Can not connect to MySQL server');
-		}
+		$dbh=mysql_connect($dbhost, $dbuser, $dbpw);
 	}
+
+/*vot*/	if(!$dbh) {
+/*vot*/		db_halt('Can not connect to MySQL server');
+/*vot*/	}
+
 	$db_connected=1;
+
+	if ($db_410=='1') {
+		db_query("SET NAMES 'utf8'");
+	}
+
 	if (!empty($dbname)) {
 		$a_result=mysql_select_db($dbname);
 		if ($a_result) {
-			if ($db_410=='1')  mysql_query("SET NAMES 'utf8'");
+			return $a_result;
+		} else {
+/*vot*/			db_halt('Can not connect to MySQL server');
 		}
-		return $a_result;
 	}
 }
 
+/*vot
 function db_select_db($dbname) {
 	$a_result=mysql_select_db($dbname);
 	if ($a_result) {
-		if (mysql_get_server_info()>='4.1.0') mysql_query("SET NAMES 'utf8'");
+		if (mysql_get_server_info()>='4.1.0') {
+			mysql_query("SET NAMES 'utf8'");
+		}
 	}
 	return $a_result;
 }
+*/
 
 function db_fetch_array($query, $result_type = MYSQL_ASSOC) {
 	return mysql_fetch_array($query, $result_type);
