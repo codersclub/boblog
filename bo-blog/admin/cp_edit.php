@@ -20,7 +20,6 @@ $backtodraft="{$lna[325]}|admin.php?go=entry_draft";
 
 if (!$job) $job='add';
 $id=$itemid;
-//dump($id, '$id');
 
 include_once ("data/cache_emot.php");
 if (@$flset['weather']!=1) {

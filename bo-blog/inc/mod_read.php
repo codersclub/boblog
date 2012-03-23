@@ -120,7 +120,6 @@ if ($records[0]['replies']!=0 || $records[0]['tbs']!=0)  {
 		$replyarray=$m_b->getgroupbyquery("SELECT * FROM `{$db_prefix}replies` WHERE blogid='{$itemid}' AND (reproperty<2 OR reproperty=4) ORDER BY reptime {$order}  LIMIT {$start_id}, {$mbcon['replyperpage']}");
 
 	}
-//dump($replyarray, '$replyarray');
 	if ($replyarray[0]['repid']!='') {
 		$section_body_main[]=$m_b->make_replies($replyarray);
 		$outurl=getlink_entry($itemid, $records[0]['blogalias'], '%s', $part);

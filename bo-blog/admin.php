@@ -165,7 +165,6 @@ function highlightadminitems ($itemhighlight, $itemsrow) {
 
 function addpref ($pref_type, $pref_content) { //This will generate the complete config form body
 	global $pref_leftchar, $pref_variable, $pref_result, $pref_quicksel, $prefseccounter;
-//dump($pref_content, '$pref_content');
 	if ($pref_leftchar=='') $pref_leftchar=200;
 	global $$pref_variable;
 	$prefvalue=$$pref_variable;
@@ -174,7 +173,7 @@ function addpref ($pref_type, $pref_content) { //This will generate the complete
 /*vot*/ if (!isset($prefs[2])) {$prefs[2] = '';}
 /*vot*/ if (!isset($prefs[3])) {$prefs[3] = '';}
 /*vot*/ if (!isset($prefs[4])) {$prefs[4] = '';}
-//dump($prefs, '$prefs');
+
 /*vot*/ if (!isset($prefvalue[$prefs[0]])) {$prefvalue[$prefs[0]] = '';}
 	switch ($pref_type) {
 		case 't': //text input
