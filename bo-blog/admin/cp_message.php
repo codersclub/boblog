@@ -14,7 +14,7 @@ if (!defined('VALIDADMIN')) die ('Access Denied.');
 
 /*vot*/ $tablebody = '';
 /*vot*/ $censorclearall = '';
-
+/*vot*/	if (!isset($itemid)) $itemid=0;
 //Define some senteces
 $finishok=$lna[342];
 $finishok2=$lna[343];
