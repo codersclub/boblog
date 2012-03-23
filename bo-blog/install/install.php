@@ -1,6 +1,6 @@
 <?PHP
 error_reporting(E_ALL);
-include ('db.php');
+/*vot*/ include ('../inc/db.php');
 $mqgpc_status=0;
 if ($mqgpc_status==0) $_POST=addsd($_POST);
 @extract($_POST, EXTR_SKIP);
