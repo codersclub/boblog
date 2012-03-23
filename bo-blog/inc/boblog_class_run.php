@@ -141,7 +141,7 @@ class template {
 
 	function showtips($title, $tips, $links='', $enableautojump=false) {
 		global $config, $permission, $template, $lnc, $baseurl, $logstat, $langname;
-		$previouspage=($_SERVER['HTTP_REFERER']=='') ? "javascript: history.back(1);" : $_SERVER['HTTP_REFERER'];
+/*vot*/		$previouspage=(empty($_SERVER['HTTP_REFERER'])) ? "javascript: history.back(1);" : $_SERVER['HTTP_REFERER'];
 /*vot*/		$csslocation = '';
 /*vot*/		$admin_plus = '';
 /*vot*/		$autojump = '';

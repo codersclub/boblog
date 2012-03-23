@@ -21,9 +21,9 @@ acceptrequest('job', 1);
 if (!$job) {
 	$urlreturn=(empty($_SERVER['HTTP_REFERER'])) ? "index.php" : $_SERVER['HTTP_REFERER'];
 	$m_b=new getblogs;
-	$jobs=($_GET['adminlogin']==1) ? "login.php?job=verifyadmin" : "login.php?job=verify";
-	$actionnow=($_GET['adminlogin']==1) ? "{$lnc[273]}" : "{$lnc[253]} [<a href=\"login.php?job=register\">{$lnc[254]}</a>]";
-	$plusadminname=($_GET['adminlogin']==1) ? $userdetail['username'] : '';
+/*vot*/	$jobs=(@$_GET['adminlogin']==1) ? "login.php?job=verifyadmin" : "login.php?job=verify";
+/*vot*/	$actionnow=(@$_GET['adminlogin']==1) ? "{$lnc[273]}" : "{$lnc[253]} [<a href=\"login.php?job=register\">{$lnc[254]}</a>]";
+/*vot*/	$plusadminname=(@$_GET['adminlogin']==1) ? $userdetail['username'] : '';
 	$formbody.=$t->set('form_eachline', array('text'=>"*{$lnc[132]}", 'formelement'=>"<input name='username' type='text' id='username' size='24' class='text' value='{$plusadminname}' /><input type='hidden' name='urlreturn' value='{$urlreturn}' />"));
 	$formbody.=$t->set('form_eachline', array('text'=>"*{$lnc[133]}", 'formelement'=>"<input type='password'  class='text' size='24' name='password' id='password' />"));
 
@@ -32,7 +32,7 @@ if (!$job) {
 		$formbody.=$t->set('form_eachline', array('text'=>"OpenID", 'formelement'=>"<input name='openid_url' type='text' id='openid_url' size='32' class='text' />"));
 	}
 
-	if ($_GET['adminlogin']!=1) $formbody.=$t->set('form_eachline', array('text'=>'&nbsp;', 'formelement'=>"<input name=\"savecookie\" type=\"checkbox\" id=\"savecookie\" value=\"1\" checked='checked' />{$lnc[284]}"));
+/*vot*/	if (@$_GET['adminlogin']!=1) $formbody.=$t->set('form_eachline', array('text'=>'&nbsp;', 'formelement'=>"<input name=\"savecookie\" type=\"checkbox\" id=\"savecookie\" value=\"1\" checked='checked' />{$lnc[284]}"));
 	plugin_runphp('loginform');
 	if ($config['loginvalidation']==1 && $_GET['adminlogin']!=1) {
 		$rand=rand (0,100000);
