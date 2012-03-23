@@ -201,7 +201,8 @@ if ($job=='tb' || $job=='tbcensor') {
 	$start_id=($page-1)*$adminitemperpage;
 	$tbproperty=($job=='tb' ) ? 4 : 5;
 	$tbactdel=($job=='tb' ) ? 'deltb' : 'tbnopass';
-	$detail_array=$blog->getgroupbyquery("SELECT * FROM `{$db_prefix}replies` WHERE `reproperty`={$tbproperty} ORDER BY `reptime` DESC  LIMIT $start_id, $adminitemperpage");
+/*vot*/	$sql="SELECT * FROM `{$db_prefix}replies` WHERE `reproperty`={$tbproperty} ORDER BY `reptime` DESC  LIMIT $start_id, $adminitemperpage";
+/*vot*/	$detail_array=$blog->getgroupbyquery($sql);
 	for ($i=0; $i<count($detail_array); $i++) {
 		$tmp_tm=gmdate('Y/m/d H:i', $detail_array[$i]['reptime']+3600*$config['timezone']);
 		$detail_array[$i]['repcontent']=msubstr($detail_array[$i]['repcontent'], 0, 120);

@@ -16,7 +16,6 @@ $persistant_connect=0;
 //If you don't want to discontinue the program when there is any database query error, set the following variety as  1
 $ignore_db_errors=0;
 
-
 if (!defined('VALIDREQUEST')) die ('Access Denied.');
 
 if (!function_exists("mysql_connect")) {
@@ -27,9 +26,9 @@ function db_connect($dbhost, $dbuser, $dbpw, $dbname='') {
 	global $db_410, $db_connected, $persistant_connect;
 	if ($db_connected==1) return;
 	if ($persistant_connect==1) {
-		$dbh=mysql_pconnect($dbhost, $dbuser, $dbpw);
+		$dbh=@mysql_pconnect($dbhost, $dbuser, $dbpw);
 	} else {
-		$dbh=mysql_connect($dbhost, $dbuser, $dbpw);
+		$dbh=@mysql_connect($dbhost, $dbuser, $dbpw);
 	}
 
 /*vot*/	if(!$dbh) {
@@ -65,7 +64,8 @@ function db_select_db($dbname) {
 */
 
 function db_fetch_array($query, $result_type = MYSQL_ASSOC) {
-	return mysql_fetch_array($query, $result_type);
+/*vot*/	$res = mysql_fetch_array($query, $result_type);
+/*vot*/	return $res;
 }
 
 function db_query($sql, $silence = 0) {
@@ -75,7 +75,11 @@ function db_query($sql, $silence = 0) {
 		db_halt('MySQL Query Error', $sql);
 	}
 	$querynum++;
-	//$allqueries[]=$sql; //For Debug Use Only
+/*vot*/	$allqueries[]=array( //For Debug Use Only
+/*vot*/		'sql' => $sql,
+/*vot*/		'err_code' => mysql_errno(),
+/*vot*/		'err_message' => mysql_error(),
+	);
 	return $query;
 }
 
