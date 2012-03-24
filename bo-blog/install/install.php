@@ -1,5 +1,5 @@
 <?PHP
-error_reporting(E_ALL);
+/*vot*/ error_reporting(E_ALL);
 /*vot*/ include ('../inc/db.php');
 $mqgpc_status=0;
 if ($mqgpc_status==0) $_POST=addsd($_POST);
@@ -10,7 +10,7 @@ $ts=time();
 $ip=$_SERVER['REMOTE_ADDR'];
 
 if (!$v) {
-	template("<div class='log'>Select Language</div><form action='install.php?v=setlang' method='post'><div class='mes'><div align='center'><select style=\"width: 50%;\" name='slang'><option value='en'>English</option><option value='ru'>Russian</option><option value='zh-cn' selected='selected'>Simplified Chinese (简体中文)</option><option value='zh-tw'>Traditional Chinese (正體中文)</option><option value='vn'>Vietnamese (Tiếng Việt)</option></select></div><br/><div align='center'><input type='submit' value='OK' class='inbut'></div></form></div>");
+/*vot*/	template("<div class='log'>Select Language</div><form action='install.php?v=setlang' method='post'><div class='mes'><div align='center'><select style=\"width: 50%;\" name='slang'><option value='en'>English</option><option value='ru'>Russian</option><option value='zh-cn' selected='selected'>Simplified Chinese (简体中文)</option><option value='zh-tw'>Traditional Chinese (正體中文)</option><option value='vn'>Vietnamese (Tiếng Việt)</option></select></div><br/><div align='center'><input type='submit' value='OK' class='inbut'></div></form></div>");
 }
 
 if ($v=='setlang') {
