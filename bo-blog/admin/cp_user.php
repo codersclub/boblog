@@ -296,22 +296,22 @@ if ($job=='add' || $job=='edituser') {
 	}
 	foreach ($usergp as $i=>$value) {
 		if ($i==0) continue;
-		$selected=($i==@$edituser['usergroup']) ? ' selected' : '';
+/*vot*/		$selected=($i==@$edituser['usergroup']) ? ' selected' : '';
 		$puttingcates.="<option value='{$i}'{$selected}>{$value}</option>";
 	}
 	$formbody.=$t->set('form_eachline', array('text'=>$lna[463], 'formelement'=>"<select name='p[usergroup]'>{$puttingcates}</select>"));
-	$formbody.=$t->set('form_eachline', array('text'=>$lna[485], 'formelement'=>"<input type='text' class='text' size='16' name='p[email]' value='".stripslashes(@$edituser['email'])."'/>"));
-	$formbody.=$t->set('form_eachline', array('text'=>$lna[486], 'formelement'=>"<input type='text' class='text' size='16' name='p[homepage]' value='".stripslashes(@$edituser['homepage'])."'/>"));
+/*vot*/	$formbody.=$t->set('form_eachline', array('text'=>$lna[485], 'formelement'=>"<input type='text' class='text' size='16' name='p[email]' value='".stripslashes(@$edituser['email'])."'/>"));
+/*vot*/	$formbody.=$t->set('form_eachline', array('text'=>$lna[486], 'formelement'=>"<input type='text' class='text' size='16' name='p[homepage]' value='".stripslashes(@$edituser['homepage'])."'/>"));
 	$sex_sel=array('0'=>$lna[487], '1'=>$lna[488], '2'=>$lna[489]);
 	$sex_choice=array('0'=>'', '1'=>'', '2'=>'');
-	$tmp_gender=@$edituser['gender'];
+/*vot*/	$tmp_gender=@$edituser['gender'];
 	$sex_choice[$tmp_gender]="checked=checked";
 	$formbody.=$t->set('form_eachline', array('text'=>$lna[491], 'formelement'=>"<input type='radio' name='p[gender]' value='0' {$sex_choice[0]}/>{$lna[487]} <input type='radio' name='p[gender]' value='1' {$sex_choice[1]}/>{$lna[488]} <input type='radio' name='gender' value='2' {$sex_choice[2]}/>{$lna[489]}"));
-	$formbody.=$t->set('form_eachline', array('text'=>$lna[490], 'formelement'=>"<input type='text' class='text' size='16' name='p[qq]' value='".stripslashes(@$edituser['qq'])."'/>"));
-	$formbody.=$t->set('form_eachline', array('text'=>'MSN', 'formelement'=>"<input type='text' class='text' size='16' name='p[msn]' value='".stripslashes(@$edituser['msn'])."'/>"));
-	$formbody.=$t->set('form_eachline', array('text'=>'Skype', 'formelement'=>"<input type='text' class='text' size='16' name='p[skype]' value='".stripslashes(@$edituser['skype'])."'/>"));
-	$formbody.=$t->set('form_eachline', array('text'=>$lna[492], 'formelement'=>"<input type='text' class='text' size='16' name='p[from]' value='".stripslashes(@$edituser['fromplace'])."'/>"));
-	$formbody.=$t->set('form_eachline', array('text'=>$lna[493], 'formelement'=>"<textarea cols='30' rows='3' name='p[intro]'>".stripslashes(@$edituser['intro'])."</textarea>"));
+/*vot*/	$formbody.=$t->set('form_eachline', array('text'=>$lna[490], 'formelement'=>"<input type='text' class='text' size='16' name='p[qq]' value='".stripslashes(@$edituser['qq'])."'/>"));
+/*vot*/	$formbody.=$t->set('form_eachline', array('text'=>'MSN', 'formelement'=>"<input type='text' class='text' size='16' name='p[msn]' value='".stripslashes(@$edituser['msn'])."'/>"));
+/*vot*/	$formbody.=$t->set('form_eachline', array('text'=>'Skype', 'formelement'=>"<input type='text' class='text' size='16' name='p[skype]' value='".stripslashes(@$edituser['skype'])."'/>"));
+/*vot*/	$formbody.=$t->set('form_eachline', array('text'=>$lna[492], 'formelement'=>"<input type='text' class='text' size='16' name='p[from]' value='".stripslashes(@$edituser['fromplace'])."'/>"));
+/*vot*/	$formbody.=$t->set('form_eachline', array('text'=>$lna[493], 'formelement'=>"<textarea cols='30' rows='3' name='p[intro]'>".stripslashes(@$edituser['intro'])."</textarea>"));
 	$display_overall.=highlightadminitems($light, 'user');
 $display_overall.= <<<eot
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>

@@ -22,10 +22,10 @@ if ($config['blogopen']!=1 && $act!='login') {
 }
 
 if ($go) @list($job, $itemid)=@explode('_', basename($go));
-if (!@$job) $job='main';
+/*vot*/ if (!@$job) $job='main';
 else $job=basename($job);
 
-$itemid=floor(@$itemid);
+/*vot*/ $itemid=floor(@$itemid);
 $seed=0;
 /*vot*/ $rssbody = '';
 /*vot*/ $order = '';

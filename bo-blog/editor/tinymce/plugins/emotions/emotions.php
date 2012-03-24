@@ -1,5 +1,5 @@
 <?php
-error_reporting(E_ALL);
+/*vot*/ error_reporting(E_ALL);
 include ("../../../../data/cache_emot.php");
 
 print<<<eot

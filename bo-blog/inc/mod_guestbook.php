@@ -12,7 +12,7 @@ In memory of my university life
 
 if (!defined('VALIDREQUEST')) die ('Access Denied.');
 
-if (@$flset['guestbook']==1) getHttp404($lnc[313]);
+/*vot*/if (@$flset['guestbook']==1) getHttp404($lnc[313]);
 
 $m_b=new getblogs;
 

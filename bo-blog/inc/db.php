@@ -26,9 +26,9 @@ function db_connect($dbhost, $dbuser, $dbpw, $dbname='') {
 	global $db_410, $db_connected, $persistant_connect;
 	if ($db_connected==1) return;
 	if ($persistant_connect==1) {
-		$dbh=@mysql_pconnect($dbhost, $dbuser, $dbpw);
+/*vot*/		$dbh=@mysql_pconnect($dbhost, $dbuser, $dbpw);
 	} else {
-		$dbh=@mysql_connect($dbhost, $dbuser, $dbpw);
+/*vot*/		$dbh=@mysql_connect($dbhost, $dbuser, $dbpw);
 	}
 
 /*vot*/	if(!$dbh) {

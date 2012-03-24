@@ -3,7 +3,7 @@ function plugin_fmplayer_run($str) {
 /*vot*/  $str=preg_replace_callback("/\s*\[fmp(,id=.+?)?(,url=.+?)?\](.*?)\[\/fmp\]\s*/is", "makeFMPlayer", $str);
   return $str;
 }
-function makeFMPlayer($match) {
+/*vot*/ function makeFMPlayer($match) {
 /*vot*/	$tid=$match[1];
 /*vot*/	$url=$match[2];
 /*vot*/	$str=$match[3];

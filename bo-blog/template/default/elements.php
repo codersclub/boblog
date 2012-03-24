@@ -121,7 +121,7 @@ $elements['displayall']=<<<eot
 {footerhtml}
 eot;
 
-$elements['msgbox']=<<<eot
+/*vot*/ $elements['msgbox']=<<<eot
 <div class="tips">
   {$lnc['tips']}:
   <br/>
@@ -283,7 +283,7 @@ $elements['comment']=<<<eot
 	</div>
 eot;
 
-$elements['trackback']=<<<eot
+/*vot*/ $elements['trackback']=<<<eot
 	<div class="trackbackbox">
 		<div class="trackbackbox-title">
 		 {tbtitle}
@@ -363,7 +363,7 @@ $elements['entryadditional']=<<<eot
 </div>
 eot;
 
-$elements['login']=<<<eot
+/*vot*/ $elements['login']=<<<eot
 <form name="register" method="post" action="login.php?job=verify">
 <table cellspacing="1" width="100%" align="center" class="formbox">
   <tr><td class="formbox-title" colspan="2">{$lnc[253]} [<a href="login.php?job=register">{$lnc[254]}</a>]</td></tr>
@@ -412,7 +412,7 @@ $elements['taglist']=<<<eot
 <br/><br/>
 eot;
 
-$elements['register']=<<<eot
+/*vot*/ $elements['register']=<<<eot
 <form name="register" method="post" action="{job}">
 <table cellspacing="1" width="100%" align="center" class="formbox">
   <tr><td class="formbox-title" colspan="2">{title} {$lnc[262]}</td></tr>
@@ -422,13 +422,13 @@ $elements['register']=<<<eot
 </form>
 eot;
 
-$elements['normaltable']=<<<eot
+/*vot*/ $elements['normaltable']=<<<eot
 <table cellspacing="0" width="100%" align="center" class="formbox">
   {tablebody}
 </table>
 eot;
 
-$elements['normaltablewithtitle']=<<<eot
+/*vot*/ $elements['normaltablewithtitle']=<<<eot
 <table cellspacing="0" width="100%" align="center" class="formbox">
   <tr><td class="formbox-title" colspan="6">{title}</td></tr>
   {tablebody}

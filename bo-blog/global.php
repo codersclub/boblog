@@ -20,7 +20,7 @@ if (file_exists('install/install.php')) {
 	die ("WARNING: Installation file: install/install.php is still on your server. Please DELETE or RENAME it now.<br>警告：安装文件install/install.php仍然在您的服务器上，请立刻将其改名或删除！<br>警告：安裝程式install/install.php仍然在您的伺服器上，請立刻將其改名或刪除！");
 }
 
-error_reporting(E_ALL);
+/*vot*/ error_reporting(E_ALL);
 unregister_GLOBALS(); //When register_globals=On
 $mqgpc_status=0;
 define("VALIDREQUEST",1);
@@ -32,7 +32,7 @@ if (!defined('allowCache')) {
 }
 if (stristr($_SERVER['SCRIPT_FILENAME'], 'global.php')) die ("Access Denied.");
 
-$ajax=@$_REQUEST['ajax']; //If the page is in Ajax request mode
+/*vot*/ $ajax=@$_REQUEST['ajax']; //If the page is in Ajax request mode
 
 require_once ("data/mod_config.php");
 require_once ("data/config.php");
@@ -45,11 +45,11 @@ require_once ("inc/boblog_class_run.php");
 
 //Load language
 if (defined('isIndex')) {
-	if (@$_REQUEST['lang']) {
+/*vot*/	if (@$_REQUEST['lang']) {
 		$customlang=basename($_REQUEST['lang']);
 		setcookie('bloglanguage', $customlang);
 	}
-	else $customlang=basename(@$_COOKIE['bloglanguage']);
+/*vot*/	else $customlang=basename(@$_COOKIE['bloglanguage']);
 	if (!empty($customlang) && file_exists("lang/{$customlang}/common.php")) {
 		include_once ("lang/{$customlang}/common.php");
 		$langfront=$customlang;
@@ -70,7 +70,7 @@ if (!defined('VALIDADMIN')) {
 		@header("Content-Type: text/html; charset=utf-8");
 		die ($lnc[292]);
 	} else {
-		$config['blogurl']=str_replace('{host}', @$_SERVER['HTTP_HOST'], $config['blogurl']);
+/*vot*/		$config['blogurl']=str_replace('{host}', @$_SERVER['HTTP_HOST'], $config['blogurl']);
 	}
 	$baseurl="<base href=\"{$config['blogurl']}/\" />";
 }
@@ -91,11 +91,11 @@ if (!$mbcon['entrynum'] && !defined('VALIDADMIN') && !defined('isLogin')) {
 
 
 //Load template
-if (@$_REQUEST['tem']) {
+/*vot*/ if (@$_REQUEST['tem']) {
 	$customtemplate=basename($_REQUEST['tem']);
 	setcookie('blogtemplate', $customtemplate);
 }
-else $customtemplate=basename(@$_COOKIE['blogtemplate']);
+/*vot*/ else $customtemplate=basename(@$_COOKIE['blogtemplate']);
 if (!empty($customtemplate) && file_exists("template/{$customtemplate}/info.php")) {
 	require ("template/{$customtemplate}/info.php");
 }
@@ -137,7 +137,7 @@ else {
 		}
 	}
 }
-if (@$mbcon['enableopenid']=='1') {
+/*vot*/ if (@$mbcon['enableopenid']=='1') {
 	$openidloginstat=($logstat==0 && $_COOKIE['openid_url_id']) ? 1 : 0;
 } else $openidloginstat=0;
 
@@ -238,7 +238,7 @@ function acceptcookie($valuedesc, $overwrite=0) {
 	foreach ($values as $valuename) {
 		global $$valuename;
 		if ($overwrite==0 && isset($$valuename)) continue;
-		if ($mqgpc_status==0) $$valuename=addsd(@$_COOKIE[$valuename]);
+/*vot*/		if ($mqgpc_status==0) $$valuename=addsd(@$_COOKIE[$valuename]);
 		else $$valuename=$_COOKIE[$valuename];
 		$$valuename=str_replace('`', '&#96;', $$valuename);
 	}
@@ -252,14 +252,14 @@ function acceptrequest($valuedesc, $overwrite=0, $type="both") {
 		global $$valuename;
 		if ($overwrite==0 && isset($$valuename)) continue;
 		if ($mqgpc_status==0) {
-			if ($type=="both") $$valuename=addsd(@$_REQUEST[$valuename]);
-			elseif ($type=="post") $$valuename=addsd(@$_POST[$valuename]);
-			else $$valuename=addsd(@$_GET[$valuename]);
+/*vot*/			if ($type=="both") $$valuename=addsd(@$_REQUEST[$valuename]);
+/*vot*/			elseif ($type=="post") $$valuename=addsd(@$_POST[$valuename]);
+/*vot*/			else $$valuename=addsd(@$_GET[$valuename]);
 		}
 		else {
-			if ($type=="both") $$valuename=@$_REQUEST[$valuename];
-			elseif ($type=="post") $$valuename=@$_POST[$valuename];
-			else $$valuename=@$_GET[$valuename];
+/*vot*/			if ($type=="both") $$valuename=@$_REQUEST[$valuename];
+/*vot*/			elseif ($type=="post") $$valuename=@$_POST[$valuename];
+/*vot*/			else $$valuename=@$_GET[$valuename];
 		}
 		$$valuename=str_replace('`', '&#96;', $$valuename);
 	}
@@ -336,29 +336,29 @@ function addbar ($barname, $actions) { //Generate a module
 		return;
 	}
 	foreach ($actions as $eachitem) {
-		if (@$blogitem[$eachitem]['permitgp']!='') {
+/*vot*/		if (@$blogitem[$eachitem]['permitgp']!='') {
 			$allowedgp=@explode('|', $blogitem[$eachitem]['permitgp']);
 			if (!in_array($userdetail['usergroup'], $allowedgp)) continue;
 		}
-		if ((@$blogitem[$eachitem]['indexonly']==1 && !strstr($_SERVER['SCRIPT_FILENAME'], 'index.php')) || (@$blogitem[$eachitem]['indexonly']==2 && strstr($_SERVER['SCRIPT_FILENAME'], 'index.php'))) continue;
-		if (@$blogitem[$eachitem]['type']=='link') {
+/*vot*/		if ((@$blogitem[$eachitem]['indexonly']==1 && !strstr($_SERVER['SCRIPT_FILENAME'], 'index.php')) || (@$blogitem[$eachitem]['indexonly']==2 && strstr($_SERVER['SCRIPT_FILENAME'], 'index.php'))) continue;
+/*vot*/		if (@$blogitem[$eachitem]['type']=='link') {
 			$plus='';
-			if (@$blogitem[$eachitem]['target']) $plus.=" target=\"".$blogitem[$eachitem]['target']."\"";
-			if (@$blogitem[$eachitem]['title']) $plus.=" title=\"".$blogitem[$eachitem]['title']."\"";
-			if (@$blogitem[$eachitem]['onclick']) $plus.=" onclick=\"".$blogitem[$eachitem]['onclick']."\"";
+/*vot*/			if (@$blogitem[$eachitem]['target']) $plus.=" target=\"".$blogitem[$eachitem]['target']."\"";
+/*vot*/			if (@$blogitem[$eachitem]['title']) $plus.=" title=\"".$blogitem[$eachitem]['title']."\"";
+/*vot*/			if (@$blogitem[$eachitem]['onclick']) $plus.=" onclick=\"".$blogitem[$eachitem]['onclick']."\"";
 			$spanid=str_replace('%', '_', urlencode(str_replace('.php', '', $blogitem[$eachitem]['url'])));
 			${$addto}[]="<span id=\"nav_{$spanid}\"><a href=\"{$blogitem[$eachitem]['url']}\" {$plus}><span id=\"navitem_{$spanid}\">{$blogitem[$eachitem]['text']}</span></a></span>";
-		} elseif  (@$blogitem[$eachitem]['type']=='function') {
+/*vot*/		} elseif  (@$blogitem[$eachitem]['type']=='function') {
 			eval("\${$addto}[]={$blogitem[$eachitem]['userfunction']}();");
-		} elseif  (@$blogitem[$eachitem]['type']=='html') {
+/*vot*/		} elseif  (@$blogitem[$eachitem]['type']=='html') {
 			$tmp_code=evalmycode($blogitem[$eachitem]['code']);
 			${$addto}[]=$tmp_code;
 			unset ($tmp_code);
-		} elseif  (@$blogitem[$eachitem]['type']=='block') {
+/*vot*/		} elseif  (@$blogitem[$eachitem]['type']=='block') {
 			${$addto}[]=$blogitem[$eachitem];
-		} elseif  (@$blogitem[$eachitem]['type']=='extraheader') {
+/*vot*/		} elseif  (@$blogitem[$eachitem]['type']=='extraheader') {
 			${$addto}[]=evalmycode($blogitem[$eachitem]['code']);
-		} elseif  (@$blogitem[$eachitem]['type']=='plugin') {
+/*vot*/		} elseif  (@$blogitem[$eachitem]['type']=='plugin') {
 			$eachitem=basename($eachitem);
 			if (file_exists("plugin/{$eachitem}/source.php")) include ("plugin/{$eachitem}/source.php");
 		}
@@ -623,7 +623,7 @@ function lunarcalendar ($month, $year) {
 				$monthss=$lci;
 				$monthssshow=$mmonth[$monthss];
 			}
-			if ($monthss<=10 && @$runyue!=1) $monthssshow.=$mmonth[13]; //Add the word "month" to the month with only 1 word
+/*vot*/			if ($monthss<=10 && @$runyue!=1) $monthssshow.=$mmonth[13]; //Add the word "month" to the month with only 1 word
 			$results[$i]=$monthssshow;
 		}
 	}
@@ -726,7 +726,7 @@ function plugin_get ($pluginpart) { //Load plugins and return results
 
 function plugin_walk ($pluginpart, $str) { //Load plugins, compute and return results
 	global $blogplugin;
-	if (@$blogplugin[$pluginpart]) {
+/*vot*/	if (@$blogplugin[$pluginpart]) {
 		$valid_plugins=@explode(',', $blogplugin[$pluginpart]);
 		foreach ($valid_plugins as $loadplugin) {
 			$loadplugin=basename($loadplugin);
@@ -784,10 +784,10 @@ function zhgmdate ($timeformat, $timestamp) {
 	$factmonth=(string)$fact['mon'];
 	$factday=(string)$fact['mday'];
 	$factweek=$fact['wday'];
-	$sfact[0]=$zh_numbers[$factyear[0]].$zh_numbers[$factyear[1]].$zh_numbers[$factyear[2]].$zh_numbers[$factyear[3]].$zh_sybols[0];
-	$sfact[1]=($factmonth>=10) ? ($zh_numbers[10].$zh_numbers[$factmonth[1]].$zh_sybols[1]) : ($zh_numbers[$factmonth].$zh_sybols[1]);
+/*vot*/	$sfact[0]=$zh_numbers[$factyear[0]].$zh_numbers[$factyear[1]].$zh_numbers[$factyear[2]].$zh_numbers[$factyear[3]].$zh_sybols[0];
+/*vot*/	$sfact[1]=($factmonth>=10) ? ($zh_numbers[10].$zh_numbers[$factmonth[1]].$zh_sybols[1]) : ($zh_numbers[$factmonth].$zh_sybols[1]);
 	$sfact[1]=str_replace($zh_numbers[10].$zh_numbers[0], $zh_numbers[10], $sfact[1]);
-	$sfact[2]=($factday>=10) ? ($zh_numbers[$factday[0]].$zh_numbers[10].$zh_numbers[$factday[1]].$zh_sybols[2]) : ($zh_numbers[$factday].$zh_sybols[2]);
+/*vot*/	$sfact[2]=($factday>=10) ? ($zh_numbers[$factday[0]].$zh_numbers[10].$zh_numbers[$factday[1]].$zh_sybols[2]) : ($zh_numbers[$factday].$zh_sybols[2]);
 	$sfact[2]=str_replace($zh_numbers[1].$zh_numbers[10], $zh_numbers[10], $sfact[2]);
 	$sfact[2]=str_replace($zh_numbers[10].$zh_numbers[0], $zh_numbers[10], $sfact[2]);
 	$sfact[3]=$zh_weeks[$factweek];
@@ -801,7 +801,7 @@ function encodetburl ($str, $outputjs=1) {
 	$rand=rand(0,9);
 	$newstr[0]=$rand;
 	for ($i=0; $i<strlen($str); $i++) {
-		$newstr[]=ord($str[$i])+$rand;
+/*vot*/		$newstr[]=ord($str[$i])+$rand;
 	}
 	$putstr=@implode('%', $newstr);
 	return $putstr;
@@ -995,7 +995,7 @@ function checkPageValidity($page, $total) {
 function getHttp404($errormsg) {
 	global $config;
 	@header ("HTTP/1.1 404 Not Found");
-	if (@$config['customized404']) {
+/*vot*/	if (@$config['customized404']) {
 		@header ("Location: {$config['customized404']}");
 		exit();
 	}
@@ -1131,12 +1131,6 @@ function backtrace() {
 
   foreach($raw as $entry){
     $args = '';
-
-//DEBUG
-//echo '<pre>';
-//echo 'entry: ';
-//print_r($entry);
-//echo '</pre>';
 
     if($entry['function'] != 'backtrace') {
       echo '<tr>', "\n";

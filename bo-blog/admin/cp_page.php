@@ -80,7 +80,7 @@ if ($job=='pagewrite' || $job=='editpage') { //Initialize public items
 	else $disableemotstatus=1;
 	if ($permission['PinEntry']==1) $disabled_sticky=0;
 	else $disabled_sticky=1;
-	$puttingsidebar=autoradio('checkbox', 'closesidebar', array($lna[1127]), array(1), array(@$records['closesidebar']), array(''));
+/*vot*/	$puttingsidebar=autoradio('checkbox', 'closesidebar', array($lna[1127]), array(1), array(@$records['closesidebar']), array(''));
 
 	$selectedid_editors=array_search($useeditor, $arrayvalue_editors);
 	$puttingeditors=autoselect('useeditor', $arrayoption_editors, $arrayvalue_editors, $selectedid_editors);
@@ -90,7 +90,7 @@ if ($job=='pagewrite' || $job=='editpage') { //Initialize public items
 	$puttingubb=autoradio('checkbox', 'ubb', array($lna[281]), array(1), array($records['ubbstat']), array($disableubbstatus));
 	$puttingemot=autoradio('checkbox', 'emot', array($lna[282]), array(1), array($records['emotstat']), array($disableemotstatus));
 
-	$editorbody=str_replace("{content}", @$records['pagecontent'], $editorbody);
+/*vot*/	$editorbody=str_replace("{content}", @$records['pagecontent'], $editorbody);
 
 
 

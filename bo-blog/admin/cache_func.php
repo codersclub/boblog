@@ -279,7 +279,7 @@ function recache_plugins () {
 			}
 		}
 	}
-	if (is_array(@$blogplugin)) {
+/*vot*/ 	if (is_array(@$blogplugin)) {
 		foreach ($blogplugin as $typename=>$plugins) {
 			$pluginline='"'.@implode(',', $plugins).'"';
 			$plugwrt[]="\$blogplugin['{$typename}']={$pluginline};\r\n";

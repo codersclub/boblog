@@ -19,7 +19,7 @@ acceptrequest('job', 1);
 /*vot*/ $pagebar = '';
 
 if (!$job) {
-	$urlreturn=(empty($_SERVER['HTTP_REFERER'])) ? "index.php" : $_SERVER['HTTP_REFERER'];
+/*vot*/	$urlreturn=(empty($_SERVER['HTTP_REFERER'])) ? "index.php" : $_SERVER['HTTP_REFERER'];
 	$m_b=new getblogs;
 /*vot*/	$jobs=(@$_GET['adminlogin']==1) ? "login.php?job=verifyadmin" : "login.php?job=verify";
 /*vot*/	$actionnow=(@$_GET['adminlogin']==1) ? "{$lnc[273]}" : "{$lnc[253]} [<a href=\"login.php?job=register\">{$lnc[254]}</a>]";
@@ -27,7 +27,7 @@ if (!$job) {
 	$formbody.=$t->set('form_eachline', array('text'=>"*{$lnc[132]}", 'formelement'=>"<input name='username' type='text' id='username' size='24' class='text' value='{$plusadminname}' /><input type='hidden' name='urlreturn' value='{$urlreturn}' />"));
 	$formbody.=$t->set('form_eachline', array('text'=>"*{$lnc[133]}", 'formelement'=>"<input type='password'  class='text' size='24' name='password' id='password' />"));
 
-	if (@$mbcon['enableopenid']=='1' && $_GET['adminlogin']!=1) {
+/*vot*/	if (@$mbcon['enableopenid']=='1' && $_GET['adminlogin']!=1) {
 		$formbody.=$t->set('form_eachline', array('text'=>"", 'formelement'=>"{$lnc[314]}:"));
 		$formbody.=$t->set('form_eachline', array('text'=>"OpenID", 'formelement'=>"<input name='openid_url' type='text' id='openid_url' size='32' class='text' />"));
 	}
@@ -217,8 +217,8 @@ if ($job=='verify') {
 		exit();
 	}
 
-	$password=md5(@$_POST['password']);
-	$username=safe_convert(mystrtolower(@$_POST['username']));
+/*vot*/	$password=md5(@$_POST['password']);
+/*vot*/	$username=safe_convert(mystrtolower(@$_POST['username']));
 	plugin_runphp('loginprocess');
 	$try=$blog->getbyquery("SELECT * FROM `{$db_prefix}user` WHERE LOWER(username)='{$username}' AND `userpsw`='{$password}'");
 	if (!is_array($try)) {
@@ -312,7 +312,7 @@ if ($job=='applylink') {
 	$formbody.=$t->set('form_eachline', array('text'=>"*{$lnc[170]}", 'formelement'=>"<input type='text'  class='text' size='30' name='siteurl' />"));
 	$formbody.=$t->set('form_eachline', array('text'=>$lnc[171], 'formelement'=>"<input type='text'  class='text' size='30' name='sitelogo' /> {$lnc[172]}"));
 	$formbody.=$t->set('form_eachline', array('text'=>$lnc[173], 'formelement'=>"<input type='text'  class='text' size='30' name='siteintro' /> {$lnc[174]}"));
-	$formbody.=$t->set('form_eachline', array('text'=>$lnc[175], 'formelement'=>"{$lnc[176]}<br/><ul><li>{$lnc[177]}<br/><textarea class='text' cols='60' rows='4' name='sitemycode1'>{$mycode1}</textarea></li><li>{$lnc[178]}<br/><textarea class='text' cols='60' rows='4' name='sitemycode2'>{$mycode2}</textarea></li></ul>"));
+/*vot*/	$formbody.=$t->set('form_eachline', array('text'=>$lnc[175], 'formelement'=>"{$lnc[176]}<br/><ul><li>{$lnc[177]}<br/><textarea class='text' cols='60' rows='4' name='sitemycode1'>{$mycode1}</textarea></li><li>{$lnc[178]}<br/><textarea class='text' cols='60' rows='4' name='sitemycode2'>{$mycode2}</textarea></li></ul>"));
 	if ($config['applylinkvalidation']==1) {
 		$rand=rand (0,100000);
 		$formbody.=$t->set('form_eachline', array('text'=>$lnc[249], 'formelement'=>"<span id='securityimagearea'><img src='inc/securitycode.php?rand={$rand}' alt='' title='{$lnc[250]}'/></span> <input name='securitycode' type='text' id='securitycode' size='16' class='text' /> {$lnc[251]} [<a href=\"javascript: refreshsecuritycode('securityimagearea', 'securitycode');\">{$lnc[283]}</a>]"));

@@ -21,7 +21,7 @@ include_once ("data/cache_emot.php");
 include_once ("data/cache_emsel.php");
 include_once ("data/cache_adminlist.php");
 
-$isSafeMode=(@$_REQUEST['safemode']==1 || @$_COOKIE['safemode']==1) ? true : false;
+/*vot*/ $isSafeMode=(@$_REQUEST['safemode']==1 || @$_COOKIE['safemode']==1) ? true : false;
 if (!$isSafeMode) {
 	include_once ("data/modules.php");
 	include_once("data/plugin_enabled.php");
@@ -122,7 +122,7 @@ $currentpage_cssid='pagelocation-'.$currentpagelocation;
 $headerhtml=str_replace('{pageID}', $currentpage_cssid, $headerhtml);
 
 //Section: Side
-if (@$plugin_closesidebar!=1) {
+/*vot*/ if (@$plugin_closesidebar!=1) {
 	if (is_array($section_sidebar)) {
 		$siderbarcounter=0;
 		$sidebarcolumn=1;
@@ -134,8 +134,8 @@ if (@$plugin_closesidebar!=1) {
 			$blockname="sideblock_{$blocker['name']}";
 			if (isset($elements[$blockname])) $sideblock=$blockname;
 			else $sideblock="sideblock";
-			$ifextend=@$blocker['extend'] ? 'block' : 'none';
-			$decodedcontent=evalmycode(@$blocker['content']);
+/*vot*/			$ifextend=@$blocker['extend'] ? 'block' : 'none';
+/*vot*/			$decodedcontent=evalmycode(@$blocker['content']);
 			$section_side_column[$sidebarcolumn][]=$t->set($sideblock, array('title'=>$blocker['title'], 'content'=>$decodedcontent, 'id'=>$blocker['name'], 'ifextend'=>$ifextend));
 			$tptvalue["block_{$blocker['name']}"]=$decodedcontent;
 			$siderbarcounter+=1;

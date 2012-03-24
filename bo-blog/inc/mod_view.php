@@ -177,7 +177,7 @@ if ($job=='archivelist') {
 		foreach ($allvaliddates as $time) {
 			$y=gmdate('Y', $time+3600*$config['timezone']);
 			$m=gmdate('n', $time+3600*$config['timezone']);
-			if(!isset($resultdates[$y][$m])) {$resultdates[$y][$m] = 0;};
+/*vot*/			if(!isset($resultdates[$y][$m])) {$resultdates[$y][$m] = 0;};
 			$resultdates[$y][$m]+=1;
 		}
 

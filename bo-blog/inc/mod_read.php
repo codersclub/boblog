@@ -139,7 +139,7 @@ $section_body_main[]=$t->set('endviewentry', array('form_reply'=>$form_reply, 'i
 
 if (!$is_preview) {
 	//Read counter
-	$allreads=@$_COOKIE['readentry'];
+/*vot*/	$allreads=@$_COOKIE['readentry'];
 	if (!strstr($allreads, "{$itemid},")) {
 		$m_b->query("UPDATE LOW_PRIORITY `{$db_prefix}blogs` SET `views`=`views`+1 WHERE `blogid`='{$itemid}'");
 		@setcookie('readentry', $allreads."{$itemid},", time()+7200);

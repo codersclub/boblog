@@ -96,7 +96,7 @@ if ($job=='delreply') {
 	}
 	$countblogid=array_values(array_unique($countblogid));
 	for ($i=0; $i<count($countblogid); $i++) {
-		$countreps=$blog->countbyquery("SELECT COUNT(*) FROM `{$db_prefix}replies` WHERE `reproperty`<=1 AND `blogid`='{$countblogid[$i]}'");
+/*vot*/		$countreps=$blog->countbyquery("SELECT COUNT(*) FROM `{$db_prefix}replies` WHERE `reproperty`<=1 AND `blogid`='{$countblogid[$i]}'");
 		$blog->query("UPDATE `{$db_prefix}blogs` SET `replies`='{$countreps}' WHERE `blogid`='{$countblogid[$i]}'");
 	}
 	recache_latestreplies();
@@ -127,7 +127,7 @@ if ($job=='deltb' || $job=='tbnopass') {
 	if ($job=='deltb') {
 		$countblogid=array_values(array_unique($countblogid));
 		for ($i=0; $i<count($countblogid); $i++) {
-			$countreps=$blog->countbyquery("SELECT COUNT(*) FROM `{$db_prefix}replies` WHERE `reproperty`=4  AND `blogid`='{$countblogid[$i]}'");
+/*vot*/			$countreps=$blog->countbyquery("SELECT COUNT(*) FROM `{$db_prefix}replies` WHERE `reproperty`=4  AND `blogid`='{$countblogid[$i]}'");
 			$blog->query("UPDATE `{$db_prefix}blogs` SET `tbs`='{$countreps}' WHERE `blogid`='{$countblogid[$i]}'");
 		}
 		recache_latestreplies();
@@ -152,7 +152,7 @@ if ($job=='censor' || $job=='default') {
 		$titlem=$lna[24];
 		$titler=$lna[354];
 		$param2=4;
-		$totalvolume=$blog->countbyquery("SELECT COUNT(*) FROM `{$db_prefix}replies` WHERE `reproperty`=2 OR `reproperty`=3");
+/*vot*/		$totalvolume=$blog->countbyquery("SELECT COUNT(*) FROM `{$db_prefix}replies` WHERE `reproperty`=2 OR `reproperty`=3");
 		$censorclearall="<br><br>[<a href=\"javascript: redirectcomfirm('admin.php?go=reply_repliesclearall');\">{$lna[1021]}</a>]";
 	}
 	elseif ($job=='default') 	{
@@ -218,7 +218,7 @@ if ($job=='tb' || $job=='tbcensor') {
 		$titlem=$lna[947];
 		$titler=$lna[948];
 		$actionurl="admin.php?go=reply_tbcensor";
-		$countnum=$blog->countbyquery("SELECT COUNT(*) FROM `{$db_prefix}replies` WHERE `reproperty`=5");
+/*vot*/		$countnum=$blog->countbyquery("SELECT COUNT(*) FROM `{$db_prefix}replies` WHERE `reproperty`=5");
 	}
 	else {
 		$censorplus1=$censorplus2='';
@@ -283,7 +283,7 @@ if ($job=='pass' || $job=='block') {
 	}
 	$countblogid=array_values(array_unique($countblogid));
 	for ($i=0; $i<count($countblogid); $i++) {
-		$countreps=$blog->countbyquery("SELECT COUNT(*) FROM `{$db_prefix}replies` WHERE `reproperty`<=1 AND `blogid`='{$countblogid[$i]}'");
+/*vot*/		$countreps=$blog->countbyquery("SELECT COUNT(*) FROM `{$db_prefix}replies` WHERE `reproperty`<=1 AND `blogid`='{$countblogid[$i]}'");
 		$blog->query("UPDATE `{$db_prefix}blogs` SET `replies`='{$countreps}' WHERE `blogid`='{$countblogid[$i]}'");
 	}
 	recache_latestreplies();
@@ -311,7 +311,7 @@ if ($job=='tbpass') {
 	}
 	$countblogid=array_values(array_unique($countblogid));
 	for ($i=0; $i<count($countblogid); $i++) {
-		$countreps=$blog->countbyquery("SELECT COUNT(*) FROM `{$db_prefix}replies` WHERE `reproperty`=4 AND `blogid`='{$countblogid[$i]}'");
+/*vot*/		$countreps=$blog->countbyquery("SELECT COUNT(*) FROM `{$db_prefix}replies` WHERE `reproperty`=4 AND `blogid`='{$countblogid[$i]}'");
 		$blog->query("UPDATE `{$db_prefix}blogs` SET `tbs`='{$countreps}' WHERE `blogid`='{$countblogid[$i]}'");
 	}
 	recache_latestreplies();

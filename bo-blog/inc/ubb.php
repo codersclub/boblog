@@ -164,7 +164,7 @@ function convert_ubb ($str, $advanced=0, $inrss=0) {
 	return $str;
 }
 
-function makecode ($match) {
+/*vot*/ function makecode ($match) {
 /*vot*/	$str = $match[1];
 	$str=str_replace('[autourl]', '', $str);
 	$str=str_replace('[/autourl]', '', $str);

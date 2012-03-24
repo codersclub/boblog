@@ -22,12 +22,12 @@ if (!$job) $job='add';
 $id=$itemid;
 
 include_once ("data/cache_emot.php");
-if (@$flset['weather']!=1) {
+/*vot*/ if (@$flset['weather']!=1) {
 	include_once ("data/weather.php");
 }
 
 //All Tags
-if (@$flset['tags']!=1) {
+/*vot*/ if (@$flset['tags']!=1) {
 	$existtagall=trim(readfromfile("data/cache_tags.php"));
 	$exist_tags_all=@explode(' ',$existtagall);
 }
@@ -79,7 +79,7 @@ if ($job=='add' || $job=='edit') { //Initialize public items
 	$currentjob=basename($_SERVER['QUERY_STRING']);
 	@list($currentjob, $unuse)=@explode('&useeditor=', $currentjob);
 
-	if(@$flset['weather']!=1 && is_array($weather)) { //Get Weather List
+/*vot*/	if(@$flset['weather']!=1 && is_array($weather)) { //Get Weather List
 		while (@list($wkey, $wvalue)=@each($weather)) {
 			$arrayoption_weather[]=$wvalue['text'];
 			$arrayvalue_weather[]=$wkey;
@@ -95,7 +95,7 @@ if ($job=='add' || $job=='edit') { //Initialize public items
 	$arrayvalue_editors=array('quicktags', 'ubb', 'fckeditor', 'tinymce', 'custom');
 
 	$ismoreon='none';
-	if (@$flset['tags']!=1 && $permission['AddTag']==1) {
+/*vot*/	if (@$flset['tags']!=1 && $permission['AddTag']==1) {
 		$exist_tags_tmp=$blog->getarraybyquery("SELECT * FROM `{$db_prefix}tags` ORDER BY `tagcounter` DESC LIMIT 50");
 		$exist_tags=$exist_tags_tmp['tagname'];
 		for ($i=0; $i<count($exist_tags); $i++) {
@@ -113,7 +113,7 @@ if ($job=='add' || $job=='edit') { //Initialize public items
 }
 
 if ($job=='edit') { //Initialize Edit only items
-	if (@$flset['weather']!=1) $selectedid_weather=array_search($records['weather'], $arrayvalue_weather); //selected weather
+/*vot*/	if (@$flset['weather']!=1) $selectedid_weather=array_search($records['weather'], $arrayvalue_weather); //selected weather
 	$selectedid_category=array_search($records['category'], $arrayvalue_categories); //selected category
 	$selectedid_sticky=array_search($records['sticky'], $arrayvalue_sticky); //if pinned
 	$records['tags']=str_replace('>', ' ', trim($records['tags'],'>'));
@@ -165,7 +165,7 @@ if ($job=='add' || $job=='edit') { //Initialize public items
 	else $disableemotstatus=1;
 	if ($permission['PinEntry']==1) $disabled_sticky=0;
 	else $disabled_sticky=1;
-	$puttingproperty=autoselect('property', $arrayoption_property, $arrayvalue_property, @$records['property']);
+/*vot*/	$puttingproperty=autoselect('property', $arrayoption_property, $arrayvalue_property, @$records['property']);
 
 	$selectedid_editors=array_search($useeditor, $arrayvalue_editors);
 	$puttingeditors=autoselect('useeditor', $arrayoption_editors, $arrayvalue_editors, $selectedid_editors);
@@ -177,7 +177,7 @@ if ($job=='add' || $job=='edit') { //Initialize public items
 		$puttingcates_after.="<option value='{$arrayvalue_categories[$i]}'>{$lna[1025]} {$arrayoption_categories[$i]}</option>";
 	}
 
-	if (@$flset['weather']!=1) $puttingweather=autoselect('sweather', $arrayoption_weather, $arrayvalue_weather, $selectedid_weather);
+/*vot*/	if (@$flset['weather']!=1) $puttingweather=autoselect('sweather', $arrayoption_weather, $arrayvalue_weather, $selectedid_weather);
 	else {
 		$lna[301]=$puttingweather='';
 	}
@@ -186,11 +186,11 @@ if ($job=='add' || $job=='edit') { //Initialize public items
 	$puttingubb=autoradio('checkbox', 'ubb', array($lna[281]), array(1), array($records['ubbstat']), array($disableubbstatus));
 	$puttingemot=autoradio('checkbox', 'emot', array($lna[282]), array(1), array($records['emotstat']), array($disableemotstatus));
 	$puttingpermitgp=autoradio ('checkbox', 'permitgp[]', $usergp_1, $usergp_2, $arraychecked_permitgp);
-	if (@$flset['star']!=1) $puttingstarred=autoradio ('checkbox', 'starred', array($lna[1020]), array(1), array(@$records['starred']%2));
+/*vot*/	if (@$flset['star']!=1) $puttingstarred=autoradio ('checkbox', 'starred', array($lna[1020]), array(1), array(@$records['starred']%2));
 	else $puttingstarred='';
 
 	$hiddenareas.="<input type='hidden' name='forcedraft' id='forcedraft' value='0'/>";
-	if ($disableinvert!=1) $records['content']=safe_invert(@$records['content'], @$records['htmlstat']);
+/*vot*/	if ($disableinvert!=1) $records['content']=safe_invert(@$records['content'], @$records['htmlstat']);
 /*vot*/	$records['content']=preg_replace_callback("/\[php\](.+?)\[\/php\]/is", "phpcode4", @$records['content']);
 	$records['content']=stripslashes($records['content']);
 	if ($editorbody!='PHP_INCLUDE') $editorbody=str_replace("{content}", $records['content'], $editorbody);
@@ -333,7 +333,7 @@ $display_overall.= <<<eot
 </tr>
 eot;
 
-if (@$flset['tags']!=1) {
+/*vot*/ if (@$flset['tags']!=1) {
 	$display_overall.= <<<eot
 <tr bgcolor="#ffffff" align=left class="hiddenitem">
 <td width=100 valign=top align=center>Tags</td>
@@ -655,9 +655,9 @@ function autoradio ($type, $name, $arraylabel, $arrayvalue, $arraychecked=array(
 /*vot*/ $formcontent = '';
 	if ($type!='checkbox' && $type!='radio') return;
 	for ($i=0; $i<count($arraylabel); $i++) {
-		if (@$arraychecked[$i]==1) $addcheck="checked='checked'";
+/*vot*/	if (@$arraychecked[$i]==1) $addcheck="checked='checked'";
 		else $addcheck='';
-		if (@$arraydisabled[$i]==1) $disabled="disabled='disabled'";
+/*vot*/	if (@$arraydisabled[$i]==1) $disabled="disabled='disabled'";
 		else $disabled='';
 		if ($type=='checkbox') $disabled.=" id='{$name}' ";
 		$formcontent.="<label><input type='{$type}' name='{$name}' value='{$arrayvalue[$i]}' {$addcheck} class='formradiobox' {$disabled}/>{$arraylabel[$i]}</label> ";

@@ -315,7 +315,7 @@ if ($job=='del') {
 	if ($sourcecate==='') {
 		catcherror ($lna[207]);
 	}
-	$entrynum=$blog->countbyquery("SELECT COUNT(*) FROM `{$db_prefix}blogs` WHERE `category`='{$sourcecate}'");
+/*vot*/	$entrynum=$blog->countbyquery("SELECT COUNT(*) FROM `{$db_prefix}blogs` WHERE `category`='{$sourcecate}'");
 	if ($entrynum>=1) $cancel=$lna[208];
 	catcherror ($cancel);
 	$blog->query("DELETE FROM `{$db_prefix}categories` WHERE `cateid`='{$sourcecate}'");

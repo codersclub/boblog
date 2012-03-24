@@ -3,8 +3,8 @@
 if (!defined('VALIDADMIN')) die ('Access Denied.');
 checkpermission('CP');
 
-if ($langback=='ru') include_once("plugin/viewstat/lang_ru.php");
-else if ($langback=='en') include_once("plugin/viewstat/lang_en.php");
+/*vot*/ if ($langback=='ru') include_once("plugin/viewstat/lang_ru.php");
+/*vot*/else if ($langback=='en') include_once("plugin/viewstat/lang_en.php");
 else if ($langback=='zh-tw') include_once("plugin/viewstat/lang_zh-tw.php");
 else include_once("plugin/viewstat/lang_zh-cn.php");
 
@@ -56,7 +56,7 @@ for ($i=0; $i<$thesedays; $i++) {
 	$putgraph.="<tr><td width=\"120\">".$day_his[$i]."</td><td>".statgraphic($vis_his[$i], $ruler)."</td></tr>";
 }
 
-$afilename="data/online.php"; 
+$afilename="data/online.php";
 $onlineusers=$nowonline=array();
 $online_all=@file($afilename);
 $nowonline=$online_all;

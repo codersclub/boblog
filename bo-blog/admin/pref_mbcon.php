@@ -20,7 +20,7 @@ addpref("r", "stattoday|{$lna[554]}|{$lna[534]}|{$lna[535]}");
 addpref("r", "statentries|{$lna[555]}|{$lna[534]}|{$lna[535]}");
 addpref("r", "statreplies|{$lna[556]}|{$lna[534]}|{$lna[535]}");
 addpref("r", "stattb|{$lna[557]}|{$lna[534]}|{$lna[535]}");
-if (@$flset['guestbook']!=1) addpref("r", "statmessages|{$lna[558]}|{$lna[534]}|{$lna[535]}");
+/*vot*/ if (@$flset['guestbook']!=1) addpref("r", "statmessages|{$lna[558]}|{$lna[534]}|{$lna[535]}");
 addpref("r", "statusers|{$lna[559]}|{$lna[534]}|{$lna[535]}");
 addpref("r", "statonline|{$lna[560]}|{$lna[534]}|{$lna[535]}");
 addpref("sec", "{$lna[561]}");
@@ -65,7 +65,7 @@ addpref("r", "tburlexpire|{$lna[1049]}|{$lna[511]}|{$lna[512]}|<br>{$lna[1050]}"
 addpref("r", "tburljs|{$lna[1053]}|{$lna[511]}|{$lna[512]}|<br>{$lna[1054]}");
 addpref("r", "tburlmath|{$lna[1051]}|{$lna[511]}|{$lna[512]}|<br>{$lna[1052]}");
 
-if (@$flset['tags']!=1) {
+/*vot*/ if (@$flset['tags']!=1) {
 	addpref("sec", "{$lna[601]}");
 	addpref("t", "tagminsize|{$lna[602]}|px");
 	addpref("t", "tagmaxsize|{$lna[603]}|px");
@@ -108,7 +108,7 @@ addpref("sel", "wmposition|{$lna[988]}|0>>{$lna[989]}<<3>>{$lna[990]}<<1>>{$lna[
 addpref("t", "wmpadding|{$lna[995]}|{$lna[996]}");
 addpref("t", "wmtrans|{$lna[997]}|<br>{$lna[998]}");
 
-if (@$flset['avatar']!=1) {
+/*vot*/ if (@$flset['avatar']!=1) {
 	addpref("sec", "{$lna[881]}");
 	addpref("r", "avatar|{$lna[608]}|{$lna[609]}|{$lna[610]}|<br><a href='admin.php?go=misc_avatar'>{$lna[891]}</a>");
 	addpref("r", "usergravatar|{$lna[883]}|{$lna[609]}|{$lna[610]}|");

@@ -145,11 +145,11 @@ if ($job=='refreshcounter') {
 	acceptrequest('selid2');
 	if (!is_array($selid2)) catcherror($lna[205]);
 	$countsql=array(
-		'entries'=>"SELECT COUNT(*) FROM `{$db_prefix}blogs`",
-		'replies'=>"SELECT COUNT(*) FROM `{$db_prefix}replies` WHERE `reproperty`<=1",
-		'tb'=>"SELECT COUNT(*) FROM `{$db_prefix}replies` WHERE `reproperty`=4",
-		'messages'=>"SELECT COUNT(*) FROM `{$db_prefix}messages` WHERE `reproperty`<=1",
-		'users'=>"SELECT COUNT(*) FROM `{$db_prefix}user`"
+/*vot*/ 		'entries'=>"SELECT COUNT(*) FROM `{$db_prefix}blogs`",
+/*vot*/ 		'replies'=>"SELECT COUNT(*) FROM `{$db_prefix}replies` WHERE `reproperty`<=1",
+/*vot*/ 		'tb'=>"SELECT COUNT(*) FROM `{$db_prefix}replies` WHERE `reproperty`=4",
+/*vot*/ 		'messages'=>"SELECT COUNT(*) FROM `{$db_prefix}messages` WHERE `reproperty`<=1",
+/*vot*/ 		'users'=>"SELECT COUNT(*) FROM `{$db_prefix}user`"
 	);
 	for ($i=0; $i<count($selid2); $i++) {
 		if ($selid2[$i]=='max') continue;
@@ -1024,11 +1024,11 @@ if ($job=='rollback') {
 		}
 
 		$countsql=array(
-			'entries'=>"SELECT COUNT(*) FROM `{$db_prefix}blogs`",
-			'replies'=>"SELECT COUNT(*) FROM `{$db_prefix}replies` WHERE `reproperty`<=1",
-			'tb'=>"SELECT COUNT(*) FROM `{$db_prefix}replies` WHERE `reproperty`=4",
-			'messages'=>"SELECT COUNT(*) FROM `{$db_prefix}messages` WHERE `reproperty`<=1",
-			'users'=>"SELECT COUNT(*) FROM `{$db_prefix}user`"
+/*vot*/ 			'entries'=>"SELECT COUNT(*) FROM `{$db_prefix}blogs`",
+/*vot*/ 			'replies'=>"SELECT COUNT(*) FROM `{$db_prefix}replies` WHERE `reproperty`<=1",
+/*vot*/ 			'tb'=>"SELECT COUNT(*) FROM `{$db_prefix}replies` WHERE `reproperty`=4",
+/*vot*/ 			'messages'=>"SELECT COUNT(*) FROM `{$db_prefix}messages` WHERE `reproperty`<=1",
+/*vot*/ 			'users'=>"SELECT COUNT(*) FROM `{$db_prefix}user`"
 		);
 		foreach ($countsql as $key=>$value) {
 			$result_num=$blog->countbyquery($value);
@@ -1217,7 +1217,7 @@ eot;
 }
 
 function backup_rsswhole($rssbody) {
-	global $mbcon, $config, $categories, $blogversion;
+/*vot*/	global $mbcon, $config, $categories, $blogversion, $langfront;
 	$out="<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\r\n";
 	$out.=<<<eot
 <rss version="2.0">
@@ -1225,7 +1225,7 @@ function backup_rsswhole($rssbody) {
 <title>{$config['blogname']}</title>
 <link>{$config['blogurl']}/index.php</link>
 <description>{$config['blogdesc']}</description>
-<language>zh-cn</language>
+<language>{$langfront}</language>
 <copyright>Powered by Bo-blog {$blogversion}</copyright>
 {$rssbody}
 </channel>

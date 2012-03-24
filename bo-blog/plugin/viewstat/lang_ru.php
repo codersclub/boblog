@@ -1,5 +1,5 @@
 <?php
-$langstat = array 
+$langstat = array
 (
 	0=>'Blog Information',
 	1=>'Blog name',

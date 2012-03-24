@@ -1,5 +1,5 @@
 <?php
-error_reporting(E_ALL);
+/*vot*/ error_reporting(E_ALL);
 define ("allowCache", 1);
 include("../data/config.php");
 $config['blogurl']=str_replace('{host}', $_SERVER['HTTP_HOST'], $config['blogurl']);
