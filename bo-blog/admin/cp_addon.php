@@ -25,6 +25,8 @@ $backtoskin="{$lna[27]}|admin.php?go=addon_skin";
 $backtoplugin="{$lna[28]}|admin.php?go=addon_plugin";
 $backtolangspec="{$lna[1099]}|admin.php?go=addon_langspec";
 
+/*vot*/	$warn='';
+
 if (!$job) $job='skin';
 
 if ($job=='skin') {
@@ -268,7 +270,7 @@ if ($job=='addplugin') {
 	if (!$newplugindir || !is_file("plugin/{$newplugindir}/setup.php")) catcherror($lna[915]);
 	else include_once("plugin/{$newplugindir}/setup.php");
 	$try=$blog->getgroupbyquery("SELECT * FROM `{$db_prefix}plugins` WHERE `plname`='{$info['name']}'");
-	if (is_array($try)) catcherror($lna[916]);
+/*vot*/	if (is_array($try) && count($try)) catcherror($lna[916]);
 	if ($info['blogversion']>$blogversion)  catcherror($lna[917]);
 	$warn.="<b>{$lna[918]}</b><br><table width=95% align=center><tr><td width=20%>{$lna[919]}</td><td>{$info['name']}</td></tr><tr><td width=20%>{$lna[132]}</td><td>{$info['author']}  &nbsp; [<a href=\"{$info['authorurl']}\" target=_blank>{$lna[920]}</a>]</td></tr><tr><td width=20%>{$lna[921]}</td><td>{$info['version']}</td></tr><tr><td width=20%>{$lna[134]}</td><td>{$info['intro']}</td></tr></table><br><input type='checkbox' name='activate' value='1' checked>{$lna[922]}";
 	$display_overall.=highlightadminitems('plugin', 'addon');
