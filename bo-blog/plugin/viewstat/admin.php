@@ -3,6 +3,9 @@
 if (!defined('VALIDADMIN')) die ('Access Denied.');
 checkpermission('CP');
 
+/*vot*/ $putgraph='';
+/*vot*/ $putonline='';
+
 /*vot*/ if ($langback=='ru') include_once("plugin/viewstat/lang_ru.php");
 /*vot*/else if ($langback=='en') include_once("plugin/viewstat/lang_en.php");
 else if ($langback=='zh-tw') include_once("plugin/viewstat/lang_zh-tw.php");
