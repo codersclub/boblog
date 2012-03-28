@@ -17,6 +17,7 @@ if (!$job) $job='recache';
 
 /*vot*/ $tablebody = '';
 /*vot*/ $queryplus = '';
+/*vot*/	$message = '';
 
 //Define some senteces
 $finishok=$lna[753];
