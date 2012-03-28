@@ -248,7 +248,7 @@ $display_overall_plus= <<<eot
 <table class='tablewidth' align=center>
 <tr><td width=25%>{$lna[469]}</td><td><input type='text' name='detailuser' size='20'></td></tr>
 <tr><td width=25%>{$lna[470]}</td><td><input type='radio' checked=checked name='detailtype' value='username'>{$lna[464]} &nbsp; <input type='radio' name='detailtype' value='userid'>{$lna[471]}</td></tr>
-<tr><td width=25%>{$lna[472]}</td><td><input type='radio' checked=checked name='detailact' value='edituser'>{$lna[77]} &nbsp; <input type='radio' name='detailact' value='deluser'>{$lna[78]}[<b>{$lna[473]}</b>]</td></tr>
+<tr><td width=25%>{$lna[472]}</td><td><input type='radio' checked=checked name='detailact' value='edituser'>{$lna[77]} &nbsp; <input type='radio' name='detailact' value='deluser'>{$lna[78]} [<b>{$lna[473]}</b>]</td></tr>
 <tr><td colspan=2 align=center><input type=submit value="{$lna[64]}" class='formbutton'> <input type=reset value="{$lna[65]}" class='formbutton'>
 </td></tr></table>
 
