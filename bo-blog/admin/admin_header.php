@@ -96,7 +96,7 @@ $admin_item["entry"]=array("default"=>$lna[3], "write"=>$lna[22], "draft"=>$lna[
 $admin_item["reply"]=array("default"=>$lna[6], "censor"=>$lna[24], "tb"=>$lna[25], "tbcensor"=>$lna[947]);
 
 /*vot*/ if (@$flset['guestbook']!=1) {
-	$admin_item["message"]=array("default"=>$lna[7], "censor"=>$lna[26]);
+	$admin_item["message"]=array("default"=>$lna[813], "censor"=>$lna[26]);
 }
 
 $admin_item["addon"]=array("skin"=>$lna[27], "plugin"=>$lna[28], "langspec"=>$lna[1101]);
