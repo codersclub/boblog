@@ -126,7 +126,7 @@ if ($job=='addskin') {
 	else include_once("template/{$newskindir}/info.php");
 	$tmp=$template['id'];
 	if (!$tmp) catcherror($lna[174]);
-	if ($skinset[$tmp]) catcherror($lna[175]);
+/*vot*/	if (!empty($skinset[$tmp])) catcherror($lna[175]);
 	$addline="\$skinset[\"{$template['id']}\"]=\"{$template['id']}|".skin_convert($template['name'])."|".skin_convert($template['author'])."|".skin_convert($template['intro'])."|".skin_convert($template['dirname'])."|".skin_convert($template['thumbnail'])."|\";\n";
 	$oldcontent=readfromfile("data/cache_skinlist.php");
 	if (!writetofile("data/cache_skinlist.php", $oldcontent.$addline)) catcherror($lna[66]."data/cache_skinlist.php");
