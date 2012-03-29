@@ -94,7 +94,7 @@ $lnc=array (
 88=>'Home',
 89=>'Login',
 90=>'Profile',
-91=>'Message',
+91=>'Guestbook',
 92=>'Sidebar',
 93=>'Starred',
 94=>'Links',
@@ -132,7 +132,7 @@ $lnc=array (
 126=>'Messages',
 127=>'Tags',
 128=>'Search',
-129=>'Leave messages',
+129=>'Leave a new message',
 130=>'Please do not register more than once.',
 131=>'Please login first.',
 132=>'Username',
@@ -325,7 +325,11 @@ $lnc=array (
 319=>'OpenID has been disabled.',
 320=>'You submitted the post too quick. You need to wait for another ',
 
-'tips'		 => 'Tips',
+'tips'=>'Tips',
+'said'=>'said',
+'article'=>'Article',
+'has'=>'has',
+'comments'=>'comments',
 //global.php:20
 'install_remove' => 'WARNING: Installation file: install/install.php is still on your server. Please DELETE or RENAME it now.<br>警告：安装文件install/install.php仍然在您的服务器上，请立刻将其改名或删除！<br>警告：安裝程式install/install.php仍然在您的伺服器上，請立刻將其改名或刪除！',
 );

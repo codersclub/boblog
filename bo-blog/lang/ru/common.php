@@ -325,7 +325,11 @@ $lnc=array (
 319=>'OpenID отключен.',
 320=>'Вы отправляете сообщения слишком часто. Необходимо немного подождать.',
 
-'tips'		 => 'Tips',
+'tips'=>'Tips',
+'said'=>'said',
+'article'=>'Article',
+'has'=>'has',
+'comments'=>'comments',
 //global.php:20
 'install_remove' => 'WARNING: Installation file: install/install.php is still on your server. Please DELETE or RENAME it now.<br>警告：安装文件install/install.php仍然在您的服务器上，请立刻将其改名或删除！<br>警告：安裝程式install/install.php仍然在您的伺服器上，請立刻將其改名或刪除！',
 );
