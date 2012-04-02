@@ -2,15 +2,18 @@
 if (!defined('VALIDREQUEST')) die ('Access Denied.');
 function plugin_highslide_run ($str) {
 
-	$highslide_search =	"/<a href=\"(\S+?)\" target=\"_blank\"><img src=\"(\S+?)\"((.+?)|\S*)\/><\/a>/ise";
+/*vot*/	$highslide_search =	"/<a href=\"(\S+?)\" target=\"_blank\"><img src=\"(\S+?)\"((.+?)|\S*)\/><\/a>/is";
 	
-	$highslide_replace ="makeslideimg('\\1', '\\2','\\3')";
+/*vot*/	$highslide_replace ="makeslideimg";
 
-		$str=preg_replace($highslide_search, $highslide_replace, $str);
+/*vot*/		$str=preg_replace_callback($highslide_search, $highslide_replace, $str);
 		return $str;
 }
-function makeslideimg($url,$src,$other){
-	
+function makeslideimg($match){
+/*vot*/ $url = @$match[1];
+/*vot*/ $src = @$match[2];
+/*vot*/ $other = @$match[3];
+
 if ($url==$src){
 		$imgcode="<a href=\"{$src}\" class=\"highslide\" onclick=\"return hs.expand(this)\"><img src=\"{$src}\" class=\"insertimage\" alt=\"Highslide JS\" title=\"Нажмите для увеличения\" border=\"0\"{$other}/></a>";
 	}
