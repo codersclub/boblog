@@ -1,5 +1,6 @@
 <?PHP
 /*vot*/ error_reporting(E_ALL);
+//*vot*/ error_reporting(E_ALL & ~E_DEPRECATED & ~E_NOTICE);
 /*vot*/ include ('../inc/db.php');
 $mqgpc_status=0;
 if ($mqgpc_status==0) $_POST=addsd($_POST);
