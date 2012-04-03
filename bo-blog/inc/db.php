@@ -139,7 +139,7 @@ function db_close() {
 }
 
 function db_halt($message = '', $sql = '') {
-global $db_prefix;
+global $db_prefix, $config;
 $timestamp = time();
 $errmsg = '';
 
@@ -150,8 +150,8 @@ $sql=str_replace($db_prefix, '***', $sql);
 
 
 $errmsg = "<b>Bo-Blog Database System Tips</b>: $message\n\n";
-$errmsg .= "<b>Time</b>: ".gmdate("Y-n-j g:ia", $timestamp + ($GLOBALS["timeoffset"] * 3600))."\n";
-$errmsg .= "<b>Script</b>: ".$GLOBALS['PHP_SELF']."\n\n";
+/*vot*/ $errmsg .= "<b>Time</b>: ".gmdate("Y-m-d H:i:s", $timestamp + ($config['timezone'] * 3600))."\n";
+/*vot*/ $errmsg .= "<b>Script</b>: ".$_SERVER['PHP_SELF']."\n\n";
 if($sql) {
 	$errmsg .= "<b>SQL</b>: ".htmlspecialchars($sql)."\n";
 }
