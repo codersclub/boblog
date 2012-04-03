@@ -1,5 +1,7 @@
 <?PHP
-error_reporting(E_ERROR | E_WARNING | E_PARSE);
+//vot error_reporting(E_ERROR | E_WARNING | E_PARSE);
+/*vot*/ error_reporting(E_ALL);
+//*vot*/ error_reporting(E_ALL & ~E_DEPRECATED & ~E_NOTICE);
 
 if(function_exists('set_magic_quotes_runtime')) {
 	@set_magic_quotes_runtime(0);
