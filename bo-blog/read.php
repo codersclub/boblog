@@ -3,6 +3,7 @@
 // all the resulting answer will not be the use of non-normal!
 
 /*vot*/ error_reporting(E_ALL);
+//*vot*/ error_reporting(E_ALL & ~E_DEPRECATED & ~E_NOTICE);
 require_once ("data/config.php");
 
 //Auto detect mirror site

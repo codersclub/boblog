@@ -14,6 +14,7 @@ In memory of my university life
 //This part needs GD Library to be installed
 //Original Code: Piglets will qigong   http://guan8.net
 /*vot*/ error_reporting(E_ALL);
+//*vot*/ error_reporting(E_ALL & ~E_DEPRECATED & ~E_NOTICE);
 require_once ("../data/config.php");
 
 if ($db_defaultsessdir!=1) session_save_path("../{$db_tmpdir}");

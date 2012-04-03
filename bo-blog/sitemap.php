@@ -8,6 +8,7 @@ $entrynumber=1500;
 
 //No need to change anything below
 /*vot*/ error_reporting(E_ALL);
+//*vot*/ error_reporting(E_ALL & ~E_DEPRECATED & ~E_NOTICE);
 define ("noCounter", 1);
 include_once ("function.php");
 $smentries=GetNewPosts ($entrynumber, 'blogid,pubtime,edittime,blogalias');

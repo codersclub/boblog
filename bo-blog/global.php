@@ -21,6 +21,7 @@ if (file_exists('install/install.php')) {
 }
 
 /*vot*/ error_reporting(E_ALL);
+//*vot*/ error_reporting(E_ALL & ~E_DEPRECATED & ~E_NOTICE);
 unregister_GLOBALS(); //When register_globals=On
 $mqgpc_status=0;
 define("VALIDREQUEST",1);

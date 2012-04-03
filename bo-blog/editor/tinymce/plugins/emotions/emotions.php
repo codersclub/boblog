@@ -1,5 +1,6 @@
 <?php
 /*vot*/ error_reporting(E_ALL);
+//*vot*/ error_reporting(E_ALL & ~E_DEPRECATED & ~E_NOTICE);
 include ("../../../../data/cache_emot.php");
 
 print<<<eot

@@ -12,6 +12,7 @@ This file is used for URL optimization based on PHP
 ------------------------------------------------------- */
 
 /*vot*/ error_reporting(E_ALL);
+//*vot*/ error_reporting(E_ALL & ~E_DEPRECATED & ~E_NOTICE);
 include_once("./data/config.php");
 if ($config['urlrewritemethod']!='1') {
 	die("ACCESS DENIED.");

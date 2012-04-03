@@ -1,5 +1,6 @@
 <?PHP
 error_reporting(E_ALL);
+//*vot*/ error_reporting(E_ALL & ~E_DEPRECATED & ~E_NOTICE);
 include("include.php");
 include($file['list']);
 $id=$_GET['id'];

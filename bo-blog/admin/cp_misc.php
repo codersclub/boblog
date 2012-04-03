@@ -405,6 +405,7 @@ if ($job=='testsession') {
 	$testcontent1=<<<eot
 <?php
 /*vot*/ error_reporting(E_ALL);
+//*vot*/ error_reporting(E_ALL & ~E_DEPRECATED & ~E_NOTICE);
 session_cache_limiter("private, must-revalidate");
 session_start();
 \$_SESSION['testboblogsess']='This is a test string.';
@@ -412,6 +413,7 @@ eot;
 	$testcontent2=<<<eot
 <?php
 /*vot*/ error_reporting(E_ALL);
+//*vot*/ error_reporting(E_ALL & ~E_DEPRECATED & ~E_NOTICE);
 session_cache_limiter("private, must-revalidate");
 session_start();
 die (\$_SESSION['testboblogsess']);
