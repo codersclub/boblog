@@ -318,7 +318,7 @@ $lnc=array (
 311=>'Nội dung ẩn giấu',
 312=>'Nội dung này cần đăng nhập mới xem được. Hãy ',
 313=>'HTTP/1.1 404 Page Not Found.',
-314=>"You can also login with your <a href=\"http://vi.wikipedia.org/wiki/OpenID\" target=\"_blank\">OpenID</a>",
+314=>"You can also login with your <a href=\"http://openid.net\" target=\"_blank\">OpenID</a>",
 315=>'OpenID Error:<br/>',
 316=>'You have chosen to deny the OpenID authentification request.<br/>Please go back or <a href="javascript: history.go(-2)"><strong>Click Here</strong></a> to cancel the process, but you will lose the unsubmitted content.',
 317=>'You are now logged in with limited permissions as ',
@@ -333,6 +333,22 @@ $lnc=array (
 'comments'=>'comments',
 //global.php:20
 'install_remove' => 'WARNING: Installation file: install/install.php is still on your server. Please DELETE or RENAME it now.<br>警告：安装文件install/install.php仍然在您的服务器上，请立刻将其改名或删除！<br>警告：安裝程式install/install.php仍然在您的伺服器上，請立刻將其改名或刪除！',
+320=>'Category',//'所属分类',
+321=>'Other',//'其他',
+322=>'Enter keywords and press Enter',//'输入关键词后回车',
+323=>'Random article',//'随机日志',
+324=>'The content is loading, please wait...',//'内容正在载入中，请稍后……',
+325=>'Close banner ads',//'关闭横幅广告',
+326=>'Close left sidebar',//'关闭左侧栏',
+327=>'Close right sidebar',//'关闭右侧栏',
+328=>'Narrow screen',//'窄屏幕',
+329=>'Default screen',//'默认屏幕',
+330=>'Wide Screen',//'宽屏幕',
+331=>'Adaptive screen',//'自适应屏幕',
+332=>'Increase font size',//'增加字号',
+333=>'Decrease font size',//'减小字号',
+334=>'Subscribe to RSS',//'订阅RSS',
+335=>'Permission Options',//'权限选项',
 );
 
 //nhân vật Trung Quốc 

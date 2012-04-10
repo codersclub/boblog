@@ -332,6 +332,22 @@ $lnc=array (
 'comments'=>'comments',
 //global.php:20
 'install_remove' => 'WARNING: Installation file: install/install.php is still on your server. Please DELETE or RENAME it now.<br>警告：安装文件install/install.php仍然在您的服务器上，请立刻将其改名或删除！<br>警告：安裝程式install/install.php仍然在您的伺服器上，請立刻將其改名或刪除！',
+320=>'所属分类',//'Category',
+321=>'其他',//'Other',
+322=>'输入关键词后回车',//'Enter keywords and press Enter',
+323=>'随机日志',//'Random article',
+324=>'内容正在载入中，请稍后……',//'The content is loading, please wait...',
+325=>'关闭横幅广告',//'Close banner ads',
+326=>'关闭左侧栏',//'Close left sidebar',
+327=>'关闭右侧栏',//'Close right sidebar',
+328=>'窄屏幕',//'Narrow screen',
+329=>'默认屏幕',//'Default screen',
+330=>'宽屏幕',//'Wide Screen',
+331=>'自适应屏幕',//'Adaptive screen',
+332=>'增加字号',//'Increase font size',
+333=>'减小字号',//'Decrease font size',
+334=>'订阅RSS',//'Subscribe to RSS',
+335=>'权限选项',//'Permission Options',
 );
 
 //农历用字
