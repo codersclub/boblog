@@ -160,7 +160,7 @@ $elements['excerpt']=<<<eot
 	{entrycontent}
 	</div>
 	<div class="textbox-bottom">
-	{$lnc[321]}:{entrycateicon} {entrycate} | {entrycomment} | {entrytb} | {entryviews} {ifadmin}
+	{$lnc['category']}: {entrycateicon} {entrycate} | {entrycomment} | {entrytb} | {entryviews} {ifadmin}
 	</div>
 	{tbbar}
 	{adminbar}
@@ -181,7 +181,7 @@ $elements['excerptontop']=<<<eot
 	{entrycontent}
 	</div>
 	<div class="textbox-bottom">
-	{$lnc[320]}: {entrycateicon} {entrycate} | {entrycomment} | {entrytb} | {entryviews} {ifadmin}
+	{$lnc['category']}: {entrycateicon} {entrycate} | {entrycomment} | {entrytb} | {entryviews} {ifadmin}
 	</div>
 	{tbbar}
 	{adminbar}
@@ -236,7 +236,7 @@ $elements['viewentry']=<<<eot
 	<div style="display: {iftags}"><img src="template/simple/images/tag.gif" /> {tags} {alltags}</div>
 	</div>
 	<div class="textbox-bottom">
-	 {$lnc[321]}: {entrycateicon} {entrycate} | {entrycomment} | {entrytb} | {entryviews} {ifadmin}
+	 {$lnc['category']}: {entrycateicon} {entrycate} | {entrycomment} | {entrytb} | {entryviews} {ifadmin}
 	</div>
 	{tbbar}
 	{adminbar}

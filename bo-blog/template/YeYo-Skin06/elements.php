@@ -30,7 +30,7 @@ $elements['displayheader']=<<<eot
 		<form method="post" action="visit.php">
 			<input name="job" type="hidden" value="search"/>
 			<input name="searchmethod" type="hidden" value="2"/>
-			<input name="keyword" type="text" id="search-text" alt="{$lnc[128]}" class="keyword" value="{$lnc[128]}..." onblur="if(this.value=='') this.value='{$lnc[128]}...';" onfocus="if(this.value=='{$lnc[128]}...') this.value='';" title="{$lnc[322]}"/>
+			<input name="keyword" type="text" id="search-text" alt="{$lnc[128]}" class="keyword" value="{$lnc[128]}..." onblur="if(this.value=='') this.value='{$lnc[128]}...';" onfocus="if(this.value=='{$lnc[128]}...') this.value='';" title="{$lnc['enter_keywords']}"/>
 		</form>
 	</div>
 	<div id="header">
@@ -48,7 +48,7 @@ $elements['displayheader']=<<<eot
 		<div id="block1">
 			<div id="top-ads">
 				<span class="top-ads-left"></span>
-				<div class="topAds"><div id="ads"><center><font color="#666666" size="4"><strong>{$lnc[324]}</strong></font></center></div></div>
+				<div class="topAds"><div id="ads"><center><font color="#666666" size="4"><strong>{$lnc['loading']}</strong></font></center></div></div>
 				<span class="top-ads-right"></span>
 			</div>
 		</div>
@@ -72,17 +72,17 @@ $elements['mainpage']=<<<eot
 				<span class="side-left"></span>
 				<div id="page-header-inner">
 					<div id="tools">
-						<a href="#" onclick="mygrid.toggleBlock('block1');"><img src="{$template['images']}/close_top_ads.gif" alt="{$lnc[325]}" title="{$lnc[325]}" border="0"/></a> 
-						<a href="#" onclick="mygrid.toggleLeft();"><img src="{$template['images']}/close_left_sidebar.gif" alt="{$lnc[326]}" title="{$lnc[326]}" border="0"/></a> 
-						<a href="#" onclick="mygrid.toggleRight();"><img src="{$template['images']}/close_right_sidebar.gif" alt="{$lnc[327]}" title="{$lnc[327]}" border="0"/></a> 
-						<a href="#" onclick="mygrid.resize(860,'px');"><img src="{$template['images']}/small_screen.gif" alt="{$lnc[328]}" title="{$lnc[328]}" border="0"/></a> 
-						<a href="#" onclick="mygrid.resize(980,'px');"><img src="{$template['images']}/default_screen.gif" alt="{$lnc[329]}" title="{$lnc[329]}" border="0"/></a> 
-						<a href="#" onclick="mygrid.resize(1236,'px');"><img src="{$template['images']}/wide_screen.gif" alt="{$lnc[330]}" title="{$lnc[330]}" border="0"/></a> 
-						<a href="#" onclick="mygrid.resize(99,'%');"><img src="{$template['images']}/full_screen.gif" alt="{$lnc[331]}" title="{$lnc[331]}" border="0"/></a> 
-						<a href="#" onclick="mygrid.resizeFont(0.05);"><img src="{$template['images']}/increase_size.gif" alt="{$lnc[332]}" title="{$lnc[332]}" border="0"/></a> 
-						<a href="#" onclick="mygrid.resizeFont(-0.05);"><img src="{$template['images']}/reduction_size.gif" alt="{$lnc[333]}" title="{$lnc[333]}" border="0"/></a> 
+						<a href="#" onclick="mygrid.toggleBlock('block1');"><img src="{$template['images']}/close_top_ads.gif" alt="{$lnc['close_ads']}" title="{$lnc['close_ads']}" border="0"/></a> 
+						<a href="#" onclick="mygrid.toggleLeft();"><img src="{$template['images']}/close_left_sidebar.gif" alt="{$lnc['close_lsidebar']}" title="{$lnc['close_lsidebar']}" border="0"/></a> 
+						<a href="#" onclick="mygrid.toggleRight();"><img src="{$template['images']}/close_right_sidebar.gif" alt="{$lnc['close_rsidebar']}" title="{$lnc['close_rsidebar']}" border="0"/></a> 
+						<a href="#" onclick="mygrid.resize(860,'px');"><img src="{$template['images']}/small_screen.gif" alt="{$lnc['narrow_screen']}" title="{$lnc['narrow_screen']}" border="0"/></a> 
+						<a href="#" onclick="mygrid.resize(980,'px');"><img src="{$template['images']}/default_screen.gif" alt="{$lnc['default_screen']}" title="{$lnc['default_screen']}" border="0"/></a> 
+						<a href="#" onclick="mygrid.resize(1236,'px');"><img src="{$template['images']}/wide_screen.gif" alt="{$lnc['wide_screen']}" title="{$lnc['wide_screen']}" border="0"/></a> 
+						<a href="#" onclick="mygrid.resize(99,'%');"><img src="{$template['images']}/full_screen.gif" alt="{$lnc['adaptive_screen']}" title="{$lnc['adaptive_screen']}" border="0"/></a> 
+						<a href="#" onclick="mygrid.resizeFont(0.05);"><img src="{$template['images']}/increase_size.gif" alt="{$lnc['font++']}" title="{$lnc['font++']}" border="0"/></a> 
+						<a href="#" onclick="mygrid.resizeFont(-0.05);"><img src="{$template['images']}/reduction_size.gif" alt="{$lnc['font--']}" title="{$lnc['font--']}" border="0"/></a> 
 						<!--global:{block_music}--> 
-						<a href="feed.php"><img src="{$template['images']}/top_rss.gif" alt="{$lnc[334]}" title="{$lnc[334]}" border="0"/></a>
+						<a href="feed.php"><img src="{$template['images']}/top_rss.gif" alt="{$lnc['rss_subscribe']}" title="{$lnc['rss_subscribe']}" border="0"/></a>
 					</div>
 				</div>
 				<span class="side-right"></span>
@@ -343,7 +343,7 @@ $elements['form_reply']=<<<eot
 				<div class="formbox-comment-tool">
 					<div id="choose-options-panel">
 						<a onclick="showhidediv('commentbox-openid')" style="cursor:hand;cursor:pointer;"><img src="{$template['images']}/openid.png" alt="OpenID {$lnc[89]}" title="OpenID {$lnc[89]}" border="0"/></a>
-						<a onclick="showhidediv('set')" style="cursor:hand;cursor:pointer;"><img src="{$template['images']}/options.png" alt="{$lnc[335]}" title="{$lnc[242]}, {$lnc[243]}, {$lnc[38]} {$lnc[245]}, {$lnc[284]}" border="0"/></a>
+						<a onclick="showhidediv('set')" style="cursor:hand;cursor:pointer;"><img src="{$template['images']}/options.png" alt="{$lnc['permissions']}" title="{$lnc[242]}, {$lnc[243]}, {$lnc[38]} {$lnc[245]}, {$lnc[284]}" border="0"/></a>
 						<a onclick="showhidediv('emots')" style="cursor:hand;cursor:pointer;"><img src="{$template['images']}/emots.png" alt="{$lnc[241]}" title="{$lnc[244]}" border="0"/></a>
 					</div>
 					<div id="set" class="choose-options" style="display: none;">

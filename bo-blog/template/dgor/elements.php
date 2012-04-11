@@ -204,7 +204,7 @@ $elements['excerpt']=<<<eot
 	</div>
 	<div class="textbox-bottom">
     <span class="author">{$lnc[74]}{entryauthor}</span>
-    <span class="cate"> | {$lnc[321]}: {entrycate}</span>
+    <span class="cate"> | {$lnc['category']}: {entrycate}</span>
     <span class="tags" style="display: {iftags}">| {tags} {alltags}
 	</span>
     </div>

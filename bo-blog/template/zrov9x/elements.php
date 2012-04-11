@@ -47,7 +47,7 @@ $elements['displayheader']=<<<eot
 				</div>
 				<div class="search">
 					<form name="searchform" method="post" action="visit.php">
-						<input class="sch" type="text" id="minisearch" name="keyword" value="{$lnc[322]}" onmouseover="this.select();" onfocus="this.value=='{$lnc[322]}'?this.value='':'';" onblur="this.value==''?this.value='{$lnc[322]}':''" onkeydown="KeyDown()" onkeyup='input()' />
+						<input class="sch" type="text" id="minisearch" name="keyword" value="{$lnc['enter_keywords']}" onmouseover="this.select();" onfocus="this.value=='{$lnc['enter_keywords']}'?this.value='':'';" onblur="this.value==''?this.value='{$lnc['enter_keywords']}':''" onkeydown="KeyDown()" onkeyup='input()' />
 						<input name="job" type="hidden" value="search"/><input type="hidden" name="searchmethod" value="2"/>
 						&nbsp;<input class="sch_go" type="image" src="{$template['images']}/search_go.gif" id="minisearchSubmit" value="" align="top" />
 					</form>

@@ -85,7 +85,7 @@ $elements['mainpage']=<<<eot
 <li><a href="#" onmouseover="easytabs('1', '1');" onfocus="easytabs('1', '1');" onclick="return false;"  title="" id="tablink1">{$lnc[113]}</a></li>
 <li><a href="#" onmouseover="easytabs('1', '2');" onfocus="easytabs('1', '2');" onclick="return false;"  title="" id="tablink2">{$lnc[114]}</a></li>
 <li><a href="#" onmouseover="easytabs('1', '3');" onfocus="easytabs('1', '3');" onclick="return false;"  title="" id="tablink3">{$lnc[126]}</a></li>
-<li><a href="#" onmouseover="easytabs('1', '4');" onfocus="easytabs('1', '4');" onclick="return false;"  title="" id="tablink4">{$lnc[323]}</a></li>
+<li><a href="#" onmouseover="easytabs('1', '4');" onfocus="easytabs('1', '4');" onclick="return false;"  title="" id="tablink4">{$lnc['random_article']}</a></li>
 </ul>
 </div>
 <div id="tabcontent1"><!--global:{block_entries}--></div>
