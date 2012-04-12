@@ -30,7 +30,7 @@ lang : {
 	nextTitle : 'Next (arrow right)',
 	moveTitle : 'Move',
 	fullExpandText : '1:1',
-	number: 'Фото %1 из %2',
+	number: 'Image %1 / %2',
 	restoreTitle : 'Click to close image, click and drag to move. Use arrow keys for next and previous.'
 },
 // See http://highslide.com/ref for examples of settings  

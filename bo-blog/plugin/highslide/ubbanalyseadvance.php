@@ -15,7 +15,7 @@ function makeslideimg($match){
 /*vot*/ $other = @$match[3];
 
 if ($url==$src){
-		$imgcode="<a href=\"{$src}\" class=\"highslide\" onclick=\"return hs.expand(this)\"><img src=\"{$src}\" class=\"insertimage\" alt=\"Highslide JS\" title=\"Нажмите для увеличения\" border=\"0\"{$other}/></a>";
+		$imgcode="<a href=\"{$src}\" class=\"highslide\" onclick=\"return hs.expand(this)\"><img src=\"{$src}\" class=\"insertimage\" alt=\"Highslide JS\" title=\"Click to enlarge\" border=\"0\"{$other}/></a>";
 	}
 	else{
 		$imgcode="<a href=\"{$url}\" target=\"_blank\"><img src=\"{$src}\" class=\"insertimage\" alt=\"{$alt}\" title=\"{$title}\" border=\"0\"{$other}/></a>";

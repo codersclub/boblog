@@ -5,7 +5,7 @@
 #stringName can only be formed by letters, numbers, dots and underlines
 ggReg=category
 #Set the description of this gadget by ggIntro, can be any characters.
-ggIntro=显示分类列表
+ggIntro=Show category list
 #Set the icon of this gadget by ggIcon, and put the image file into gadgets/images, 60px*60px
 ggIcon=category.jpg
 

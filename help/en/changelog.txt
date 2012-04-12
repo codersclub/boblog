@@ -96,8 +96,8 @@ Added:
 *You can choose a log not to appear in the summary and list modes.
 *You can customize the summary content for a single log that is different from the content of the log body.
 *Custom page function, you can write a simple, independent page.
-*You can specify whether the log is "original" and set the source of the log. －－Note: template cooperation is required. Add entrysourcewithlink (source with link) or entrysource (source link) or entrysourcelink (source name) tags in the relevant block to display these contents.
-* Comprehensively improve the URL rewriting mechanism. Supports setting aliases to personalize log URLs and fully path internal URL links. (This function requires server support, please check the official website for more information)
+*You can specify whether the log is "original" and set the source of the log. - -Note: template cooperation is required. Add entrysourcewithlink (source with link) or entrysource (source link) or entrysourcelink (source name) tags in the relevant block to display these contents.
+*Comprehensively improve the URL rewriting mechanism. Supports setting aliases to personalize log URLs and fully path internal URL links. (This function requires server support, please check the official website for more information)
 *Improve the upload mechanism and increase the attachment anti-theft chain function. When the uploaded file is being read, downloaded and displayed, it can be checked whether the requested origin is an allowed domain name.
 *If the publication time of a post is changed to a time in the future, its attribute can be set to the draft status of "automatically published after expiration", and the post will be automatically published after that time.
 *Language pack fine-tuning function: For the words in the front-end language pack, you can set some words to replace the words originally set in the language pack.
@@ -226,7 +226,7 @@ CSS and template changes:
 *rowcouple/rowodd: The even/odd rows of the comment and the latest log list are defined separately.
 *In the single comment and quotation block, you can use the tag {oddorcouplecss} to know whether the comment/quotation is singular (get odd) or odd (get couple), which is convenient for making interval display effects.
 *Support to use <!--global:{block_moduleid}--> to call the content of the module.
-*The template author should pay attention to the css settings in the relevant area of ​​the calendar. The total width should not be too narrow, and the padding should not be too large, so as not to display the lunar calendar.
+*The template author should pay attention to the setting of the css in the relevant area of the calendar. The total width should not be too narrow, and the padding should not be too large, so as not to display the lunar calendar.
 *Star pattern and arrow pattern can be specified in the template information folder ($template['moreimages']), if not specified, the default is used.
 *Add the tag {blockreply} to the comment block to display the link to quickly block a single comment and message.
 * Added support for .activepage in the navigation bar at the top of the page. This class can define the link style of the currently active page.
@@ -373,7 +373,7 @@ Attachment: Fixed Bugs:
 -The problem that the xml-rpc interface can never be accessed;
 -When opening a beautified URL, the default template cannot select text in IE;
 -When opening the beautified URL, the jump address in js is abnormal under IE;
--When the database gives an error message, the data table prefix is ​​not filtered;
+-When the database gives an error message, the data table prefix is not filtered;
 -Fix a problem that may cause login errors;
 -The copyright statement says "The program is based on PHP+text";
 -Some other questions.
@@ -415,7 +415,7 @@ Comments, messages, and replies posted/modified/deleted by the administrator all
 Correct 90% of known bugs;
 You can set whether to open the verification code for speaking and logging in separately;
 Re-statistics of each statistics can be performed;
-Allows to set custom code in the head area of ​​the template;
+Allows to set custom code in the head area of the template;
 Contains the upgrade program from 1.7 (install/updates/).
 
 

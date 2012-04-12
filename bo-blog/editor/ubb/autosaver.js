@@ -1,8 +1,8 @@
-/*    本文件部分思路和方法来自
-       基于Ajax的网站通用草稿自动保存系统SipoAutoSaver(ver 3.0)  by Sipo
-       http://www.dc9.cn/post/SipoAutoSaverV3.html                                 */
+/* Some ideas and methods of this document come from
+        Ajax-based web site general draft automatic saving system SipoAutoSaver (ver 3.0) by Sipo
+        http://www.dc9.cn/post/SipoAutoSaverV3.html */
 
-var AutoSaveTime=60;   //修改每次保存时间(秒)
+var AutoSaveTime=60; //Save modified each time (in seconds)
 var AutoHideMsg=55;  
 
 var autosaveroff=getCookie ('autosaveroff');
