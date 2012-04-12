@@ -1,13 +1,14 @@
 <?php
 if (!defined('VALIDREQUEST')) die ('Access Denied.');
 function plugin_highslide_run ($str) {
-
-/*vot*/	$highslide_search =	"/<a href=\"(\S+?)\" target=\"_blank\"><img src=\"(\S+?)\"((.+?)|\S*)\/><\/a>/is";
+    if(@$GLOBALS['itemid']) { // Run highslide on r3ad.php only!
+/*vot*/ $highslide_search = "/<a href=\"(\S+?)\" target=\"_blank\"><img src=\"(\S+?)\"((.+?)|\S*)\/><\/a>/is";
 	
-/*vot*/	$highslide_replace ="makeslideimg";
+/*vot*/ $highslide_replace = "makeslideimg";
 
-/*vot*/		$str=preg_replace_callback($highslide_search, $highslide_replace, $str);
-		return $str;
+/*vot*/ $str=preg_replace_callback($highslide_search, $highslide_replace, $str);
+    }
+    return $str;
 }
 function makeslideimg($match){
 /*vot*/ $url = @$match[1];
