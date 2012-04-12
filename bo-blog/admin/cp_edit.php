@@ -18,8 +18,8 @@ $partbacktoart=$lna[266];
 $backtoaddnew="{$lna[267]}|admin.php?go=edit_add";
 $backtodraft="{$lna[325]}|admin.php?go=entry_draft";
 
-if (!$job) $job='add';
-$id=$itemid;
+if (!@$job) $job='add';
+$id=@$itemid;
 
 include_once ("data/cache_emot.php");
 /*vot*/ if (@$flset['weather']!=1) {
