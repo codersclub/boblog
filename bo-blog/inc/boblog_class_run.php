@@ -12,9 +12,11 @@ In memory of my university life
 
 class boblog {
 //Bo-Blog 2.x Database Control Class (c) Bob Shen
-	function boblog() {
+	function __construct() {
 		global $db_connected;
-		if (empty($db_connected)) $this->connectdb();
+		if (empty($db_connected)) {
+			$this->connectdb();
+		}
 	}
 
 	function connectdb() {
@@ -45,7 +47,7 @@ class boblog {
 			}
 			$i+=1;
 		}
-/*vot*/		mysql_free_result($result);
+/*vot*/		db_free_result($result);
 		return $fetchresult;
 	}
 
@@ -75,7 +77,7 @@ class boblog {
 }
 
 class template {
-	function template() {
+	function __construct() {
 		global $elements, $template;
 		if (empty($elements)) {
 			global $lnc, $tptvalue;
@@ -950,7 +952,7 @@ class getblogs extends boblog {
 				$tmp=str_replace(array('/>', '<', '>'), array(' />', '', ''), mystrtolower($singlestr));
 				@list($currenttag)=@explode(' ', $tmp);
 				if (!in_array($currenttag, $allowsingle)) {
-					if ($currenttag{0}=='/') {
+					if ($currenttag[0]=='/') {
 						$currenttag=str_replace('/', '', $currenttag);
 						$htmltagend[$currenttag]+=1;
 					} else {
