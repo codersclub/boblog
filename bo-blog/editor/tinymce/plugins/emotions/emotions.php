@@ -20,7 +20,7 @@ $perline=15;
 $selbody='';
 if (is_array($myemots)) {
 	$i=0;
-	while (@list($emotcode, $emott)=@each($myemots)) {
+	foreach ($myemots as $emotcode => $emott) {
 		$emotthumb=$emott['thumb'];
 		$emotorigin=$emott['image'];
 		$selbody.="<td><a href=\"javascript:insertEmotion('{$emotorigin}','{$emotcode}');\"><img src=\"../../../../images/emot/{$emotthumb}\" border=\"0\" alt=\"{$emotcode}\" /></a></td>";

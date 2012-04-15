@@ -42,7 +42,7 @@ class boblog {
 /*vot*/		$fetchresult = array();
 		$i=0;
 		while ($row=db_fetch_array($result)) {
-			while (@list($key, $val)=@each($row)) {
+			foreach ($row as $key => $val) {
 				$fetchresult[$i][$key]=$val;
 			}
 			$i+=1;
@@ -56,7 +56,7 @@ class boblog {
 /*vot*/		$fetchresult = array();
 		$i=0;
 		while ($row=db_fetch_array($result)) {
-			while (@list($key, $val)=@each($row)) {
+			foreach ($row as $key => $val) {
 				$fetchresult[$key][$i]=$val;
 			}
 			$i+=1;
@@ -112,7 +112,7 @@ class template {
 			$content[$elementname]=preg_replace("/<!-- php --><!--(.+?)--><!-- \/php -->/is", '', $content[$elementname]);
 		}
 
-		while (@list($parser, $value) = @each ($array)) {
+		foreach ($array as $parser => $value) {
 			$tptvalue[$parser]=$value;
 			$content[$elementname]=str_replace("{".$parser."}", $value, $content[$elementname]);
 		}
@@ -125,7 +125,7 @@ class template {
 /*vot*/		preg_replace_callback("/<!--global:{(.+?)}-->/i", function ($match) {
 /*vot*/			return "\$globalvar['".$match[1]."']=@\$tptvalue['".$match[1]."']";
 /*vot*/			}, $contentstr);
-		while (@list($parser, $value) = @each ($globalvar)) {
+		foreach ($globalvar as $parser => $value) {
 			$contentstr=str_replace("<!--global:{".$parser."}-->", $value, $contentstr);
 		}
 		if ($screen) echo ($contentstr);
@@ -197,7 +197,7 @@ class getblogs extends boblog {
 		$i=0;
 /*vot*/		$fetchresult = array();
 		while ($row=db_fetch_array($result)) {
-			while (list($key, $val)=each($row)) {
+			foreach ($row as $key=>$val) {
 				$fetchresult[$i][$key]=$val;
 			}
 			$i+=1;

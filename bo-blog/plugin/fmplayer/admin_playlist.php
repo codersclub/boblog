@@ -18,8 +18,8 @@ if ($configjob=='save_list') {
 	$savetext="<?PHP\n";
 	$save_list=$_POST['fmp'];
 	//if (count($save_list)<=0) catcherror ($lna[1013]);
-	while (@list ($key, $val) = @each ($save_list)) {
-		while (@list ($val_key, $val_value) = @each ($val)) {
+	foreach ($save_list as $key => $val) {
+		foreach ($val as $val_key => $val_value) {
 			if($val_key=='title' && empty($val_value))break;
 			if(!empty($val_value))$savetext.="\$fmp_list['{$key}']['{$val_key}']='".admin_convert($val_value)."';\n";
 		}

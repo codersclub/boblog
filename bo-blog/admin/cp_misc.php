@@ -32,7 +32,7 @@ if (!$job) $job='forbidden';
 if ($job=='weatherset') {
 	if ($weather) {
 		$i=0;
-		while (@list($weathername, $weatherdetail)=@each($weather)) {
+		foreach ($weather as $weathername => $weatherdetail) {
 			$formbody.="<tr><td colspan=2 class='prefsection'>{$lna[361]}{$weatherdetail['text']}</td></tr>";
 			if ($weathername!='blank') $formbody.="<tr><td class='prefleft'>{$lna[362]}</td><td class='prefright'><input type=text size=20 name='variable[{$i}]' value='{$weathername}'> {$lna[363]}</td></tr>";
 			else $formbody.="<tr><td class='prefleft'>{$lna[362]}</td><td class='prefright'><input type=text size=20 name='variable[{$i}]' value='{$weathername}' disabled><input type=hidden name='variable[{$i}]' value='{$weathername}'> {$lna[364]}</td></tr>";
@@ -121,7 +121,7 @@ if ($job=='weatherdel') {
 	}
 	$blog->query("UPDATE `{$db_prefix}blogs` SET `weather`='blank' WHERE `weather`='{$itemid}'");
 	if ($weather) {
-		while (@list($weathername, $weatherdetail)=@each($weather)) {
+		foreach ($weather as $weathername, $weatherdetail) {
 			if ($weathername!=$itemid && $weathername!=='') {
 				$conout.="\$weather['{$weathername}']['image']='{$weatherdetail['image']}';\n";
 				$conout.="\$weather['{$weathername}']['text']='{$weatherdetail['text']}';\n";
@@ -206,7 +206,7 @@ if ($job=='avatarrefresh') {
 if ($job=='emot') {
 	if ($myemots) {
 		$i=0;
-		while (@list($emotcode, $emott)=@each($myemots)) {
+		foreach ($myemots as $emotcode => $emott) {
 			$emotimage=$emott['image'];
 			$emotthumb=$emott['thumb'];
 			$formbody.="<tr class='sect' align=center><td width=40><img src='images/emot/{$emotthumb}'></td><td><input type=text size=9 name='variable[{$i}]' value='{$emotcode}'></td><td><input type=text size=25 name='image[{$i}]' value='{$emotimage}'> </td><td><input type=text size=25 name='thumb[{$i}]' value='{$emotthumb}'></td></tr>";
@@ -467,7 +467,7 @@ if ($job=='changesessiondir') {
 	unset ($config);
 	include('data/config.php');
 	$savetext="<?PHP\n\$db_server='{$db_server}';\n\$db_username='{$db_username}';\n\$db_password='{$db_password}';\n\$db_name='{$db_name}';\n\$db_prefix='{$db_prefix}';\n\$db_410='{$db_410}';\n{$partwrite}";
-	while (@list ($key, $val) = @each ($config)) {
+	foreach ($config as $key, $val) {
 		$savetext.="\$config['{$key}']='".admin_convert(stripslashes($val))."';\n";
 	}
 	if (writetofile ("data/config.php", $savetext)) {
@@ -530,7 +530,7 @@ if ($job=='urlrewritesave') {
 	acceptrequest('urlrewritesta');
 	$urlrewritesta=floor($urlrewritesta);
 	$savetext="<?PHP\n\$db_server='{$db_server}';\n\$db_username='{$db_username}';\n\$db_password='{$db_password}';\n\$db_name='{$db_name}';\n\$db_prefix='{$db_prefix}';\n\$db_410='{$db_410}';\n\$db_tmpdir='{$db_tmpdir}';\n\$db_defaultsessdir='{$db_defaultsessdir}';\n";
-	while (@list ($key, $val) = @each ($config)) {
+	foreach ($config as $key, $val) {
 		if ($key=='urlrewritemethod') {
 			$savetext.="\$config['{$key}']='{$urlrewritesta}';\n";
 			$saved=1;

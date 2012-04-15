@@ -19,7 +19,7 @@ if ($configjob=='save_config') {
 	$savetext="<?PHP\n";
 	$save_config=$_POST['prefconfig'];
 	if (count($save_config)<=1) catcherror ($lna[1013]);
-		while (@list ($key, $val) = @each ($save_config)) {
+		foreach ($save_config as $key => $val) {
 			$savetext.="\$fmp_cfg['{$key}']='".admin_convert($val)."';\n";
 		}
 	if ($savetext=='') catcherror ($lna[1013]);

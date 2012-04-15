@@ -27,7 +27,7 @@ $prefseccounter=0;
 if ($job=='default') {
 	$phpver=PHP_VERSION;
 	$phpos=PHP_OS.' '.$_SERVER['SERVER_SOFTWARE'];
-	$mysqlver=@mysql_get_server_info();
+	$mysqlver=@db_get_server_info();
 	if (function_exists("gd_info")) {
 		$tmp_gd_info=gd_info();
 		$gdver=$tmp_gd_info["GD Version"];
@@ -244,7 +244,7 @@ if ($job=='configsave') {
 	//catcherror (print_r($save_config, true));
 	if (count($save_config)<=1) catcherror ($lna[1013]);
 	$save_config['blogcreatetime']=strtotime($save_config['blogcreatetime']);
-	while (@list ($key, $val) = @each ($save_config)) {
+	foreach ($save_config as $key => $val) {
 		$savetext.="\$config['{$key}']='".admin_convert(stripslashes($val))."';\n";
 	}
 	if ($savetext=='') catcherror ($lna[1013]);
@@ -296,7 +296,7 @@ if ($job=='mbconsave') {
 	$savetext="<?PHP\n";
 	$save_config=$_POST['prefconfig'];
 	if (count($save_config)<=1) catcherror ($lna[1013]);
-	while (@list ($key, $val) = @each ($save_config)) {
+	foreach ($save_config as $key => $val) {
 		$savetext.="\$mbcon['{$key}']='".admin_convert($val)."';\n";
 	}
 	if ($savetext=='') catcherror ($lna[1013]);
@@ -888,7 +888,7 @@ if ($job=='funclocksave') {
 	$relatedmods=array('tags'=>'alltags', 'star'=>'starred', 'guestbook'=>'guestbook');
 	$tosetinvisiblearray=$tosetvisiblearray=array();
 
-	while (@list ($key, $val) = @each ($save_config)) {
+	foreach ($save_config as $key => $val) {
 		$savetext.="\$flset['{$key}']='".admin_convert($val)."';\n";
 		if ($relatedmods[$key]) {
 			if ($val==1) $tosetinvisiblearray[]=$relatedmods[$key];
