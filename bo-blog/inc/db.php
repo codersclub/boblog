@@ -239,18 +239,20 @@ function db_close() {
 }
 
 function db_field_name($result, $field_offset) {
+	global $db_type;
 	if($db_type == 'mysqli') {
-        return mysqli_field_name($result, $field_offset);
+	        return mysqli_field_name($result, $field_offset);
 	} else {
-        return mysql_field_name($result, $field_offset);
+        	return mysql_field_name($result, $field_offset);
 	}
 }
 
 function db_get_server_info() {
+	global $db_type;
 	if($db_type == 'mysqli') {
-        return mysqli_get_server_info();
+	        return mysqli_get_server_info();
 	} else {
-        return mysql_get_server_info();
+        	return mysql_get_server_info();
 	}
 }
 
@@ -266,11 +268,13 @@ function db_halt($message = '', $sql = '') {
 
 
     $errmsg = "<b>Bo-Blog Database System Tips</b>: $message\n\n";
-/*vot*/ $errmsg .= "<b>Time</b>: ".gmdate("Y-m-d H:i:s", $timestamp + ($config['timezone'] * 3600))."\n";
-/*vot*/ $errmsg .= "<b>Script</b>: ".$_SERVER['PHP_SELF']."\n\n";
+    $errmsg .= "<b>Time</b>: ".gmdate("Y-m-d H:i:s", $timestamp + ($config['timezone'] * 3600))."\n";
+    $errmsg .= "<b>Script</b>: ".$_SERVER['PHP_SELF']."\n\n";
+
     if($sql) {
     	$errmsg .= "<b>SQL</b>: ".htmlspecialchars($sql)."\n";
     }
+
     $errmsg .= "<b>Error</b>: $dberror\n";
     $errmsg .= "<b>Errno.</b>: $dberrno";
 
