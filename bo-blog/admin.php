@@ -8,6 +8,7 @@ Code: Bob Shen
 Offical site: http://www.bo-blog.com
 Copyright (c) Bob Shen, China - Shanghai
 In memory of my university life
+Modified by Valery Votintsev
 ------------------------------------------------------- */
 
 define('VALIDADMIN', 1);
@@ -15,7 +16,6 @@ define("noCounter", 1);
 
 // Init variables
 $adminlogstat = 0;
-
 $admskinsel = '';
 $arraychecked_permitgp = '';
 $blogalias = '';
@@ -94,6 +94,7 @@ $adminclassshow = array(
     'main'       => '',
     'carecenter' => '',
 );
+
 require_once("global.php");
 include_once("lang/{$langback}/backend.php");
 include_once("data/allmods.php");
@@ -101,6 +102,7 @@ include("data/cache_usergroup.php");
 require_once("admin/cache_func.php");
 
 $blogplugin = $plugin_onload = $plugin_header = null;
+
 include_once("data/plugin_enabled.php");
 
 if ($logstat !== 1) {
@@ -114,14 +116,17 @@ if ($adminlogstat !== 1) {
 }
 
 acceptrequest('act,go,page');
+
 if (!isset($page) || !is_numeric($page) || $page <= 0) {
     $page = 1;
 } else {
     $page = floor($page);
 }
+
 if ($go) {
     @list($act, $job, $itemid) = @explode('_', basename($go));
 }
+
 if (!$act) {
     $act = 'main';
 } else {
@@ -136,6 +141,7 @@ if ($act == 'upload') {
 $maxrecord = $blog->getsinglevalue("{$db_prefix}maxrec");
 
 include_once("admin/admin_header.php");
+
 //Start Loading Modules
 if (file_exists("admin/cp_{$act}.php")) {
     if ($act != 'edit' && $act != 'entry') {
@@ -155,10 +161,10 @@ if (file_exists("admin/cp_{$act}.php")) {
         include("admin/cp_main.php");
     }
 }
+
 $display_overall = str_replace('<!--plugin_header-->', $plugin_header, $display_overall);
 $display_overall = str_replace('<body', '<body ' . $plugin_onload, $display_overall);
 include_once("admin/admin_footer.php");
-
 
 //Starting Admin-only functions
 function highlightadminitems($itemhighlight, $itemsrow)

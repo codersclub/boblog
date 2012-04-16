@@ -8,4 +8,4 @@ $showtips[5]='You can send to multiple blog quoted (Trackback).';
 $showtips[6]='Message from Key audit mechanism, the link frequency and the length of the text to identify spam and so on.';
 $showtips[7]='If your server supports the GD, you can open the code to prevent the malicious message.';
 $showtips[8]='you can add to, delete from any item on the sidebar, for example, to add advertisements or weather.';
-$showtips[9]='Bo-Blog using UTF-8 encoding, can support almost all the world's languages text.';
+$showtips[9]='Bo-Blog using UTF-8 encoding, can support almost all the world\'s languages text.';

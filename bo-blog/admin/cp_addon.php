@@ -8,6 +8,7 @@ Code: Bob Shen
 Offical site: http://www.bo-blog.com
 Copyright (c) Bob Shen, China - Shanghai
 In memory of my university life
+Modified by Valery Votintsev
 ------------------------------------------------------- */
 
 if (!defined('VALIDADMIN')) {
