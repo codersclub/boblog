@@ -97,12 +97,12 @@ function db_select_db($dbname) {
 }
 */
 
-function db_fetch_array($query, $result_type = MYSQL_ASSOC) {
+function db_fetch_array($query) {
 	global $db_type;
 	if($db_type == 'mysqli') {
-		return mysqli_fetch_array($query, $result_type);
+		return mysqli_fetch_array($query, MYSQLI_ASSOC);
 	} else {
-		return mysql_fetch_array($query, $result_type);
+		return mysql_fetch_array($query, MYSQL_ASSOC);
 	}
 }
 
