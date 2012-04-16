@@ -39,8 +39,12 @@ $elements['displayheader']=<<<eot
 				<form name="searchform" method="post" action="visit.php">
 					<input name="job" type="hidden" value="search"/>
 					<input name="searchmethod" type="hidden" value="2"/>
-					<div id="search-text"><input name="keyword" type="text" class="keyword" value="Search..." onclick="if (this.value=='Search...') this.value='';" /></div>
-					<div id="search-submit"><input name="submit" type="image" class="search" title="Search" src="{$template['images']}/searchbutton.png" alt="Search" value="Go" /></div>
+					<div id="search-text">
+					    <input name="keyword" type="text" class="keyword" value="Search..." onclick="if (this.value=='Search...') this.value='';" />
+					</div>
+					<div id="search-submit">
+					    <input name="submit" type="image" class="search" title="Search" src="{$template['images']}/searchbutton.png" alt="Search" value="Go" />
+					</div>
 				</form>
 				</div>
 			</div>
@@ -53,21 +57,29 @@ $elements['mainpage']=<<<eot
 				<div id="innerContent">
 					<div class="announce" style="display: {ifannouncement}">
 						<div class="announce-content">
-						{topannounce}
+						    {topannounce}
 						</div>
 					</div>
 					<div class="article-top" style="display: {iftoppage}">
 						<div class="pages">
-							<div class="previous-entries"><a href="{nextpageurl}">{$lnc[70]}</a></div>
-							<div class="next-entries"><a href="{previouspageurl}">{$lnc[69]}</a></div>
+							<div class="previous-entries">
+							    <a href="{nextpageurl}">{$lnc[70]}</a>
+							</div>
+							<div class="next-entries">
+							    <a href="{previouspageurl}">{$lnc[69]}</a>
+							</div>
 							<div class="clear">&nbsp;</div>
 						</div>
 					</div>
 					{mainpart}
 					<div class="article-bottom" style="display: {ifbottompage}">
 						<div class="pages">
-							<div class="previous-entries"><a href="{nextpageurl}">{$lnc[70]}</a></div>
-							<div class="next-entries"><a href="{previouspageurl}">{$lnc[69]}</a></div>
+							<div class="previous-entries">
+							    <a href="{nextpageurl}">{$lnc[70]}</a>
+							</div>
+							<div class="next-entries">
+							    <a href="{previouspageurl}">{$lnc[69]}</a>
+							</div>
 							<div class="clear">&nbsp;</div>
 						</div>
 					</div>
@@ -99,9 +111,11 @@ $elements['displayfooter']=<<<eot
 		<div id="footer">
 			<div id="innerFooter">
 			<!-- Please respect the labor of others, reservations about the author and copyright amendment -->
-				{section_foot_components} | Design By <a href="http://livesino.net" target="_blank">Picturepan2</a> | Transplant by 404cn.com
-			<div id="processtime">
-			</div>
+				{section_foot_components}
+				| Design By <a href="http://livesino.net" target="_blank">Picturepan2</a>
+				| Transplant by 404cn.com
+			    <div id="processtime">
+			    </div>
 			</div>
 		</div>
 	</div>
@@ -135,10 +149,10 @@ eot;
 
 $elements['sideblock']=<<<eot
 <div class="panel">
-<h5 onclick='showhidediv("sidebar_{id}");'>{title}</h5>
-<div class="panel-content" id="sidebar_{id}" style="display: {ifextend}">
-{content}
-</div>
+    <h5 onclick='showhidediv("sidebar_{id}");'>{title}</h5>
+    <div class="panel-content" id="sidebar_{id}" style="display: {ifextend}">
+        {content}
+    </div>
 </div>
 eot;
 
@@ -147,7 +161,7 @@ $elements['sideblock_search']='';
 $elements['displaybody']=<<<eot
 <div id="sidebar" class="sidebar">
   <div id="innerSidebar">
-  {section_side_components}
+    {section_side_components}
   </div>
 </div>
 eot;
@@ -161,20 +175,19 @@ $elements['excerpt']=<<<eot
 		<span class="post-year">{entrydatey}</span>
 	</div>
 	<div class="textbox-title">
-		<h4>
-		{entrytitle}
-		</h4>
+		<h4>{entrytitle}</h4>
 		<div class="textbox-label">
 			<span class="post-author">{entryauthor}</span>
-                        <span class="post-tag" style="display: {iftags}">{alltags}</span>
-                        <span class="add-comment">{entrycomment}</span>
-<!-- //vot --><span class="entryviews">{entryviews}&nbsp;</span>
+            <span class="post-tag" style="display: {iftags}">{alltags}</span>
+            <span class="add-comment">{entrycomment}</span>
+            <span class="entryviews">{entryviews}&nbsp;</span>
 		</div>
 	</div>
 	<div class="textbox-content">
-	{entrycontent}
+	    {entrycontent}
 	</div>
-	{adminlink} {adminbar}
+	{adminlink}
+	{adminbar}
 </div>
 eot;
 
@@ -187,19 +200,21 @@ $elements['excerptontop']=<<<eot
 	</div>
 	<div class="textbox-title">
 		<h4>
-		<a href="javascript: showhidediv('{topid}');">{entrytitletext}</a> [{$lnc[33]}] 
+		<a href="javascript: showhidediv('{topid}');">{entrytitletext}</a>
+		[{$lnc[33]}] 
 		</h4>
 		<div class="textbox-label">
 			<span class="post-author">{entryauthor}</span>
-                        <span class="post-tag" style="display: {iftags}">{alltags}</span>
-                        <span class="add-comment">{entrycomment}</span>
+            <span class="post-tag" style="display: {iftags}">{alltags}</span>
+            <span class="add-comment">{entrycomment}</span>
 		</div>
 	</div>
 	<div id="{topid}" style="display: none;">
 	  <div class="textbox-content">
-	  {entrycontent}
+	    {entrycontent}
 	  </div>
-	  {adminlink}{adminbar}
+	  {adminlink}
+	  {adminbar}
 	</div>
 	<div class="clear">&nbsp;</div>
 </div>
@@ -222,12 +237,13 @@ $elements['viewentry']=<<<eot
 		</h4>
 		<div class="textbox-label">
 			<span class="post-author">{entryauthor}</span>
-                        <span class="post-tag" style="display: {iftags}">{alltags}</span>
-                        <span class="post-entrycate">{entrycate}</span>
+            <span class="post-tag" style="display: {iftags}">{alltags}</span>
+            <span class="post-entrycate">{entrycate}</span>
 		</div>
 	</div>
 	<div class="textbox-content" id="zoomtext">
-	  {entrycontent} {ifedited}
+	  {entrycontent}
+	  {ifedited}
 	</div>
 	<div class="textbox-bottom">
 		<span class="entrysource">{$lnc[240]}: {entrysourcewithlink}</span>
@@ -259,35 +275,38 @@ eot;
 
 $elements['listbody']=<<<eot
 <div class="listbox">
-	<div class="listbox-table">
+  <div class="listbox-table">
 	<table cellpadding="2" cellspacing="0" width="100%">
-	<tr>
+	  <tr>
 		<td class="listbox-header" align="center">
 			{$lnc[237]}
 		</td>
 		<td class="listbox-header" style="word-break: normal;" align="center">{$lnc[238]}</td>
 		<td class="listbox-header" width="70" align="center">{$lnc[239]}</td>
-	</tr>
-	{listbody}
+	  </tr>
+	  {listbody}
 	</table>
-	</div>
+  </div>
 </div>
 eot;
 
 $elements['comment']=<<<eot
 	<div class="commentbox comment-{oddorcouplecss}">
 		<div class="commentbox-title">
-		<span class="commentbox-author">{replier}</span> {$lnc['said']}: {deladminreply} {delreply} {blockreply}</br>
-		<span class="commentbox-label">{replytime}</span> {replierhomepage} {replierip} {addadminreply}
+    		<span class="commentbox-author">{replier}</span> {$lnc['said']}: {deladminreply} {delreply} {blockreply}
+    		</br>
+	    	<span class="commentbox-label">{replytime}</span> {replierhomepage} {replierip} {addadminreply}
 		</div>
 		<div class="commentbox-content">
 			{replycontent}
 			<div class="quote" style="display: {ifadminreplied}"  id="replied_{commentid}">
 			{adminrepliershow}:
-			<br />{adminreplycontent}
+			<br />
+			{adminreplycontent}
 			</div>
 		</div>
-		<div id="{commentid}" style="display: none">{adminreplybody}
+		<div id="{commentid}" style="display: none">
+		    {adminreplybody}
 		</div>
 	</div>
 eot;
@@ -295,12 +314,15 @@ eot;
 $elements['trackback']=<<<eot
 	<div class="trackbackbox">
 		<div class="trackbackbox-title">
-		{tbtitle} </br>
+		{tbtitle}
+		</br>
 		[{tbtime}] {delreply}
 		</div>
 		<div class="trackbackbox-content">
-		 IP: {repip}<br/>
-		 {$lnc[240]}<a href="{tburl}" target="_blank">{tbblogname}</a><br/>
+		 IP: {repip}
+		 <br/>
+		 {$lnc[240]}<a href="{tburl}" target="_blank">{tbblogname}</a>
+		 <br/>
 		 {$lnc[76]}{tbcontent}
 		</div>
 	</div>
@@ -315,8 +337,11 @@ $elements['form_reply']=<<<eot
 			<div class="formbox-comment-content">
 				<div class="formbox-comment-input">
 					{if_neednopsw_begin}
-					<input name="v_replier" id="v_replier" type="text" size="42" class="text" value="{replier}" {disable_replier}/> {$lnc[246]}<br/><br/>
-					<input name="v_repurl" id="v_repurl" type="text" size="42" class="text" value="{repurl}" /> {$lnc[170]}<br/><br/>
+					<input name="v_replier" id="v_replier" type="text" size="42" class="text" value="{replier}" {disable_replier}/> {$lnc[246]}<br/>
+					<br/>
+					<input name="v_repurl" id="v_repurl" type="text" size="42" class="text" value="{repurl}" /> {$lnc[170]}
+					<br/>
+					<br/>
 					<input name="v_repemail" id="v_repemail" type="text" size="42" class="text"  value="{repemail}" /> {$lnc[248]}
 					<input name="v_password" id="v_password" type="hidden" size="42" class="text"  value="{password}" {disable_password}/>
 					{if_neednopsw_end}
@@ -336,11 +361,19 @@ $elements['form_reply']=<<<eot
 						{emots}
 					</div>
 				</div>
-				{if_securitycode_begin}<script type="text/javascript">securitycodejs="{$lnc[249]} <span id='securityimagearea'><img src='inc/securitycode.php?rand={rand}' alt='' title='{$lnc[250]}' style='cursor: pointer;' onclick=\"refreshsecuritycode('securityimagearea', 'v_security');\"/></span> <input name='v_security' id='v_security' type='text' size='4' maxlength='4' class='text' style='ime-mode: disabled' /> ";</script>  {if_securitycode_end}
-				<textarea name="v_content" id="v_content" cols="100%" rows="10" onkeydown="ctrlenterkey(event);" onfocus="if (securitycodejs!=null) {document.getElementById('showsecuritycode').innerHTML=securitycodejs; securitycodejs=null;}"></textarea> <br/>	<span id="showsecuritycode"></span>
+				{if_securitycode_begin}
+				<script type="text/javascript">
+				securitycodejs="{$lnc[249]} <span id='securityimagearea'><img src='inc/securitycode.php?rand={rand}' alt='' title='{$lnc[250]}' style='cursor: pointer;' onclick=\"refreshsecuritycode('securityimagearea', 'v_security');\"/></span> <input name='v_security' id='v_security' type='text' size='4' maxlength='4' class='text' style='ime-mode: disabled' /> ";
+				</script>
+				{if_securitycode_end}
+				<textarea name="v_content" id="v_content" cols="100%" rows="10" onkeydown="ctrlenterkey(event);" onfocus="if (securitycodejs!=null) {document.getElementById('showsecuritycode').innerHTML=securitycodejs; securitycodejs=null;}"></textarea>
+				<br/>
+				<span id="showsecuritycode"></span>
 				<div style="padding-top:10px">
 					{hidden_areas}
-					<div class="btnborder"><input type="buttom" name="btnSubmit" id="btnSubmit" value="{$lnc[25]}" class="button" onclick="ajax_submit('{jobnow}'); return false;"/></div>
+					<div class="btnborder">
+					    <input type="buttom" name="btnSubmit" id="btnSubmit" value="{$lnc[25]}" class="button" onclick="ajax_submit('{jobnow}'); return false;"/>
+					</div>
 					<div class="clear" style="width:10px">&nbsp;</div>
 				</div>
 			</div>
@@ -351,7 +384,7 @@ eot;
 
 $elements['endviewentry']=<<<eot
 	<div class="comment-pages">
-	{innerpages}
+    	{innerpages}
 	</div>
 </div>
 {form_reply}
@@ -374,20 +407,38 @@ $elements['login']=<<<eot
   </tr>
   <tr>
     <td class="formbox-rowheader">{$lnc[132]}</td>
-    <td class="formbox-content"><input name="username" type="text" id="username" size="24" class="text" /></td>
+    <td class="formbox-content">
+      <input name="username" type="text" id="username" size="24" class="text" />
+    </td>
   </tr>
   <tr>
     <td class="formbox-rowheader">{$lnc[133]}</td>
-    <td class="formbox-content"><input name="password" type="password" id="password" size="16" class="text" /></td>
+    <td class="formbox-content">
+      <input name="password" type="password" id="password" size="16" class="text" />
+    </td>
   </tr>
   <tr>
     <td class="formbox-rowheader">{$lnc[255]}</td>
-    <td class="formbox-content"><input name="savecookie" type="radio" id="savecookie" value="0"/>{$lnc[256]} <input name="savecookie" type="radio" id="savecookie" value="3600"/>{$lnc[257]} <input name="savecookie" type="radio" id="savecookie" value="86400"/>{$lnc[258]}  <input name="savecookie" type="radio" id="savecookie" value="604800"/>{$lnc[259]}  <input name="savecookie" type="radio" id="savecookie" value="2592000"/>{$lnc[260]}   <input name="savecookie" type="radio" id="savecookie" value="31104000"/>{$lnc[261]}</td>
+    <td class="formbox-content">
+      <input name="savecookie" type="radio" id="savecookie" value="0"/>{$lnc[256]}
+      <input name="savecookie" type="radio" id="savecookie" value="3600"/>{$lnc[257]}
+      <input name="savecookie" type="radio" id="savecookie" value="86400"/>{$lnc[258]}
+      <input name="savecookie" type="radio" id="savecookie" value="604800"/>{$lnc[259]}
+      <input name="savecookie" type="radio" id="savecookie" value="2592000"/>{$lnc[260]}
+      <input name="savecookie" type="radio" id="savecookie" value="31104000"/>{$lnc[261]}
+    </td>
   </tr>
   {lvstart}
   <tr>
     <td class="formbox-rowheader">{$lnc[249]}</td>
-    <td class="formbox-content"><span id='securityimagearea'><img src="inc/securitycode.php?rand={rand}" alt="" title="{$lnc[250]}"/></span> <input name="securitycode" type="text" id="securitycode" size="16" class="text" /> {$lnc[251]}  [<a href="javascript: refreshsecuritycode('securityimagearea', 'securitycode');">{$lnc[283]}</a>]</td>
+    <td class="formbox-content">
+      <span id='securityimagearea'>
+        <img src="inc/securitycode.php?rand={rand}" alt="" title="{$lnc[250]}"/>
+      </span>
+      <input name="securitycode" type="text" id="securitycode" size="16" class="text" />
+      {$lnc[251]}
+      [<a href="javascript: refreshsecuritycode('securityimagearea', 'securitycode');">{$lnc[283]}</a>]
+    </td>
   </tr>
   {lvend}
   <tr>
@@ -434,7 +485,10 @@ $elements['register']=<<<eot
   </tr>
   {registerbody}
   <tr>
-    <td colspan="2" align="center"><input type="submit" value="{$lnc[25]}" class="button"/> <input type="reset" value="{$lnc[252]}" class="button"/></td>
+    <td colspan="2" align="center">
+      <input type="submit" value="{$lnc[25]}" class="button"/>
+      <input type="reset" value="{$lnc[252]}" class="button"/>
+    </td>
   </tr>
 </table>
 </form>
@@ -496,9 +550,7 @@ $elements['tips']=<<<eot
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="{language}">
 <head>
-<!--//votmeta http-equiv="Content-Type" content="text/html; charset=UTF-8" /-->
-<!--//votmeta http-equiv="Content-Language" content="UTF-8" /-->
-<meta http-equiv="Content-Type" content="text/html; charset={charset}" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta http-equiv="Content-Language" content="{languagename}" />
 {csslocation}
 <title>{blogname} - {blogdesc}</title>
@@ -512,7 +564,11 @@ $elements['tips']=<<<eot
   <div class="messagebox-content">
     {tips}
   </div>
-  <div class="messagebox-bottom"><a href="javascript: window.history.back();">{$lnc[263]}</a> | <a href="index.php">{$lnc[88]}</a> {admin_plus}</div>
+  <div class="messagebox-bottom">
+    <a href="javascript: window.history.back();">{$lnc[263]}</a>
+    | <a href="index.php">{$lnc[88]}</a>
+    {admin_plus}
+  </div>
 </div>
 </center>
 </div>

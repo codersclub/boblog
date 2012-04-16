@@ -1,9 +1,14 @@
 <?php
+
 global $plugin_ubbeditor_functions, $plugin_ubbeditor_buttons;
-$plugin_ubbeditor_buttons.=<<<eot
-<a href="JavaScript: void(0); "><img border="0" onclick="addfmp()" title="" src="plugin/fmplayer/fmp.gif" ></a>
+
+$plugin_ubbeditor_buttons .= <<<eot
+<a href="JavaScript: void(0); ">
+    <img border="0" onclick="addfmp()" title="" src="plugin/fmplayer/fmp.gif" >
+</a>
 eot;
-$plugin_ubbeditor_functions.=<<<eot
+
+$plugin_ubbeditor_functions .= <<<eot
 function addfmp() {
 	if (document.selection && document.selection.type == "Text") {
 		var range = document.selection.createRange();

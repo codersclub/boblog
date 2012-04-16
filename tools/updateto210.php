@@ -10,7 +10,8 @@ if (!$v) {
         <div>
             This program can upgrade the data format of version 2.0.3 sp1 / 2.1.0 alpha to the latest data format of 2.1.0 beta/official version.
             It is recommended that you back up your data before upgrading. This operation is irreversible!
-            <br/><br/>
+            <br/>
+            <br/>
             If your blog is currently closed, please open it and continue.
         </div>
         <br/>
@@ -58,28 +59,28 @@ if ($v == '1') {
     }
 
     $queries[] = "CREATE TABLE IF NOT EXISTS `{$db_prefix}pages` (
-`pageid` INT( 5 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-`pagetitle` VARCHAR( 255 ) NULL ,
-`pagecontent` TEXT NULL ,
-`pageauthor` INT( 8 ) NOT NULL DEFAULT '0',
-`pagetime` INT( 11 ) NOT NULL DEFAULT '0',
-`pageedittime` INT( 11 ) NOT NULL DEFAULT '0',
-`closesidebar` TINYINT( 1 ) NOT NULL DEFAULT '0',
-`htmlstat` TINYINT( 1 ) NOT NULL DEFAULT '0',
-`ubbstat` TINYINT( 1 ) NOT NULL DEFAULT '0',
-`emotstat` TINYINT( 1 ) NOT NULL DEFAULT '0',
-`pagealias` VARCHAR( 255 ) NULL,
-INDEX ( `pageauthor` )
+  `pageid` INT( 5 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+  `pagetitle` VARCHAR( 255 ) NULL ,
+  `pagecontent` TEXT NULL ,
+  `pageauthor` INT( 8 ) NOT NULL DEFAULT '0',
+  `pagetime` INT( 11 ) NOT NULL DEFAULT '0',
+  `pageedittime` INT( 11 ) NOT NULL DEFAULT '0',
+  `closesidebar` TINYINT( 1 ) NOT NULL DEFAULT '0',
+  `htmlstat` TINYINT( 1 ) NOT NULL DEFAULT '0',
+  `ubbstat` TINYINT( 1 ) NOT NULL DEFAULT '0',
+  `emotstat` TINYINT( 1 ) NOT NULL DEFAULT '0',
+  `pagealias` VARCHAR( 255 ) NULL,
+  INDEX ( `pageauthor` )
 ) ENGINE = MYISAM{$sqlcharset}";
 
     $queries[] = "CREATE TABLE IF NOT EXISTS `{$db_prefix}upload` (
-`fid` int(6) NOT NULL auto_increment,
-`filepath` varchar(255) default NULL,
-`originalname` VARCHAR( 255 ) NULL,
-`dltime` int(8) NOT NULL default '0',
-`uploadtime` int(11) default NULL,
-`uploaduser` int(6) NOT NULL default '0',
-PRIMARY KEY  (`fid`)
+  `fid` int(6) NOT NULL auto_increment,
+  `filepath` varchar(255) default NULL,
+  `originalname` VARCHAR( 255 ) NULL,
+  `dltime` int(8) NOT NULL default '0',
+  `uploadtime` int(11) default NULL,
+  `uploaduser` int(6) NOT NULL default '0',
+  PRIMARY KEY  (`fid`)
 ) ENGINE=MyISAM";
 
     foreach ($queries as $singlequery) {
@@ -90,7 +91,6 @@ PRIMARY KEY  (`fid`)
 
     template("<div class='log'>Upgrade completed</div><div class='mes'>The data format of 2.0.3 sp1 / 2.1.0 alpha version has been upgraded to the data format of 2.1.0 beta/official version.<br/><br/>Please go to the &laquo;Parameter settings&raquo; in the background to set new options such as the number of tag pages, the number of emoticons per page, anti-theft link, etc., and give the administrator to create a custom page in the &laquo;User Group Authority&raquo; setting And refresh all caches at the same time, otherwise the blog display may be abnormal.<br/><br/>Please delete this file from the server immediately.</div><br/></div>");
 }
-
 
 function template($body)
 {

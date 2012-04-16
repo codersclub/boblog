@@ -1,20 +1,34 @@
 <?PHP
-if (!defined('VALIDADMIN')) die ('Access Denied.');
 
-/*$srcHTML="data/cache_emsel.php";
+if (!defined('VALIDADMIN')) {
+    die ('Access Denied.');
+}
+
+/*
+$srcHTML="data/cache_emsel.php";
 
 @include ($srcHTML);
 $emots=str_replace("<br/>", ' ', $emots);
-$emots=str_replace("</a>", '</a> ', $emots);*/
+$emots=str_replace("</a>", '</a> ', $emots);
+*/
 
 switch ($langback) {
-	case 'ru' : $langeditor='ru'; break;
-	case 'en' : $langeditor='en'; break;
-	case 'zh-cn' : $langeditor='zh_cn_utf8'; break;
-	case 'zh-tw' : $langeditor='zh_tw_utf8'; break;
-	default : $langeditor='en';
+    case 'ru' :
+        $langeditor = 'ru';
+        break;
+    case 'en' :
+        $langeditor = 'en';
+        break;
+    case 'zh-cn' :
+        $langeditor = 'zh_cn_utf8';
+        break;
+    case 'zh-tw' :
+        $langeditor = 'zh_tw_utf8';
+        break;
+    default :
+        $langeditor = 'en';
 }
-$editorjs=<<<eot
+$editorjs = <<<eot
 <script language="javascript" type="text/javascript" src="editor/tinymce/tiny_mce.js"></script>
 <script language="javascript" type="text/javascript">
 tinyMCE.init({
@@ -38,11 +52,13 @@ tinyMCE.init({
 });
 </script>
 eot;
-$editorbody=<<<eot
+
+$editorbody = <<<eot
 <textarea name='content' id='content' class='mceEditor' style="width:96%; height:300px; padding: 0px; ">{content}</textarea>
 eot;
-$onloadjs="";
-$submitjs="";
-$autobr=0;
 
-$callaftersubmit='';
+$onloadjs = "";
+$submitjs = "";
+$autobr = 0;
+
+$callaftersubmit = '';

@@ -10,7 +10,8 @@ if (!$v) {
         <div>
             This program can upgrade the data format of the 2.0.2 sp2 / 2.0.3 alpha version to the 2.0.3 beta/official version data format.
             It is recommended that you back up your data before upgrading. This operation is irreversible!
-            <br/><br/>
+            <br/>
+            <br/>
             If your blog is currently closed, please open it and continue.
         </div>
         <br/>

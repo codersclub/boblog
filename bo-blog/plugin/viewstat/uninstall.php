@@ -1,2 +1,5 @@
 <?php
-if (!defined('VALIDADMIN')) die ('Access Denied.');
+
+if (!defined('VALIDADMIN')) {
+    die ('Access Denied.');
+}

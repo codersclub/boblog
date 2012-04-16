@@ -1,11 +1,16 @@
 <?php
-if (!defined('VALIDREQUEST')) die ('Access Denied.');
-function plugin_highslide_firstheader ($str) {
-$str.=<<<eot
+
+if (!defined('VALIDREQUEST')) {
+    die ('Access Denied.');
+}
+
+function plugin_highslide_firstheader($str)
+{
+    $str .= <<<eot
 <link rel="stylesheet" type="text/css" href="plugin/highslide/highslide.css" />
 <script type="text/javascript" src="plugin/highslide/highslide-with-gallery.js"></script>
 <script type="text/javascript">
-	hs.graphicsDir = 'plugin/highslide/graphics/';
+hs.graphicsDir = 'plugin/highslide/graphics/';
 hs.align = 'center';
 hs.transitions = ['expand', 'crossfade'];
 hs.outlineType = 'rounded-white';
@@ -28,5 +33,5 @@ if (hs.addSlideshow) hs.addSlideshow({
 	});
 </script>
 eot;
-	return $str;
+    return $str;
 }
