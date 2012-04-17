@@ -204,7 +204,7 @@ if ($job == 'weatherdel') {
     }
     $blog->query("UPDATE `{$db_prefix}blogs` SET `weather`='blank' WHERE `weather`='{$itemid}'");
     if ($weather) {
-        foreach ($weather as $weathername, $weatherdetail) {
+        foreach ($weather as $weathername => $weatherdetail) {
             if ($weathername != $itemid && $weathername !== '') {
                 $conout .= "\$weather['{$weathername}']['image']='{$weatherdetail['image']}';\n";
                 $conout .= "\$weather['{$weathername}']['text']='{$weatherdetail['text']}';\n";
@@ -760,7 +760,7 @@ if ($job == 'changesessiondir') {
 \$db_410='{$db_410}';
 {$partwrite}";
 
-    foreach ($config as $key, $val) {
+    foreach ($config as $key => $val) {
         $savetext .= "\$config['{$key}']='" . admin_convert(stripslashes($val)) . "';\n";
     }
 	if (writetofile("data/config.php", $savetext)) {
@@ -842,7 +842,7 @@ if ($job == 'urlrewritesave') {
     acceptrequest('urlrewritesta');
     $urlrewritesta = floor($urlrewritesta);
     $savetext = "<?PHP\n\$db_server='{$db_server}';\n\$db_username='{$db_username}';\n\$db_password='{$db_password}';\n\$db_name='{$db_name}';\n\$db_prefix='{$db_prefix}';\n\$db_410='{$db_410}';\n\$db_tmpdir='{$db_tmpdir}';\n\$db_defaultsessdir='{$db_defaultsessdir}';\n";
-    foreach ($config as $key, $val) {
+    foreach ($config as $key => $val) {
         if ($key == 'urlrewritemethod') {
             $savetext .= "\$config['{$key}']='{$urlrewritesta}';\n";
             $saved = 1;

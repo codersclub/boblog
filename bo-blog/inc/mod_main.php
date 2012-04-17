@@ -45,12 +45,12 @@ switch ($job) {
 		$urlpattern=getlink_index ('%s', 1);
 /*vot*/		if (@$flset['modeselectable']!=1) $pagebaritem=" [ {$lnc[181]} <a href=\"".sprintf($urlpattern, 1)."\" title=\"{$lnc[182]}\">{$lnc[183]}</a> | <a href=\"".sprintf($urlpattern, 2)."\" title=\"{$lnc[184]}\">{$lnc[185]}</a> ]";
 		if ($mbcon['main_list']==1) {
-			$partialquery="{$limitation1} ORDER BY `sticky`DESC, `pubtime` DESC";
+			$partialquery="{$limitation1} ORDER BY `sticky` DESC, `pubtime` DESC";
 			$perpagevalue=$mbcon['listitemperpage'];
 			$actionforexc='list';
 			$urlref=getlink_index ('2', '%s');
 		} else {
-			$partialquery="{$limitation1} ORDER BY `sticky`DESC, `pubtime` DESC";
+			$partialquery="{$limitation1} ORDER BY `sticky` DESC, `pubtime` DESC";
 			$perpagevalue=$mbcon['exceptperpage'];
 			$actionforexc='excerpt';
 			$urlref=getlink_index ('1', '%s');
@@ -66,12 +66,12 @@ switch ($job) {
 /*vot*/		if (@$flset['modeselectable']!=1) $pagebaritem=" [ {$lnc[181]} <a href=\"".sprintf($urlpattern, 1)."\" title=\"{$lnc[182]}\">{$lnc[183]}</a> | <a href=\"".sprintf($urlpattern, 2)."\" title=\"{$lnc[184]}\">{$lnc[185]}</a> ]";
 		$pagetitle="{$lnc[93]} - ";
 		if ($mbcon['starred_list']==1) {
-			$partialquery="{$limitation1} AND `starred`%2 = 1 ORDER BY `sticky`DESC, `pubtime` DESC";
+			$partialquery="{$limitation1} AND `starred`%2 = 1 ORDER BY `sticky` DESC, `pubtime` DESC";
 			$perpagevalue=$mbcon['listitemperpage'];
 			$actionforexc='list';
 			$urlref=getlink_star ('2', '%s');
 		} else {
-			$partialquery="{$limitation1} AND `starred`%2 = 1 ORDER BY `sticky`DESC, `pubtime` DESC";
+			$partialquery="{$limitation1} AND `starred`%2 = 1 ORDER BY `sticky` DESC, `pubtime` DESC";
 			$perpagevalue=$mbcon['exceptperpage'];
 			$actionforexc='excerpt';
 			$urlref=getlink_star ('1', '%s');

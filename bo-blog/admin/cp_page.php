@@ -15,6 +15,8 @@ if (!defined('VALIDADMIN')) {
     die ('Access Denied.');
 }
 
+$createlinks = '';
+
 //Define some senteces
 $finishok = $lna[1095];
 $backtoaddnew = "{$lna[1056]}|admin.php?go=page_pagewrite";

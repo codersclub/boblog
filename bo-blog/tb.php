@@ -72,8 +72,9 @@ extract_forbidden();
 if (check_ip($userdetail['ip'], $forbidden['banip'])) {
     tb_xml_error("Your IP address is banned from sending trackbacks.");
 }
-if (preg_search($excerpt, $forbidden['banword']) || preg_search($title,
-        $forbidden['banword']) || preg_search($blog_name, $forbidden['banword'])) {
+if (preg_search($excerpt, $forbidden['banword']) ||
+    preg_search($title, $forbidden['banword']) ||
+    preg_search($blog_name, $forbidden['banword'])) {
     tb_xml_error("The trackback content contains some words that are not welcomed on our site. You may edit your post and send it again. Sorry for the inconvenience.");
 }
 if ($mbcon['antispam'] == '1') {
