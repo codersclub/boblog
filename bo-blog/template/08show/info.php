@@ -1,4 +1,4 @@
-<?PHP
+<?php
 $template['id']="08SHOW061015";
 $template['sysver']='5.2';
 $template['name']="08SHOW";

@@ -1,4 +1,4 @@
-<?PHP
+<?php
 //error_reporting(E_ERROR | E_WARNING | E_PARSE);
 //error_reporting(E_ALL & ~E_DEPRECATED & ~E_NOTICE);
 error_reporting(E_ALL);
@@ -83,7 +83,7 @@ if ($v == 2) {
 
 if ($v == 3) {
     $usorigin0 = <<<eot
-<?PHP
+<?php
 \$permission['gpname']='Guest';
 \$permission['visit']='1';
 \$permission['ViewPHPError']='0';
@@ -119,7 +119,7 @@ if ($v == 3) {
 eot;
 
     $usorigin2 = <<<eot
-<?PHP
+<?php
 \$permission['gpname']='Administrator';
 \$permission['visit']='1';
 \$permission['ViewPHPError']='1';

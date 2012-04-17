@@ -1,4 +1,4 @@
-<?PHP
+<?php
 //Không dùng notepad trong Windows để sửa, nếu dùng gây lỗi sẽ không giải đáp!
 // Dịch sang tiếng Việt: dichgia.com
 // Dịch bổ sung cho phiên bản 2.1.0 : kusanagivn.com 

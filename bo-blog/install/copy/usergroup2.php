@@ -1,4 +1,4 @@
-<?PHP
+<?php
 $permission['gpname']='{langcopy4}';
 $permission['visit']='1';
 $permission['ViewPHPError']='1';

@@ -1,4 +1,4 @@
-<?PHP
+<?php
 /* -----------------------------------------------------
 Bo-Blog 2 : The Blog Reloaded.
 <<A Bluview Technology Product>>
@@ -1162,66 +1162,106 @@ setCookie ('nonstop','',null,null, null, false);
 
 <form action="admin.php?go=carecenter_doimport" method="post" enctype='multipart/form-data'>
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
-<tr>
-<td class="sectstart">
-{$lna[844]}
-</td>
-<td class="sectend">{$lna[845]}</td>
-</tr>
+  <tr>
+    <td class="sectstart">
+      {$lna[844]}
+    </td>
+    <td class="sectend">{$lna[845]}</td>
+  </tr>
 </table>
+
 <table class='tablewidth' align=center cellpadding=8 cellspacing=0>
-<tr><td class="hiddenitem">
-<b>{$lna[846]}</b>
-</td></tr>
-<tr><td class="visibleitem">
+  <tr>
+    <td class="hiddenitem">
+      <b>{$lna[846]}</b>
+    </td>
+  </tr>
+  <tr>
+    <td class="visibleitem">
 
-<table class='tablewidth' align=center cellpadding=0 cellspacing=0>
-<tr>
-<td><input type="radio" name="imtype" value="xml" checked onclick="swapdiv(1);"><b>{$lna[820]}</b></td><td>{$lna[847]}</td>
-</tr>
-<tr>
-<td><input type="radio" name="imtype" value="rss" onclick="swapdiv(2);"><b>RSS 2.0</b> </td><td>{$lna[848]}</td>
-</tr>
+      <table class='tablewidth' align=center cellpadding=0 cellspacing=0>
+        <tr>
+          <td>
+            <input type="radio" name="imtype" value="xml" checked onclick="swapdiv(1);"><b>{$lna[820]}</b>
+          </td>
+          <td>{$lna[847]}</td>
+        </tr>
+        <tr>
+          <td>
+            <input type="radio" name="imtype" value="rss" onclick="swapdiv(2);"><b>RSS 2.0</b>
+          </td>
+          <td>{$lna[848]}</td>
+        </tr>
+      </table>
+
+    </td>
+  </tr>
+  <tr>
+    <td class="hiddenitem">
+      <b>{$lna[849]}</b>
+    </td>
+  </tr>
+  <tr>
+    <td class="visibleitem">
+
+      <div id="showrange1" style="display:block;">
+        <table class='tablewidth' align=center cellpadding=0 cellspacing=0>
+          <tr>
+            <td>
+              {$lna[850]}
+              <br>
+              {$lna[851]} bak/<input type='text' name='srcindex'>
+              <br>
+              {$lna[826]} <input type=text name='impause' value='2' size='2'> {$lna[296]}
+              <br>
+              {$lna[953]}
+              <input type=radio name='nonstop' value='1'>{$lna[239]}
+              <input type=radio name='nonstop' value='0' checked>{$lna[240]}
+              <br>
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <div id="showrange2" style="display:none;">
+        <table class='tablewidth' align=center cellpadding=0 cellspacing=0>
+          <tr>
+            <td>
+              {$lna[852]}<input type='file' name='rsssrc'>
+              <br>
+              {$lna[853]} xml/txt/gz
+              <br>
+              {$lna[854]}
+              <select name='targetcate'>{$puttingcates}</select>
+              <br>
+              {$lna[855]}
+              <br>
+            </td>
+          </tr>
+        </table>
+      </div>
+
+    </td>
+  </tr>
+  <tr>
+    <td class="hiddenitem">
+      <b>{$lna[830]}</b>
+    </td>
+  </tr>
+  <tr>
+    <td class="visibleitem">
+      <ul>
+        <li><font color=red>{$lna[892]}</font></li>
+        <li>{$lna[831]}</li>
+        <li>{$lna[833]}</li>
+      </ul>
+    </td>
+  </tr>
 </table>
 
-</td></tr>
-<tr><td class="hiddenitem">
-<b>{$lna[849]}</b>
-</td></tr>
-<tr><td class="visibleitem">
-
-<div id="showrange1" style="display:block;">
-<table class='tablewidth' align=center cellpadding=0 cellspacing=0>
-<tr><td>
-{$lna[850]}<br>
-{$lna[851]} bak/<input type='text' name='srcindex'> <br>
-{$lna[826]} <input type=text name='impause' value='2' size='2'> {$lna[296]}<br>
-{$lna[953]} <input type=radio name='nonstop' value='1'>{$lna[239]} <input type=radio name='nonstop' value='0' checked>{$lna[240]}<br>
-</table>
-</div>
-
-<div id="showrange2" style="display:none;">
-<table class='tablewidth' align=center cellpadding=0 cellspacing=0>
-<tr><td>
-{$lna[852]}<input type='file' name='rsssrc'><br>
-{$lna[853]} xml/txt/gz<br>
-{$lna[854]} <select name='targetcate'>{$puttingcates}</select><br>
-{$lna[855]}<br>
-</td></tr>
-</table>
-</div>
-
-</td></tr>
-<tr><td class="hiddenitem">
-<b>{$lna[830]}</b>
-</td></tr>
-<tr><td class="visibleitem">
-<ul><li><font color=red>{$lna[892]}</font></li><li>{$lna[831]}</li><li>{$lna[833]}</li></ul>
-</td></tr>
-
-</table>
 <br>
 <br>
+
 <div align=center>
   <input type=submit value="{$lna[64]}" class='formbutton'>
   <input type=reset value="{$lna[65]}" class='formbutton'>

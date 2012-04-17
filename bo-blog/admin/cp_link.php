@@ -1,4 +1,4 @@
-<?PHP
+<?php
 /* -----------------------------------------------------
 Bo-Blog 2 : The Blog Reloaded.
 <<A Bluview Technology Product>>

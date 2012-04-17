@@ -1,4 +1,4 @@
-<?PHP
+<?php
 
 $act = 'page';
 define('whereAmI', 'page');

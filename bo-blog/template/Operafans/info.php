@@ -1,4 +1,4 @@
-<?PHP
+<?php
 $template['id']="Operafans080616";
 $template['sysver']='5.2';
 $template['name']="Operafans";

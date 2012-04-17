@@ -1,4 +1,4 @@
-<?PHP
+<?php
 $avatars=array(
 '1.jpg',
 '2.jpg',

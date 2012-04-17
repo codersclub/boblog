@@ -1,4 +1,4 @@
-<?PHP
+<?php
 $template['id']="windowsXP0807";
 $template['sysver']='5.2';
 $template['name']="XPbox";

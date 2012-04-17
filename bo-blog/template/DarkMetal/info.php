@@ -1,4 +1,4 @@
-<?PHP
+<?php
 $template['id']="DarkMetal";
 $template['sysver']='5.2';
 $template['name']="DarkMetal";

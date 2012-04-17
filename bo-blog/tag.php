@@ -1,4 +1,4 @@
-<?PHP
+<?php
 
 //Very Simple Re-direct
 $act = 'tag';

@@ -1,4 +1,4 @@
-<?PHP
+<?php
 $permission['gpname']='{langcopy2}';
 $permission['visit']='1';
 $permission['SeeSecretCategory']='0';

@@ -1,4 +1,4 @@
-<?PHP
+<?php
 $weather['blank']['image']='images/weather/blank.gif';
 $weather['blank']['text']='{langcopy8}';
 $weather['sunny']['image']='images/weather/sunny.gif';

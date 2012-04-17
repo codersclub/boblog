@@ -1,4 +1,4 @@
-<?PHP
+<?php
 $template['id']="60A13BBE-C069-47A1-B210-C69C40CAAA00";
 $template['sysver']='5.2';
 $template['name']="Default";

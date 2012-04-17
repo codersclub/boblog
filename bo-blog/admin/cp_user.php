@@ -1,4 +1,4 @@
-<?PHP
+<?php
 /* -----------------------------------------------------
 Bo-Blog 2 : The Blog Reloaded.
 <<A Bluview Technology Product>>
@@ -187,7 +187,7 @@ if ($job == 'addnewgp' || $job == 'savegp') {
     }
     $newgpname = safe_convert(trim($newpermission['gpname']));
     $usergp[$gpnum] = $newgpname;
-    $savetext .= "<?PHP\n";
+    $savetext .= "<?php\n";
     foreach ($usergp as $key => $value) {
         $savetext .= "\$usergp[{$key}]='" . safe_convert($value) . "';\n";
     }
@@ -196,7 +196,7 @@ if ($job == 'addnewgp' || $job == 'savegp') {
     }
 
     unset ($savetext);
-    $savetext .= "<?PHP\n";
+    $savetext .= "<?php\n";
     foreach ($newpermission as $key => $value) {
         $savetext .= "\$permission['{$key}']='" . safe_convert($value) . "';\n";
     }
@@ -250,7 +250,7 @@ if ($job == 'dodelgp') {
     if (file_exists("data/usergroup{$itemid}.php")) {
         @unlink("data/usergroup{$itemid}.php");
     }
-    $savetext .= "<?PHP\n";
+    $savetext .= "<?php\n";
     foreach ($usergp as $key => $value) {
         if ($key != $itemid) {
             $savetext .= "\$usergp[{$key}]='" . safe_convert($value) . "';\n";

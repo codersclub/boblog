@@ -1,4 +1,4 @@
-<?PHP
+<?php
 
 if (!defined('VALIDADMIN')) {
     die ('Access Denied.');
@@ -23,7 +23,7 @@ $backtofmp_list = "{$lanfp[0]}{$lanfp[13]}{$lanfp[1]}|admin.php?act={$page['list
 acceptrequest('configjob');
 
 if ($configjob == 'save_list') {
-    $savetext = "<?PHP\n";
+    $savetext = "<?php\n";
     $save_list = $_POST['fmp'];
     //if (count($save_list)<=0) catcherror ($lna[1013]);
     foreach ($save_list as $key => $val) {

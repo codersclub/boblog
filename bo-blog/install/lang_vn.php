@@ -1,4 +1,4 @@
-<?PHP
+<?php
 $lang[0]='Trình cài đặt Bo-Blog';
 $lang[1]='Có lỗi';
 $lang[2]='Bản PHP quá thấp, không cài đặt được.';

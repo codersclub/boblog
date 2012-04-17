@@ -1,4 +1,4 @@
-<?PHP
+<?php
 $template['id']="ColdNight";
 $template['sysver']='1.0';
 $template['name']="ColdNight for bo-blog2.1.1";

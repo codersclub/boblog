@@ -1,4 +1,4 @@
-<?PHP
+<?php
 $template['id']="soriq-simple-20070304";
 $template['name']="SimpleStyle";
 $template['author']="Soriq";

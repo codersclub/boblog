@@ -1,4 +1,4 @@
-<?PHP
+<?php
 if (!defined('VALIDADMIN')) die ('Access Denied.');
 addpref("sec", "{$lna[636]}");
 addpref("t", "gpname|{$lna[637]}");

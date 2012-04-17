@@ -1,4 +1,4 @@
-<?PHP
+<?php
 /* -----------------------------------------------------
 Bo-Blog 2 : The Blog Reloaded.
 <<A Bluview Technology Product>>
@@ -165,7 +165,7 @@ if ($job == 'weathersave') {
         $conout .= "\$weather['" . safe_convert($variable[$i]) . "']['image']='" . safe_convert($icon[$i]) . "';\n";
         $conout .= "\$weather['" . safe_convert($variable[$i]) . "']['text']='" . safe_convert($desc[$i]) . "';\n";
     }
-    $wholeout = "<?PHP\n{$conout}";
+    $wholeout = "<?php\n{$conout}";
     if (writetofile("data/weather.php", $wholeout)) {
         if ($ajax == 'on') {
             $fetchURL = 'admin.php?go=misc_weatherset';
@@ -212,7 +212,7 @@ if ($job == 'weatherdel') {
             }
         }
 	}
-    $wholeout = "<?PHP\n{$conout}";
+    $wholeout = "<?php\n{$conout}";
     if (writetofile("data/weather.php", $wholeout)) {
         if ($ajax == 'on') {
             $fetchURL = 'admin.php?go=misc_weatherset';
@@ -288,7 +288,7 @@ if ($job == 'avatarrefresh') {
             $savetext .= "'{$file}',\n";
         }
     }
-    $saveall = "<?PHP\n\$avatars=array(\n" . $savetext . ");\n?>";
+    $saveall = "<?php\n\$avatars=array(\n" . $savetext . ");\n?>";
     if (writetofile("data/cache_avatars.php", $saveall)) {
         if ($ajax == 'on') {
             $fetchURL = 'admin.php?go=misc_avatar';
@@ -413,7 +413,7 @@ if ($job == 'emotsave') {
             $conout .= "\$myemots['" . safe_convert($variable[$i]) . "']['thumb']='" . safe_convert($thumb[$i]) . "';\n";
         }
     }
-    $wholeout = "<?PHP\n{$conout}";
+    $wholeout = "<?php\n{$conout}";
     if (writetofile("data/cache_emot.php", $wholeout)) {
         include_once("data/cache_emot.php");
         recache_emotselection();
@@ -751,7 +751,7 @@ if ($job == 'changesessiondir') {
 
     unset ($config);
     include('data/config.php');
-    $savetext = "<?PHP
+    $savetext = "<?php
 \$db_server='{$db_server}';
 \$db_username='{$db_username}';
 \$db_password='{$db_password}';
@@ -841,7 +841,7 @@ eot;
 if ($job == 'urlrewritesave') {
     acceptrequest('urlrewritesta');
     $urlrewritesta = floor($urlrewritesta);
-    $savetext = "<?PHP\n\$db_server='{$db_server}';\n\$db_username='{$db_username}';\n\$db_password='{$db_password}';\n\$db_name='{$db_name}';\n\$db_prefix='{$db_prefix}';\n\$db_410='{$db_410}';\n\$db_tmpdir='{$db_tmpdir}';\n\$db_defaultsessdir='{$db_defaultsessdir}';\n";
+    $savetext = "<?php\n\$db_server='{$db_server}';\n\$db_username='{$db_username}';\n\$db_password='{$db_password}';\n\$db_name='{$db_name}';\n\$db_prefix='{$db_prefix}';\n\$db_410='{$db_410}';\n\$db_tmpdir='{$db_tmpdir}';\n\$db_defaultsessdir='{$db_defaultsessdir}';\n";
     foreach ($config as $key => $val) {
         if ($key == 'urlrewritemethod') {
             $savetext .= "\$config['{$key}']='{$urlrewritesta}';\n";

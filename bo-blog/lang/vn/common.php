@@ -1,4 +1,4 @@
-<?PHP
+<?php
 //Không dùng notepad trong Windows để sửa, nếu dùng gây lỗi sẽ không giải đáp!
 // Dịch sang tiếng Việt: dichgia.com / congtydich.com / dichthuat.net
 $langname['front']="Tiếng Việt";

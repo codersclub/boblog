@@ -1,4 +1,4 @@
-<?PHP
+<?php
 /* -----------------------------------------------------
 Bo-Blog 2 : The Blog Reloaded.
 PHP+MySQL blog system.
@@ -306,7 +306,7 @@ if ($job=='search') {
 		foreach ($result as $item) {
 			$pinch[]="{$item}";
 		}
-		$pinchall="<?PHP exit;?>\n{$keyword}\n{$searchmethod}\n".@implode(',', $pinch);
+		$pinchall="<?php exit;?>\n{$keyword}\n{$searchmethod}\n".@implode(',', $pinch);
 		$sid=md5(time().$userdetail['ip']);
 		$keyword=urlencode($keyword);
 		if (!writetofile ("{$db_tmpdir}/{$sid}.php", $pinchall)) catcherror ($lnc[226]);

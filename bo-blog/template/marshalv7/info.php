@@ -1,4 +1,4 @@
-<?PHP
+<?php
 $template['id']="marshalv7-For-boblog-v2";
 $template['name']="marshalv7";
 $template['author']="Marshal";

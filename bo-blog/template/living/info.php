@@ -1,4 +1,4 @@
-<?PHP
+<?php
 $template['id']="FOXSTYLE-LIVING-20070213";
 $template['name']="living";
 $template['author']="Celin.Fox";

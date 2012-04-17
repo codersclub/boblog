@@ -1,4 +1,4 @@
-<?PHP
+<?php
 /* -----------------------------------------------------
 Bo-Blog 2 : The Blog Reloaded.
 <<A Bluview Technology Product>>
@@ -341,7 +341,7 @@ if ($job=='doapplylink') {
 	$sitelogo=urlconvert($sitelogo);
 	$siteid=time().rand(0,10);
 	if (preg_search($sitename, $forbidden['banword']) || preg_search($siteintro, $forbidden['banword']) ||  preg_search($siteurl, $forbidden['banword']) || preg_search($sitename, $forbidden['suspect']) || preg_search($siteintro, $forbidden['suspect']) ||  preg_search($siteurl, $forbidden['suspect'])) catcherror($lnc[214]);
-	$addline="<?PHP exit();?><|>$siteid<|>$sitename<|>$siteurl<|>$sitelogo<|>$siteintro<|>\n";
+	$addline="<?php exit();?><|>$siteid<|>$sitename<|>$siteurl<|>$sitelogo<|>$siteintro<|>\n";
 	$filename="data/cache_applylinks.php";
 	$oldcontent=@readfromfile($filename);
 	$content=$addline.$oldcontent;

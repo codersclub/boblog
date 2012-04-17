@@ -1,4 +1,4 @@
-<?PHP
+<?php
 /* -----------------------------------------------------
 Bo-Blog 2 : The Blog Reloaded.
 <<A Bluview Technology Product>>
@@ -46,7 +46,7 @@ function recache_links()
         }
     }
     $linksshow = '<ul>' . @implode('', $displaygp) . '</ul>';
-    $write = "<?PHP\n\$linksshow=<<<eot\n{$linksshow}\neot;\n?>";
+    $write = "<?php\n\$linksshow=<<<eot\n{$linksshow}\neot;\n?>";
     writetofile("data/cache_links.php", $write);
 }
 
@@ -78,7 +78,7 @@ function recache_emotselection()
             }
             unset ($emotcode, $emotthumb);
         }
-        $write = "<?PHP\n\$emots=<<<eot\n{$selbody}\neot;\n?>";
+        $write = "<?php\n\$emots=<<<eot\n{$selbody}\neot;\n?>";
         writetofile("data/cache_emsel.php", $write);
     }
 }
@@ -103,12 +103,12 @@ function recache_mods()
             $writeout .= "addbar('{$key}', array({$body_sec}));\n";
         }
     }
-    if (!writetofile("data/mods.php", "<?PHP\nif (!defined('VALIDREQUEST')) die ('Access Denied.');\n{$writeout}")) {
+    if (!writetofile("data/mods.php", "<?php\nif (!defined('VALIDREQUEST')) die ('Access Denied.');\n{$writeout}")) {
         catcherror($lna[66] . "data/mods.php");
     }
 
     unset ($writeout);
-    $writeout = "<?PHP\n\$allopenmods=array(" . @implode(', ', $section_all) . ");\n?>";
+    $writeout = "<?php\n\$allopenmods=array(" . @implode(', ', $section_all) . ");\n?>";
     if (!writetofile("data/allmods.php", $writeout)) {
         catcherror($lna[66] . "data/allmods.php");
     }
@@ -134,7 +134,7 @@ function recache_adminlist()
                 $out[] = "'{$all_admins['userid'][$i]}'=>'{$all_admins['username'][$i]}'";
             }
             $outout = @implode(',', $out);
-            $writeout = "<?PHP\n\$adminlist=array({$outout});\n";
+            $writeout = "<?php\n\$adminlist=array({$outout});\n";
             if (!writetofile("data/cache_adminlist.php", $writeout)) {
                 catcherror($lna[66] . "data/cache_adminlist.php");
             }
@@ -161,7 +161,7 @@ function recache_categories()
             $result3[$i] = 0;
         }
         $row['parentcate'] = ($row['catemode'] == 1) ? $previousid : -1;
-        $writeout .= "<?PHP exit;?><|>{$row['cateid']}<|>" . stripslashes($row['catename']) . "<|>" . stripslashes($row['catedesc']) . "<|>{$row['cateproperty']}<|>{$row['cateorder']}<|>{$row['catemode']}<|>{$row['cateurl']}<|>{$row['cateicon']}<|>{$result3[$i]}<|>{$row['parentcate']}<|>{$row['cateurlname']}<|>\n";
+        $writeout .= "<?php exit;?><|>{$row['cateid']}<|>" . stripslashes($row['catename']) . "<|>" . stripslashes($row['catedesc']) . "<|>{$row['cateproperty']}<|>{$row['cateorder']}<|>{$row['catemode']}<|>{$row['cateurl']}<|>{$row['cateicon']}<|>{$result3[$i]}<|>{$row['parentcate']}<|>{$row['cateurlname']}<|>\n";
         if ($row['catemode'] == 0) {
             $previousid = $row['cateid'];
         } //Change parent id now
@@ -197,7 +197,7 @@ function recache_latestentries()
             $outcache_limit .= "\$cache_latest_all[]=array(\"blogid\"=>{$result_all_detail['blogid']}, \"title\"=>'{$title}', \"category\"=>{$result_all_detail['category']}, \"fulltitle\"=>'{$result_all_detail['title']}', \"blogalias\"=>'{$result_all_detail['blogalias']}');\n";
         }
     }
-    if (!writetofile("data/cache_latest.php", "<?PHP\n" . $outcache_limit . "?>")) {
+    if (!writetofile("data/cache_latest.php", "<?php\n" . $outcache_limit . "?>")) {
         catcherror($lna[66] . "data/cache_latest.php");
     }
 }
@@ -292,7 +292,7 @@ function recache_currentmonthentries()
 {$calendarbody}
 </tbody></table>
 eot;
-    //$out="<?PHP\n\$month_calendar=array(".@implode(',', $result_all).");";
+    //$out="<?php\n\$month_calendar=array(".@implode(',', $result_all).");";
     if (!writetofile("data/cache_currentmonth.php", $out)) {
         catcherror($lna[66] . "data/cache_currentmonth.php");
     }
@@ -344,7 +344,7 @@ function recache_plugins()
             $pluginline = '"' . @implode(',', $plugins) . '"';
             $plugwrt[] = "\$blogplugin['{$typename}']={$pluginline};\r\n";
         }
-        $out = "<?PHP\r\n" . @implode('', $plugwrt);
+        $out = "<?php\r\n" . @implode('', $plugwrt);
     }
     if (!writetofile("data/plugin_enabled.php", $out)) {
         catcherror($lna[66] . "data/plugin_enabled.php");

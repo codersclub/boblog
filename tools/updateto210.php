@@ -1,4 +1,4 @@
-<?PHP
+<?php
 
 error_reporting(E_ALL);
 $v = @$_REQUEST['v'];
@@ -87,7 +87,7 @@ if ($v == '1') {
         $blog->query($singlequery);
     }
 
-    writetofile("data/cache_adminskinlist.php", "<?PHP\n\$adminskin[]='default';\n\$currentadminskin='default';");
+    writetofile("data/cache_adminskinlist.php", "<?php\n\$adminskin[]='default';\n\$currentadminskin='default';");
 
     template("<div class='log'>Upgrade completed</div><div class='mes'>The data format of 2.0.3 sp1 / 2.1.0 alpha version has been upgraded to the data format of 2.1.0 beta/official version.<br/><br/>Please go to the &laquo;Parameter settings&raquo; in the background to set new options such as the number of tag pages, the number of emoticons per page, anti-theft link, etc., and give the administrator to create a custom page in the &laquo;User Group Authority&raquo; setting And refresh all caches at the same time, otherwise the blog display may be abnormal.<br/><br/>Please delete this file from the server immediately.</div><br/></div>");
 }

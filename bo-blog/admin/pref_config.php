@@ -1,4 +1,4 @@
-<?PHP
+<?php
 if (!defined('VALIDADMIN')) die ('Access Denied.');
 include("data/config.php");
 $config['blogcreatetime']=date("Y-m-d H:i:s", $config['blogcreatetime']);

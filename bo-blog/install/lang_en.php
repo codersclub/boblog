@@ -1,4 +1,4 @@
-<?PHP
+<?php
 $lang[0]='Bo-Blog Installer';
 $lang[1]='Error';
 $lang[2]='PHP version is too low to run this program.';

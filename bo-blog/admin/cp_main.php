@@ -1,4 +1,4 @@
-<?PHP
+<?php
 /* -----------------------------------------------------
 Bo-Blog 2 : The Blog Reloaded.
 <<A Bluview Technology Product>>
@@ -318,7 +318,7 @@ eot;
 }
 
 if ($job == 'configsave') {
-    $savetext = "<?PHP\n\$db_server='{$db_server}';\n\$db_username='{$db_username}';\n\$db_password='{$db_password}';\n\$db_name='{$db_name}';\n\$db_prefix='{$db_prefix}';\n\$db_410='{$db_410}';\n\$db_tmpdir='{$db_tmpdir}';\n\$db_defaultsessdir='{$db_defaultsessdir}';\n";
+    $savetext = "<?php\n\$db_server='{$db_server}';\n\$db_username='{$db_username}';\n\$db_password='{$db_password}';\n\$db_name='{$db_name}';\n\$db_prefix='{$db_prefix}';\n\$db_410='{$db_410}';\n\$db_tmpdir='{$db_tmpdir}';\n\$db_defaultsessdir='{$db_defaultsessdir}';\n";
     $save_config = $_POST['prefconfig'];
     //catcherror (print_r($save_config, true));
     if (count($save_config) <= 1) {
@@ -406,7 +406,7 @@ eot;
 }
 
 if ($job == 'mbconsave') {
-    $savetext = "<?PHP\n";
+    $savetext = "<?php\n";
     $save_config = $_POST['prefconfig'];
     if (count($save_config) <= 1) {
         catcherror($lna[1013]);
@@ -1353,7 +1353,7 @@ if ($job == 'dolangset') {
     if (!file_exists("lang/{$newlangb}/backend.php")) {
         catcherror($lna['admin_lang_not_found']);
     }
-    $newcontent = "<?PHP\n\$langfront=\"{$newlangf}\";\n\$langback=\"{$newlangb}\";\n@include_once (\"lang/{$newlangf}/common.php\");";
+    $newcontent = "<?php\n\$langfront=\"{$newlangf}\";\n\$langback=\"{$newlangb}\";\n@include_once (\"lang/{$newlangf}/common.php\");";
     writetofile("data/language.php", $newcontent);
     catchsuccess("{$lna['language_updated']}");
 }
@@ -1375,7 +1375,7 @@ if ($job == 'refreshadminskinlist' || $job == 'selectadminskin') {
             $currentadminskin = $targetskin;
         }
     }
-    $sleout = "<?PHP\n" . $out . "\$currentadminskin='{$currentadminskin}';";
+    $sleout = "<?php\n" . $out . "\$currentadminskin='{$currentadminskin}';";
     writetofile("data/cache_adminskinlist.php", $sleout);
     header("Location: admin.php");
 }
@@ -1439,7 +1439,7 @@ eot;
 
 
 if ($job == 'funclocksave') {
-    $savetext = "<?PHP\nif (!defined('VALIDREQUEST')) die ('Access Denied.');\n";
+    $savetext = "<?php\nif (!defined('VALIDREQUEST')) die ('Access Denied.');\n";
     $save_config = $_POST['prefconfig'];
     if (count($save_config) <= 1) {
         catcherror($lna[1013]);

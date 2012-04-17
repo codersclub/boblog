@@ -1,4 +1,4 @@
-<?PHP
+<?php
 $showtips[0]='Bạn có thể tạo một phân loại ẩn giấu, thành viên không có quyền hạn xem thậm chí hầu như không biết đến phân loại này.';
 $showtips[1]='Bo-Blog hỗ trợ đọc RSS.';
 $showtips[2]='Bo-Blog hỗ trợ MetaWeblogAPI, có thể viết và sửa trực tiếp qua trình biên tập.';

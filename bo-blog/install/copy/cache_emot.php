@@ -1,4 +1,4 @@
-<?PHP
+<?php
 $myemots['anger']['code']='anger';
 $myemots['anger']['image']='anger.gif';
 $myemots['anger']['thumb']='thumbnail/anger.gif';

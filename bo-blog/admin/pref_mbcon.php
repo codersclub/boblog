@@ -1,4 +1,4 @@
-<?PHP
+<?php
 if (!defined('VALIDADMIN')) die ('Access Denied.');
 addpref("sec", "{$lna[532]}");
 addpref("r", "displayannounce|{$lna[533]}|{$lna[534]}|{$lna[535]}");

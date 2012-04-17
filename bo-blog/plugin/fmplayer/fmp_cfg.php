@@ -1,4 +1,4 @@
-<?PHP
+<?php
 
 $fmp_cfg['file'] = 'plugin/fmplayer/playlist.php';
 $fmp_cfg['displayheight'] = '80';

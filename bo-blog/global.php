@@ -1,4 +1,4 @@
-<?PHP
+<?php
 /* -----------------------------------------------------
 Bo-Blog 2 : The Blog Reloaded.
 <<A Bluview Technology Product>>
@@ -212,7 +212,7 @@ if (!defined('noCounter')) { //trackback, rss, sitemap are not regarded as norma
                 'ip'         => $oldip[1],
             );
         } elseif ($oldip[1] == $userdetail['ip']) {
-            $nowonline[] = "<?PHP exit;?>|{$userdetail['ip']}|{$nowtime['timestamp']}|{$userdetail['userid']}|{$userdetail['username']}|\n";
+            $nowonline[] = "<?php exit;?>|{$userdetail['ip']}|{$nowtime['timestamp']}|{$userdetail['userid']}|{$userdetail['username']}|\n";
             $onlineusers[] = array(
                 'userid'     => $oldip[3],
                 'username'   => $oldip[4],
@@ -223,7 +223,7 @@ if (!defined('noCounter')) { //trackback, rss, sitemap are not regarded as norma
         }
     }
     if ($tmp_checked_current != 1) {
-        $nowonline[] = "<?PHP exit;?>|{$userdetail['ip']}|{$nowtime['timestamp']}|{$userdetail['userid']}|{$userdetail['username']}|\n";
+        $nowonline[] = "<?php exit;?>|{$userdetail['ip']}|{$nowtime['timestamp']}|{$userdetail['userid']}|{$userdetail['username']}|\n";
         $onlineusers[] = array(
             'userid'     => $userdetail['userid'],
             'username'   => $userdetail['username'],

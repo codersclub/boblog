@@ -1,4 +1,4 @@
-<?PHP
+<?php
 /* Sitemap generator for Bo-Blog 2.0.x
 Written by Bob
 Updated on 2008-7-12  */

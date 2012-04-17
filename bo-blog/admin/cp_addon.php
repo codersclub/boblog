@@ -1,4 +1,4 @@
-<?PHP
+<?php
 /* -----------------------------------------------------
 Bo-Blog 2 : The Blog Reloaded.
 <<A Bluview Technology Product>>
@@ -127,7 +127,7 @@ eot;
 }
 
 if ($job == 'scanskin') {
-    $addline = "<?PHP\n";
+    $addline = "<?php\n";
     $handle = opendir("template/");
 
     if (!$handle) {

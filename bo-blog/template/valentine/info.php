@@ -1,4 +1,4 @@
-<?PHP
+<?php
 $template['id']="20080115-emily-valentine-skin4";
 $template['name']="valentine";
 $template['author']="emily";

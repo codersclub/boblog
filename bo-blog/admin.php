@@ -1,4 +1,4 @@
-<?PHP
+<?php
 /* -----------------------------------------------------
 Bo-Blog 2 : The Blog Reloaded.
 <<A Bluview Technology Product>>
@@ -256,7 +256,7 @@ function changesingleconfig($configname, $value, $configtype = 'mbcon', $configf
     global $$configtype, $lnc;
     $rar = $$configtype;
     $rar[$configname] = $value;
-    $savetext = "<?PHP\n";
+    $savetext = "<?php\n";
     foreach ($rar as $key => $val) {
         $savetext .= "\${$configtype}['{$key}']='" . safe_convert(stripslashes($val)) . "';\n";
     }

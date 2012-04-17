@@ -1,4 +1,4 @@
-<?PHP
+<?php
 /* This file provides a few functions for developers 
 Usage: include ("function.php"); */
 

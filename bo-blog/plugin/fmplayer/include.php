@@ -1,4 +1,4 @@
-<?PHP
+<?php
 
 $file = array(
     "list"  => "../../data/fmp_list.php",

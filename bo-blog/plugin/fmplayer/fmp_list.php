@@ -1,4 +1,4 @@
-<?PHP
+<?php
 
 $fmp_list['1172239144421']['title'] = 'Homeland';
 $fmp_list['1172239144421']['creator'] = 'Postman';

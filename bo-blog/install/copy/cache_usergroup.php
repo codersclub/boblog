@@ -1,4 +1,4 @@
-<?PHP
+<?php
 $usergp[0]='{langcopy2}';
 $usergp[1]='{langcopy3}';
 $usergp[2]='{langcopy4}';

@@ -1,4 +1,4 @@
-<?PHP
+<?php
 //禁止使用Windows記事本修改檔案，由此造成的一切使用不正常恕不解答！
 $langname['front']="正體中文";
 $langname['languagename']="zh-tw";

@@ -1,4 +1,4 @@
-<?PHP
+<?php
 $mbcon['displayannounce']='1';
 $mbcon['announce']='Welcome to Bo-Blog.';
 $mbcon['entrynum']='5';

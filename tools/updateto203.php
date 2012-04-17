@@ -1,4 +1,4 @@
-<?PHP
+<?php
 
 error_reporting(E_ALL);
 $v = @$_REQUEST['v'];

@@ -1,4 +1,4 @@
-<?PHP
+<?php
 $showtips[0]='您可以创建一个隐藏的分类，没有查看权限的用户甚至不会意识到该分类的存在。';
 $showtips[1]='Bo-Blog支持RSS订阅。';
 $showtips[2]='Bo-Blog支持MetaWeblogAPI，可以通过日志编辑软件直接撰写和编辑。';

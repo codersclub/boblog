@@ -1,4 +1,4 @@
-<?PHP
+<?php
 $showtips[0]='You can create a hidden classification, users do not see not even aware of the existence of the classification.';
 $showtips[1]='Bo-Blog support RSS subscriptions.';
 $showtips[2]='Bo-Blog support MetaWeblogAPI, log editing software can write and edit directly.';
