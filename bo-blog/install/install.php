@@ -1,4 +1,4 @@
-<?PHP
+<?php
 
 error_reporting(E_ALL);
 // error_reporting(E_ALL & ~E_DEPRECATED & ~E_NOTICE);
@@ -544,7 +544,7 @@ if ($v == '3') {
 }
 
 if ($v == '4') {
-    $config_data = "<?PHP
+    $config_data = "<?php
 \$db_server='$db_server';
 \$db_username='$db_username';
 \$db_password='$db_password';
@@ -588,29 +588,29 @@ if ($v == '4') {
     }
 
 
-    writetofile('../data/cache_adminlist.php', "<?PHP\n\$adminlist=array('1'=>'{$username}');");
+    writetofile('../data/cache_adminlist.php', "<?php\n\$adminlist=array('1'=>'{$username}');");
 
     writetofile('../data/modules.php',
-        "<?PHP\n/*--PREPENDAREA--*/\n/*--APPENDAREA--*/\n\$blogitem['announcement']=array('type'=>'block',	'name'=>'announcement', 'title'=>'{$lang[59]}', 'content'=>'{$lang[60]}', 'extend'=>1);\n\$blogitem['archivelink']=array('type'=>'link', 'url'=>'archive.php', 'text'=>'{$lang[49]}');\n");
+        "<?php\n/*--PREPENDAREA--*/\n/*--APPENDAREA--*/\n\$blogitem['announcement']=array('type'=>'block',	'name'=>'announcement', 'title'=>'{$lang[59]}', 'content'=>'{$lang[60]}', 'extend'=>1);\n\$blogitem['archivelink']=array('type'=>'link', 'url'=>'archive.php', 'text'=>'{$lang[49]}');\n");
 
     writetofile('../data/cache_categories.php',
-        "<?PHP exit;?><|>0<|>{$lang[32]}<|>{$lang[33]}<|>0<|>0<|>0<|><|><|>1<|>-1<|>\n");
+        "<?php exit;?><|>0<|>{$lang[32]}<|>{$lang[33]}<|>0<|>0<|>0<|><|><|>1<|>-1<|>\n");
 
     writetofile('../data/online.php', "");
 
     writetofile('../data/cache_tags.php', "");
 
     writetofile('../data/language.php',
-        "<?PHP\n\$langfront=\"{$language}\";\n\$langback=\"{$language}\";\n@include_once (\"lang/{$language}/common.php\");");
+        "<?php\n\$langfront=\"{$language}\";\n\$langback=\"{$language}\";\n@include_once (\"lang/{$language}/common.php\");");
 
     writetofile('../data/cache_currentmonth.php', "");
 
     writetofile('../data/cache_latest.php',
-        "<?PHP\n\$cache_latest_limit[]=array(\"blogid\"=>0, \"title\"=>\"{$lang[30]}\", \"category\"=>0, \"fulltitle\"=>\"{$lang[30]}\");\n\$cache_latest_all[]=array(\"blogid\"=>0, \"title\"=>\"{$lang[30]}\", \"category\"=>0, \"fulltitle\"=>\"{$lang[30]}\");?>");
+        "<?php\n\$cache_latest_limit[]=array(\"blogid\"=>0, \"title\"=>\"{$lang[30]}\", \"category\"=>0, \"fulltitle\"=>\"{$lang[30]}\");\n\$cache_latest_all[]=array(\"blogid\"=>0, \"title\"=>\"{$lang[30]}\", \"category\"=>0, \"fulltitle\"=>\"{$lang[30]}\");?>");
 
     writetofile('../data/cache_replies.php', "");
 
-    writetofile('../data/plugin_enabled.php', "<?PHP\n");
+    writetofile('../data/plugin_enabled.php', "<?php\n");
 
     $copylangorigin = array(
         '{langcopy0}',
