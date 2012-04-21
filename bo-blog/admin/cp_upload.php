@@ -300,11 +300,10 @@ function print_upload($message, $classup = "highlight", $classdown = "normal", $
 {
     global $csslocation, $mbcon, $lna, $langback, $useeditor;
     $display_overall .= <<<eot
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="UTF-8">
+<!DOCTYPE html>
+<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta http-equiv="Content-Language" content="UTF-8" />
+<meta charset="UTF-8">
 <link rel="stylesheet" rev="stylesheet" href="{$csslocation}" type="text/css" media="all" />
 <script type='text/javascript' src="lang/{$langback}/jslang.js"></script>
 <script type='text/javascript' src="editor/{$useeditor}/uploader.js"></script>
