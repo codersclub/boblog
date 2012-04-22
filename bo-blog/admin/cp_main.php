@@ -1203,7 +1203,7 @@ if ($job == 'ordermodule') {
     }
     $mod_array = $blog->getgroupbyquery("SELECT * FROM `{$db_prefix}mods` WHERE `position`='{$section}' AND `active`=1 ORDER BY `modorder`");
     for ($i = 0; $i < count($mod_array); $i++) {
-        $mod_array[$i]['desc'] = msubstr($mod_array[$i]['desc'], 0, 15);
+        $mod_array[$i]['desc'] = mb_substr($mod_array[$i]['desc'], 0, 15);
         $puttingcates .= "<option value='" . urlencode($mod_array[$i]['name']) . "'>{$mod_array[$i]['name']} ({$mod_array[$i]['desc']})</option>";
     }
     $realname = array('header' => $lna[71], 'sidebar' => $lna[72], 'footer' => $lna[73], 'prebody' => $lna[1055]);

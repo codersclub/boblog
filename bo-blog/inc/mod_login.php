@@ -245,7 +245,7 @@ if ($job=='verify') {
 if ($job=='verifyadmin') {
 	acceptrequest('urlreturn');
  	$password=md5($_POST['password']);
-	$username=safe_convert(mystrtolower($_POST['username']));
+	$username=safe_convert(mb_strtolower($_POST['username']));
 	$try=$blog->getbyquery("SELECT * FROM `{$db_prefix}user` WHERE LOWER(username)='{$username}' AND `userpsw`='{$password}'");
 	if (!is_array($try)) {
 		catcherror ($lnc[166]);
@@ -359,7 +359,7 @@ if ($job=='ajaxverify') {
 		if ($securitycode=='' || strtolower($securitycode)!=strtolower($_SESSION['code'])) catcherror($lnc[165]);
 	}
 	$password=md5($_POST['password']);
-	$username=safe_convert(mystrtolower($_POST['username']));
+	$username=safe_convert(mb_strtolower($_POST['username']));
 	$try=$blog->getbyquery("SELECT * FROM `{$db_prefix}user` WHERE LOWER(username)='{$username}' AND `userpsw`='{$password}'");
 	if (!is_array($try)) {
 		catcherror ($lnc[166]);

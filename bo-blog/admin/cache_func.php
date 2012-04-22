@@ -181,7 +181,7 @@ function recache_latestentries()
     $result_all = $blog->getgroupbyquery("SELECT * FROM `{$db_prefix}blogs` WHERE `property`<3 ORDER BY `pubtime` DESC LIMIT 0, {$mbcon['entrynum']}");
     if (is_array($result_limit)) {
         foreach ($result_limit as $result_limit_detail) {
-            $title = msubstr($result_limit_detail['title'], 0, $mbcon['entrylength']);
+            $title = mb_substr($result_limit_detail['title'], 0, $mbcon['entrylength']);
             if ($title != $result_limit_detail['title']) {
                 $title .= '...';
             }
@@ -190,7 +190,7 @@ function recache_latestentries()
     }
     if (is_array($result_all)) {
         foreach ($result_all as $result_all_detail) {
-            $title = msubstr($result_all_detail['title'], 0, $mbcon['entrylength']);
+            $title = mb_substr($result_all_detail['title'], 0, $mbcon['entrylength']);
             if ($title != $result_all_detail['title']) {
                 $title .= '...';
             }
@@ -214,7 +214,7 @@ function recache_latestreplies()
         foreach ($result_limit as $result_limit_detail) {
             $result_limit_detail['repcontent'] = strip_tags($result_limit_detail['repcontent']);
             $result_limit_detail['repcontent'] = strip_ubbs($result_limit_detail['repcontent']);
-            $title = msubstr($result_limit_detail['repcontent'], 0, $mbcon['replylength']);
+            $title = mb_substr($result_limit_detail['repcontent'], 0, $mbcon['replylength']);
             if ($title != $result_limit_detail['repcontent']) {
                 $title .= '...';
             }
@@ -228,7 +228,7 @@ function recache_latestreplies()
             $result_all_detail['repcontent'] = strip_ubbs($result_all_detail['repcontent']);
             $result_all_detail['repcontent'] = str_replace("\\", "\\\\", $result_all_detail['repcontent']);
             $result_all_detail['repcontent'] = str_replace('$', "\\\$", $result_all_detail['repcontent']);
-            $title = msubstr($result_all_detail['repcontent'], 0, $mbcon['replylength']);
+            $title = mb_substr($result_all_detail['repcontent'], 0, $mbcon['replylength']);
             if ($title != $result_all_detail['repcontent']) {
                 $title .= '...';
             }

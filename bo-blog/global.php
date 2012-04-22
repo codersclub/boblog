@@ -522,18 +522,6 @@ function safe_invert($string, $html = 0)
     return $string;
 }
 
-function msubstr($str, $start, $end, $len = 0)
-{ //UTF-8 Cutting
-    preg_match_all("/[\x01-\x7f]|[\xc2-\xdf][\x80-\xbf]|\xe0[\xa0-\xbf][\x80-\xbf]|[\xe1-\xef][\x80-\xbf][\x80-\xbf]|\xf0[\x90-\xbf][\x80-\xbf][\x80-\xbf]|[\xf1-\xf7][\x80-\xbf][\x80-\xbf][\x80-\xbf]/",
-        $str, $info);
-    $lens = sizeof($info[0]);
-    if ($len == 1) {
-        return array(join("", array_slice($info[0], $start, $end)), $lens);
-    } else {
-        return join("", array_slice($info[0], $start, $end));
-    }
-}
-
 function catchsuccess($tip, $returnurl = false)
 {
     global $ajax, $lnc;

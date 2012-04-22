@@ -60,9 +60,9 @@ if ($excerpt == '') {
 } else {
     $excerpt = tb_convert($excerpt);
 }
-$title = msubstr($title, 0, $mbcon['maxtblen']);
-$blog_name = msubstr($blog_name, 0, $mbcon['maxtblen']);
-$excerpt = msubstr($excerpt, 0, $mbcon['maxtblen']);
+$title = mb_substr($title, 0, $mbcon['maxtblen']);
+$blog_name = mb_substr($blog_name, 0, $mbcon['maxtblen']);
+$excerpt = mb_substr($excerpt, 0, $mbcon['maxtblen']);
 $title = ($title) ? tb_convert($title) : $lnc[13];
 $blog_name = ($blog_name) ? tb_convert($blog_name) : $lnc[14];
 
