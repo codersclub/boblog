@@ -591,7 +591,7 @@ if ($job == 'savenewuser' || $job == 'saveuser') {
         } else {
             $password = md5($p['password']);
         }
-        $usercheck = mystrtolower($username);
+        $usercheck = mb_strtolower($username);
         $try = $blog->getbyquery("SELECT userid FROM `{$db_prefix}user` WHERE LOWER(username)='{$usercheck}'");
         if (is_array($try)) {
             catcherror($lna[497]);

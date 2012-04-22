@@ -58,7 +58,7 @@ if ($job=='adminlog') {
 if ($job=='adminverify') {
 	acceptrequest('ipassword');
 	$password=md5($_POST['ipassword']);
-	$username=safe_convert(mystrtolower($userdetail['username']));
+	$username=safe_convert(mb_strtolower($userdetail['username']));
 	$try=$blog->getbyquery("SELECT * FROM `{$db_prefix}user` WHERE LOWER(username)='{$username}'");
 	if (!is_array($try)) {
 		catcherror ($lnc[276]);
@@ -153,7 +153,7 @@ if ($job=='doregister' || $job=='domodpro') {
 		if (strlen($username)<$mbcon['minusenamelen'] || strlen($username)>$mbcon['maxusenamelen']) catcherror ($lnc[155]);
 		if ($password==='' || $password!=$confirmpsw || strlen($password)<$mbcon['minpswlen']) catcherror ($lnc[156]);
 		else $password=md5($password);
-		$usercheck=mystrtolower($username);
+		$usercheck=mb_strtolower($username);
 		$try=$blog->getbyquery("SELECT userid FROM `{$db_prefix}user` WHERE LOWER(username)='{$usercheck}'");
 		if (is_array($try)) catcherror ($lnc[157]);
 		if (preg_search($username, $forbidden['banword']) || preg_search($username, $forbidden['keep'])) catcherror ($lnc[158]);
@@ -218,7 +218,7 @@ if ($job=='verify') {
 	}
 
 /*vot*/	$password=md5(@$_POST['password']);
-/*vot*/	$username=safe_convert(mystrtolower(@$_POST['username']));
+/*vot*/	$username=safe_convert(mb_strtolower(@$_POST['username']));
 	plugin_runphp('loginprocess');
 	$try=$blog->getbyquery("SELECT * FROM `{$db_prefix}user` WHERE LOWER(username)='{$username}' AND `userpsw`='{$password}'");
 	if (!is_array($try)) {

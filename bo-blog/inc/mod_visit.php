@@ -104,9 +104,9 @@ if ($job=='addreply' || $job=='addmessage' || $job=='editreply' || $job=='editme
 			$replierid=$userdetail['userid'];
 		} else {
 			$v_password=md5($v_password);
-			$v_replier_checker=mystrtolower($v_replier);
+			$v_replier_checker=mb_strtolower($v_replier);
 			$userchecker=$blog->getbyquery("SELECT * FROM `{$db_prefix}user` WHERE LOWER(username)='{$v_replier_checker}'");
-			if (mystrtolower($userchecker['username'])==$v_replier_checker && $v_password==$userchecker['userpsw']) {
+			if (mb_strtolower($userchecker['username'])==$v_replier_checker && $v_password==$userchecker['userpsw']) {
 				$replier=$userchecker['username'];
 				$replierid=$userchecker['userid'];
 				@setcookie ('userid', $userchecker['userid']);

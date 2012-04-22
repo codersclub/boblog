@@ -949,7 +949,7 @@ class getblogs extends boblog {
 			if ($singlestr=='' || strstr($singlestr, '<!--')) $outhtml.=$singlestr;
 			elseif (strstr($singlestr, '<')) {
 				//if (substr_count($singlestr, '<')!=substr_count($singlestr, '>') || substr_count($singlestr, '"')%2==1 || substr_count($singlestr, "'")%2==1) continue;
-				$tmp=str_replace(array('/>', '<', '>'), array(' />', '', ''), mystrtolower($singlestr));
+				$tmp=str_replace(array('/>', '<', '>'), array(' />', '', ''), mb_strtolower($singlestr));
 				@list($currenttag)=@explode(' ', $tmp);
 				if (!in_array($currenttag, $allowsingle)) {
 					if ($currenttag[0]=='/') {

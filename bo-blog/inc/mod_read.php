@@ -60,7 +60,7 @@ if ($is_preview) {
 		$comefrom=$originsrc='';
 	}
 	if ($tags) {
-		$tags_array=@explode(' ', mystrtolower(trim($tags)));
+		$tags_array=@explode(' ', mb_strtolower(trim($tags)));
 		$tags_array_all=array_unique($tags_array);
 		$tags=@implode(' ', $tags_array_all);
 		$tags=safe_convert($tags);

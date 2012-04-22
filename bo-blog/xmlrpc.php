@@ -270,7 +270,7 @@ function checkuser($username, $password)
     global $db_prefix;
     $blog = new boblog;
     $password = md5($password);
-    $username = mystrtolower($username);
+/*vot*/    $username = mb_strtolower($username);
     $userdetail = $blog->getbyquery("SELECT * FROM `{$db_prefix}user` WHERE LOWER(username)='{$username}' AND `userpsw`='{$password}'");
     if (!$userdetail) {
         return false;

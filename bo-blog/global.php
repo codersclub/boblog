@@ -996,12 +996,6 @@ function check_ip($ip, $iparray)
     return false;
 }
 
-function mystrtolower($str)
-{ //strtolower function that works fine with Chinese characters
-    $str = preg_replace("/([A-Z]+)/e", "strtolower('\\1')", $str);
-    return $str;
-}
-
 function evalmycode($code)
 {
     $a = preg_match("/<php>(.+?)<\/php>/is", $code, $phpcode_array);
