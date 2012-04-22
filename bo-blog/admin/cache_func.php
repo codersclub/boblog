@@ -121,7 +121,7 @@ function recache_adminlist()
     if (is_array($usergp)) {
         foreach ($usergp as $key => $value) {
             if (file_exists("data/usergroup{$key}.php")) {
-                $tmp = readfromfile("data/usergroup{$key}.php");
+                $tmp = file_get_contents("data/usergroup{$key}.php");
                 if (strstr($tmp, "['AddEntry']='1'")) {
                     $admin_s[] = $key;
                 }

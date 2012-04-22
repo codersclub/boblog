@@ -81,9 +81,9 @@ if ($job == 'default') {
     }
 
     if (file_exists("lang/{$langback}/licence")) {
-        $copytxt = nl2br(readfromfile("lang/{$langback}/licence"));
+        $copytxt = nl2br(file_get_contents("lang/{$langback}/licence"));
     } else {
-        $copytxt = nl2br(readfromfile("admin/licence"));
+        $copytxt = nl2br(file_get_contents("admin/licence"));
     }
     $display_overall .= highlightadminitems('default', 'main');
     $display_overall_plus = <<<eot
@@ -336,7 +336,7 @@ if ($job == 'configsave') {
     }
     if (writetofile("data/config.php", $savetext)) {
         //Check now
-        $tmp = readfromfile("data/config.php");
+        $tmp = file_get_contents("data/config.php");
         if (strlen($tmp) <= 1) {
             @unlink("data/config.php");
             rename("data/configbakup.php", "data/config.php");
@@ -422,7 +422,7 @@ if ($job == 'mbconsave') {
     }
     if (writetofile("data/mod_config.php", $savetext)) {
         //Check now
-        $tmp = readfromfile("data/mod_config.php");
+        $tmp = file_get_contents("data/mod_config.php");
         if (strlen($tmp) <= 1) {
             @unlink("data/mod_config.php");
             rename("data/mod_configbakup.php", "data/mod_config.php");
@@ -1068,7 +1068,7 @@ if ($job == 'automod') {
     if (!move_uploaded_file($upload_file, "{$db_tmpdir}/{$upload_filename}")) {
         catcherror($lna[130] . 'temp/');
     }
-    $filecontent = readfromfile("{$db_tmpdir}/{$upload_filename}");
+    $filecontent = file_get_contents("{$db_tmpdir}/{$upload_filename}");
     $security_check = checksafe($filecontent);
     if ($security_check) {
         $warn = "<font color=red>{$lna[932]}</font>";
@@ -1120,7 +1120,7 @@ if ($job == 'automod2') {
     if ($ext != '.blog' && $ext != '.txt') {
         catcherror($lna[129]);
     }
-    $filecontent = readfromfile("{$db_tmpdir}/" . $upload_filename);
+    $filecontent = file_get_contents("{$db_tmpdir}/" . $upload_filename);
     eval ($filecontent);
     $warn .= "
 <table width=95% align=center>
@@ -1183,7 +1183,7 @@ if ($job == 'autoaddmodule') {
     if ($ext != '.blog' && $ext != '.txt') {
         catcherror($lna[129]);
     }
-    $filecontent = readfromfile("{$db_tmpdir}/" . $newmodfile);
+    $filecontent = file_get_contents("{$db_tmpdir}/" . $newmodfile);
     eval ($filecontent);
     $maxmodid = $blog->countbyquery("SELECT MAX(`modorder`) FROM `{$db_prefix}mods`");
     $maxmodid += 1;

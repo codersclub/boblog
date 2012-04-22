@@ -80,7 +80,7 @@ if ($mbcon['antileech'] == '0' || $mbcon['antileech'] == '1') {
     @header("Content-Disposition: {$headerposition}; filename=\"{$sfilename}\"");
     @header("Content-Type: {$contenttype}");
     @header('Content-Length: ' . $sfilesize);
-    echo readfromfile($attachfind['filepath']);
+    echo file_get_contents($attachfind['filepath']);
     exit();
 }
 
@@ -89,7 +89,7 @@ function generate_leech_error()
     @header("Content-Disposition: inline; filename=\"no_leech.gif\"");
     @header("Content-Type: image/gif");
     $sfilesize = filesize('images/others/no_leech.gif');
-    echo readfromfile('images/others/no_leech.gif');
+    echo file_get_contents('images/others/no_leech.gif');
     exit();
 }
 

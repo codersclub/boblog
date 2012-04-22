@@ -51,7 +51,7 @@ if ($v == 'start') {
         @unlink('../data/test.php');
     }
 
-    $copytxt = readfromfile("licence.txt");
+    $copytxt = file_get_contents("licence.txt");
     template("<div class='log'>{$lang[3]}</div><div class='mes'><div align='center'><form action=\"install.php?v=1&newinstall={$newinstall}\" method='post'><textarea style=\"width: 90%; height: 200px;\">{$copytxt}</textarea></div><br/><div align='center'><input type='submit' value='{$lang[4]}' class='inbut'> <input type='button' value='{$lang[5]}' onclick='window.location=\"install.php?v=cancel\";' class='inbut'></form></div></div>");
 }
 
@@ -580,7 +580,7 @@ if ($v == '4') {
 
     if ($newinstall != 1) { //Quit
         if (file_exists("copy/mod_config.php")) { //Repair mod_config.php
-            $orgin = readfromfile("copy/mod_config.php");
+            $orgin = file_get_contents("copy/mod_config.php");
             writetofile("../data/mod_config.php", $orgin);
         }
         @rename("install.php", "install.bak"); //Try to rename install.php
@@ -637,7 +637,7 @@ if ($v == '4') {
     for ($i = 0; $i < count($file_list); $i++) {
         $file_s = trim($file_list[$i]);
         if (file_exists("copy/{$file_s}") && !is_dir("copy/{$file_s}")) {
-            $orgin = readfromfile("copy/{$file_s}");
+            $orgin = file_get_contents("copy/{$file_s}");
             $orgin = str_replace($copylangorigin, $langcopy, $orgin);
             writetofile("../data/{$file_s}", $orgin);
             unset ($orgin);
@@ -652,10 +652,12 @@ if ($v == '4') {
 
 function template($body)
 {
-    global $newinstall, $lang;
+    global $newinstall, $lang, $language;
     $bbb = <<<eot
-<html xmlns="http://www.w3.org/1999/xhtml" lang="UTF-8">
+<!DOCTYPE html>
+<html lang="{$language}>
 <head>
+<meta charset="UTF-8">
 <link rel="stylesheet" rev="stylesheet" href="install.css" type="text/css" media="all" />
 <title>Bo-Blog Installation</title>
 <script type="text/javascript">
@@ -706,23 +708,6 @@ eot;
     @header("Content-Type: text/html; charset=utf-8");
     print($bbb);
     exit();
-}
-
-function readfromfile($file_name)
-{ //File Reading
-    if (file_exists($file_name)) {
-        $filenum = fopen($file_name, "r");
-        $sizeofit = filesize($file_name);
-        if ($sizeofit <= 0) {
-            return '';
-        }
-        @flock($filenum, LOCK_EX);
-        $file_data = fread($filenum, $sizeofit);
-        fclose($filenum);
-        return $file_data;
-    } else {
-        return '';
-    }
 }
 
 function writetofile($filename, $data)

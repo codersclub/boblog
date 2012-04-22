@@ -971,7 +971,7 @@ eot;
         $i = 0;
         foreach ($importantfiles as $important_file) {
             if (file_exists("data/{$important_file}")) {
-                $tmpread = base64_encode(readfromfile("data/{$important_file}"));
+                $tmpread = base64_encode(file_get_contents("data/{$important_file}"));
                 $out_importantfile .= "\$bfname[{$i}]='data/{$important_file}';\n";
                 $out_importantfile .= "\$bfcontent[{$i}]=\"{$tmpread}\";\n";
                 $i += 1;
@@ -1275,7 +1275,7 @@ if ($job == 'doimport') {
         if (!file_exists("bak/{$srcindex}")) {
             catcherror($lna[856]);
         } else {
-            $tmp = readfromfile("bak/{$srcindex}");
+            $tmp = file_get_contents("bak/{$srcindex}");
             if (strstr($tmp, ".gz") && !function_exists('gzopen')) {
                 catcherror($lna[857]);
             }
@@ -1375,7 +1375,7 @@ if ($job == 'rollback') {
     if ($dbnonstop == 1) {
         $ignore_db_errors = 1;
     }
-    $tmp = readfromfile("bak/{$srcindex}");
+    $tmp = file_get_contents("bak/{$srcindex}");
     $all_files = @explode('//', $tmp);
     if ($endnumber >= count($all_files)) {
         //Auto refresh caches now
@@ -1545,7 +1545,7 @@ if ($job == 'rssrollback') {
     if (strstr($srcindex, '.gz')) {
         $rsscontent = @gzreadfromfile("bak/{$srcindex}");
     } else {
-        $rsscontent = readfromfile("bak/{$srcindex}");
+        $rsscontent = file_get_contents("bak/{$srcindex}");
     }
     $array_insert = rssrollback($rsscontent);
     if (is_array($array_insert)) {
@@ -1759,7 +1759,7 @@ function parserss($xml)
 function addbakfile($filename, $batchid)
 {
     if (file_exists("bak/bak{$batchid}_filelist.txt")) {
-        $ir = readfromfile("bak/bak{$batchid}_filelist.txt");
+        $ir = file_get_contents("bak/bak{$batchid}_filelist.txt");
         $is = @explode('//', $ir);
     }
     $is[] = $filename;
@@ -1770,7 +1770,7 @@ function addbakfile($filename, $batchid)
 function finishbackup($batchid)
 {
     global $lna;
-    $ir = trim(readfromfile("bak/bak{$batchid}_filelist.txt"));
+    $ir = trim(file_get_contents("bak/bak{$batchid}_filelist.txt"));
     if (!$ir) {
         return ($lna[870]);
     }

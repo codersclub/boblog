@@ -343,7 +343,7 @@ if ($job=='doapplylink') {
 	if (preg_search($sitename, $forbidden['banword']) || preg_search($siteintro, $forbidden['banword']) ||  preg_search($siteurl, $forbidden['banword']) || preg_search($sitename, $forbidden['suspect']) || preg_search($siteintro, $forbidden['suspect']) ||  preg_search($siteurl, $forbidden['suspect'])) catcherror($lnc[214]);
 	$addline="<?php exit();?><|>$siteid<|>$sitename<|>$siteurl<|>$sitelogo<|>$siteintro<|>\n";
 	$filename="data/cache_applylinks.php";
-	$oldcontent=@readfromfile($filename);
+	$oldcontent=@file_get_contents($filename);
 	$content=$addline.$oldcontent;
 	if (!writetofile($filename, $content)) catcherror ($lnc[7].$filename);
 	else catchsuccess ($lnc[180], "{$lnc[163]}|index.php");

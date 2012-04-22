@@ -364,26 +364,6 @@ function addsd($array)
     return $array;
 }
 
-function readfromfile($file_name)
-{ //File Reading
-    if (file_exists($file_name)) {
-        if (PHP_VERSION >= "4.3.0") {
-            return file_get_contents($file_name);
-        }
-        $filenum = fopen($file_name, "r");
-        $sizeofit = filesize($file_name);
-        if ($sizeofit <= 0) {
-            return '';
-        }
-        @flock($filenum, LOCK_EX);
-        $file_data = fread($filenum, $sizeofit);
-        fclose($filenum);
-        return $file_data;
-    } else {
-        return '';
-    }
-}
-
 function writetofile($filename, $data)
 { //File Writing
     $filenum = @fopen($filename, "w");

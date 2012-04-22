@@ -183,7 +183,7 @@ if ($job == 'weatheradd') {
     if (empty($newvariable) || empty($newicon) || empty($newdesc)) {
         catcherror($lna[371]);
     }
-    $conout = @readfromfile("data/weather.php");
+    $conout = @file_get_contents("data/weather.php");
     $conout .= "\$weather['" . safe_convert($newvariable) . "']['image']='" . safe_convert($newicon) . "';\n";
     $conout .= "\$weather['" . safe_convert($newvariable) . "']['text']='" . safe_convert($newdesc) . "';\n";
     if (writetofile("data/weather.php", $conout)) {
@@ -788,7 +788,7 @@ if ($job == 'urlrewrite') {
     $config['blogurl'] = str_replace('{host}', $_SERVER['HTTP_HOST'], $config['blogurl']);
     $possibleroot = parse_url($config['blogurl']);
     $serverroot = $possibleroot['path'] . '/';
-    $ruletemplate = nl2br(htmlspecialchars(readfromfile("images/others/rule_apache.txt")));
+    $ruletemplate = nl2br(htmlspecialchars(file_get_contents("images/others/rule_apache.txt")));
     $ruletemplate = str_replace('&lt;ROOTHERE&gt;', $serverroot, $ruletemplate);
 
     $display_overall .= highlightadminitems('urlrewrite', 'misc');

@@ -33,7 +33,7 @@ if (@$flset['weather'] != 1) {
 
 //All Tags
 if (@$flset['tags'] != 1) {
-    $existtagall = trim(readfromfile("data/cache_tags.php"));
+    $existtagall = trim(file_get_contents("data/cache_tags.php"));
     $exist_tags_all = @explode(' ', $existtagall);
 }
 

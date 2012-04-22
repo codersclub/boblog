@@ -270,7 +270,7 @@ function changesingleconfig($configname, $value, $configtype = 'mbcon', $configf
 //Partially change the content of a file
 function replaceblock($filename, $blockidentifier, $newvalues)
 {
-    $oldfilecontent = @readfromfile($filename);
+    $oldfilecontent = @file_get_contents($filename);
     $inthebeginning = "//[Start]{$blockidentifier}";
     $intheend = "//[End]{$blockidentifier}";
     @list($thebeginningpart, $tobereplaced) = @explode($inthebeginning, $oldfilecontent);
@@ -285,7 +285,7 @@ function mod_append($value)
 {
     global $lnc;
     $filename = "data/modules.php";
-    $filecontent = @readfromfile($filename);
+    $filecontent = @file_get_contents($filename);
     $value = "/*--APPENDAREA--*/\n" . $value . "\n";
     $filecontent = str_replace("/*--APPENDAREA--*/", $value, $filecontent);
     $filecontent = str_replace("\n\n", "\n", $filecontent);
@@ -356,7 +356,7 @@ function check_upload_file($filename)
     if (!file_exists($filename)) {
         return true;
     }
-    $content = @readfromfile($filename);
+    $content = @file_get_contents($filename);
     foreach ($danger as $checker) {
         if (stristr($content, $checker)) {
             return false;

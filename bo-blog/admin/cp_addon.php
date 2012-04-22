@@ -179,7 +179,7 @@ if ($job == 'addskin') {
     }
 
     $addline = "\$skinset[\"{$template['id']}\"]=\"{$template['id']}|" . skin_convert($template['name']) . "|" . skin_convert($template['author']) . "|" . skin_convert($template['intro']) . "|" . skin_convert($template['dirname']) . "|" . skin_convert($template['thumbnail']) . "|\";\n";
-    $oldcontent = readfromfile("data/cache_skinlist.php");
+    $oldcontent = file_get_contents("data/cache_skinlist.php");
     if (!writetofile("data/cache_skinlist.php", $oldcontent . $addline)) {
         catcherror($lna[66] . "data/cache_skinlist.php");
     } else {
@@ -197,7 +197,7 @@ if ($job == 'setskin') {
         catcherror($lna[176]);
     }
 
-    $content = readfromfile("template/" . basename($itemid) . "/info.php");
+    $content = file_get_contents("template/" . basename($itemid) . "/info.php");
 
     if (!writetofile("data/mod_template.php", $content)) {
         catcherror($lna[66] . "data/mod_template.php");
@@ -701,7 +701,7 @@ function add_module($filename)
 {
     global $activate, $newplugindir, $blog, $db_prefix;
     if (is_file("plugin/{$newplugindir}/{$filename}")) {
-        $filecontent = readfromfile("plugin/{$newplugindir}/{$filename}");
+        $filecontent = file_get_contents("plugin/{$newplugindir}/{$filename}");
         eval ($filecontent);
         $maxmodid = $blog->countbyquery("SELECT MAX(`modorder`) FROM `{$db_prefix}mods`");
         $maxmodid += 1;

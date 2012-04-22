@@ -228,7 +228,7 @@ if (in_array('entries', $allopenmods)) {
 
 //[Start]replies
 if (in_array('replies', $allopenmods)) {
-	if (file_exists("data/cache_replies.php")) $tmpreplies=@explode('<||>', readfromfile("data/cache_replies.php"));
+	if (file_exists("data/cache_replies.php")) $tmpreplies=@explode('<||>', file_get_contents("data/cache_replies.php"));
 	$tmpreplyarray=$cache_replies_all=$cache_replies_limit=array();
 	if ($tmpreplies[0]) {
 		foreach ($tmpreplies as $tmpsinglereply) {
@@ -271,12 +271,12 @@ if (in_array('calendar', $allopenmods)) {
 	$cy=($cy<=1970 || $cy>2100) ? ($nowtime['year']) : $cy;
 	$month_calendar=array();
 	if ($cy==$nowtime['year'] && $cm==$nowtime['month']) {
-		$cal_body=@readfromfile("data/cache_currentmonth.php");
+		$cal_body=@file_get_contents("data/cache_currentmonth.php");
 		if (!strstr($cal_body, "<span class=\"calendar-month\">{$cm}</span>")) { //Cache auto refresh once a month
 			define ('REPLYSPECIAL', 1);
 			include_once ("admin/cache_func.php");
 			recache_currentmonthentries();
-			$cal_body=@readfromfile("data/cache_currentmonth.php");
+			$cal_body=@file_get_contents("data/cache_currentmonth.php");
 		}
 		$currentdate=gmdate('j', $nowtime['timestamp']+3600*$config['timezone']);
 		$cal_search=array ("<td id=\"cal{$currentdate}\" class=\"calendar-sunday\">", "<td id=\"cal{$currentdate}\" class=\"calendar-saturday\">", "<td id=\"cal{$currentdate}\" class=\"calendar-day\">");
