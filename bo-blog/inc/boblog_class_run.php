@@ -72,7 +72,7 @@ class boblog {
 	function countbyquery($myquery) {
 		$result=db_query($myquery);
 		$row=db_fetch_row($result);
-		return $row[0];
+		return isset($row[0]) ? $row[0] : 0;
 	}
 }
 

@@ -681,7 +681,13 @@ function lunarcalendar($month, $year)
     /*Lunar calendar - A broad and profound lunar calendar
 	The original data and algorithm ideas come from S&S Lab http://www.focus-2000.com, but the website seems to be closed
 	*/
-    //The number of days in a month in the lunar calendar. Each element is one year. The data in each element is: [0] is the month in which the leap month is, and 0 is the month without leap; [1] to [13] are the number of days per month for 12 or 13 months each year; [14] is the order of the sun's rays in the current year, [15] is the order of the earthly branches of the year
+    // The number of days in a month in the lunar calendar.
+    // Each element is one year.
+    // The data in each element is:
+    // [0] is the month in which the leap month is, and 0 is the month without leap;
+    // [1] to [13] are the number of days per month for 12 or 13 months each year;
+    // [14] is the order of the sun's rays in the current year;
+    // [15] is the order of the earthly branches of the year
     $everymonth = array(
         0   => array(8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 29, 30, 7, 1),
         1   => array(0, 29, 30, 29, 29, 30, 29, 30, 29, 30, 30, 30, 29, 0, 8, 2),

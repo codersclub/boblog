@@ -111,22 +111,21 @@ function db_query($sql, $silence = 0) {
 	global $querynum, $allqueries, $ignore_db_errors;
 	if($db_type == 'mysqli') {
 		$query = mysqli_query($dbh, $sql);
-	} else {
-		$query = mysql_query($sql);
-	}
-	if($db_type == 'mysqli') {
 		$errno = mysqli_errno($dbh);
 		$errmess = mysqli_error($dbh);
 	} else {
+		$query = mysql_query($sql);
 		$errno = mysql_errno();
 		$errmess = mysql_error();
 	}
 	$querynum++;
-/*vot*/	$allqueries[]=array( //For Debug Use Only
+/*vot*/	$log=array( //For Debug Use Only
 /*vot*/		'sql' => $sql,
 /*vot*/		'err_code' => $errno,
 /*vot*/		'err_message' => $errmess,
 	);
+/*vot*/	$allqueries[] = $log;
+//dump($log, '$log');
 	if(!$query && !$silence && !$ignore_db_errors) {
 		db_halt('MySQL Query Error', $sql);
 	}

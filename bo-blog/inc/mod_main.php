@@ -129,7 +129,10 @@ switch ($job) {
 
 		$cyearmonth=($cm<10) ? "{$year}0{$month}" : "{$year}{$month}";
 		$all_datas=$blog->getarraybyquery("SELECT `cid` FROM `{$db_prefix}calendar` WHERE `cyearmonth`='{$cyearmonth}'");
-/*vot*/		$counter_now=count(@$all_datas['cid']);
+		if(!is_array(@$all_datas['cid'])) {
+			$all_datas['cid']=array();
+		}
+		$counter_now=count($all_datas['cid']);
 		$jointstr=@implode(',', $all_datas['cid']);
 		if ($jointstr=='') $jointstr='null';
 		$partialquery="{$limitation2} blogid in($jointstr) ORDER BY `pubtime` DESC";
