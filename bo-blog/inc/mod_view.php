@@ -186,9 +186,10 @@ if ($job=='archivelist') {
 			$y=$uniquedates[$i];
 			$result.="<tr><td colspan=\"4\"><strong>{$y}{$lnc[299]}</strong></td></tr>\n<tr>";
 			for ($j=1; $j<13; $j++) {
+/*vot*/				$mnt = $lnlunarcalendar['month'];
 /*vot*/				if(!isset($resultdates[$y][$j])) {$resultdates[$y][$j] = 0;}
 				$resultdates[$y][$j]=floor($resultdates[$y][$j]);
-				$result.="<td><a href=\"".getlink_archive($j, $y)."\" rel=\"noindex,nofollow\"><strong>{$j}{$lnc[298]}</strong></a> ({$resultdates[$y][$j]})</td>"; 
+/*vot*/				$result.="<td><a href=\"".getlink_archive($j, $y)."\" rel=\"noindex,nofollow\"><strong>{$mnt[$j]}{$lnc[298]}</strong></a> ({$resultdates[$y][$j]})</td>"; 
 				if ($j%4==0) $result.="</tr><tr>";
 			}
 			$result.="</tr>\n";

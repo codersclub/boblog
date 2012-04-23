@@ -308,29 +308,34 @@ if (in_array('calendar', $allopenmods)) {
 		$thismonthurl=getlink_archive($cm, $cy);
 
 		$thisyearurl="archive.php";
+		$mnt = $lnlunarcalendar['month'][$cm];
 		$cal_body=<<<eot
 <!-- Sidebar Calendar -->
 <table id="calendar" cellspacing="1" width="100%">
-<tbody><tr><td colspan="7" class="calendar-top">
-<a href="{$lastyearurl}" rel="noindex,nofollow">&lt;</a>
-<a href="{$thisyearurl}" rel="noindex,nofollow"><span class="calendar-year">{$cy}</span></a>
-<a href="{$nextyearurl}" rel="noindex,nofollow">&gt;</a>
-	&nbsp;&nbsp;
-<a href="{$lastmonthurl}" rel="noindex,nofollow">&lt;</a>
-<a href="{$thismonthurl}" rel="noindex,nofollow"><span class="calendar-month">{$cm}</span></a>
-<a href="{$nextmonthurl}" rel="noindex,nofollow">&gt;</a>{$lunarym}
-</td></tr>
-<tr class="calendar-weekdays">
-	<td class="calendar-weekday-cell">{$lnc[115]}</td>
-	<td class="calendar-weekday-cell">{$lnc[116]}</td>
-	<td class="calendar-weekday-cell">{$lnc[117]}</td>
-	<td class="calendar-weekday-cell">{$lnc[118]}</td>
-	<td class="calendar-weekday-cell">{$lnc[119]}</td>
-	<td class="calendar-weekday-cell">{$lnc[120]}</td>
-	<td class="calendar-weekday-cell">{$lnc[121]}</td>
-</tr>
+<tbody>
+  <tr>
+    <td colspan="7" class="calendar-top">
+      <a href="{$lastyearurl}" rel="noindex,nofollow">&lt;</a>
+      <a href="{$thisyearurl}" rel="noindex,nofollow"><span class="calendar-year">{$cy}</span></a>
+      <a href="{$nextyearurl}" rel="noindex,nofollow">&gt;</a>
+      &nbsp;&nbsp;
+      <a href="{$lastmonthurl}" rel="noindex,nofollow">&lt;</a>
+      <a href="{$thismonthurl}" rel="noindex,nofollow"><span class="calendar-month">{$mnt}</span></a>
+      <a href="{$nextmonthurl}" rel="noindex,nofollow">&gt;</a>{$lunarym}
+    </td>
+  </tr>
+  <tr class="calendar-weekdays">
+    <td class="calendar-weekday-cell">{$lnc[115]}</td>
+    <td class="calendar-weekday-cell">{$lnc[116]}</td>
+    <td class="calendar-weekday-cell">{$lnc[117]}</td>
+    <td class="calendar-weekday-cell">{$lnc[118]}</td>
+    <td class="calendar-weekday-cell">{$lnc[119]}</td>
+    <td class="calendar-weekday-cell">{$lnc[120]}</td>
+    <td class="calendar-weekday-cell">{$lnc[121]}</td>
+  </tr>
 {$calendarbody}
-</tbody></table>
+</tbody>
+</table>
 eot;
 	}
 	$blogitem['calendar']+=array(
