@@ -215,12 +215,12 @@ class getblogs extends boblog {
 			} else $setcateplus='';
 			$previousresult=$this->getbyquery("SELECT `blogid`,`title`,`blogalias` FROM `{$db_prefix}blogs` {$partialquery2} AND `pubtime`<'{$result[0]['pubtime']}' {$setcateplus} ORDER BY `pubtime` DESC LIMIT 1");
 			$nextresult=$this->getbyquery("SELECT `blogid`,`title`,`blogalias` FROM `{$db_prefix}blogs` {$partialquery2} AND `pubtime`>'{$result[0]['pubtime']}' {$setcateplus} ORDER BY `pubtime` ASC LIMIT 1");
-			$result[0]['previoustitle']=($mbcon['linklength']==0)? $previousresult['title'] : msubstr($previousresult['title'], 0, $mbcon['linklength']);
-			$result[0]['previousid']=$previousresult['blogid'];
-			$result[0]['nexttitle']=($mbcon['linklength']==0)? $nextresult['title'] : msubstr($nextresult['title'], 0, $mbcon['linklength']);
-			$result[0]['nextid']=$nextresult['blogid'];
-			$result[0]['previousblogalias']=$previousresult['blogalias'];
-			$result[0]['nextblogalias']=$nextresult['blogalias'];
+			$result[0]['previoustitle']=($mbcon['linklength']==0)? @$previousresult['title'] : mb_substr(@$previousresult['title'], 0, $mbcon['linklength']);
+			$result[0]['previousid']=@$previousresult['blogid'];
+			$result[0]['nexttitle']=($mbcon['linklength']==0)? @$nextresult['title'] : mb_substr(@$nextresult['title'], 0, $mbcon['linklength']);
+			$result[0]['nextid']=@$nextresult['blogid'];
+			$result[0]['previousblogalias']=@$previousresult['blogalias'];
+			$result[0]['nextblogalias']=@$nextresult['blogalias'];
 		}
 		return $result;
 	}
