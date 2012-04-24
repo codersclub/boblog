@@ -810,7 +810,22 @@ function lunarcalendar($month, $year)
         118 => array(0, 29, 30, 29, 30, 29, 29, 30, 29, 30, 29, 30, 30, 0, 5, 11),
         119 => array(0, 30, 29, 30, 29, 30, 29, 29, 30, 29, 29, 30, 30, 0, 6, 12),
         120 => array(4, 29, 30, 30, 30, 29, 30, 29, 29, 30, 29, 30, 29, 30, 7, 1),
+
+        121 => array(0, 29, 30, 30, 29, 30, 29, 30, 29, 30, 29, 30, 29, 0, 8, 2),
+        122 => array(0, 30, 29, 30, 29, 30, 30, 29, 30, 29, 30, 29, 30, 0, 9, 3),
+        123 => array(3, 30, 29, 29, 30, 30, 29, 30, 30, 29, 30, 29, 30, 30, 10, 4),
+        124 => array(0, 29, 30, 29, 30, 29, 30, 29, 30, 29, 30, 29, 30, 0, 1, 5),
+        125 => array(0, 29, 30, 29, 30, 29, 30, 29, 30, 29, 30, 29, 30, 0, 2, 6),
+        126 => array(3, 29, 30, 29, 30, 29, 30, 29, 30, 29, 30, 29, 30, 30, 3, 7),
+        127 => array(0, 29, 30, 29, 30, 29, 30, 29, 30, 29, 30, 29, 30, 0, 4, 8),
+        128 => array(0, 29, 30, 29, 30, 29, 30, 29, 30, 29, 30, 29, 30, 0, 5, 9),
+        129 => array(3, 29, 30, 29, 30, 29, 30, 29, 30, 29, 30, 29, 30, 30, 6, 10),
+        130 => array(0, 29, 30, 29, 30, 29, 30, 29, 30, 29, 30, 29, 30, 0, 7, 11),
+        131 => array(0, 29, 30, 29, 30, 29, 30, 29, 30, 29, 30, 29, 30, 0, 8, 12),
     );
+/*vot*/    $maxyear = 2031; //2020;
+/*vot*/    $maxyearind = $maxyear - 1900;
+
     //Lunar calendar
     $mten = $lnlunarcalendar['tiangan'];
     //Earthly Branches of the Lunar Calendar
@@ -821,7 +836,7 @@ function lunarcalendar($month, $year)
     $mday = $lnlunarcalendar['day'];
     //The total number of days in the Gregorian calendar until December 21, 1900
     $total = 69 * 365 + 17 + 11; //Those before January 1, 1970 don't count.
-    if ($year == "" || $month == "" || ($year < 1970 or $year > 2020)) {
+    if ($year == "" || $month == "" || ($year < 1970 or $year > $maxyear)) {
         return '';
     }                            //No calculation beyond this range
     //Calculate the total number of days in the Gregorian calendar of the requested date-since December 21, 1900
@@ -838,7 +853,8 @@ function lunarcalendar($month, $year)
     $flag1 = 0;                  //Check the conditions for jumping out of the loop
     $lcj = 0;
     $mtotal = 0;
-    while ($lcj <= 120) {
+//vot    while ($lcj <= 120) {
+/*vot*/    while ($lcj <= $maxyearind) {
         $lci = 1;
         while ($lci <= 13) {
             $mtotal += $everymonth[$lcj][$lci];
@@ -873,7 +889,7 @@ function lunarcalendar($month, $year)
                 $lci = 1;
                 $lcj = $lcj + 1;
                 //It's a new year, and write the zodiac for the new year
-                $results['year'] .= '/' . $mten[$everymonth[$lcj][14]] . $mtwelve[$everymonth[$lcj][15]];
+                $results['year'] .= ' / ' . $mten[$everymonth[$lcj][14]] . $mtwelve[$everymonth[$lcj][15]];
             } else { //Still in this year
                 $lci = $lci + 1;
                 $lcj = $lcj;
@@ -1283,7 +1299,7 @@ function generate_emots_panel($emots)
         $emg = explode('<!-- EmotPage -->', $emots);
         $howmanyemg = count($emg);
         $emgout = "<div id=\"smileygroup\">{$emg[0]}</div>\n";
-        $emgout .= "<script type=\"text/javascript\">\n//<![CDATA[\n";
+        $emgout .= "<script>\n//<![CDATA[\n";
         $emgout .= "var emotgroup = new Array ();\n";
         $emtslb = "<div id=\"smileybuttons\">";
         for ($i = 0; $i < $howmanyemg; $i++) {

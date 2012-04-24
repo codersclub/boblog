@@ -352,6 +352,7 @@ $lnc=array (
 
 //农历用字
 $lnlunarcalendar=array(
+//'Yin-Yang'=>array("Unknown","Yang","Yin","Yang", "Yin",  "Yang",  "Yin",   "Yang",  "Yin",   "Yang",  "Yin"),
 'tiangan'=>array("未知","甲","乙","丙","丁","戊","己","庚","辛","壬","癸"),
 'dizhi'=>array("未知","子年（鼠）","丑年（牛）","寅年（虎）","卯年（兔）","辰年（龙）",
 			   "巳年（蛇）","午年（马）","未年（羊）","申年（猴）","酉年（鸡）","戌年（狗）","亥年（猪）"),
