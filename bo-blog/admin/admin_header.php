@@ -47,11 +47,9 @@ $display_overall .= <<<eot
   $initialjs
   <script src="lang/{$langback}/jslang.js"></script>
   <script src="images/js/common.js"></script>
-  <script>
-//<![CDATA[
+<script>
 var ajaxloadingIMG='admin/theme/{$themename}/ajaxloader.gif';
 var shutajax={$shutajax};
-//]]>
 </script>
 <script src="images/js/admin.js"></script>
 <script src="images/js/ajax.js"></script>

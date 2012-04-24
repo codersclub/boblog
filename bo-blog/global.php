@@ -1299,7 +1299,7 @@ function generate_emots_panel($emots)
         $emg = explode('<!-- EmotPage -->', $emots);
         $howmanyemg = count($emg);
         $emgout = "<div id=\"smileygroup\">{$emg[0]}</div>\n";
-        $emgout .= "<script>\n//<![CDATA[\n";
+        $emgout .= "<script>\n";
         $emgout .= "var emotgroup = new Array ();\n";
         $emtslb = "<div id=\"smileybuttons\">";
         for ($i = 0; $i < $howmanyemg; $i++) {
@@ -1307,7 +1307,7 @@ function generate_emots_panel($emots)
             $emtslb .= "<span class=\"smileybut\"><a href=\"javascript: turnsmileygroup({$i});\">" . ($i + 1) . "</a></span>";
         }
         $emtslb .= "</div>";
-        $emgout .= "//]]>\n</script>\n";
+        $emgout .= "</script>\n";
         $emgout .= $emtslb;
         return $emgout;
     }
