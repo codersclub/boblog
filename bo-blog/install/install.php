@@ -660,7 +660,7 @@ function template($body)
 <meta charset="UTF-8">
 <link rel="stylesheet" rev="stylesheet" href="install.css" type="text/css" media="all" />
 <title>Bo-Blog Installation</title>
-<script type="text/javascript">
+<script>
 function submitit(){
 	document.getElementById('btn1').value='{$lang[75]}';
 	document.getElementById('btn1').disabled='disabled';

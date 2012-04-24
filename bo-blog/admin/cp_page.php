@@ -126,7 +126,7 @@ if ($job == 'pagewrite' || $job == 'editpage') { //Initialize public items
 //Now Begins the main part
     $display_overall .= highlightadminitems('pagewrite', 'entry');
     $display_overall .= <<<eot
-<script type='text/javascript'>
+<script>
 function chktitle() {
 	if (document.getElementById('title').value=='' || document.getElementById('title').value==null) {
 		alert("{$lna[877]}");

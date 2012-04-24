@@ -12,11 +12,11 @@ $elements['header']=<<<eot
 <link rel="alternate" title="{blogname}" href="feed.php" type="application/rss+xml" />
 {csslocation}
 <title>{pagetitle}{blogname}</title>
-<script type="text/javascript" src="images/js/common.js"></script>
-<script type="text/javascript" src="js/prototype.js"></script> 
-<script type="text/javascript" src="js/scriptaculous.js?load=effects"></script> 
-<script type="text/javascript" src="js/lightbox.js"></script> 
-<script language="JavaScript" src="include/common.js"></script> 
+<script src="images/js/common.js"></script>
+<script src="js/prototype.js"></script> 
+<script src="js/scriptaculous.js?load=effects"></script> 
+<script src="js/lightbox.js"></script> 
+<script src="include/common.js"></script> 
 <link rel="stylesheet" href="css/lightbox.css" type="text/css" media="screen" />
 {ajax_js}
 {extraheader}
@@ -97,7 +97,7 @@ $elements['displayfooter']=<<<eot
 eot;
 
 $elements['footer']=<<<eot
-<script type="text/javascript">
+<script>
 loadSidebar();
 </script>
 </body>
@@ -466,11 +466,11 @@ $elements['tips']=<<<eot
 <meta charset="UTF-8">
 {csslocation}
 <title>{blogname} - {blogdesc}</title>
-<script type="text/javascript" src="images/js/common.js"></script>
-<script type="text/javascript" src="js/prototype.js"></script> 
-<script type="text/javascript" src="js/scriptaculous.js?load=effects"></script> 
-<script type="text/javascript" src="js/lightbox.js"></script> 
-<script language="JavaScript" src="include/common.js"></script> 
+<script src="images/js/common.js"></script>
+<script src="js/prototype.js"></script> 
+<script src="js/scriptaculous.js?load=effects"></script> 
+<script src="js/lightbox.js"></script> 
+<script src="include/common.js"></script> 
 <link rel="stylesheet" href="css/lightbox.css" type="text/css" media="screen" />
 </head>
 <body>

@@ -9,12 +9,12 @@ $elements['header']=<<<eot
 <meta name="description" content="{blogdesc}" />
 <meta name="keywords" content="{blogkeywords}" />
 {baseurl}
-<script type="text/javascript" src="template/YeYo-Skin06/js/dfFlexiGrid_inc.js"></script>
-<script type="text/javascript" src="template/YeYo-Skin06/js/dfFlexiGrid.js"></script>
+<script src="template/YeYo-Skin06/js/dfFlexiGrid_inc.js"></script>
+<script src="template/YeYo-Skin06/js/dfFlexiGrid.js"></script>
 <link rel="alternate" title="{blogname}" href="feed.php" type="application/rss+xml" />
 {csslocation}
 <title>{pagetitle}{blogname} - {blogdesc}</title>
-<script type="text/javascript" src="images/js/common.js?jsver={codeversion}"></script>
+<script src="images/js/common.js?jsver={codeversion}"></script>
 {ajax_js}
 {extraheader}
 </head>
@@ -124,7 +124,7 @@ $elements['displayfooter']=<<<eot
 </div>
 	<div id="footer">
 		<div id="span_ads" style="display:none;"><!--global:{block_topads}--></div>
-		<script type="text/javascript">
+		<script>
 			document.getElementById("ads").innerHTML = document.getElementById("span_ads").innerHTML;
 			document.getElementById("span_ads").innerHTML = "";
 		</script>
@@ -360,7 +360,11 @@ $elements['form_reply']=<<<eot
 					</div>
 					<div id="ubb">{ubbcode}</div>
 			    </div>
-				{if_securitycode_begin}<script type="text/javascript">securitycodejs="{$lnc[249]} <span id='securityimagearea'><img src='inc/securitycode.php?rand={rand}' alt='' title='{$lnc[250]}'/></span> <input name='v_security' id='v_security' type='text' size='4' maxlength='4' class='text' /> {$lnc[251]}   [<a href=\"javascript: refreshsecuritycode('securityimagearea', 'v_security');\">{$lnc[283]}</a>]";</script>  {if_securitycode_end}
+				{if_securitycode_begin}
+				<script>
+				securitycodejs="{$lnc[249]} <span id='securityimagearea'><img src='inc/securitycode.php?rand={rand}' alt='' title='{$lnc[250]}'/></span> <input name='v_security' id='v_security' type='text' size='4' maxlength='4' class='text' /> {$lnc[251]}   [<a href=\"javascript: refreshsecuritycode('securityimagearea', 'v_security');\">{$lnc[283]}</a>]";
+				</script>
+				{if_securitycode_end}
 				<textarea name="v_content" id="v_content" cols="70" rows="10" onkeydown="ctrlenterkey(event);" onfocus="if (securitycodejs!=null) {document.getElementById('showsecuritycode').innerHTML=securitycodejs; securitycodejs=null;}"></textarea><br />	<span id="showsecuritycode"></span>
 				<div style="padding-top:10px">
 					{hidden_areas}
@@ -503,7 +507,7 @@ $elements['tips']=<<<eot
 <meta charset="UTF-8">
 {csslocation}
 <title>{blogname} - {blogdesc}</title>
-<script type="text/javascript" src="images/js/common.js"></script>
+<script src="images/js/common.js"></script>
 </head>
 <body>
 <center>

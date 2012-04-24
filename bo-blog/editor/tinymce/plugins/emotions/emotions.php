@@ -4,11 +4,12 @@
 include ("../../../../data/cache_emot.php");
 
 print<<<eot
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!doctype html>
+<html>
 <head>
 	<title>Emots</title>
-	<script language="javascript" type="text/javascript" src="../../tiny_mce_popup.js"></script>
-	<script language="javascript" type="text/javascript" src="jscripts/functions.js"></script>
+	<script src="../../tiny_mce_popup.js"></script>
+	<script src="jscripts/functions.js"></script>
 	<base target="_self" />
 </head>
 <body>

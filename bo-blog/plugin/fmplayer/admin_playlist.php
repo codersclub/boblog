@@ -68,12 +68,12 @@ $plugin_header = <<<eot
 }
 </style>
 
-<script type="text/javascript">
+<script>
 var dyn_t,divi;
 var jslanfp = Array('{$page['list']}','{$lna[64]}','{$lna[65]}','{$lanfp[10]}','{$lanfp[14]}','{$lanfp[11]}','{$lanfp[12]}','{$lanfp[15]}','{$lanfp[16]}','{$lanfp[3]}','{$lanfp[4]}','{$lanfp[5]}','{$lanfp[6]}','{$lanfp[7]}','{$lanfp[8]}','{$lanfp[9]}');
 </script>
 
-<script type="text/javascript" src="{$plugin_address}/dyn_table.js"></script>
+<script src="{$plugin_address}/dyn_table.js"></script>
 eot;
 
 $plugin_return = <<<eot
@@ -109,7 +109,7 @@ $plugin_return = <<<eot
     <input type="button" value="{$lanfp[2]}" onclick="add_fpRow('inum','','','','','','','','')" />
 </div>
 
-<script type="text/javascript">
+<script>
 creatFrom();	
 creatSubmit();
 dyn_t = document.getElementById("tbl_setList");

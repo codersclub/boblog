@@ -12,7 +12,7 @@ $elements['header']=<<<eot
 <link rel="alternate" title="{blogname}" href="feed.php" type="application/rss+xml" />
 {csslocation}
 <title>{pagetitle}{blogname} - {blogdesc}</title>
-<script type="text/javascript" src="images/js/common.js"></script>
+<script src="images/js/common.js"></script>
 {ajax_js}
 {extraheader}
 </head>
@@ -31,7 +31,7 @@ $elements['displayheader']=<<<eot
 					<div class="blog-desc">{blogdesc}</div>
 					<!--Start search bar -->
 					<div id="minisearchbar" align="right">
-	<script type='text/javascript'>//<![CDATA[
+<script>
 function livesearch (eventobject){
 	if(eventobject.keyCode==13) {
 		document.getElementById("minisearchSubmit").click();
@@ -43,7 +43,6 @@ function setbgin () {
 function setbgout () {
 	document.getElementById('minisearcharea').style.background="url('"+absbaseurl+"template/EleganX2/images/search1.gif"+"') no-repeat";;
 }
-//]]>
 </script>
 						<li class="minisearchbar">
 						<div class='minisearcharea' id='minisearcharea'>
@@ -128,7 +127,7 @@ $elements['displayfooter']=<<<eot
 eot;
 
 $elements['footer']=<<<eot
-<script type="text/javascript">
+<script>
 loadSidebar();
 </script>
 </body>
@@ -481,7 +480,7 @@ $elements['tips']=<<<eot
 <meta charset="UTF-8">
 {csslocation}
 <title>{blogname} - {blogdesc}</title>
-<script type="text/javascript" src="images/js/common.js"></script>
+<script src="images/js/common.js"></script>
 </head>
 <body>
 <center>

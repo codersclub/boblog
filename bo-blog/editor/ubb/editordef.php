@@ -20,16 +20,17 @@ if ($act == 'edit') {
 <a href="JavaScript: void(0); "><IMG border=0 onclick="AddText('[newpage]')" title="{$lna[702]}" src="editor/ubb/images/newpage.gif" ></a>
 eot;
     $editoreditmodeonly2 = <<<eot
-<br><span id="timemsg">{$lna[1179]}</span>&nbsp; &nbsp;<span id="timemsg2"></span>
- <script type='text/javascript' src='editor/ubb/autosaver.js'>
-</script>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[<a href="javascript: stopautosaver();">{$lna[1176]}</a>] | [<a href="javascript: restartautosaver();">{$lna[1175]}</a>] | [<a href="javascript: stopforever();">{$lna[1177]}</a>] | [<a href="javascript: switchtodraft();">{$lna[1173]}</a>] | [<a href="javascript: savedraft();">{$lna[1178]}</a>] | [<a href="javascript: cleardraft();">{$lna[1180]}</a>]
+<br>
+<span id="timemsg">{$lna[1179]}</span>&nbsp; &nbsp;<span id="timemsg2"></span>
+<script src='editor/ubb/autosaver.js'></script>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+[<a href="javascript: stopautosaver();">{$lna[1176]}</a>] | [<a href="javascript: restartautosaver();">{$lna[1175]}</a>] | [<a href="javascript: stopforever();">{$lna[1177]}</a>] | [<a href="javascript: switchtodraft();">{$lna[1173]}</a>] | [<a href="javascript: savedraft();">{$lna[1178]}</a>] | [<a href="javascript: cleardraft();">{$lna[1180]}</a>]
 eot;
 }
 
 $editorjs = <<<eot
-<script type="text/javascript" src="editor/ubb/ubbeditor.js"></script>
-<script type="text/javascript">
+<script src="editor/ubb/ubbeditor.js"></script>
+<script>
 function insertemot (emotcode) {
 	var emot="[emot]"+emotcode+"[/emot]";
 	AddText(emot);
@@ -68,7 +69,7 @@ $editorbody = <<<eot
 <a href="JavaScript: void(0); "><IMG border=0 onclick="addsfile();" title="{$lna[699]}" src="editor/ubb/images/sfile.gif" ></a>
 <a href="JavaScript: void(0); "><IMG border=0 onclick="showemot()" title="{$lna[700]}" src="editor/ubb/images/insertsmile.gif" ></a>
 $editoreditmodeonly
-<script type="text/javascript">
+<script>
 if (is_firefox) {
 	document.write("<a href='JavaScript: void(0); '><IMG border=0 onclick='undo_fx();' title='{$lna[703]}' src='editor/ubb/images/undo.gif' ></a>");
 }
@@ -156,7 +157,7 @@ $editoreditmodeonly2
 <!--
 <br>
 <ul>
-<script type="text/javascript">
+<script>
 if (is_firefox) {
 	document.write("{$lna[742]}");
 }
@@ -167,6 +168,6 @@ if (is_firefox) {
 -->
 eot;
 
-$initialjs = "<script type='text/javascript' src=\"editor/ubb/uploader.js\"></script>";
+$initialjs = "<script src=\"editor/ubb/uploader.js\"></script>";
 
 $autobr = 1;

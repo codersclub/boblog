@@ -526,7 +526,7 @@ if ($job == 'langspec') {
     $lnni = $lni + 1;
     $display_overall .= highlightadminitems('langspec', 'addon');
     $display_overall .= <<<eot
-<script type="text/javascript">
+<script>
 $langmodulejs
 var newlcount={$lnni};
 var getnewlnum;

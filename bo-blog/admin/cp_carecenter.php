@@ -728,7 +728,7 @@ if ($job == 'export') {
     $tablebody .= "</tr>";
     $display_overall .= highlightadminitems('export', 'carecenter');
     $display_overall .= <<<eot
-<script type="text/javascript">
+<script>
 function swapdiv(opt) {
 	if (opt==1) {
 		document.getElementById("showrange1").style.display="block";
@@ -884,7 +884,7 @@ if ($job == 'doexport') {
 
     $display_overall .= highlightadminitems('export', 'carecenter');
     $display_overall .= <<<eot
-<script type="text/javascript">
+<script>
 var dateObjexp= new Date();
 dateObjexp.setSeconds(7200);
 setCookie ('exrange', '$exrange', dateObjexp, null, null, false);
@@ -1020,7 +1020,7 @@ eot;
         $display_overall);
     $display_overall .= highlightadminitems('export', 'carecenter');
     $display_overall .= <<<eot
-<script type="text/javascript">
+<script>
 var dateObjexp= new Date();
 dateObjexp.setSeconds(7200);
 $jssetcookie
@@ -1107,7 +1107,7 @@ eot;
         $display_overall);
     $display_overall .= highlightadminitems('export', 'carecenter');
     $display_overall .= <<<eot
-<script type="text/javascript">
+<script>
 var dateObjexp= new Date();
 dateObjexp.setSeconds(7200);
 $jssetcookie
@@ -1144,7 +1144,7 @@ if ($job == 'import') {
     }
     $display_overall .= highlightadminitems('import', 'carecenter');
     $display_overall .= <<<eot
-<script type="text/javascript">
+<script>
 function swapdiv(opt) {
 	if (opt==1) {
 		document.getElementById("showrange1").style.display="block";
@@ -1282,7 +1282,7 @@ if ($job == 'doimport') {
         }
         $display_overall .= highlightadminitems('import', 'carecenter');
         $display_overall .= <<<eot
-<script type="text/javascript">
+<script>
 var dateObjexp= new Date();
 dateObjexp.setSeconds(7200);
 setCookie ('endnumber', '0', dateObjexp, null, null, false);
@@ -1335,7 +1335,7 @@ eot;
         }
         $display_overall .= highlightadminitems('import', 'carecenter');
         $display_overall .= <<<eot
-<script type="text/javascript">
+<script>
 var dateObjexp= new Date();
 dateObjexp.setSeconds(7200);
 setCookie ('srcindex', '$upload_filename', dateObjexp, null, null, false);
@@ -1453,7 +1453,7 @@ if ($job == 'rollback') {
 
         $display_overall .= highlightadminitems('import', 'carecenter');
         $display_overall .= <<<eot
-<script type='text/javascript'>
+<script>
 setCookie ('endnumber','',null,null, null, false);
 setCookie ('impause','',null,null, null, false);
 setCookie ('srcindex','',null,null, null, false);
@@ -1505,7 +1505,7 @@ eot;
         $display_overall);
     $display_overall .= highlightadminitems('import', 'carecenter');
     $display_overall .= <<<eot
-<script type="text/javascript">
+<script>
 var dateObjexp= new Date();
 dateObjexp.setSeconds(7200);
 $jssetcookie

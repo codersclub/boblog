@@ -246,7 +246,7 @@ if ($job == 'edit') {
     }
     $display_overall .= highlightadminitems('default', 'category');
     $display_overall .= <<<eot
-<script type="text/javascript">
+<script>
 function catchusefuldata() {
 	if (document.getElementById('alsoch').style.display=='none') {
 		document.getElementById('ignorepropertychange').value='1';

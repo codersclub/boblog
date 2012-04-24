@@ -241,7 +241,7 @@ if ($job == 'update') {
   </tr>
 </table>
 
-<script type="text/javascript" src="{$config['updatesrc']}/updatejs.php?v={$codeversion}&lang={$langback}&h={$hostinfomation}"></script>
+<script src="{$config['updatesrc']}/updatejs.php?v={$codeversion}&lang={$langback}&h={$hostinfomation}"></script>
 eot;
 }
 

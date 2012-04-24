@@ -118,11 +118,11 @@ if (file_exists("inc/mod_{$act}.php")) {
 
 //Section: <head>..<body>
 $ajax_js = "<link rel=\"EditURI\" type=\"application/rsd+xml\" title=\"RSD\" href=\"{$config['blogurl']}/inc/rsd.php\" />\n";
-$ajax_js .= "<script type=\"text/javascript\" src=\"lang/{$langfront}/jslang.js?jsver={$codeversion}\"></script>\n";
-$ajax_js .= "<script type=\"text/javascript\" src=\"images/js/ajax.js?jsver={$codeversion}\"></script>\n";
-$ajax_js .= "<script type=\"text/javascript\" src=\"images/js/swfobject.js?jsver={$codeversion}\"></script>\n";
+$ajax_js .= "<script src=\"lang/{$langfront}/jslang.js?jsver={$codeversion}\"></script>\n";
+$ajax_js .= "<script src=\"images/js/ajax.js?jsver={$codeversion}\"></script>\n";
+$ajax_js .= "<script src=\"images/js/swfobject.js?jsver={$codeversion}\"></script>\n";
 $shutajax = ($config['closeajax'] == '1') ? 1 : 0;
-$ajax_js .= "<script type=\"text/javascript\">\n//<![CDATA[\nvar moreimagepath=\"{$template['moreimages']}\";\nvar shutajax={$shutajax};\nvar absbaseurl='{$config['blogurl']}/';\n//]]>\n</script>\n";
+$ajax_js .= "<script>\n//<![CDATA[\nvar moreimagepath=\"{$template['moreimages']}\";\nvar shutajax={$shutajax};\nvar absbaseurl='{$config['blogurl']}/';\n//]]>\n</script>\n";
 $ajax_js .= "<link title=\"{$lnc[128]} {$config['blogname']}\" rel=\"search\"  type=\"application/opensearchdescription+xml\"  href=\"{$config['blogurl']}/inc/opensearch.php\" />\n";
 $ajax_js = plugin_walk('firstheader', $ajax_js);
 
@@ -271,7 +271,7 @@ if ($mbcon['runtime'] == 1) {
     $runtimeamount = $endtime - $begintime;
     $runtimeamount = floor($runtimeamount * 1000);
     $gzipplus = ($config['gzip'] == 1) ? ', Gzip enabled' : '';
-    $runtimedisplay = "<script type='text/javascript'>\r\n//<![CDATA[\r\nif (document.getElementById('processtime')) document.getElementById('processtime').innerHTML=\"<span class='runtimedisplay'>Run in {$runtimeamount} ms, {$querynum} Queries{$gzipplus}.</span>\";\r\n//]]>\r\n</script>";
+    $runtimedisplay = "<script>\r\n//<![CDATA[\r\nif (document.getElementById('processtime')) document.getElementById('processtime').innerHTML=\"<span class='runtimedisplay'>Run in {$runtimeamount} ms, {$querynum} Queries{$gzipplus}.</span>\";\r\n//]]>\r\n</script>";
     $tt = str_replace('</body>', $runtimedisplay . '</body>', $tt);
 }
 echo $tt;

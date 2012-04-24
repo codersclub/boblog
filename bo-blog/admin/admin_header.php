@@ -45,17 +45,17 @@ $display_overall .= <<<eot
   <link rel="stylesheet" rev="stylesheet" href="{$csslocation}" type="text/css" media="all" />
   <title>{$config['blogname']} - {$lna[0]} [Powered by Bo-Blog]</title>
   $initialjs
-  <script type="text/javascript" src="lang/{$langback}/jslang.js"></script>
-  <script type="text/javascript" src="images/js/common.js"></script>
-  <script type="text/javascript">
+  <script src="lang/{$langback}/jslang.js"></script>
+  <script src="images/js/common.js"></script>
+  <script>
 //<![CDATA[
 var ajaxloadingIMG='admin/theme/{$themename}/ajaxloader.gif';
 var shutajax={$shutajax};
 //]]>
 </script>
-<script type="text/javascript" src="images/js/admin.js"></script>
-<script type="text/javascript" src="images/js/ajax.js"></script>
-<script type="text/javascript" src="images/js/adminmenu.js"></script>
+<script src="images/js/admin.js"></script>
+<script src="images/js/ajax.js"></script>
+<script src="images/js/adminmenu.js"></script>
 $editorjs
 <!--plugin_header-->
 </head>

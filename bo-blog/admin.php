@@ -170,7 +170,7 @@ include_once("admin/admin_footer.php");
 function highlightadminitems($itemhighlight, $itemsrow)
 {
     global $admin_item;
-    $str = "<script type=\"text/javascript\">
+    $str = "<script>
 	function adminitemhover(hovername, obj) {
 		if (document.getElementById('dropmenudiv') && document.getElementById('hoveritem_'+hovername)) document.getElementById('dropmenudiv').innerHTML=document.getElementById('hoveritem_'+hovername).innerHTML;
 		if ((is_ie || is_ie4) && !is_ie8) document.getElementById('dropmenudiv').innerHTML+=\"<iframe src='javascript:false' style='position:absolute; visibility:inherit;   top:0px; left:0px; width:128px; height:200px; z-index:-1; filter=progid:DXImageTransform.Microsoft.Alpha(style=0,opacity=0);'></iframe>\";

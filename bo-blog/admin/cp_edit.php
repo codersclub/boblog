@@ -111,8 +111,8 @@ if ($job == 'add' || $job == 'edit') { //Initialize public items
         for ($i = 0; $i < count($exist_tags); $i++) {
             $exist_tags[$i] = "'" . str_replace("'", '&#39;', $exist_tags[$i]) . "'";
         }
-        $tag_js = "<script type='text/javascript'>\nvar custom_array = new Array();\ncustom_array=[" . @implode(',',
-                $exist_tags) . "];\n</script>\n<script type='text/javascript' src='images/js/autosuggestion.js'></script>";
+        $tag_js = "<script>\nvar custom_array = new Array();\ncustom_array=[" . @implode(',',
+                $exist_tags) . "];\n</script>\n<script src='images/js/autosuggestion.js'></script>";
         $taglist = '';
     } else {
         $taglist = $lna[277];
@@ -255,7 +255,7 @@ if ($job == 'add' || $job == 'edit') { //Initialize public items
 //Now Begins the main part
     $display_overall .= highlightadminitems('write', 'entry');
     $display_overall .= <<<eot
-<script type='text/javascript'>
+<script>
 function chktitle() {
 	if (document.getElementById('title').value=='' || document.getElementById('title').value==null) {
 		alert("{$lna[877]}");
@@ -514,7 +514,7 @@ eot;
 </div>
 </form>
 
-<script type="text/javascript">
+<script>
 var totalextras=8;
 var extrasdisplay=0;
 function hs_extras(status) {

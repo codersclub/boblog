@@ -13,7 +13,7 @@ $elements['header']=<<<eot
 <link rel="Shortcut Icon" href="favicon.ico"> 
 {csslocation}
 <title>{pagetitle}{blogname} - {blogdesc}</title>
-<script type="text/javascript" src="images/js/common.js"></script>
+<script src="images/js/common.js"></script>
 {ajax_js}
 {extraheader}
 </head>
@@ -110,7 +110,7 @@ $elements['displayfooter']=<<<eot
 eot;
 
 $elements['footer']=<<<eot
-<script type="text/javascript">
+<script>
 loadSidebar();
 </script>
 </body>
@@ -319,7 +319,11 @@ $elements['form_reply']=<<<eot
 					{$lnc[248]} <input name="v_repemail" id="v_repemail" type="text" size="12" class="text"  value="{repemail}" />&nbsp; {if_neednopsw_end}{additional}
 					</div>
 					{ubbcode}
-					{if_securitycode_begin}<script type="text/javascript">securitycodejs="{$lnc[249]} <span id='securityimagearea'><img src='inc/securitycode.php?rand={rand}' alt='' title='{$lnc[250]}'/></span> <input name='v_security' id='v_security' type='text' size='4' maxlength='4' class='text' /> {$lnc[251]}   [<a href=\"javascript: refreshsecuritycode('securityimagearea', 'v_security');\">{$lnc[283]}</a>]";</script>  {if_securitycode_end}
+					{if_securitycode_begin}
+					<script>
+					securitycodejs="{$lnc[249]} <span id='securityimagearea'><img src='inc/securitycode.php?rand={rand}' alt='' title='{$lnc[250]}'/></span> <input name='v_security' id='v_security' type='text' size='4' maxlength='4' class='text' /> {$lnc[251]}   [<a href=\"javascript: refreshsecuritycode('securityimagearea', 'v_security');\">{$lnc[283]}</a>]";
+					</script>
+					{if_securitycode_end}
 					<textarea name="v_content" id="v_content" cols="64" rows="10" onkeydown="ctrlenterkey(event);" onfocus="if (securitycodejs!=null) {document.getElementById('showsecuritycode').innerHTML=securitycodejs; securitycodejs=null;}"></textarea> <br/>	<span id="showsecuritycode"></span>
 					<div style="padding-top:10px">
 					    {hidden_areas}
@@ -464,7 +468,7 @@ $elements['tips']=<<<eot
 <meta charset="UTF-8">
 {csslocation}
 <title>{blogname} - {blogdesc}</title>
-<script type="text/javascript" src="images/js/common.js"></script>
+<script src="images/js/common.js"></script>
 </head>
 <body>
 <center>

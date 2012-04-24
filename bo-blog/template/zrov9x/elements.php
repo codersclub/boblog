@@ -12,7 +12,7 @@ $elements['header']=<<<eot
 <link rel="alternate" title="{blogname}" href="feed.php" type="application/rss+xml" />
 {csslocation}
 <title>{pagetitle}{blogname} - {blogdesc}</title>
-<script type="text/javascript" src="images/js/common.js"></script>
+<script src="images/js/common.js"></script>
 {ajax_js}
 {extraheader}
 </head>
@@ -104,7 +104,7 @@ $elements['displayfooter']=<<<eot
 eot;
 
 $elements['footer']=<<<eot
-<script type="text/javascript">
+<script>
 loadSidebar();
 </script>
 </body>
@@ -449,7 +449,7 @@ $elements['tips']=<<<eot
 <meta charset="UTF-8">
 {csslocation}
 <title>{blogname} - {blogdesc}</title>
-<script type="text/javascript" src="images/js/common.js"></script>
+<script src="images/js/common.js"></script>
 </head>
 <body>
 <center>

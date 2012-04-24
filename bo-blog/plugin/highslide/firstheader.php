@@ -8,8 +8,8 @@ function plugin_highslide_firstheader($str)
 {
     $str .= <<<eot
 <link rel="stylesheet" type="text/css" href="plugin/highslide/highslide.css" />
-<script type="text/javascript" src="plugin/highslide/highslide-with-gallery.js"></script>
-<script type="text/javascript">
+<script src="plugin/highslide/highslide-with-gallery.js"></script>
+<script>
 hs.graphicsDir = 'plugin/highslide/graphics/';
 hs.align = 'center';
 hs.transitions = ['expand', 'crossfade'];

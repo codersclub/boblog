@@ -38,7 +38,27 @@ function makeFMPlayer($match)
                 break;
         }
         $tid = rand(999, 999999);
-        $fmp_put = "<div class=\"quote fmp_q\"><div class=\"quote-title\">{$str}</div><div class=\"quote-content\"><div id=\"fmp_{$tid}\"><a href=\"http://www.macromedia.com/go/getflashplayer\">Get the Flash Player</a> to see this player.</div><script type=\"text/javascript\">var so_{$tid} = new SWFObject(\"images/others/mediaplayer.swf\",\"JW_Media_Player_{$tid}\",\"80%\",\"20\",\"7\");so_{$tid}.addVariable(\"file\",\"{$url}\");so_{$tid}.addVariable(\"displayheight\",\"0\");so_{$tid}.addVariable(\"base\",\".\");so_{$tid}.write(\"fmp_{$tid}\");</script></div></div>";
+        $fmp_put = "<div class=\"quote fmp_q\">
+  <div class=\"quote-title\">{$str}</div>
+  <div class=\"quote-content\">
+    <div id=\"fmp_{$tid}\">
+      <a href=\"http://www.macromedia.com/go/getflashplayer\">Get the Flash Player</a> to see this player.
+    </div>
+<script>
+var so_{$tid} = new SWFObject(
+	\"images/others/mediaplayer.swf\",
+	\"JW_Media_Player_{$tid}\",
+	\"80%\",
+	\"20\",
+	\"7\"
+);
+so_{$tid}.addVariable(\"file\",\"{$url}\");
+so_{$tid}.addVariable(\"displayheight\",\"0\");
+so_{$tid}.addVariable(\"base\",\".\");
+so_{$tid}.write(\"fmp_{$tid}\");
+</script>
+  </div>
+</div>";
     } else {
         $fmp_put = "FMP Code Error";
     }

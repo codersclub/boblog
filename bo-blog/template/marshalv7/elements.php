@@ -13,17 +13,14 @@ $elements['header']=<<<eot
 <link rel="Shortcut Icon" href="favicon.ico" /> 
 {csslocation}
 <title>{pagetitle}{blogname} - {blogdesc}</title>
-<script type="text/javascript" src="images/js/common.js"></script>
- <!--[if lt IE 7.]>
+<script src="images/js/common.js"></script>
+<!--[if lt IE 7.]>
 <script language="javascript"> 
-function correctPNG()  
-{ 
-for(var i=0; i<document.images.length; i++) 
-{ 
+function correctPNG() { 
+ for(var i=0; i<document.images.length; i++) { 
   var img = document.images[i] 
   var imgName = img.src.toUpperCase() 
-  if (imgName.substring(imgName.length-3, imgName.length) == "PNG") 
-  { 
+  if (imgName.substring(imgName.length-3, imgName.length) == "PNG") { 
    var imgID = (img.id) ? "id='" + img.id + "' " : "" 
    var imgClass = (img.className) ? "class='" + img.className + "' " : "" 
    var imgTitle = (img.title) ? "title='" + img.title + "' " : "title='" + img.alt + "' " 
@@ -33,15 +30,15 @@ for(var i=0; i<document.images.length; i++)
    if (img.parentElement.href) imgStyle = "cursor:hand;" + imgStyle   
    var strNewHTML = "<span " + imgID + imgClass + imgTitle 
    + " style=\"" + "width:" + img.width + "px; height:" + img.height + "px;" + imgStyle + ";" 
-  + "filter:progid:DXImageTransform.Microsoft.AlphaImageLoader" 
+   + "filter:progid:DXImageTransform.Microsoft.AlphaImageLoader" 
    + "(src=\'" + img.src + "\', sizingMethod='scale');\"></span>"  
    img.outerHTML = strNewHTML 
    i = i-1 
   } 
-} 
+ } 
 } 
 window.attachEvent("onload", correctPNG); 
- </script>
+</script>
 <![endif]-->
 {ajax_js}
 {extraheader}
@@ -129,7 +126,7 @@ $elements['displayfooter']=<<<eot
 eot;
 
 $elements['footer']=<<<eot
-<script type="text/javascript">
+<script>
 loadSidebar();
 </script>
 </body>
@@ -350,7 +347,11 @@ $elements['form_reply']=<<<eot
 					{$lnc[248]} <input name="v_repemail" id="v_repemail" type="text" size="12" class="text"  value="{repemail}" />&nbsp; {if_neednopsw_end}{additional}
 					</div>
 					{ubbcode}
-					{if_securitycode_begin}<script type="text/javascript">securitycodejs="{$lnc[249]} <span id='securityimagearea'><img src='inc/securitycode.php?rand={rand}' alt='' title='{$lnc[250]}'/></span> <input name='v_security' id='v_security' type='text' size='4' maxlength='4' class='text' /> {$lnc[251]}   [<a href=\"javascript: refreshsecuritycode('securityimagearea', 'v_security');\">{$lnc[283]}</a>]";</script>  {if_securitycode_end}
+					{if_securitycode_begin}
+					<script>
+					securitycodejs="{$lnc[249]} <span id='securityimagearea'><img src='inc/securitycode.php?rand={rand}' alt='' title='{$lnc[250]}'/></span> <input name='v_security' id='v_security' type='text' size='4' maxlength='4' class='text' /> {$lnc[251]}   [<a href=\"javascript: refreshsecuritycode('securityimagearea', 'v_security');\">{$lnc[283]}</a>]";
+					</script>
+					{if_securitycode_end}
 					<textarea name="v_content" id="v_content" cols="64" rows="10" onkeydown="ctrlenterkey(event);" onfocus="if (securitycodejs!=null) {document.getElementById('showsecuritycode').innerHTML=securitycodejs; securitycodejs=null;}"></textarea> <br/>	<span id="showsecuritycode"></span>
 					<div style="padding-top:10px">
 					    {hidden_areas}
@@ -495,7 +496,7 @@ $elements['tips']=<<<eot
 <meta charset="UTF-8">
 {csslocation}
 <title>{blogname} - {blogdesc}</title>
-<script type="text/javascript" src="images/js/common.js"></script>
+<script src="images/js/common.js"></script>
 </head>
 <body>
 <center>

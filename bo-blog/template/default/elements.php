@@ -13,7 +13,7 @@ $elements['header'] = <<<eot
 <link rel="alternate" title="{blogname}" href="feed.php" type="application/rss+xml" />
 {csslocation}
 <title>{pagetitle}{blogname} - {blogdesc}</title>
-<script type="text/javascript" src="images/js/common.js?jsver={codeversion}"></script>
+<script src="images/js/common.js?jsver={codeversion}"></script>
 {ajax_js}
 {extraheader}
 </head>
@@ -105,7 +105,7 @@ $elements['displayfooter'] = <<<eot
 eot;
 
 $elements['footer'] = <<<eot
-<script type="text/javascript">
+<script>
 loadSidebar();
 </script>
 </body>
@@ -364,7 +364,7 @@ $elements['form_reply'] = <<<eot
             </div>
         </div>
         {if_securitycode_begin}
-        <script type="text/javascript">
+        <script>
         securitycodejs="{$lnc[249]} <span id='securityimagearea'><img src='inc/securitycode.php?rand={rand}' alt='' title='{$lnc[250]}' style='cursor: pointer;' onclick=\"refreshsecuritycode('securityimagearea', 'v_security');\"/></span> <input name='v_security' id='v_security' type='text' size='4' maxlength='4' class='text' style='ime-mode: disabled' /> ";
         </script>
         {if_securitycode_end}
@@ -554,7 +554,7 @@ $elements['tips'] = <<<eot
 <meta charset="UTF-8">
 {csslocation}
 <title>{blogname} - {blogdesc}</title>
-<script type="text/javascript" src="images/js/common.js"></script>
+<script src="images/js/common.js"></script>
 </head>
 
 <body>

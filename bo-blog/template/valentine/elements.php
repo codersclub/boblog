@@ -12,7 +12,7 @@ $elements['header']=<<<eot
 <link rel="alternate" title="{blogname}" href="feed.php" type="application/rss+xml" />
 {csslocation}
 <title>{pagetitle}{blogname} - {blogdesc}</title>
-<script type="text/javascript" src="images/js/common.js"></script>
+<script src="images/js/common.js"></script>
 {ajax_js}
 {extraheader}
 </head>
@@ -76,7 +76,7 @@ $elements['displayside']=<<<eot
 			    </div>
 		    </div>
 
-<script type='text/javascript'>//<![CDATA[
+<script>
 //Change sidebar-left items here
 var total_sidebar_items=new Array ('dingyue','category', 'link','archive',  'entries','statistics');
 
@@ -90,7 +90,6 @@ for (var i=0; i<total_sidebar_items.length; i++) {
 	}
 }
 if (document.getElementById('changeable_html')) document.getElementById('changeable_html').innerHTML=changehtml;
-//]]>
 </script>
 
 eot;
@@ -120,7 +119,7 @@ $elements['displayfooter']=<<<eot
 eot;
 
 $elements['footer']=<<<eot
-<script type="text/javascript">
+<script>
 loadSidebar();
 </script>
 </body>
@@ -368,7 +367,8 @@ $elements['form_reply']=<<<eot
   <div id="ubbid" class="formbox-comment-ubb" style="display: none;">{ubbcode}</div>
   <div id="emotid" class="formbox-comment-smilies" style="display: none;">{emots}</div>
   {if_securitycode_begin}
-  <script type="text/javascript">securitycodejs="{$lnc[249]} <span id='securityimagearea'><img src='inc/securitycode.php?rand={rand}' alt='' title='{$lnc[250]}'/></span> <input name='v_security' id='v_security' type='text' size='4' maxlength='4' class='text' /> {$lnc[251]}   [<a href=\"javascript: refreshsecuritycode('securityimagearea', 'v_security');\">{$lnc[283]}</a>]";
+  <script>
+  securitycodejs="{$lnc[249]} <span id='securityimagearea'><img src='inc/securitycode.php?rand={rand}' alt='' title='{$lnc[250]}'/></span> <input name='v_security' id='v_security' type='text' size='4' maxlength='4' class='text' /> {$lnc[251]}   [<a href=\"javascript: refreshsecuritycode('securityimagearea', 'v_security');\">{$lnc[283]}</a>]";
   </script>
   {if_securitycode_end}
   <div class="formbox-comment-content">
@@ -503,7 +503,7 @@ $elements['tips']=<<<eot
 <meta charset="UTF-8">
 {csslocation}
 <title>{blogname} - {blogdesc}</title>
-<script type="text/javascript" src="images/js/common.js"></script>
+<script src="images/js/common.js"></script>
 </head>
 <body>
 <center>

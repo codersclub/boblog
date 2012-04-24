@@ -29,8 +29,8 @@ switch ($langback) {
         $langeditor = 'en';
 }
 $editorjs = <<<eot
-<script language="javascript" type="text/javascript" src="editor/tinymce/tiny_mce.js"></script>
-<script language="javascript" type="text/javascript">
+<script src="editor/tinymce/tiny_mce.js"></script>
+<script>
 tinyMCE.init({
 	theme : "advanced",
 	mode : "textareas",
