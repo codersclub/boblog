@@ -77,7 +77,7 @@ $itemid = safe_convert($itemid);
 //Load Template info
 $csslocation = '';
 for ($i = 0; $i < count($template['css']); $i++) {
-    $csslocation .= "<link rel=\"stylesheet\" rev=\"stylesheet\" href=\"{$template['css'][$i]}\" type=\"text/css\" media=\"all\" />\n";
+    $csslocation .= "<link rel=\"stylesheet\" href=\"{$template['css'][$i]}\">\n";
 }
 $mbcon['images'] = $template['images'];
 

@@ -17,7 +17,7 @@ $elements['header']=<<<eot
 <script src="js/scriptaculous.js?load=effects"></script> 
 <script src="js/lightbox.js"></script> 
 <script src="include/common.js"></script> 
-<link rel="stylesheet" href="css/lightbox.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="css/lightbox.css">
 {ajax_js}
 {extraheader}
 </head>
@@ -471,7 +471,7 @@ $elements['tips']=<<<eot
 <script src="js/scriptaculous.js?load=effects"></script> 
 <script src="js/lightbox.js"></script> 
 <script src="include/common.js"></script> 
-<link rel="stylesheet" href="css/lightbox.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="css/lightbox.css">
 </head>
 <body>
 <center>

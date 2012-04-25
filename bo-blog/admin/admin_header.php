@@ -42,7 +42,7 @@ $display_overall .= <<<eot
 <head>
   <meta charset="UTF-8">
   <meta name="robots" content="noindex, nofollow" />
-  <link rel="stylesheet" rev="stylesheet" href="{$csslocation}" type="text/css" media="all" />
+  <link rel="stylesheet" href="{$csslocation}">
   <title>{$config['blogname']} - {$lna[0]} [Powered by Bo-Blog]</title>
   $initialjs
   <script src="lang/{$langback}/jslang.js"></script>

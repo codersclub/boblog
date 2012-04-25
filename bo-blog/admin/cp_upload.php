@@ -304,7 +304,7 @@ function print_upload($message, $classup = "highlight", $classdown = "normal", $
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" rev="stylesheet" href="{$csslocation}" type="text/css" media="all" />
+<link rel="stylesheet" href="{$csslocation}">
 <script src="lang/{$langback}/jslang.js"></script>
 <script src="editor/{$useeditor}/uploader.js"></script>
 </head>

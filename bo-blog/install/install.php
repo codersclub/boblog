@@ -935,7 +935,7 @@ function template($body)
 <html lang="{$language}>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" rev="stylesheet" href="install.css" type="text/css" media="all" />
+<link rel="stylesheet" href="install.css">
 <title>Bo-Blog Installation</title>
 <script>
 function submitit(){

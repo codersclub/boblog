@@ -7,7 +7,7 @@ if (!defined('VALIDREQUEST')) {
 function plugin_highslide_firstheader($str)
 {
     $str .= <<<eot
-<link rel="stylesheet" type="text/css" href="plugin/highslide/highslide.css" />
+<link rel="stylesheet" href="plugin/highslide/highslide.css" />
 <script src="plugin/highslide/highslide-with-gallery.js"></script>
 <script>
 hs.graphicsDir = 'plugin/highslide/graphics/';

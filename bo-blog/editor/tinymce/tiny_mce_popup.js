@@ -66,7 +66,7 @@ TinyMCEPopup.prototype.init = function() {
 	}
 
 	// Output Popup CSS class
-	document.write('<link href="' + tinyMCE.getParam("popups_css") + '" rel="stylesheet" type="text/css">');
+	document.write('<link href="' + tinyMCE.getParam("popups_css") + '" rel="stylesheet">');
 
 	tinyMCE.addEvent(window, "load", this.onLoad);
 };

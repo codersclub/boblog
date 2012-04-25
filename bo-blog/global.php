@@ -474,8 +474,8 @@ function safe_convert($string, $html = 0, $filterslash = 0)
             $string = str_replace("\\\\", '&#92;', $string);
         }
     }
-    $string = str_replace("\r", "<br/>", $string);
-    $string = str_replace("\n", "", $string);
+    $string = str_replace("\r", "", $string);
+    $string = str_replace("\n", "<br/>", $string);
     $string = str_replace("\t", "&nbsp;&nbsp;", $string);
     $string = str_replace("  ", "&nbsp;&nbsp;", $string);
     $string = str_replace('|', '&#124;', $string);
@@ -489,9 +489,9 @@ function safe_convert($string, $html = 0, $filterslash = 0)
 function safe_invert($string, $html = 0)
 { //Transfer the converted words into editable characters
     if ($html == 0) {
-        $string = str_replace("<br/>", "\r", $string);
+        $string = str_replace("<br/>", "\n", $string);
     } else {
-        $string = str_replace("<br/>", "\r", $string);
+        $string = str_replace("<br/>", "\n", $string);
         $string = str_replace("&nbsp;", " ", $string);
         $string = str_replace("&", "&amp;", $string);
         $string = preg_replace_callback("/\[code\](.+?)\[\/code\]/is", function ($match) {

@@ -44,7 +44,7 @@ if ($configjob == 'save_config') {
 
 
 $plugin_header = <<<eot
-<style type="text/css">
+<style>
 .pd3 {
 	padding:2px;
 }

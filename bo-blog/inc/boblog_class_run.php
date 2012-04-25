@@ -94,7 +94,7 @@ class template {
 			if (is_file("inc/tpltune/{$template['sysver']}.php")) include_once("inc/tpltune/{$template['sysver']}.php");
 			if (is_file("inc/tpltune/{$template['sysver']}.css")) {
 				global $csslocation;
-				$csslocation.="<link rel=\"stylesheet\" rev=\"stylesheet\" href=\"inc/tpltune/{$template['sysver']}.css\" type=\"text/css\" media=\"all\" />\n";
+				$csslocation.="<link rel=\"stylesheet\" href=\"inc/tpltune/{$template['sysver']}.css\">\n";
 			}
 			$tptvalue=array();
 		}
@@ -178,7 +178,7 @@ class template {
 		$csslocation.=$baseurl;
 		if ($enableautojump) $csslocation.=$autojump;
 		for ($i=0; $i<count($template['css']); $i++) {
-			$csslocation.="<link rel=\"stylesheet\" rev=\"stylesheet\" href=\"{$template['css'][$i]}\" type=\"text/css\" media=\"all\" />\n";
+			$csslocation.="<link rel=\"stylesheet\" href=\"{$template['css'][$i]}\">\n";
 		}
 		$tipsin=$this->set('tips', array('tips'=>$tips, 'title'=>$title, 'csslocation'=>$csslocation, 'blogname'=>$config['blogname'], 'blogdesc'=>$config['blogdesc'], 'admin_plus'=>$admin_plus, 'language'=>$langname['languagename']));
 		echo $tipsin;
