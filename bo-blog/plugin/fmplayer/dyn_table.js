@@ -50,7 +50,7 @@ function setPref(objSet, prefName, pref) {
 }
 
 function add_Cell(myRow, name, value, size) {
-    return "<input type=\"text\" name=\"" + name + "\" value=\"" + value + "\" size=\"" + size + "\" />";
+    return "<input type=\"text\" name=\"" + name + "\" value=\"" + value + "\" size=\"" + size + "\">";
 }
 
 function add_fpRow(inum, identifier, title, creator, location, info, image, album, meta) {
@@ -66,7 +66,7 @@ function add_fpRow(inum, identifier, title, creator, location, info, image, albu
     if (identifier == "") identifier = ntime.getTime();
     name = "fmp[" + identifier + "]";
     myRow = dyn_t.insertRow(inum);
-    setOut = jslanfp[4] + ":" + identifier + "<br/>" +
+    setOut = jslanfp[4] + ":" + identifier + "<br>" +
         "<a href=\"JavaScript://\" onclick=\"moveItem('up',this)\">[" + jslanfp[5] + "]</a>" +
         "<a href=\"JavaScript://\" onclick=\"moveItem('down',this)\">[" + jslanfp[6] + "]</a>" +
         "<a href=\"JavaScript:showhidediv('" + identifier + "');\">[" + jslanfp[7] + "]</a>" +
@@ -82,16 +82,16 @@ function add_fpRow(inum, identifier, title, creator, location, info, image, albu
         myCell.style.background = "#CCCCCC";
     }
     setOut = "<table valign=\"top\"><tr>" +
-        "<td class=\"prefsection\">" + jslanfp[9] + ":<br/>" + add_Cell(myRow, name + "[title]", title, 18) + "</td>" +
-        "<td class=\"prefsection\">" + jslanfp[10] + ":<br/>" + add_Cell(myRow, name + "[creator]", creator, 18) + "</td>" +
-        "<td class=\"prefsection\">" + jslanfp[11] + ":<br/>" + add_Cell(myRow, name + "[location]", location, 60) + "</td>" +
+        "<td class=\"prefsection\">" + jslanfp[9] + ":<br>" + add_Cell(myRow, name + "[title]", title, 18) + "</td>" +
+        "<td class=\"prefsection\">" + jslanfp[10] + ":<br>" + add_Cell(myRow, name + "[creator]", creator, 18) + "</td>" +
+        "<td class=\"prefsection\">" + jslanfp[11] + ":<br>" + add_Cell(myRow, name + "[location]", location, 60) + "</td>" +
         "</tr></table>" +
         "<div id=\"" + identifier + "\" style=\"display: none\">" +
         "<table valign=\"top\"><tr>" +
-        "<td class=\"prefsection\">" + jslanfp[12] + ":<br/>" + add_Cell(myRow, name + "[info]", info, 40) + "</td>" +
-        "<td class=\"prefsection\">" + jslanfp[13] + ":<br/>" + add_Cell(myRow, name + "[image]", image, 40) + "</td>" +
-        "<td class=\"prefsection\">" + jslanfp[14] + ":<br/>" + add_Cell(myRow, name + "[album]", album, 6) + "</td>" +
-        "<td class=\"prefsection\">" + jslanfp[15] + ":<br/>" + add_Cell(myRow, name + "[meta]", meta, 4) + "</td>" +
+        "<td class=\"prefsection\">" + jslanfp[12] + ":<br>" + add_Cell(myRow, name + "[info]", info, 40) + "</td>" +
+        "<td class=\"prefsection\">" + jslanfp[13] + ":<br>" + add_Cell(myRow, name + "[image]", image, 40) + "</td>" +
+        "<td class=\"prefsection\">" + jslanfp[14] + ":<br>" + add_Cell(myRow, name + "[album]", album, 6) + "</td>" +
+        "<td class=\"prefsection\">" + jslanfp[15] + ":<br>" + add_Cell(myRow, name + "[meta]", meta, 4) + "</td>" +
         "</tr></table></div>";
     myCell = myRow.insertCell(-1);
     myCell.innerHTML = setOut;

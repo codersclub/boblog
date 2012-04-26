@@ -474,7 +474,7 @@ if ($job == 'updateattachment') {
   <tr>
     <td height=110>
       $message
-      <input type="hidden" name="fileid" value="{$fileid}" />
+      <input type="hidden" name="fileid" value="{$fileid}">
     </td>
   </tr>
 </table>

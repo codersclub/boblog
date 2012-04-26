@@ -199,7 +199,7 @@ if ($job=='addreply' || $job=='addmessage' || $job=='editreply' || $job=='editme
 		$try['repcontent']=$v_content;
 	}
 	if ($suspectspam==1) {
-		$tipsplus=($mbcon['censorall']=='1') ? "<br/>{$lnc[270]}" : "<br/>{$lnc[215]}";
+		$tipsplus=($mbcon['censorall']=='1') ? "<br>{$lnc[270]}" : "<br>{$lnc[215]}";
 		if ($ajax=='on') catcherror (strip_tags($tipsplus));
 	}
 	if (($job=='addreply'|| $job=='editreply') && $suspectspam!=1) {
@@ -296,7 +296,7 @@ if ($job=='search') {
 	$count_result=(is_array($result)) ? (count($result)) : 0;
 	setcookie ('lastsearch', time(), time()+$permission['SearchInterval']);
 	if ($count_result==0) {
-		$showresult="<br/><div align='center'><span style='font-size: 14px;'>{$lnc[223]}</span></div><br/>";
+		$showresult="<br><div align='center'><span style='font-size: 14px;'>{$lnc[223]}</span></div><br>";
 		$mainpart=$t->set('contentpage', array('title'=>"{$lnc[224]} {$keyword}", 'contentbody'=>$showresult));
 		announcebar();
 		$bodymenu=$t->set('mainpage', array('pagebar'=>'', 'iftoppage'=>'none', 'ifbottompage'=>'none', 'ifannouncement'=>$ifannouncement, 'topannounce'=>$topannounce, 'mainpart'=>$mainpart, 'currentpage'=>'', 'previouspageurl'=>'', 'nextpageurl'=>'', 'turningpages'=>'', 'totalpages'=>'', 'previouspageexists'=>'', 'nextpageexists'=>''));
@@ -342,7 +342,7 @@ if ($job=='viewresult') {
 	if ($searchmethod==3) {
 		$records=$blog->getgroupbyquery("SELECT t1.*, t2.title, t2.blogalias FROM `{$db_prefix}replies` t1 INNER JOIN `{$db_prefix}blogs` t2 ON t2.blogid=t1.blogid WHERE t1.repid in  ({$result}) ORDER BY t1.reptime DESC LIMIT {$start_id}, {$mbcon['listitemperpage']}");
 		for ($i=0; $i<count($records); $i++) {
-			$records[$i]['repcontent']="<strong>{$lnc[71]}</strong><a href=\"".getlink_entry($records[$i]['blogid'], $records[$i]['blogalias'])."\">{$records[$i]['title']}</a><br/><strong>{$lnc[76]}</strong>".$records[$i]['repcontent'];
+			$records[$i]['repcontent']="<strong>{$lnc[71]}</strong><a href=\"".getlink_entry($records[$i]['blogid'], $records[$i]['blogalias'])."\">{$records[$i]['title']}</a><br><strong>{$lnc[76]}</strong>".$records[$i]['repcontent'];
 		}
 		$section_body_main[]=$m_b->make_replies($records);
 		$pagebar=$m_b->make_pagebar ($page, $mbcon['pagebaritems'], $urlref, $counter_now, $mbcon['listitemperpage']);

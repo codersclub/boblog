@@ -322,7 +322,7 @@ if ($job == 'add' || $job == 'modify' || $job == 'approve') {
         $puttinggp3 = $puttinggp . "<option class='currentitem' value='{$tmp_gp}' selected>{$lna[231]}{$linkgps[$tmp_gp]['linkgpname']}";
         $sel1 = ($linkvalue['isdisplay'] == 1) ? 'selected' : '';
         $sel2 = ($linkvalue['isdisplay'] == 1) ? '' : 'selected';
-        $addhidden = "<input type='hidden' name='tomodify' value='1'/><input type='hidden' name='linkid' value='{$itemid}'/>";
+        $addhidden = "<input type='hidden' name='tomodify' value='1'>\n<input type='hidden' name='linkid' value='{$itemid}'>\n";
     } else {
         $puttinggp3 = $puttinggp;
     }
@@ -336,7 +336,7 @@ if ($job == 'add' || $job == 'modify' || $job == 'approve') {
                 break;
             }
         }
-        $addhidden = "<input type='hidden' name='alsodel' value='{$itemid}'/>";
+        $addhidden = "<input type='hidden' name='alsodel' value='{$itemid}'>";
     }
     $display_overall .= highlightadminitems('add', 'link');
 

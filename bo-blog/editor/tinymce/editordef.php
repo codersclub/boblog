@@ -8,7 +8,7 @@ if (!defined('VALIDADMIN')) {
 $srcHTML="data/cache_emsel.php";
 
 @include ($srcHTML);
-$emots=str_replace("<br/>", ' ', $emots);
+$emots=str_replace("<br>", ' ', $emots);
 $emots=str_replace("</a>", '</a> ', $emots);
 */
 

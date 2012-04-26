@@ -51,9 +51,9 @@ function starblog() {
 			if (messagereturn == 'ok') {
 				var staridcon=document.getElementById(currentstarid);
 				if (staridcon.innerHTML.indexOf("/starred.gif")!=-1) {
-					staridcon.innerHTML="<a href=\"javascript: dostar('"+currentblogid+"');\"><img src=\""+moreimagepath+"/others/unstarred.gif\" alt=\"\" title=\""+jslang[14]+"\" border=\"0\"/></a>";
+					staridcon.innerHTML="<a href=\"javascript: dostar('"+currentblogid+"');\"><img src=\""+moreimagepath+"/others/unstarred.gif\" alt=\"\" title=\""+jslang[14]+"\" border=\"0\"></a>";
 				} else {
-					staridcon.innerHTML="<a href=\"javascript: dostar('"+currentblogid+"');\"><img src=\""+moreimagepath+"/others/starred.gif\" alt=\"\" title=\""+jslang[15]+"\" border=\"0\"/></a>";
+					staridcon.innerHTML="<a href=\"javascript: dostar('"+currentblogid+"');\"><img src=\""+moreimagepath+"/others/starred.gif\" alt=\"\" title=\""+jslang[15]+"\" border=\"0\"></a>";
 				}
 			}
 			else alert(messagereturn);

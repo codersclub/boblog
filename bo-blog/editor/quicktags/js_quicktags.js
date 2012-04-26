@@ -344,19 +344,19 @@ function edShowButton(button, i) {
 	}
 	switch (button.id) {
 		case 'ed_img':
-			document.write('<input type="button" id="' + button.id + '" ' + accesskey + ' class="ed_button" onclick="edInsertImage(edCanvas);" value="' + button.display + '" />');
+			document.write('<input type="button" id="' + button.id + '" ' + accesskey + ' class="ed_button" onclick="edInsertImage(edCanvas);" value="' + button.display + '">');
 			break;
 		case 'ed_link':
-			document.write('<input type="button" id="' + button.id + '" ' + accesskey + ' class="ed_button" onclick="edInsertLink(edCanvas, ' + i + ');" value="' + button.display + '" />');
+			document.write('<input type="button" id="' + button.id + '" ' + accesskey + ' class="ed_button" onclick="edInsertLink(edCanvas, ' + i + ');" value="' + button.display + '">');
 			break;
 		case 'ed_ext_link':
-			document.write('<input type="button" id="' + button.id + '" ' + accesskey + ' class="ed_button" onclick="edInsertExtLink(edCanvas, ' + i + ');" value="' + button.display + '" />');
+			document.write('<input type="button" id="' + button.id + '" ' + accesskey + ' class="ed_button" onclick="edInsertExtLink(edCanvas, ' + i + ');" value="' + button.display + '">');
 			break;
 		case 'ed_footnote':
-			document.write('<input type="button" id="' + button.id + '" ' + accesskey + ' class="ed_button" onclick="edInsertFootnote(edCanvas);" value="' + button.display + '" />');
+			document.write('<input type="button" id="' + button.id + '" ' + accesskey + ' class="ed_button" onclick="edInsertFootnote(edCanvas);" value="' + button.display + '">');
 			break;
 		default:
-			document.write('<input type="button" id="' + button.id + '" ' + accesskey + ' class="ed_button" onclick="edInsertTag(edCanvas, ' + i + ');" value="' + button.display + '"  />');
+			document.write('<input type="button" id="' + button.id + '" ' + accesskey + ' class="ed_button" onclick="edInsertTag(edCanvas, ' + i + ');" value="' + button.display + '">');
 			break;
 	}
 }
@@ -456,22 +456,22 @@ function edToolbar() {
 	}
 	if (edShowExtraCookie()) {
 		document.write(
-			'<input type="button" id="ed_close" class="ed_button" onclick="edCloseAllTags();" value="Close Tags" />'
-			+ '<input type="button" id="ed_spell" class="ed_button" onclick="edSpell(edCanvas);" value="Dict" />'
-			+ '<input type="button" id="ed_extra_show" class="ed_button" onclick="edShowExtra()" value="&raquo;" style="visibility: hidden;" />'
-			+ '</span><br />'
+			'<input type="button" id="ed_close" class="ed_button" onclick="edCloseAllTags();" value="Close Tags">'
+			+ '<input type="button" id="ed_spell" class="ed_button" onclick="edSpell(edCanvas);" value="Dict">'
+			+ '<input type="button" id="ed_extra_show" class="ed_button" onclick="edShowExtra()" value="&raquo;" style="visibility: hidden;">'
+			+ '</span><br>'
 			+ '<span id="ed_extra_buttons">'
-			+ '<input type="button" id="ed_extra_hide" class="ed_button" onclick="edHideExtra();" value="&laquo;" />'
+			+ '<input type="button" id="ed_extra_hide" class="ed_button" onclick="edHideExtra();" value="&laquo;">'
 		);
 	}
 	else {
 		document.write(
-			'<input type="button" id="ed_close" class="ed_button" onclick="edCloseAllTags();" value="Close Tags" />'
-			+ '<input type="button" id="ed_spell" class="ed_button" onclick="edSpell(edCanvas);" value="Dict" />'
-			+ '<input type="button" id="ed_extra_show" class="ed_button" onclick="edShowExtra()" value="&raquo;" />'
-			+ '</span><br />'
+			'<input type="button" id="ed_close" class="ed_button" onclick="edCloseAllTags();" value="Close Tags">'
+			+ '<input type="button" id="ed_spell" class="ed_button" onclick="edSpell(edCanvas);" value="Dict">'
+			+ '<input type="button" id="ed_extra_show" class="ed_button" onclick="edShowExtra()" value="&raquo;">'
+			+ '</span><br>'
 			+ '<span id="ed_extra_buttons" style="display: none;">'
-			+ '<input type="button" id="ed_extra_hide" class="ed_button" onclick="edHideExtra();" value="&laquo;" />'
+			+ '<input type="button" id="ed_extra_hide" class="ed_button" onclick="edHideExtra();" value="&laquo;">'
 		);
 	}
 	for (i = extendedStart; i < edButtons.length; i++) {
@@ -636,7 +636,7 @@ function edInsertImage(myField) {
 		myValue = '<img src="' 
 				+ myValue 
 				+ '" alt="' + prompt('Enter a description of the image', '') 
-				+ '" />';
+				+ '">';
 		edInsertContent(myField, myValue);
 	}
 }

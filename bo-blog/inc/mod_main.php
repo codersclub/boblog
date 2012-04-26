@@ -192,7 +192,7 @@ if (!empty($m_b->total_rows)) {
 		$section_body_main[]=$m_b->make_list(@implode('', $listbody));
 	}
 }
-else $section_body_main[]="<br/><div align='center'><span style='font-size: 14px;'>{$lnc[186]}</span></div><br/>";
+else $section_body_main[]="<br><div align='center'><span style='font-size: 14px;'>{$lnc[186]}</span></div><br>";
 
 $iftoppage=($mbcon['pagebarposition']=='down') ? 'none' : 'block';
 $ifbottompage=($mbcon['pagebarposition']=='up') ? 'none' : 'block';

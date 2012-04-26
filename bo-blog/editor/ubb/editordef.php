@@ -11,7 +11,7 @@ plugin_runphp('ubbeditor');
 $srcHTML = "data/cache_emsel.php";
 
 @include($srcHTML);
-$emots = str_replace("<br/>", ' ', $emots);
+$emots = str_replace("<br>", ' ', $emots);
 $emots = str_replace("</a>", '</a> ', $emots);
 
 if ($act == 'edit') {

@@ -91,9 +91,9 @@ $plugin_return = <<<eot
     $pref_result_show
 	<tr>
 	    <td align="center" colspan="2">
-	        <input type="hidden" value="save_config" name="configjob" />
-	        <input type="submit" value="{$lna[64]}" class="formbutton"/>
-	        <input type="reset" value="{$lna[65]}" class="formbutton" />
+	        <input type="hidden" value="save_config" name="configjob">
+	        <input type="submit" value="{$lna[64]}" class="formbutton">
+	        <input type="reset" value="{$lna[65]}" class="formbutton">
 	    </td>
 	</tr>
 </table>
@@ -101,7 +101,7 @@ $plugin_return = <<<eot
 
 <div id="copyright" align="right">
     {$lanfp[99]}
-    <br/>
+    <br>
     {$lanfp[76]}
 </div>
 eot;

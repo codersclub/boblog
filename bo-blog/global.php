@@ -77,7 +77,7 @@ if (!defined('VALIDADMIN')) {
     } else {
         $config['blogurl'] = str_replace('{host}', @$_SERVER['HTTP_HOST'], $config['blogurl']);
     }
-    $baseurl = "<base href=\"{$config['blogurl']}/\" />";
+    $baseurl = "<base href=\"{$config['blogurl']}/\">";
 }
 
 /* data/config.php may be corrupted in some servers */
@@ -381,7 +381,7 @@ function checkpermission($permission_name)
     global $permission, $in_ajax_mode, $lnc;
     if ($permission[$permission_name] != 1) {
         if ($in_ajax_mode != 1) {
-            catcherror("{$lnc[2]} <br/>{$lnc[3]}  {$permission['gpname']}");
+            catcherror("{$lnc[2]} <br>{$lnc[3]}  {$permission['gpname']}");
         } else {
             die($lnc[2]);
         }
@@ -475,7 +475,7 @@ function safe_convert($string, $html = 0, $filterslash = 0)
         }
     }
     $string = str_replace("\r", "", $string);
-    $string = str_replace("\n", "<br/>", $string);
+    $string = str_replace("\n", "<br>", $string);
     $string = str_replace("\t", "&nbsp;&nbsp;", $string);
     $string = str_replace("  ", "&nbsp;&nbsp;", $string);
     $string = str_replace('|', '&#124;', $string);
@@ -489,9 +489,9 @@ function safe_convert($string, $html = 0, $filterslash = 0)
 function safe_invert($string, $html = 0)
 { //Transfer the converted words into editable characters
     if ($html == 0) {
-        $string = str_replace("<br/>", "\n", $string);
+        $string = str_replace("<br>", "\n", $string);
     } else {
-        $string = str_replace("<br/>", "\n", $string);
+        $string = str_replace("<br>", "\n", $string);
         $string = str_replace("&nbsp;", " ", $string);
         $string = str_replace("&", "&amp;", $string);
         $string = preg_replace_callback("/\[code\](.+?)\[\/code\]/is", function ($match) {
@@ -585,7 +585,7 @@ function getemot($matches)
     global $myemots;
     $currentemot = $matches[1];
     $emotimage = $myemots[$currentemot]['image'];
-    return "<img src=\"images/emot/{$emotimage}\" border=\"0\" alt=\"$currentemot\" />";
+    return "<img src=\"images/emot/{$emotimage}\" border=\"0\" alt=\"$currentemot\">";
 }
 
 function get_time_unix($date, $destination = "stamp")
@@ -661,7 +661,7 @@ function makecalendar($month, $year, $month_calendar, $lunarstream = '')
                 if ($mbcon['lunarcalendar'] == 2) {
                     $ca_sh = "<span title='{$lunarstream[$currentdate]}'>{$ca_sh}</span>";
                 } else {
-                    $ca_sh .= '<br/>' . $lunarstream[$currentdate];
+                    $ca_sh .= '<br>' . $lunarstream[$currentdate];
                 }
             }
             if ($currentdate !== '') {

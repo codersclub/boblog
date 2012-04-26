@@ -54,7 +54,7 @@ if ($job=='links') {
 			unset ($tmp_gp, $tmp_displayitem);
 			$tmp_gp=$linkeachitem['linkgptoid'];
 /*vot*/			$alllinks[$tmp_gp] = '';
-			if ($linkeachitem['linklogo']) $displayitemlogo="<img src=\"{$linkeachitem['linklogo']}\" alt=\"{$linkeachitem['linkname']}\" border=\"0\" />";
+			if ($linkeachitem['linklogo']) $displayitemlogo="<img src=\"{$linkeachitem['linklogo']}\" alt=\"{$linkeachitem['linkname']}\" border=\"0\">";
 			else $displayitemlogo='';
 			if (empty($rowcount[$tmp_gp])) {
 				$rowcount[$tmp_gp]=1;
@@ -89,7 +89,7 @@ if ($job=='comment') {
 	$start_id=($page-1)*$mbcon['replyperpage'];
 	$records=$blog->getgroupbyquery("SELECT t1.*, t2.title, t2.blogalias FROM `{$db_prefix}replies` t1 INNER JOIN `{$db_prefix}blogs` t2 ON t2.blogid=t1.blogid WHERE t1.reproperty<=1 AND t2.property<2 ORDER BY t1.reptime DESC LIMIT {$start_id}, {$mbcon['replyperpage']}");
 	for ($i=0; $i<count($records); $i++) {
-		$records[$i]['repcontent']="<strong>{$lnc[71]}</strong><a href=\"".getlink_entry($records[$i]['blogid'], $records[$i]['blogalias'])."\">{$records[$i]['title']}</a><br/><strong>{$lnc[76]}</strong>".$records[$i]['repcontent'];
+		$records[$i]['repcontent']="<strong>{$lnc[71]}</strong><a href=\"".getlink_entry($records[$i]['blogid'], $records[$i]['blogalias'])."\">{$records[$i]['title']}</a><br><strong>{$lnc[76]}</strong>".$records[$i]['repcontent'];
 	}
 	$m_b=new getblogs;
 	if (is_array($records)) {
@@ -156,7 +156,7 @@ if ($job=='userlist') {
 
 	$innerpages=$m_b->make_pagebar ($page, $mbcon['pagebaritems'], "view.php?go=userlist", $statistics['users']+1, $mbcon['listitemperpage']);
 
-	$innerpages.="<br/>{$puttingcates}<br/> {$lnc[203]} <a href=\"view.php?go=userlist&amp;usergroup={$usergroup}&amp;ordered=1\">{$lnc[204]}</a> | <a href=\"view.php?go=userlist&amp;usergroup={$usergroup}&amp;ordered=2\">{$lnc[205]}</a> | <a href=\"view.php?go=userlist&amp;usergroup={$usergroup}&amp;ordered=3\">{$lnc[206]}</a> | <a href=\"view.php?go=userlist&amp;usergroup={$usergroup}&amp;ordered=4\">{$lnc[207]}</a>";
+	$innerpages.="<br>{$puttingcates}<br> {$lnc[203]} <a href=\"view.php?go=userlist&amp;usergroup={$usergroup}&amp;ordered=1\">{$lnc[204]}</a> | <a href=\"view.php?go=userlist&amp;usergroup={$usergroup}&amp;ordered=2\">{$lnc[205]}</a> | <a href=\"view.php?go=userlist&amp;usergroup={$usergroup}&amp;ordered=3\">{$lnc[206]}</a> | <a href=\"view.php?go=userlist&amp;usergroup={$usergroup}&amp;ordered=4\">{$lnc[207]}</a>";
 
 	$iftoppage=($mbcon['pagebarposition']=='down') ? 'none' : 'block';
 	$ifbottompage=($mbcon['pagebarposition']=='up') ? 'none' : 'block';

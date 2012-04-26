@@ -65,9 +65,9 @@ if ($job == 'pagewrite' || $job == 'editpage') { //Initialize public items
 if ($job == 'editpage') { //Initialize Edit only items
     $selectedid_sidebar = array_search($records['closesidebar'], $arrayvalue_sidebar);
     $records['pagecontent'] = stripslashes($records['pagecontent']);
-    $hiddenareas = "<input type='hidden' name='go' id='go' value='page_restore_{$records['pageid']}'/>";
-    $hiddenareas .= "<input type='hidden' name='idforsave' id='idforsave' value='{$records['pageid']}'/>";
-    $hiddenareas .= "<input type='hidden' name='oldgo' id='oldgo' value='{$currentjob}'/>";
+    $hiddenareas = "<input type='hidden' name='go' id='go' value='page_restore_{$records['pageid']}'>";
+    $hiddenareas .= "<input type='hidden' name='idforsave' id='idforsave' value='{$records['pageid']}'>";
+    $hiddenareas .= "<input type='hidden' name='oldgo' id='oldgo' value='{$currentjob}'>";
 }
 
 if ($job == 'pagewrite') { //Initialize Add only items
@@ -80,9 +80,9 @@ if ($job == 'pagewrite') { //Initialize Add only items
     if ($permission['Emot'] == 1) {
         $records['emotstat'] = 1;
     }
-    $hiddenareas = "<input type='hidden' name='go' id='go' value='page_store'/>";
-    $hiddenareas .= "<input type='hidden' name='idforsave' id='idforsave' value=''/>";
-    $hiddenareas .= "<input type='hidden' name='oldgo' id='oldgo' value='{$currentjob}'/>";
+    $hiddenareas = "<input type='hidden' name='go' id='go' value='page_store'>";
+    $hiddenareas .= "<input type='hidden' name='idforsave' id='idforsave' value=''>";
+    $hiddenareas .= "<input type='hidden' name='oldgo' id='oldgo' value='{$currentjob}'>";
 
     $createlinks = "<tr bgcolor=\"#ffffff\" align=left class=\"visibleitem\" valign=top><td width=100 align=center>{$lna[1125]}</td><td><input type=checkbox name=addshortcut value=1>{$lna[1124]}<br>{$lna[97]} <input type='radio' name='shortcuttarget' value='' checked>{$lna[98]} <input type='radio' name='shortcuttarget' value='_blank'>{$lna[99]}<br>{$lna[95]} <input type=text name='shortcutname' value='' size='50'> {$lna[102]}<br>{$lna[1126]}</td></tr>\n";
 }
@@ -336,7 +336,7 @@ function autoradio($type, $name, $arraylabel, $arrayvalue, $arraychecked = array
         } else {
             $disabled = '';
         }
-        $formcontent .= "<label><input type='{$type}' name='{$name}' value='{$arrayvalue[$i]}' {$addcheck} class='formradiobox' {$disabled}/>{$arraylabel[$i]}</label> ";
+        $formcontent .= "<label><input type='{$type}' name='{$name}' value='{$arrayvalue[$i]}' {$addcheck} class='formradiobox' {$disabled}>{$arraylabel[$i]}</label> ";
     }
     return $formcontent;
 }

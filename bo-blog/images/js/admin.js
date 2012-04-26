@@ -323,7 +323,7 @@ function fadingMaskDo() {
 }
 
 function adminAjaxLoading() {
-	var changeBoxText="<div id='changeBox' class='adminbox-loading'><img align='absmiddle' src='"+ajaxloadingIMG+"'/> Loading...</div>";
+	var changeBoxText="<div id='changeBox' class='adminbox-loading'><img align='absmiddle' src='"+ajaxloadingIMG+"'> Loading...</div>";
 	document.getElementById('adminalert').style.display='block';
 	document.getElementById('adminalert').innerHTML=changeBoxText;
 	window.location.hash="beginning";

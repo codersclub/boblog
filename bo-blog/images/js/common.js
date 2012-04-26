@@ -82,8 +82,8 @@ function showadminreply (divid) {
 	switchcomandmes='reply';
 	var cleanid=divid.replace('com_', '');
 	var inputcontent="<form action='"+absbaseurl+"admin.php?go=reply_addadminreply_"+cleanid+"' method='post' id='formadminreply"+cleanid+"'>";
-	inputcontent+=jslang[0]+"<br/><textarea cols='66' rows='3' name='adminreplycontent' id='adminreplycontent"+cleanid+"'></textarea><br/>";
-	inputcontent+="<input type='button' onclick=\"ajax_adminreply('"+cleanid+"'); return false;\" value='"+jslang[1]+"' class='button'/> <input type='reset' value='"+jslang[2]+"' class='button'/> <input type='button' value='"+jslang[3]+"' onclick=\"hideadminreply('"+divid+"');\" class='button'/></form>";
+	inputcontent+=jslang[0]+"<br><textarea cols='66' rows='3' name='adminreplycontent' id='adminreplycontent"+cleanid+"'></textarea><br>";
+	inputcontent+="<input type='button' onclick=\"ajax_adminreply('"+cleanid+"'); return false;\" value='"+jslang[1]+"' class='button'> <input type='reset' value='"+jslang[2]+"' class='button'> <input type='button' value='"+jslang[3]+"' onclick=\"hideadminreply('"+divid+"');\" class='button'></form>";
 	document.getElementById(divid).innerHTML=inputcontent;
 	document.getElementById(divid).style.display='block';
 }
@@ -92,8 +92,8 @@ function showadminreplyformessage (divid) {
 	switchcomandmes='message';
 	var cleanid=divid.replace('com_', '');
 	var inputcontent="<form action='"+absbaseurl+"admin.php?go=message_addadminreply_"+cleanid+"' method='post' id='formadminreply"+cleanid+"'>";
-	inputcontent+=jslang[0]+"<br/><textarea cols='66' rows='3' name='adminreplycontent' id='adminreplycontent"+cleanid+"'></textarea><br/>";
-	inputcontent+="<input type='button' onclick=\"ajax_adminreply('"+cleanid+"'); return false;\" value='"+jslang[1]+"' class='button'/> <input type='reset' value='"+jslang[2]+"' class='button'/> <input type='button' value='"+jslang[3]+"'  onclick=\"hideadminreply('"+divid+"');\" class='button'/></form>";
+	inputcontent+=jslang[0]+"<br><textarea cols='66' rows='3' name='adminreplycontent' id='adminreplycontent"+cleanid+"'></textarea><br>";
+	inputcontent+="<input type='button' onclick=\"ajax_adminreply('"+cleanid+"'); return false;\" value='"+jslang[1]+"' class='button'> <input type='reset' value='"+jslang[2]+"' class='button'> <input type='button' value='"+jslang[3]+"'  onclick=\"hideadminreply('"+divid+"');\" class='button'></form>";
 	document.getElementById(divid).innerHTML=inputcontent;
 	document.getElementById(divid).style.display='block';
 }
@@ -334,7 +334,7 @@ function changeavatar (slname, area) {
 	var areashow=document.getElementById(area);
 	if (areashow) {
 		if (realvalue!='' && realvalue!=null) {
-			areashow.innerHTML="<img src='images/avatars/"+realvalue+"' alt=''/>";
+			areashow.innerHTML="<img src='images/avatars/"+realvalue+"' alt=''>";
 		}
 		else {
 			areashow.innerHTML=jslang[13];
@@ -414,16 +414,16 @@ function makemedia (strType,strURL,intWidth,intHeight,strID) {
 	var strHtml;
 	switch(strType) {
 		case 'wmp':
-			strHtml="<object width='"+intWidth+"' height='"+intHeight+"' classid='CLSID:6BF52A52-394A-11d3-B153-00C04F79FAA6'><param name='url' value='"+strURL+"'/><embed width='"+intWidth+"' height='"+intHeight+"' type='application/x-mplayer2' src='"+strURL+"'></embed></object>";
+			strHtml="<object width='"+intWidth+"' height='"+intHeight+"' classid='CLSID:6BF52A52-394A-11d3-B153-00C04F79FAA6'><param name='url' value='"+strURL+"'><embed width='"+intWidth+"' height='"+intHeight+"' type='application/x-mplayer2' src='"+strURL+"'></embed></object>";
 			break;
 		case 'swf':
-			strHtml="<object classid='clsid:D27CDB6E-AE6D-11cf-96B8-444553540000' width='"+intWidth+"' height='"+intHeight+"'><param name='movie' value='"+strURL+"'/><param name='quality' value='high' /><embed src='"+strURL+"' quality='high' type='application/x-shockwave-flash' width='"+intWidth+"' height='"+intHeight+"'></embed></object>";
+			strHtml="<object classid='clsid:D27CDB6E-AE6D-11cf-96B8-444553540000' width='"+intWidth+"' height='"+intHeight+"'><param name='movie' value='"+strURL+"'><param name='quality' value='high'><embed src='"+strURL+"' quality='high' type='application/x-shockwave-flash' width='"+intWidth+"' height='"+intHeight+"'></embed></object>";
 			break;
 		case 'flv':
-			strHtml="<object classid='clsid:D27CDB6E-AE6D-11cf-96B8-444553540000' width='"+intWidth+"' height='"+intHeight+"'><param name='movie' value='images/others/mediaplayer.swf?file="+strURL+"&bufferlength=10'/><param name='quality' value='high' /><param name='allowFullScreen' value='true' /><embed src='images/others/mediaplayer.swf?file="+strURL+"&bufferlength=10' quality='high' allowFullScreen='true' type='application/x-shockwave-flash' width='"+intWidth+"' height='"+intHeight+"'></embed></object>";
+			strHtml="<object classid='clsid:D27CDB6E-AE6D-11cf-96B8-444553540000' width='"+intWidth+"' height='"+intHeight+"'><param name='movie' value='images/others/mediaplayer.swf?file="+strURL+"&bufferlength=10'><param name='quality' value='high'><param name='allowFullScreen' value='true'><embed src='images/others/mediaplayer.swf?file="+strURL+"&bufferlength=10' quality='high' allowFullScreen='true' type='application/x-shockwave-flash' width='"+intWidth+"' height='"+intHeight+"'></embed></object>";
 			break;
 		case 'real':
-			strHtml="<object classid='clsid:CFCDAA03-8BE4-11cf-B84B-0020AFBBCCFA' width='"+intWidth+"' height='"+intHeight+"'><param name='src' value='"+absbaseurl+"inc/realplay.php?link="+strURL+"' /><param name='controls' value='Imagewindow' /><param name='console' value='clip1' /><param name='autostart' value='true' /><embed src='"+absbaseurl+"inc/realplay.php?link="+strURL+"' type='audio/x-pn-realaudio-plugin' autostart='true' console='clip1' controls='Imagewindow' width='"+intWidth+"' height='"+intHeight+"'></embed></object><br/><object classid='clsid:CFCDAA03-8BE4-11cf-B84B-0020AFBBCCFA' width='"+intWidth+"' height='44'><param name='src' value='"+absbaseurl+"inc/realplay.php?link="+strURL+"' /><param name='controls' value='ControlPanel' /><param name='console' value='clip1' /><param name='autostart' value='true' /><embed src='"+absbaseurl+"inc/realplay.php?link="+strURL+"' type='audio/x-pn-realaudio-plugin' autostart='true' console='clip1' controls='ControlPanel' width='"+intWidth+"' height='44'></embed></object>";
+			strHtml="<object classid='clsid:CFCDAA03-8BE4-11cf-B84B-0020AFBBCCFA' width='"+intWidth+"' height='"+intHeight+"'><param name='src' value='"+absbaseurl+"inc/realplay.php?link="+strURL+"'><param name='controls' value='Imagewindow'><param name='console' value='clip1'><param name='autostart' value='true'><embed src='"+absbaseurl+"inc/realplay.php?link="+strURL+"' type='audio/x-pn-realaudio-plugin' autostart='true' console='clip1' controls='Imagewindow' width='"+intWidth+"' height='"+intHeight+"'></embed></object><br><object classid='clsid:CFCDAA03-8BE4-11cf-B84B-0020AFBBCCFA' width='"+intWidth+"' height='44'><param name='src' value='"+absbaseurl+"inc/realplay.php?link="+strURL+"'><param name='controls' value='ControlPanel'><param name='console' value='clip1'><param name='autostart' value='true'><embed src='"+absbaseurl+"inc/realplay.php?link="+strURL+"' type='audio/x-pn-realaudio-plugin' autostart='true' console='clip1' controls='ControlPanel' width='"+intWidth+"' height='44'></embed></object>";
 			break;
 	}
 	return strHtml;
@@ -480,7 +480,7 @@ function deleteCookie(name) {
 function refreshsecuritycode(areaid, inputid) {
 	if (document.getElementById(areaid)) {
 		var rnds=Math.random();
-		document.getElementById(areaid).innerHTML="<img src='inc/securitycode.php?rand="+rnds+"' alt=''/>";
+		document.getElementById(areaid).innerHTML="<img src='inc/securitycode.php?rand="+rnds+"' alt=''>";
 	}
 	if (document.getElementById(inputid)) document.getElementById(inputid).value='';
 }
@@ -533,7 +533,7 @@ function decodetburl (str, ishidden, uniqueid) {
 	if (ishidden==1) { //Hidden!
 		var randomnumber1=Math.floor(Math.random()*10+1);
 		var randomnumber2=Math.floor(Math.random()*10+1);
-		resultstr="<span id=\"showtbq"+uniqueid+"\">"+jslang[66]+" <span id=\"qa"+uniqueid+"\">"+randomnumber1+"</span> <strong>+</strong> <span id=\"qb"+uniqueid+"\">"+randomnumber2+"</span> <strong>=</strong> <input type='text' id='ans"+uniqueid+"' maxlength='2' size='2'/> <input type='button' onclick='submithiddentbanswer(\""+uniqueid+"\");' value='"+jslang[1]+"'/><span id=\"answertb"+uniqueid+"\" style=\"display: none;\">"+str+"</span></span>";
+		resultstr="<span id=\"showtbq"+uniqueid+"\">"+jslang[66]+" <span id=\"qa"+uniqueid+"\">"+randomnumber1+"</span> <strong>+</strong> <span id=\"qb"+uniqueid+"\">"+randomnumber2+"</span> <strong>=</strong> <input type='text' id='ans"+uniqueid+"' maxlength='2' size='2'> <input type='button' onclick='submithiddentbanswer(\""+uniqueid+"\");' value='"+jslang[1]+"'><span id=\"answertb"+uniqueid+"\" style=\"display: none;\">"+str+"</span></span>";
 	}
 	else {
 		resultstr="<span id=\"showtbfinal"+uniqueid+"\">"

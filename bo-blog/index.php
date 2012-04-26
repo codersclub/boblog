@@ -48,7 +48,7 @@ $pageitems = '';
 
 if ($config['blogopen'] != 1 && !defined('isLogin')) {
     if ($permission['CP'] == 1) {
-        $config['message_off'] .= "<br/><ul><li><a href='admin.php'>{$lnc[107]}</a></li></ul>";
+        $config['message_off'] .= "<br><ul><li><a href='admin.php'>{$lnc[107]}</a></li></ul>";
     }
     catcherror($config['message_off']);
 }
@@ -117,7 +117,7 @@ if (file_exists("inc/mod_{$act}.php")) {
 }
 
 //Section: <head>..<body>
-$ajax_js = "<link rel=\"EditURI\" type=\"application/rsd+xml\" title=\"RSD\" href=\"{$config['blogurl']}/inc/rsd.php\" />
+$ajax_js = "<link rel=\"EditURI\" type=\"application/rsd+xml\" title=\"RSD\" href=\"{$config['blogurl']}/inc/rsd.php\">
 <script src=\"lang/{$langfront}/jslang.js?jsver={$codeversion}\"></script>
 <script src=\"images/js/ajax.js?jsver={$codeversion}\"></script>
 <script src=\"images/js/swfobject.js?jsver={$codeversion}\"></script>
@@ -130,7 +130,7 @@ var moreimagepath=\"{$template['moreimages']}\";
 var shutajax={$shutajax};
 var absbaseurl='{$config['blogurl']}/';
 </script>
-<link title=\"{$lnc[128]} {$config['blogname']}\" rel=\"search\"  type=\"application/opensearchdescription+xml\"  href=\"{$config['blogurl']}/inc/opensearch.php\" />
+<link title=\"{$lnc[128]} {$config['blogname']}\" rel=\"search\"  type=\"application/opensearchdescription+xml\"  href=\"{$config['blogurl']}/inc/opensearch.php\">
 ";
 
 $ajax_js = plugin_walk('firstheader', $ajax_js);

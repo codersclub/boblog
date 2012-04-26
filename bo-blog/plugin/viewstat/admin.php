@@ -97,7 +97,7 @@ $theseonline = min(sizeof($nowonline), 50);
 
 for ($i = 0; $i < $theseonline; $i++) {
     $tmpdata = explode("|", $nowonline[$i]);
-    $putonline .= "<tr><td>" . $tmpdata[1] . " <a href=\"{$mbcon['ipsearch']}{$tmpdata[1]}\" target=\"_blank\"><img src=\"{$template['images']}/ip.gif\" border=\"0\" alt=\"IP\" title=\"IP: {$tmpdata[1]}\" /></a></td><td>" . gmdate('Y/m/d H:i',
+    $putonline .= "<tr><td>" . $tmpdata[1] . " <a href=\"{$mbcon['ipsearch']}{$tmpdata[1]}\" target=\"_blank\"><img src=\"{$template['images']}/ip.gif\" border=\"0\" alt=\"IP\" title=\"IP: {$tmpdata[1]}\"></a></td><td>" . gmdate('Y/m/d H:i',
             ($tmpdata[2] + 3600 * $config['timezone'])) . "</td></tr>";
 }
 
@@ -172,8 +172,8 @@ $plugin_return = <<<eot
   </tr>
 </table>
 
-<br/>
-<br/>
+<br>
+<br>
 
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
   <tr>
@@ -201,7 +201,7 @@ $plugin_return = <<<eot
               </tr>
             </table>
             
-            <br/>
+            <br>
             
             <form action="admin.php?act=viewstat" method=post>
             <table width="100%" cellpadding="0" cellspacing="0">
@@ -224,8 +224,8 @@ $plugin_return = <<<eot
   </tr>
 </table>
 
-<br/>
-<br/>
+<br>
+<br>
 
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
   <tr>

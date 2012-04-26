@@ -1192,7 +1192,7 @@ $lna=array (
 1185=>'File cannot be replaced because the original file cannot be deleted.',
 1186=>'File has been updated.',
 1187=>'	Tùy chỉnh HTTP 404',
-1188=>'Specify the 404 (file not found) error page. Leave it blank if the default system page should be used.<br/>Notice: a 404 code should be given to the browser in your customized 404 error page to enhance search engine friendliness.',
+1188=>'Specify the 404 (file not found) error page. Leave it blank if the default system page should be used.<br>Notice: a 404 code should be given to the browser in your customized 404 error page to enhance search engine friendliness.',
 1189=>'Enable OpenID',
 1190=>'Allow visitors to login with <a href="http://vi.wikipedia.org/wiki/OpenID" target="_blank">OpenID</a>, but remain in the usergroup of Visitors.',
 1191=>'Non-Ajax admin center',

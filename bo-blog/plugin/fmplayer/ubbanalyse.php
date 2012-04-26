@@ -21,7 +21,7 @@ function makeFMPlayer($match)
     if (!empty($str)) {
         $RunID++;
     }
-    $str = str_replace("<br/>", "\n", stripslashes($str));
+    $str = str_replace("<br>", "\n", stripslashes($str));
     if ($RunID <= 5) {
         switch ($RunID) {
             case 5:

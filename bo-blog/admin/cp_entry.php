@@ -76,9 +76,9 @@ if ($job == '' || $job == "default") {
     $queryplus .= ($keyword) ? " AND `title` LIKE '%{$keyword}%'" : '';
 
     if ($keyword == '') {
-        $adminselection3 = "<input type=\"text\" name=\"keyword\" size=\"29\" value=\"{$lna[1129]}\" style=\"font-style: italic;\" onclick=\"if (this.value=='{$lna[1129]}') {this.value=''; this.style.fontStyle='normal';}\" onblur=\"if (this.value=='') {this.value='{$lna[1129]}'; this.style.fontStyle='italic';}\" />";
+        $adminselection3 = "<input type=\"text\" name=\"keyword\" size=\"29\" value=\"{$lna[1129]}\" style=\"font-style: italic;\" onclick=\"if (this.value=='{$lna[1129]}') {this.value=''; this.style.fontStyle='normal';}\" onblur=\"if (this.value=='') {this.value='{$lna[1129]}'; this.style.fontStyle='italic';}\">";
     } else {
-        $adminselection3 = "<input type=\"text\" name=\"keyword\" size=\"29\" value=\"{$keyword}\" style=\"font-style: normal;\" onclick=\"if (this.value=='{$lna[1129]}') {this.value=''; this.style.fontStyle='normal';}\" onblur=\"if (this.value=='') {this.value='{$lna[1129]}'; this.style.fontStyle='italic';}\" />";
+        $adminselection3 = "<input type=\"text\" name=\"keyword\" size=\"29\" value=\"{$keyword}\" style=\"font-style: normal;\" onclick=\"if (this.value=='{$lna[1129]}') {this.value=''; this.style.fontStyle='normal';}\" onblur=\"if (this.value=='') {this.value='{$lna[1129]}'; this.style.fontStyle='italic';}\">";
     }
 
     $start_id = ($page - 1) * $adminitemperpage;
@@ -223,8 +223,8 @@ if ($job == 'batch') {
             $convey .= "<input type='hidden' name='selid[]' value='{$selid[$i]}'>";
         }
         $convey .= "
-<br/>
-<br/>
+<br>
+<br>
 <div align=center>
   <input type=submit value='{$lna[64]}' class='formbutton'>
   <input type=button onclick='window.location=(\"admin.php?act=entry\");' value='{$lna[138]}' class='formbutton'>

@@ -38,7 +38,7 @@ function recache_links()
                 continue;
             }
             if ($linkeachitem['linklogo']) {
-                $tmp_displayitem = "<img src=\"{$linkeachitem['linklogo']}\" alt=\"{$linkeachitem['linkname']}\" border=\"0\" />";
+                $tmp_displayitem = "<img src=\"{$linkeachitem['linklogo']}\" alt=\"{$linkeachitem['linkname']}\" border=\"0\">";
             } else {
                 $tmp_displayitem = $linkeachitem['linkname'];
             }
@@ -68,10 +68,10 @@ function recache_emotselection()
         $i = 0;
         foreach ($myemots as $emotcode => $emott) {
             $emotthumb = $emott['thumb'];
-            $selbody .= "<a href=\"javascript: insertemot('$emotcode');\"><img src=\"images/emot/{$emotthumb}\" alt='emot' border='0'/></a>";
+            $selbody .= "<a href=\"javascript: insertemot('$emotcode');\"><img src=\"images/emot/{$emotthumb}\" alt='emot' border='0'></a>";
             $i += 1;
             if ($i % $perline == 0) {
-                $selbody .= "<br/>";
+                $selbody .= "<br>";
             }
             if ($i % $perpage == 0) {
                 $selbody .= "<!-- EmotPage -->";
@@ -251,7 +251,7 @@ function recache_currentmonthentries()
     $month_calendar = (is_array(@$result['cday'])) ? array_unique($result['cday']) : array();
     if ($mbcon['lunarcalendar'] != 0) {
         $lunarstream = lunarcalendar($cm, $cy);
-        $lunarym = "<br/>" . @$lunarstream['year'];
+        $lunarym = "<br>" . @$lunarstream['year'];
     } else {
         $lunarstream = '';
     }

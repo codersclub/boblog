@@ -143,13 +143,13 @@ if ($job == 'edit') {                                                           
         }
     }
     $editwarntime = $lna[278];
-    $hiddenareas = ($records['blogid'] == -1) ? "<input type='hidden' name='go' id='go' value='edit_store'/>" : "<input type='hidden' name='go' id='go' value='edit_restore_{$records['blogid']}'/>";
-    $hiddenareas .= "<input type='hidden' name='idforsave' id='idforsave' value='{$records['blogid']}'/>";
-    $hiddenareas .= "<input type='hidden' name='oldgo' id='oldgo' value='{$currentjob}'/>";
+    $hiddenareas = ($records['blogid'] == -1) ? "<input type='hidden' name='go' id='go' value='edit_store'>" : "<input type='hidden' name='go' id='go' value='edit_restore_{$records['blogid']}'>";
+    $hiddenareas .= "<input type='hidden' name='idforsave' id='idforsave' value='{$records['blogid']}'>";
+    $hiddenareas .= "<input type='hidden' name='oldgo' id='oldgo' value='{$currentjob}'>";
     $resendping = ($records['blogid'] == -1) ? '' : "<input type=checkbox name='resend' value=1>{$lna[279]}<br>";
     if ($records['blogid'] == -1) {
         $records['property'] = 0;
-        $hiddenareas .= "<input type='hidden' name='clearautosaver' id='clearautosaver' value='1'/>";
+        $hiddenareas .= "<input type='hidden' name='clearautosaver' id='clearautosaver' value='1'>";
     }
     $records['pub_tmp'] = gmdate('Y-n-j-H-i-s', $records['pubtime'] + $config['timezone'] * 3600);
 
@@ -174,9 +174,9 @@ if ($job == 'add') { //Initialize Add only items
     if ($permission['Emot'] == 1) {
         $records['emotstat'] = 1;
     }
-    $hiddenareas = "<input type='hidden' name='go' id='go' value='edit_store'/>";
-    $hiddenareas .= "<input type='hidden' name='idforsave' id='idforsave' value=''/>";
-    $hiddenareas .= "<input type='hidden' name='oldgo' id='oldgo' value='{$currentjob}'/>";
+    $hiddenareas = "<input type='hidden' name='go' id='go' value='edit_store'>";
+    $hiddenareas .= "<input type='hidden' name='idforsave' id='idforsave' value=''>";
+    $hiddenareas .= "<input type='hidden' name='oldgo' id='oldgo' value='{$currentjob}'>";
     $records['pub_tmp'] = gmdate('Y-n-j-H-i-s', time() + $config['timezone'] * 3600);
     $displaysummary = 'none';
 }
@@ -240,7 +240,7 @@ if ($job == 'add' || $job == 'edit') { //Initialize public items
         $puttingstarred = '';
     }
 
-    $hiddenareas .= "<input type='hidden' name='forcedraft' id='forcedraft' value='0'/>";
+    $hiddenareas .= "<input type='hidden' name='forcedraft' id='forcedraft' value='0'>";
 
     if ($disableinvert != 1) {
         $records['content'] = safe_invert(@$records['content'], @$records['htmlstat']);
@@ -293,7 +293,7 @@ $tag_js
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
   <tr>
     <td class="sectstart">
-      {$lna[22]} <a href="#" onclick="dohs()"><img align="absmiddle" src="admin/theme/{$themename}/more.gif" alt="More" border="0"/></a>
+      {$lna[22]} <a href="#" onclick="dohs()"><img align="absmiddle" src="admin/theme/{$themename}/more.gif" alt="More" border="0"></a>
     </td>
     <td class="sectend">{$lna[283]}</td>
   </tr>
@@ -470,7 +470,7 @@ eot;
           <td>
             {$lna[304]}
             <br>
-            <input name='tags' autocomplete="off" id='tags' size='100' class='formtextarea'  value="{$records['tags']}" onfocus="simple_ac_init('tags', 'taghint')" {$tagdisable} />
+            <input name='tags' autocomplete="off" id='tags' size='100' class='formtextarea'  value="{$records['tags']}" onfocus="simple_ac_init('tags', 'taghint')" {$tagdisable}>
             <div id="taghint" style="">
               {$taglist}
             </div>
@@ -885,7 +885,7 @@ function autoradio($type, $name, $arraylabel, $arrayvalue, $arraychecked = array
         if ($type == 'checkbox') {
             $disabled .= " id='{$name}' ";
         }
-        $formcontent .= "<label><input type='{$type}' name='{$name}' value='{$arrayvalue[$i]}' {$addcheck} class='formradiobox' {$disabled}/>{$arraylabel[$i]}</label> ";
+        $formcontent .= "<label><input type='{$type}' name='{$name}' value='{$arrayvalue[$i]}' {$addcheck} class='formradiobox' {$disabled}>{$arraylabel[$i]}</label> ";
     }
     return $formcontent;
 }

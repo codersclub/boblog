@@ -154,7 +154,7 @@ class template {
 			$admin_plus=" | <a href=\"login.php\">{$lnc[89]}</a>";
 		}
 		if ($links) {
-			if ($enableautojump) $tips.="<br/>{$lnc[310]}<ul>";
+			if ($enableautojump) $tips.="<br>{$lnc[310]}<ul>";
 			else $tips.="<ul>";
 			if (is_array($links)) {
 				$isfirstlink=true;
@@ -163,7 +163,7 @@ class template {
 					if ($current_link[1]=='<') $current_link[1]=$previouspage;
 					$tips.="<li><a href=\"{$current_link[1]}\">{$current_link[0]}</a></li>";
 					if ($isfirstlink) {
-						$autojump="<meta http-equiv=\"refresh\" content=\"3; url={$current_link[1]}\" />";
+						$autojump="<meta http-equiv=\"refresh\" content=\"3; url={$current_link[1]}\">";
 						$isfirstlink=false;
 					}
 				}
@@ -171,7 +171,7 @@ class template {
 				$current_link=@explode('|', $links);
 				if ($current_link[1]=='<') $current_link[1]=$previouspage;
 				$tips.="<li><a href=\"{$current_link[1]}\">{$current_link[0]}</a></li>";
-				$autojump="<meta http-equiv=\"refresh\" content=\"3; url={$current_link[1]}\" />";
+				$autojump="<meta http-equiv=\"refresh\" content=\"3; url={$current_link[1]}\">";
 			}
 			$tips.="</ul>";
 		}
@@ -316,9 +316,9 @@ class getblogs extends boblog {
 					}
 				}
 			}
-			if ($permission['SeeIP']==1) $replierip="<a href=\"{$mbcon['ipsearch']}{$eachreply['repip']}\" target=\"_blank\"><img src=\"{$mbcon['images']}/ip.gif\" border=\"0\" alt=\"IP\" title=\"IP: {$eachreply['repip']}\" /></a>";
-/*vot*/			if ($eachreply['repemail'] and @$permission['SeeEMAIL']==1) $replieremail="<a href=\"mailto:{$eachreply['repemail']}\"><img src=\"{$mbcon['images']}/email.gif\" border=\"0\" alt=\"Email\" title=\"{$lnc[18]}\" /></a>";
-			if ($eachreply['repurl']) $replierhomepage="<a href=\"{$eachreply['repurl']}\" target=\"_blank\"><img src=\"{$mbcon['images']}/homepage.gif\" border=\"0\" alt=\"Homepage\" title=\"{$lnc[19]}\" /></a>";
+			if ($permission['SeeIP']==1) $replierip="<a href=\"{$mbcon['ipsearch']}{$eachreply['repip']}\" target=\"_blank\"><img src=\"{$mbcon['images']}/ip.gif\" border=\"0\" alt=\"IP\" title=\"IP: {$eachreply['repip']}\"></a>";
+/*vot*/			if ($eachreply['repemail'] and @$permission['SeeEMAIL']==1) $replieremail="<a href=\"mailto:{$eachreply['repemail']}\"><img src=\"{$mbcon['images']}/email.gif\" border=\"0\" alt=\"Email\" title=\"{$lnc[18]}\"></a>";
+			if ($eachreply['repurl']) $replierhomepage="<a href=\"{$eachreply['repurl']}\" target=\"_blank\"><img src=\"{$mbcon['images']}/homepage.gif\" border=\"0\" alt=\"Homepage\" title=\"{$lnc[19]}\"></a>";
 			$replytime=zhgmdate("{$mbcon['timeformat']} H:i", ($eachreply['reptime']+3600*$config['timezone'])); 
 			if ($permission['ReplyReply']==1 && $adminlogstat==1) {
 				$addadminreply="<a href=\"javascript: showadminreply('com_{$eachreply['repid']}');\">[{$lnc[20]}]</a>";
@@ -329,7 +329,7 @@ class getblogs extends boblog {
 			if ($eachreply['reproperty']==1 && $permission['SeeHiddenReply']!=1) { //No permission to view
 				if ($eachreply['reppsw']!='') { //You can provide a Password to view the rep/mes
 					$replycontent=$lnc[304];
-					$replycontent.="<form action=\"javascript: getprotectedreply({$eachreply['repid']}, 'reply', {$i});\" method=\"post\"><input type=\"password\" name=\"reppsw\" id=\"reppsw{$eachreply['repid']}\" maxlength='12' size='8' class='text' /> <input type=\"submit\" value=\"{$lnc[25]}\" class='button' /></form>";
+					$replycontent.="<form action=\"javascript: getprotectedreply({$eachreply['repid']}, 'reply', {$i});\" method=\"post\"><input type=\"password\" name=\"reppsw\" id=\"reppsw{$eachreply['repid']}\" maxlength='12' size='8' class='text'> <input type=\"submit\" value=\"{$lnc[25]}\" class='button'></form>";
 				} else $replycontent=$lnc[23];
 			} else {
 				$replycontent=$this->getcontent($eachreply['repcontent'],  $eachreply['html'], $eachreply['ubb'], $eachreply['emot']);
@@ -337,27 +337,27 @@ class getblogs extends boblog {
 			if ($userdetail['ip']==$eachreply['repip'] && ($nowtime['timestamp']-$eachreply['reptime']<$mbcon['editcomment']) && $eachreply['reppsw']=='' && empty($eachreply['adminreptime'])) { 			//Allow edit
 				$rawreplycontent=safe_invert($eachreply['repcontent']);
 				$expirereplytime=zhgmdate("{$mbcon['timeformat']} H:i", ($eachreply['reptime']+3600*$config['timezone']+$mbcon['editcomment'])); 
-				$replycontent.="<br/><div class=\"commentbox-label\">{$lnc[300]} {$expirereplytime} {$lnc[301]} "."[<a href=\"javascript: showhidediv('editcomment{$eachreply['repid']}');\">{$lnc[302]}</a>]</div>";
-				$replycontent.="<div id=\"editcomment{$eachreply['repid']}\" style='display: none;'><form action=\"javascript: ajax_editcomment({$eachreply['repid']}, 'reply', {$i});\" method=\"post\" id=\"formeditcomment{$eachreply['repid']}\"><textarea cols='55' rows='4'  id=\"editcomcontent{$eachreply['repid']}\" name='v_contentc'>{$rawreplycontent}</textarea><br/><input type='button' value='{$lnc[25]}' onclick=\"ajax_editcomment({$eachreply['repid']}, 'reply', {$i});\" class='button' /> <input type='reset' value='{$lnc[26]}' class='button' /></form></div>";
+				$replycontent.="<br><div class=\"commentbox-label\">{$lnc[300]} {$expirereplytime} {$lnc[301]} "."[<a href=\"javascript: showhidediv('editcomment{$eachreply['repid']}');\">{$lnc[302]}</a>]</div>";
+				$replycontent.="<div id=\"editcomment{$eachreply['repid']}\" style='display: none;'><form action=\"javascript: ajax_editcomment({$eachreply['repid']}, 'reply', {$i});\" method=\"post\" id=\"formeditcomment{$eachreply['repid']}\"><textarea cols='55' rows='4'  id=\"editcomcontent{$eachreply['repid']}\" name='v_contentc'>{$rawreplycontent}</textarea><br><input type='button' value='{$lnc[25]}' onclick=\"ajax_editcomment({$eachreply['repid']}, 'reply', {$i});\" class='button'> <input type='reset' value='{$lnc[26]}' class='button'></form></div>";
 			}
 			if (!empty($avataraddress)) { //Make avatar
 				$avatarposition=($mbcon['leftavatar']=='1') ? "left" : "right";
 				$avatarposition2=($mbcon['leftavatar']=='1') ? "right" : "left";
-				$replycontent="<img src=\"{$avataraddress}\" alt=\"\" style=\"float: {$avatarposition}; padding-{$avatarposition2}: 5px; width: {$mbcon['avatarwidth']}px; height: {$mbcon['avatarheight']}px; \"/><div>{$replycontent}</div><div style=\"clear:both;\"></div>";
+				$replycontent="<img src=\"{$avataraddress}\" alt=\"\" style=\"float: {$avatarposition}; padding-{$avatarposition2}: 5px; width: {$mbcon['avatarwidth']}px; height: {$mbcon['avatarheight']}px; \"><div>{$replycontent}</div><div style=\"clear:both;\"></div>";
 			}
 			if ($eachreply['adminreptime'] && ($eachreply['reproperty']!=1 || $permission['SeeHiddenReply']==1 || $eachreply['reppsw']=='')) {
 				$ifadminreplied="block";
 				$adminreplier="<a href=\"".getlink_user($eachreply['adminrepid'])."\" target=\"_blank\" title=\"{$lnc[17]}\">{$eachreply['adminreplier']}</a>";
 				$adminreptime=zhgmdate("{$mbcon['timeformat']} H:i", ($eachreply['adminreptime']+3600*$config['timezone']));
 				$adminreplybody="<form action='admin.php?go=reply_editadminreply_{$eachreply['repid']}' id='formadminreply{$eachreply['repid']}' method='post'>";
-				$adminreplybody.="{$lnc[24]} <br/><textarea cols='66' rows='3' name='adminreplycontent' id='adminreplycontent{$eachreply['repid']}'>".safe_invert($eachreply['adminrepcontent'])."</textarea><br/>";
-				$adminreplybody.="<input type='button' value='{$lnc[25]}' onclick=\"ajax_adminreply_edit('{$eachreply['repid']}', 'reply'); return false;\" class='button'/> <input type='reset' value='{$lnc[26]}'  class='button'/> <input type='button' value='{$lnc[27]}' onclick=\"showhidediv('com_{$eachreply['repid']}');\" class='button'/></form>";
+				$adminreplybody.="{$lnc[24]} <br><textarea cols='66' rows='3' name='adminreplycontent' id='adminreplycontent{$eachreply['repid']}'>".safe_invert($eachreply['adminrepcontent'])."</textarea><br>";
+				$adminreplybody.="<input type='button' value='{$lnc[25]}' onclick=\"ajax_adminreply_edit('{$eachreply['repid']}', 'reply'); return false;\" class='button'> <input type='reset' value='{$lnc[26]}'  class='button'> <input type='button' value='{$lnc[27]}' onclick=\"showhidediv('com_{$eachreply['repid']}');\" class='button'></form>";
 				if ($permission['ReplyReply']==1) $addadminreply="<a href=\"javascript: showhidediv('com_{$eachreply['repid']}');\">[{$lnc[20]}]</a>";
 				$adminrepliershow="$adminreplier {$lnc[28]} $adminreptime";
 				$adminreplycontent=$this->getcontent($eachreply['adminrepcontent']);
 				if ($eachreply['adminrepedittime']) {
 					$adminrepedittime=zhgmdate("{$mbcon['timeformat']} H:i", ($eachreply['adminrepedittime']+3600*$config['timezone']));
-					$adminreplycontent.="<br/><span class='lastmodified'>{$lnc[29]} {$eachreply['adminrepeditor']} {$lnc[30]} {$adminrepedittime}</span>";
+					$adminreplycontent.="<br><span class='lastmodified'>{$lnc[29]} {$eachreply['adminrepeditor']} {$lnc[30]} {$adminrepedittime}</span>";
 				}
 				if ($permission['ReplyReply']!=1) $adminreplybody='';
 			} else $ifadminreplied="none";
@@ -421,10 +421,10 @@ class getblogs extends boblog {
 				}
 			}
 		}
-		if ($permission['SeeIP']==1) $replierip="<a href=\"{$mbcon['ipsearch']}{$eachreply['repip']}\" target=\"_blank\"><img src=\"{$mbcon['images']}/ip.gif\" border=\"0\" alt=\"IP\" title=\"IP: {$eachreply['repip']}\" /></a>";
+		if ($permission['SeeIP']==1) $replierip="<a href=\"{$mbcon['ipsearch']}{$eachreply['repip']}\" target=\"_blank\"><img src=\"{$mbcon['images']}/ip.gif\" border=\"0\" alt=\"IP\" title=\"IP: {$eachreply['repip']}\"></a>";
 		$replytime=zhgmdate("{$mbcon['timeformat']} H:i", ($eachreply['reptime']+3600*$config['timezone'])); //Need Further Change
-/*vot*/		if ($eachreply['repemail'] and @$permission['SeeEMAIL']==1) $replieremail="<a href=\"mailto:{$eachreply['repemail']}\"><img src=\"{$mbcon['images']}/email.gif\" border=\"0\" alt=\"Email\" title=\"{$lnc[18]}\" /></a>";
-		if ($eachreply['repurl']) $replierhomepage="<a href=\"{$eachreply['repurl']}\" target=\"_blank\"><img src=\"{$mbcon['images']}/homepage.gif\" border=\"0\" alt=\"Homepage\" title=\"{$lnc[19]}\" /></a>";
+/*vot*/		if ($eachreply['repemail'] and @$permission['SeeEMAIL']==1) $replieremail="<a href=\"mailto:{$eachreply['repemail']}\"><img src=\"{$mbcon['images']}/email.gif\" border=\"0\" alt=\"Email\" title=\"{$lnc[18]}\"></a>";
+		if ($eachreply['repurl']) $replierhomepage="<a href=\"{$eachreply['repurl']}\" target=\"_blank\"><img src=\"{$mbcon['images']}/homepage.gif\" border=\"0\" alt=\"Homepage\" title=\"{$lnc[19]}\"></a>";
 		if ($permission['ReplyReply']==1) {
 			$addadminreply="<a href=\"javascript: showadminreplyformessage('com_{$eachreply['repid']}');\">[{$lnc[20]}]</a>";
 			$deladminreply="<a href=\"javascript: showdeladminreplyformessage('{$eachreply['repid']}');\">[{$lnc[21]}]</a>";
@@ -434,7 +434,7 @@ class getblogs extends boblog {
 		if ($eachreply['reproperty']==1 && $permission['SeeHiddenReply']!=1) { //No permission to view
 			if ($eachreply['reppsw']!='') { //You can provide a Password to view the rep/mes
 				$replycontent=$lnc[304];
-				$replycontent.="<form action=\"javascript: getprotectedreply({$eachreply['repid']}, 'message', {$i});\" method=\"post\"><input type=\"password\" name=\"reppsw\" id=\"reppsw{$eachreply['repid']}\" maxlength='12' size='8' class='text' /> <input type=\"submit\" value=\"{$lnc[25]}\" class='button' /></form>";
+				$replycontent.="<form action=\"javascript: getprotectedreply({$eachreply['repid']}, 'message', {$i});\" method=\"post\"><input type=\"password\" name=\"reppsw\" id=\"reppsw{$eachreply['repid']}\" maxlength='12' size='8' class='text'> <input type=\"submit\" value=\"{$lnc[25]}\" class='button'></form>";
 			} else $replycontent=$lnc[23];
 		} else {
 			$replycontent=$this->getcontent($eachreply['repcontent'],  $eachreply['html'], $eachreply['ubb'], $eachreply['emot']);
@@ -442,27 +442,27 @@ class getblogs extends boblog {
 		if ($userdetail['ip']==$eachreply['repip'] && ($nowtime['timestamp']-$eachreply['reptime']<$mbcon['editcomment']) && $eachreply['reppsw']=='' && empty($eachreply['adminreptime'])) { //Allow edit
 			$rawreplycontent=safe_invert($eachreply['repcontent']);
 			$expirereplytime=zhgmdate("{$mbcon['timeformat']} H:i", ($eachreply['reptime']+3600*$config['timezone']+$mbcon['editcomment'])); 
-			$replycontent.="<br/><div class=\"commentbox-label\">{$lnc[300]} {$expirereplytime} {$lnc[301]} "."[<a href=\"javascript: showhidediv('editcomment{$eachreply['repid']}');\">{$lnc[302]}</a>]</div>";
-			$replycontent.="<div id=\"editcomment{$eachreply['repid']}\" style='display: none;'><form action=\"javascript: ajax_editcomment({$eachreply['repid']}, 'message', {$i});\" method=\"post\" id=\"formeditcomment{$eachreply['repid']}\"><textarea cols='55' rows='4'  id=\"editcomcontent{$eachreply['repid']}\" name='v_contentc'>{$rawreplycontent}</textarea><br/><input type='button' value='{$lnc[25]}' onclick=\"ajax_editcomment({$eachreply['repid']}, 'message', {$i});\"  class='button' /> <input type='reset' value='{$lnc[26]}'  class='button' /></form></div>";
+			$replycontent.="<br><div class=\"commentbox-label\">{$lnc[300]} {$expirereplytime} {$lnc[301]} "."[<a href=\"javascript: showhidediv('editcomment{$eachreply['repid']}');\">{$lnc[302]}</a>]</div>";
+			$replycontent.="<div id=\"editcomment{$eachreply['repid']}\" style='display: none;'><form action=\"javascript: ajax_editcomment({$eachreply['repid']}, 'message', {$i});\" method=\"post\" id=\"formeditcomment{$eachreply['repid']}\"><textarea cols='55' rows='4'  id=\"editcomcontent{$eachreply['repid']}\" name='v_contentc'>{$rawreplycontent}</textarea><br><input type='button' value='{$lnc[25]}' onclick=\"ajax_editcomment({$eachreply['repid']}, 'message', {$i});\"  class='button'> <input type='reset' value='{$lnc[26]}'  class='button'></form></div>";
 		}
 		if (!empty($avataraddress)) { //Make avatar
 			$avatarposition=($mbcon['leftavatar']=='1') ? "left" : "right";
 			$avatarposition2=($mbcon['leftavatar']=='1') ? "right" : "left";
-			$replycontent="<img src=\"{$avataraddress}\" alt=\"\" style=\"float: {$avatarposition}; padding-{$avatarposition2}: 5px; width: {$mbcon['avatarwidth']}px; height: {$mbcon['avatarheight']}px; \"/><div>{$replycontent}</div><div style=\"clear:both;\"></div>";
+			$replycontent="<img src=\"{$avataraddress}\" alt=\"\" style=\"float: {$avatarposition}; padding-{$avatarposition2}: 5px; width: {$mbcon['avatarwidth']}px; height: {$mbcon['avatarheight']}px; \"><div>{$replycontent}</div><div style=\"clear:both;\"></div>";
 		}
 		if ($eachreply['adminreptime'] && ($eachreply['reproperty']!=1 || $permission['SeeHiddenReply']==1 || $eachreply['reppsw']=='')) {
 			$ifadminreplied="block";
 			$adminreplier="<a href=\"".getlink_user($eachreply['adminrepid'])."\" target=\"_blank\" title=\"{$lnc[17]}\">{$eachreply['adminreplier']}</a>";
 			$adminreptime=zhgmdate("{$mbcon['timeformat']} H:i", ($eachreply['adminreptime']+3600*$config['timezone']));
 			$adminreplybody="<form action='admin.php?go=message_editadminreply_{$eachreply['repid']}' method='post'>";
-			$adminreplybody.="{$lnc[24]} <br/><textarea cols='66' rows='3' name='adminreplycontent' id='adminreplycontent{$eachreply['repid']}'>".safe_invert($eachreply['adminrepcontent'])."</textarea><br/>";
-			$adminreplybody.="<input type='button' value='{$lnc[25]}' onclick=\"ajax_adminreply_edit('{$eachreply['repid']}', 'message'); return false;\" class='button'/> <input type='reset' value='{$lnc[26]}'  class='button'/> <input type='button' value='{$lnc[27]}' onclick=\"showhidediv('com_{$eachreply['repid']}');\" class='button'/></form>";
+			$adminreplybody.="{$lnc[24]} <br><textarea cols='66' rows='3' name='adminreplycontent' id='adminreplycontent{$eachreply['repid']}'>".safe_invert($eachreply['adminrepcontent'])."</textarea><br>";
+			$adminreplybody.="<input type='button' value='{$lnc[25]}' onclick=\"ajax_adminreply_edit('{$eachreply['repid']}', 'message'); return false;\" class='button'> <input type='reset' value='{$lnc[26]}'  class='button'> <input type='button' value='{$lnc[27]}' onclick=\"showhidediv('com_{$eachreply['repid']}');\" class='button'></form>";
 			if ($permission['ReplyReply']==1) $addadminreply="<a href=\"javascript: showhidediv('com_{$eachreply['repid']}');\">[{$lnc[20]}]</a>";
 			$adminrepliershow="$adminreplier {$lnc[28]} $adminreptime";
 			$adminreplycontent=$this->getcontent($eachreply['adminrepcontent']);
 			if ($eachreply['adminrepedittime']) {
 				$adminrepedittime=zhgmdate("{$mbcon['timeformat']} H:i", ($eachreply['adminrepedittime']+3600*$config['timezone']));
-				$adminreplycontent.="<br/><span class='lastmodified'>{$lnc[29]} {$eachreply['adminrepeditor']} {$lnc[30]} {$adminrepedittime}</span>";
+				$adminreplycontent.="<br><span class='lastmodified'>{$lnc[29]} {$eachreply['adminrepeditor']} {$lnc[30]} {$adminrepedittime}</span>";
 			}
 			if ($permission['ReplyReply']!=1) $adminreplybody='';
 		} else $ifadminreplied="none";
@@ -516,25 +516,25 @@ class getblogs extends boblog {
 		}
 		$outurl=getlink_category($entry['category']);
 		$entrycate.="<a href=\"{$outurl}\" title=\"{$lnc[34]} {$categories[$tmp]['catename']}\">{$categories[$tmp]['catename']}</a>";
-		$entrycateicon=($categories[$tmp]['cateicon']) ? "<img src=\"{$categories[$tmp]['cateicon']}\" alt=\"\" style=\"margin:3px 1px -4px 0px;\"/> " : '';
+		$entrycateicon=($categories[$tmp]['cateicon']) ? "<img src=\"{$categories[$tmp]['cateicon']}\" alt=\"\" style=\"margin:3px 1px -4px 0px;\"> " : '';
 		$entryviews="<a href=\"".getlink_entry($entry['blogid'], $entry['blogalias'])."\">{$lnc[35]}({$entry['views']})</a>";
 		if ($entry['property']==1) {//Locked
 			$entrycomment="{$lnc[36]}({$entry['replies']})";
 		} else $entrycomment="<a href=\"".getlink_entry($entry['blogid'], $entry['blogalias'])."#reply\" title=\"{$lnc[37]}\">{$lnc[38]}({$entry['replies']})</a>";
 /*vot*/		if (@$flset['weather']!=1 && $entry['weather']) {
 			$tmp=$entry['weather'];
-			$entryicon="<img src=\"{$weather[$tmp]['image']}\" alt=\"{$weather[$tmp]['text']}\" title=\"{$weather[$tmp]['text']}\"/>";
+			$entryicon="<img src=\"{$weather[$tmp]['image']}\" alt=\"{$weather[$tmp]['text']}\" title=\"{$weather[$tmp]['text']}\">";
 		} else $entryicon='';
 		
 /*vot*/		if (@$flset['star']!=1) {
 			$entrystar="<span id=\"starid{$entry['blogid']}\">";
-			$entrystar.=($permission['AddEntry']==1) ? (($entry['starred']%2==1) ? "<a href=\"javascript: dostar('{$entry['blogid']}');\"><img src=\"{$template['moreimages']}/others/starred.gif\" alt=\"\" title=\"{$lnc[39]}\" border=\"0\"/></a>" : "<a href=\"javascript: dostar('{$entry['blogid']}');\"><img src=\"{$template['moreimages']}/others/unstarred.gif\" alt=\"\" title=\"{$lnc[40]}\" border=\"0\"/></a>") : (($entry['starred']%2==1) ? "<img src=\"{$template['moreimages']}/others/starred.gif\" alt=\"\" title=\"{$lnc[39]}\" border=\"0\"/>" : "<img src=\"{$template['moreimages']}/others/unstarred.gif\" alt=\"\" title=\"{$lnc[40]}\" border=\"0\"/>");
+			$entrystar.=($permission['AddEntry']==1) ? (($entry['starred']%2==1) ? "<a href=\"javascript: dostar('{$entry['blogid']}');\"><img src=\"{$template['moreimages']}/others/starred.gif\" alt=\"\" title=\"{$lnc[39]}\" border=\"0\"></a>" : "<a href=\"javascript: dostar('{$entry['blogid']}');\"><img src=\"{$template['moreimages']}/others/unstarred.gif\" alt=\"\" title=\"{$lnc[40]}\" border=\"0\"></a>") : (($entry['starred']%2==1) ? "<img src=\"{$template['moreimages']}/others/starred.gif\" alt=\"\" title=\"{$lnc[39]}\" border=\"0\">" : "<img src=\"{$template['moreimages']}/others/unstarred.gif\" alt=\"\" title=\"{$lnc[40]}\" border=\"0\">");
 			$entrystar.="</span>";
 		}
 
 		if ($permission['EditEntry']!=1) $ifadmin='';
 		else {
-			$adminbar=($adminlogstat==1) ? "<div id=\"admin{$entry['blogid']}\" style=\"display: none;\" class=\"textbox-adminbar\"><br/><strong>{$lnc[41]}</strong><a href=\"admin.php?go=edit_edit_{$entry['blogid']}\">{$lnc[42]}</a> | <a href=\"javascript: showdelblog('{$entry['blogid']}');\">{$lnc[43]}</a> | <a href=\"javascript: comfirmurl('admin.php?go=entry_ae_noreply&amp;tid={$entry['blogid']}');\">{$lnc[44]}</a> | <a href=\"javascript: comfirmurl('admin.php?go=entry_ae_notb&amp;tid={$entry['blogid']}');\">{$lnc[45]}</a><br/><strong>{$lnc[46]}</strong><a href=\"admin.php?go=entry_ae_lock&amp;tid={$entry['blogid']}\">{$lnc[47]}</a> | <a href=\"admin.php?go=entry_ae_unlock&amp;tid={$entry['blogid']}\">{$lnc[48]}</a> | <a href=\"admin.php?go=entry_ae_sticky1&amp;tid={$entry['blogid']}\">{$lnc[49]}</a> | <a href=\"admin.php?go=entry_ae_sticky2&amp;tid={$entry['blogid']}\">{$lnc[50]}</a> | <a href=\"admin.php?go=entry_ae_sticky0&amp;tid={$entry['blogid']}\">{$lnc[51]}</a><br/><strong>{$lnc[52]}</strong><a href=\"javascript: comfirmurl('admin.php?go=entry_ae_noread&amp;tid={$entry['blogid']}');\">{$lnc[53]}</a> | <a href=\"admin.php?go=entry_ae_recountrep&amp;tid={$entry['blogid']}\">{$lnc[54]}</a> | <a href=\"admin.php?go=entry_ae_recounttb&amp;tid={$entry['blogid']}\">{$lnc[55]}</a></div>" : '';
+			$adminbar=($adminlogstat==1) ? "<div id=\"admin{$entry['blogid']}\" style=\"display: none;\" class=\"textbox-adminbar\"><br><strong>{$lnc[41]}</strong><a href=\"admin.php?go=edit_edit_{$entry['blogid']}\">{$lnc[42]}</a> | <a href=\"javascript: showdelblog('{$entry['blogid']}');\">{$lnc[43]}</a> | <a href=\"javascript: comfirmurl('admin.php?go=entry_ae_noreply&amp;tid={$entry['blogid']}');\">{$lnc[44]}</a> | <a href=\"javascript: comfirmurl('admin.php?go=entry_ae_notb&amp;tid={$entry['blogid']}');\">{$lnc[45]}</a><br><strong>{$lnc[46]}</strong><a href=\"admin.php?go=entry_ae_lock&amp;tid={$entry['blogid']}\">{$lnc[47]}</a> | <a href=\"admin.php?go=entry_ae_unlock&amp;tid={$entry['blogid']}\">{$lnc[48]}</a> | <a href=\"admin.php?go=entry_ae_sticky1&amp;tid={$entry['blogid']}\">{$lnc[49]}</a> | <a href=\"admin.php?go=entry_ae_sticky2&amp;tid={$entry['blogid']}\">{$lnc[50]}</a> | <a href=\"admin.php?go=entry_ae_sticky0&amp;tid={$entry['blogid']}\">{$lnc[51]}</a><br><strong>{$lnc[52]}</strong><a href=\"javascript: comfirmurl('admin.php?go=entry_ae_noread&amp;tid={$entry['blogid']}');\">{$lnc[53]}</a> | <a href=\"admin.php?go=entry_ae_recountrep&amp;tid={$entry['blogid']}\">{$lnc[54]}</a> | <a href=\"admin.php?go=entry_ae_recounttb&amp;tid={$entry['blogid']}\">{$lnc[55]}</a></div>" : '';
 			$ifadmin=($adminlogstat==1) ? " | <a href='javascript: showhidediv(\"admin{$entry['blogid']}\");'>{$lnc[56]}</a>" : '';
 			$adminlink=($adminlogstat==1) ? "<a href='javascript: showhidediv(\"admin{$entry['blogid']}\");'>{$lnc[56]}</a>" : '';
 		}
@@ -543,7 +543,7 @@ class getblogs extends boblog {
 			$entrytburl="{$config['blogurl']}/tb.php?t={$entry['blogid']}&amp;extra={$tbauthentic}";
 			$entrytburl2=($mbcon['tburljs']==1) ? "<span id='tbb{$entry['blogid']}'></span>" : $entrytburl;
 			$tbb=($entry['property']==0) ? "<strong>{$lnc[57]}</strong>  {$entrytburl2}" : "<strong>{$lnc[58]}</strong>";
-			if ($mbcon['tburlexpire']==1) $tbb.="<br/>{$lnc[289]}";
+			if ($mbcon['tburlexpire']==1) $tbb.="<br>{$lnc[289]}";
 			$tbbar="<div id=\"tb{$entry['blogid']}\" style=\"display: none;\" class=\"textbox-tburl\">{$tbb}</div>";
 			$tbonclick=($mbcon['tburljs']==1) ? "showhidediv(\"tb{$entry['blogid']}\"); if (document.getElementById(\"tbb{$entry['blogid']}\")) document.getElementById(\"tbb{$entry['blogid']}\").innerHTML=decodetburl(\"".encodetburl($entrytburl)."\", {$mbcon['tburlmath']}, {$entry['blogid']});" : "showhidediv(\"tb{$entry['blogid']}\");";
 		} else {
@@ -555,7 +555,7 @@ class getblogs extends boblog {
 		$entrytbnumwithlink="<a href='javascript: void(0);' title=\"{$lnc[59]}\" onclick='{$tbonclick}'>{$entry['tbs']}</a>";
 		if ($way=='excerpt' || $way=='viewentry') {
 			if ($entry['blogpsw'] && $permission['SeeAllProtectedEntry']!=1 && $userdetail['userid']!=$entry['authorid'] && !$contentonly &&  $_COOKIE["entrypassword{$entry['blogid']}"]!=$entry['blogpsw']) { //Password protected entry
-				$entry['content']="<div id='protectedentry{$entry['blogid']}'><div class=\"quote\"><div class=\"quote-title\">{$lnc[294]}</div><div class=\"quote-content\"><form action=\"javascript: getprotectedblog({$entry['blogid']}, '{$way}');\" method='post'>{$lnc[296]}<br/>{$lnc[133]} <input type='password' name='entrypsw' id='entrypsw{$entry['blogid']}'  class='text' /> <input type='submit' value='{$lnc[25]}'  class='button'/></form></div></div></div>";
+				$entry['content']="<div id='protectedentry{$entry['blogid']}'><div class=\"quote\"><div class=\"quote-title\">{$lnc[294]}</div><div class=\"quote-content\"><form action=\"javascript: getprotectedblog({$entry['blogid']}, '{$way}');\" method='post'>{$lnc[296]}<br>{$lnc[133]} <input type='password' name='entrypsw' id='entrypsw{$entry['blogid']}'  class='text'> <input type='submit' value='{$lnc[25]}'  class='button'></form></div></div></div>";
 				$aprotectedone=1;
 			} else {
 				if ($way=='excerpt') {
@@ -592,8 +592,8 @@ class getblogs extends boblog {
 			}
 
 			if ($way=='viewentry' && $mbcon['showtoolbar']=='1') { //Toolbar
-				$toolbarplus=($mbcon['txtdown']=='1') ? " <a href=\"read.php?save_{$entry['blogid']}\"><img src=\"{$mbcon['images']}/toolbar_save.gif\" alt='' title=\"{$lnc[66]}\" border='0'/></a>" : '';
-				$toolbar="<img src=\"{$mbcon['images']}/toolbar_fontsize.gif\" alt='' title=\"{$lnc[61]}\" border='0'/> <a href=\"javascript: doZoom(16);\">{$lnc[62]}</a> | <a href=\"javascript: doZoom(14);\">{$lnc[63]}</a> | <a href=\"javascript: doZoom(12);\">{$lnc[64]}</a> <a href=\"feed.php?go=entry_{$entry['blogid']}\"><img src=\"{$mbcon['images']}/toolbar_rss.gif\" alt='' title=\"{$lnc[65]}\" border='0'/></a>{$toolbarplus}";
+				$toolbarplus=($mbcon['txtdown']=='1') ? " <a href=\"read.php?save_{$entry['blogid']}\"><img src=\"{$mbcon['images']}/toolbar_save.gif\" alt='' title=\"{$lnc[66]}\" border='0'></a>" : '';
+				$toolbar="<img src=\"{$mbcon['images']}/toolbar_fontsize.gif\" alt='' title=\"{$lnc[61]}\" border='0'> <a href=\"javascript: doZoom(16);\">{$lnc[62]}</a> | <a href=\"javascript: doZoom(14);\">{$lnc[63]}</a> | <a href=\"javascript: doZoom(12);\">{$lnc[64]}</a> <a href=\"feed.php?go=entry_{$entry['blogid']}\"><img src=\"{$mbcon['images']}/toolbar_rss.gif\" alt='' title=\"{$lnc[65]}\" border='0'></a>{$toolbarplus}";
 			}
 			$entrycontent=$this->getcontent($entry['content'],  $entry['htmlstat'], $entry['ubbstat'], $entry['emotstat'], 1);
 			$entrycontent=$this->keep_htmlcode_matches($entrycontent);
@@ -613,17 +613,17 @@ class getblogs extends boblog {
 				$previousentryexist='inline';
 				$previousentrytitle=$entry['previoustitle'];
 				$previousentryurl=getlink_entry($entry['previousid'], $entry['previousblogalias']);
-				$previous="<a href=\"{$previousentryurl}\" title=\"{$lnc[69]} {$entry['previoustitle']}\"><img src=\"{$mbcon['images']}/toolbar_previous.gif\" alt='' border='0'/>{$entry['previoustitle']}</a>";
+				$previous="<a href=\"{$previousentryurl}\" title=\"{$lnc[69]} {$entry['previoustitle']}\"><img src=\"{$mbcon['images']}/toolbar_previous.gif\" alt='' border='0'>{$entry['previoustitle']}</a>";
 			} else $previousentryexist='none';
 /*vot*/			if (@$entry['nextid']!='') {
 				$nextentryexist='inline';
 				$nextentrytitle=$entry['nextid'];
 				$nextentryurl=getlink_entry($entry['nextid'], $entry['nextblogalias']);
-				$next="<a href=\"{$nextentryurl}\" title=\"{$lnc[70]} {$entry['nexttitle']}\"><img src=\"{$mbcon['images']}/toolbar_next.gif\" alt='' border='0'/>{$entry['nexttitle']}</a>";
+				$next="<a href=\"{$nextentryurl}\" title=\"{$lnc[70]} {$entry['nexttitle']}\"><img src=\"{$mbcon['images']}/toolbar_next.gif\" alt='' border='0'>{$entry['nexttitle']}</a>";
 			} else $nextentryexist='none';
 			if ($entry['editorid'] && $mbcon['showeditor']=='1') {
 				$tmp=$entry['editorid'];
-				$editby="<br/>{$lnc[29]} {$adminlist[$tmp]} {$lnc[30]}";
+				$editby="<br>{$lnc[29]} {$adminlist[$tmp]} {$lnc[30]}";
 				$editby.=zhgmdate("{$mbcon['timeformat']} H:i", $entry['edittime']+3600*$config['timezone']);
 			}
 		}
@@ -656,12 +656,12 @@ class getblogs extends boblog {
 		$entry['content']=@str_replace('[separator]', '', $entry['content']);
 		$entry['content']=@str_replace('[newpage]', '', $entry['content']);
 		if ($logstat!=1) {
-			$entry['content']=preg_replace("/\[hide\](.+?)\[\/hide\]/is", "<br/>{$lnc[312]}  {$lnc[79]} {$lnc[235]} {$lnc[89]}<br/>", $entry['content']);
+			$entry['content']=preg_replace("/\[hide\](.+?)\[\/hide\]/is", "<br>{$lnc[312]}  {$lnc[79]} {$lnc[235]} {$lnc[89]}<br>", $entry['content']);
 		} else {
 			$entry['content']=str_replace(array('[hide]','[/hide]'), '', $entry['content']);
 		}
 		$entrycontent=$this->getrsscontent($entry['content'],  0, $entry['ubbstat'], 0);
-		$entrycontent=str_replace(array('<br/>', '</p>', '</div>', '&#123;', '&#125;', '&nbsp;'), array("\r\n", "\r\n", "\r\n", '{', '}', ' '), $entrycontent);
+		$entrycontent=str_replace(array('<br>', '</p>', '</div>', '&#123;', '&#125;', '&nbsp;'), array("\r\n", "\r\n", "\r\n", '{', '}', ' '), $entrycontent);
 		$entrycontent=strip_tags($entrycontent);
 		$entrycontent=html_entity_decode($entrycontent, ENT_QUOTES);
 		$entryurl="{$config['blogurl']}/".getlink_entry($entry['blogid'], $entry['blogalias']);
@@ -700,7 +700,7 @@ class getblogs extends boblog {
 				else $entry['content']=@str_replace('[separator]', '', $entry['content']);
 			}
 			$entrycontent=$this->getrsscontent($entry['content'],  1, $entry['ubbstat'], $entry['emotstat']);
-			if ($notfinish==1) $entrycontent.="<br/>............<br/>";
+			if ($notfinish==1) $entrycontent.="<br>............<br>";
 		}
 		if ($entry['tags'] && $entry['tags']!='>') {
 			$entry['tags']=trim($entry['tags'],'>');
@@ -712,7 +712,7 @@ class getblogs extends boblog {
 				$taginfos[]="<a href=\"{$config['blogurl']}/{$urlref}\" rel=\"tag\">{$eachtag}</a>";
 			}
 			$alltags=@implode(' , ', $taginfos);
-			$tags="<br/>Tags - ".$alltags;
+			$tags="<br>Tags - ".$alltags;
 		} else $tags='';
 		$entrycontent.=$tags;
 		$entryurl="{$config['blogurl']}/".getlink_entry($entry['blogid'], $entry['blogalias']);
@@ -781,7 +781,7 @@ class getblogs extends boblog {
 			$repurl=$userdetail['homepage'];
 			$repemail=$userdetail['email'];
 			$repopenurl='';
-			$hidden_areas.="<input type=\"hidden\" name=\"v_replier\" id=\"v_replier\" value=\"{$replier}\" /><input type=\"hidden\" name=\"v_password\" id=\"v_password\" value=\"{$password}\" /><input type=\"hidden\" name=\"v_repemail\" id=\"v_repemail\" value=\"{$repemail}\" /><input type=\"hidden\" name=\"v_repurl\" id=\"v_repurl\" value=\"{$repurl}\" />";
+			$hidden_areas.="<input type=\"hidden\" name=\"v_replier\" id=\"v_replier\" value=\"{$replier}\"><input type=\"hidden\" name=\"v_password\" id=\"v_password\" value=\"{$password}\"><input type=\"hidden\" name=\"v_repemail\" id=\"v_repemail\" value=\"{$repemail}\"><input type=\"hidden\" name=\"v_repurl\" id=\"v_repurl\" value=\"{$repurl}\">";
 		} elseif ($openidloginstat==1) {
 			$repopenurl=$_COOKIE['openid_url_id'];
 			$disable_replier="disabled='disabled'";
@@ -790,7 +790,7 @@ class getblogs extends boblog {
 			$if_neednopsw_rawend="-->";
 			$disable_password=$disable_openurl="disabled='disabled'";
 			$additional="";
-			$hidden_areas.="<input type=\"hidden\" name=\"v_replier\" id=\"v_replier\" value=\"\" /><input type=\"hidden\" name=\"v_password\" id=\"v_password\" value=\"\" /><input type=\"hidden\" name=\"v_repemail\" id=\"v_repemail\" value=\"\" /><input type=\"hidden\" name=\"v_repurl\" id=\"v_repurl\" value=\"\" /><input type=\"hidden\" name=\"openid_url\" id=\"openid_url\" value=\"{$_COOKIE['openid_url_id']}\" />";
+			$hidden_areas.="<input type=\"hidden\" name=\"v_replier\" id=\"v_replier\" value=\"\"><input type=\"hidden\" name=\"v_password\" id=\"v_password\" value=\"\"><input type=\"hidden\" name=\"v_repemail\" id=\"v_repemail\" value=\"\"><input type=\"hidden\" name=\"v_repurl\" id=\"v_repurl\" value=\"\"><input type=\"hidden\" name=\"openid_url\" id=\"openid_url\" value=\"{$_COOKIE['openid_url_id']}\">";
 		} else {
 			$replier=$_COOKIE['rem_v_replier'];
 			$repurl=$_COOKIE['rem_v_repurl'];
@@ -799,7 +799,7 @@ class getblogs extends boblog {
 			$checked_rememberme=(floor($_COOKIE['rem_v_rememberme'])==1) ? "checked='checked'" : '';
 			$additional="<a href=\"login.php?job=register\" title=\"{$lnc[79]}\">[{$lnc[79]}]</a>";
 		}
-		$hidden_areas.="<input type=\"hidden\" name=\"v_id\" id=\"v_id\" value=\"{$id}\" /><input type=\"hidden\" name=\"v_reppsw\" id=\"v_reppsw\" value=\"\" />";
+		$hidden_areas.="<input type=\"hidden\" name=\"v_id\" id=\"v_id\" value=\"{$id}\"><input type=\"hidden\" name=\"v_reppsw\" id=\"v_reppsw\" value=\"\">";
 		if ($config['validation']==0) {
 			$if_securitycode_begin='<!--';
 			$if_securitycode_end='-->';
@@ -810,7 +810,7 @@ class getblogs extends boblog {
 		}
 		if ($id==='') $jobnow='addmessage';
 		else $jobnow='addreply';
-		$ubbcode="<script src=\"editor/ubb/ubbeditor_tiny.js\"></script><div style=\"margin: 4px 0px 4px 0px;\"><img src=\"editor/ubb/images/bar.gif\" alt=''/> &nbsp;<a href=\"javascript: bold();\"><img border='0' title=\"{$lnc[80]}\" src=\"editor/ubb/images/bold.gif\" alt=''/></a> &nbsp;<a href=\"javascript: italicize();\"><img border='0' title=\"{$lnc[81]}\" src=\"editor/ubb/images/italic.gif\" alt=''/></a> &nbsp;<a href=\"javascript: underline();\"><img border='0' title=\"{$lnc[82]}\" src=\"editor/ubb/images/underline.gif\"  alt=''/></a> &nbsp;<img src=\"editor/ubb/images/bar.gif\" alt=''/> &nbsp;<a href=\"javascript: image();\"><img border='0' title=\"{$lnc[83]}\" src=\"editor/ubb/images/insertimage.gif\" alt=''/></a> &nbsp;<a href=\"javascript: hyperlink();\"><img border='0' title=\"{$lnc[84]}\" src=\"editor/ubb/images/url.gif\" alt=''/></a> &nbsp;<a href=\"javascript: email();\"><img border='0' title=\"{$lnc[85]}\" src=\"editor/ubb/images/email.gif\"  alt=''/></a> &nbsp;<a href=\"javascript: quoteme();\"><img border='0' title=\"{$lnc[86]}\" src=\"editor/ubb/images/quote.gif\" alt=''/></a></div>";
+		$ubbcode="<script src=\"editor/ubb/ubbeditor_tiny.js\"></script><div style=\"margin: 4px 0px 4px 0px;\"><img src=\"editor/ubb/images/bar.gif\" alt=''> &nbsp;<a href=\"javascript: bold();\"><img border='0' title=\"{$lnc[80]}\" src=\"editor/ubb/images/bold.gif\" alt=''></a> &nbsp;<a href=\"javascript: italicize();\"><img border='0' title=\"{$lnc[81]}\" src=\"editor/ubb/images/italic.gif\" alt=''></a> &nbsp;<a href=\"javascript: underline();\"><img border='0' title=\"{$lnc[82]}\" src=\"editor/ubb/images/underline.gif\"  alt=''></a> &nbsp;<img src=\"editor/ubb/images/bar.gif\" alt=''> &nbsp;<a href=\"javascript: image();\"><img border='0' title=\"{$lnc[83]}\" src=\"editor/ubb/images/insertimage.gif\" alt=''></a> &nbsp;<a href=\"javascript: hyperlink();\"><img border='0' title=\"{$lnc[84]}\" src=\"editor/ubb/images/url.gif\" alt=''></a> &nbsp;<a href=\"javascript: email();\"><img border='0' title=\"{$lnc[85]}\" src=\"editor/ubb/images/email.gif\"  alt=''></a> &nbsp;<a href=\"javascript: quoteme();\"><img border='0' title=\"{$lnc[86]}\" src=\"editor/ubb/images/quote.gif\" alt=''></a></div>";
 		$emots=generate_emots_panel($emots);
 		$out=$t->set("form_reply", array('actionurl'=>$actionurl, 'formtitle'=>$formtitle, 'emots'=>$emots, 'disable_html'=>$disable_html, 'disable_ubb'=>$disable_ubb, 'disable_emot'=>$disable_emot, 'replier'=>$replier, 'disable_replier'=>$disable_replier, 'password'=>$password, 'disable_password'=>$disable_password, 'additional'=>$additional, 'repurl'=>$repurl, 'repemail'=>$repemail, 'hidden_areas'=>$hidden_areas, 'if_securitycode_begin'=>$if_securitycode_begin, 'if_securitycode_end'=>$if_securitycode_end, 'jobnow'=>$jobnow, 'if_neednopsw_begin'=>$if_neednopsw_begin, 'if_neednopsw_end'=>$if_neednopsw_end, 'if_neednopsw_rawend'=>$if_neednopsw_rawend, 'checked_rememberme'=>$checked_rememberme, 'ubbcode'=>$ubbcode, 'repopenurl'=>$repopenurl, 'if_openid_begin'=>$if_openid_begin, 'if_openid_end'=>$if_openid_end, 'rand'=>rand(1000,9999)));
 		return $out;
@@ -860,10 +860,10 @@ class getblogs extends boblog {
 		$lastindexpage=min(($firstindexpage+$numperline-1), $this->total_pages);
 		$pagebar.=" {$lnc[8]} {$page}/{$this->total_pages} ";
 		$urlpattern=($pageway==0) ? str_replace('%', '%%', $returnurl)."{$conxer}page=%s" : $returnurl;
-		$pagebar.=" <a href=\"".sprintf($urlpattern, 1)."\"><img src=\"{$template['moreimages']}/arrows/doubleleft.gif\" alt=\"{$lnc[9]}\" title=\"{$lnc[9]}\" border=\"0\"/></a> ";
+		$pagebar.=" <a href=\"".sprintf($urlpattern, 1)."\"><img src=\"{$template['moreimages']}/arrows/doubleleft.gif\" alt=\"{$lnc[9]}\" title=\"{$lnc[9]}\" border=\"0\"></a> ";
 		if ($page!=1) {
 			$previouspageurl=sprintf($urlpattern, ($page-1));
-			$pagebar.=" <a href=\"{$previouspageurl}\"><img src=\"{$template['moreimages']}/arrows/singleleft.gif\" alt=\"{$lnc[10]}\" title=\"{$lnc[10]}\" border=\"0\"/></a> ";
+			$pagebar.=" <a href=\"{$previouspageurl}\"><img src=\"{$template['moreimages']}/arrows/singleleft.gif\" alt=\"{$lnc[10]}\" title=\"{$lnc[10]}\" border=\"0\"></a> ";
 			$previouspageexists='inline';
 		} else $previouspageexists='none';
 		$turningpages='';
@@ -874,10 +874,10 @@ class getblogs extends boblog {
 		$pagebar.="<span class=\"pagebar-selections\">".$turningpages."</span>";
 		if ($page!=$this->total_pages) {
 			$nextpageurl=sprintf($urlpattern, ($page+1));
-			$pagebar.=" <a href=\"{$nextpageurl}\"><img src=\"{$template['moreimages']}/arrows/singleright.gif\" alt=\"{$lnc[11]}\" title=\"{$lnc[11]}\" border=\"0\"/></a> ";
+			$pagebar.=" <a href=\"{$nextpageurl}\"><img src=\"{$template['moreimages']}/arrows/singleright.gif\" alt=\"{$lnc[11]}\" title=\"{$lnc[11]}\" border=\"0\"></a> ";
 			$nextpageexists='inline';
 		} else $nextpageexists='none';
-		$pagebar.=" <a href=\"".sprintf($urlpattern, ($this->total_pages))."\"><img src=\"{$template['moreimages']}/arrows/doubleright.gif\" alt=\"{$lnc[12]}\" title=\"{$lnc[12]}\" border=\"0\"/></a> ";
+		$pagebar.=" <a href=\"".sprintf($urlpattern, ($this->total_pages))."\"><img src=\"{$template['moreimages']}/arrows/doubleright.gif\" alt=\"{$lnc[12]}\" title=\"{$lnc[12]}\" border=\"0\"></a> ";
 		$pageitems=array('currentpage'=>$page, 'previouspageurl'=>$previouspageurl, 'nextpageurl'=>$nextpageurl, 'turningpages'=>$turningpages, 'totalpages'=>($this->total_pages), 'previouspageexists'=>$previouspageexists, 'nextpageexists'=>$nextpageexists);
 		$pagebar="<span class=\"pagebar-mainbody\">{$pagebar}</span>";
 		$pagebar.=plugin_get('afterpagebar');

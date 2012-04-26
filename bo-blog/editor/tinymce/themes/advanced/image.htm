@@ -6,7 +6,7 @@
 	<script src="../../utils/mctabs.js"></script>
 	<script src="../../utils/form_utils.js"></script>
 	<script src="jscripts/image.js"></script>
-	<base target="_self" />
+	<base target="_self">
 </head>
 <body id="image" onload="tinyMCEPopup.executeOnLoad('init();');" style="display: none">
 <form onsubmit="insertImage();return false;" action="#">
@@ -89,11 +89,11 @@
 
 	<div class="mceActionPanel">
 		<div style="float: left">
-			<input type="button" id="insert" name="insert" value="{$lang_insert}" onclick="insertImage();" />
+			<input type="button" id="insert" name="insert" value="{$lang_insert}" onclick="insertImage();">
 		</div>
 
 		<div style="float: right">
-			<input type="button" id="cancel" name="cancel" value="{$lang_cancel}" onclick="tinyMCEPopup.close();" />
+			<input type="button" id="cancel" name="cancel" value="{$lang_cancel}" onclick="tinyMCEPopup.close();">
 		</div>
 	</div>
 </form>

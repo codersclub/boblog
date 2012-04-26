@@ -4,12 +4,12 @@ $elements['header']=<<<eot
 <html lang="{language}">
 <head> 
 <meta charset="UTF-8">
-<meta content="all" name="robots" />
-<meta name="author" content="{blogname}" />
-<meta name="description" content="{blogdesc}" />
-<meta name="keywords" content="{blogkeywords}" />
+<meta content="all" name="robots">
+<meta name="author" content="{blogname}">
+<meta name="description" content="{blogdesc}">
+<meta name="keywords" content="{blogkeywords}">
 {baseurl}
-<link rel="alternate" title="{blogname}" href="feed.php" type="application/rss+xml" />
+<link rel="alternate" title="{blogname}" href="feed.php" type="application/rss+xml">
 {csslocation}
 <title>{pagetitle}{blogname} - {blogdesc}</title>
 <script src="{$template['images']}/easytabs.js"></script>
@@ -139,9 +139,9 @@ $elements['displayfooter']=<<<eot
 				     <div id="searchbar">
 						<form method="post" action="visit.php">
 						<div>
-							<input name="job" type="hidden" value="search"/>
-							<input name="searchmethod" type="hidden" value="2"/>
-							<input name="keyword" type="text" id="search-text" class="keyword" value="Search The Blog..." onfocus="this.value=''"/>
+							<input name="job" type="hidden" value="search">
+							<input name="searchmethod" type="hidden" value="2">
+							<input name="keyword" type="text" id="search-text" class="keyword" value="Search The Blog..." onfocus="this.value=''">
 						</div>
 						</form>
 					</div>
@@ -183,7 +183,7 @@ $elements['displayall']=<<<eot
 eot;
 
 $elements['msgbox']=<<<eot
-<div class="tips">{$lnc['tips']}:<br/>{message}</div>
+<div class="tips">{$lnc['tips']}:<br>{message}</div>
 eot;
 
 $elements['sideblock']=<<<eot
@@ -347,7 +347,7 @@ $elements['trackback']=<<<eot
 			</div>
 		</div>
 		<div class="trackbackbox-content">
-		 {$lnc[240]}<a href="{tburl}" target="_blank">{tbblogname}</a><br/>
+		 {$lnc[240]}<a href="{tburl}" target="_blank">{tbblogname}</a><br>
 		 {$lnc[76]}{tbcontent}
 		</div>
 	</div>
@@ -363,26 +363,26 @@ $elements['form_reply']=<<<eot
       <div class="formbox-comment-content">
         <div class="formbox-comment-input">
           {if_neednopsw_begin}
-					<p class="in"><input name="v_replier" id="v_replier" type="text" size="32" class="text" value="{replier}" {disable_replier}/>  {$lnc[246]}</p>			
-					<p class="in"><input name="v_repurl" id="v_repurl" type="text" size="32" class="text" value="{repurl}" />  {$lnc[170]}</p>				
-					<p class="in"><input name="v_repemail" id="v_repemail" type="text" size="32" class="text"  value="{repemail}" />  {$lnc[248]}</p>
-					<input name="v_password" id="v_password" type="hidden" size="12" class="text"  value="{password}" {disable_password}/>
+					<p class="in"><input name="v_replier" id="v_replier" type="text" size="32" class="text" value="{replier}" {disable_replier}>  {$lnc[246]}</p>			
+					<p class="in"><input name="v_repurl" id="v_repurl" type="text" size="32" class="text" value="{repurl}">  {$lnc[170]}</p>				
+					<p class="in"><input name="v_repemail" id="v_repemail" type="text" size="32" class="text"  value="{repemail}">  {$lnc[248]}</p>
+					<input name="v_password" id="v_password" type="hidden" size="12" class="text"  value="{password}" {disable_password}>
           {if_neednopsw_end}
 		  {if_openid_begin}
 		<div id="commentbox-openid" style="padding-bottom:5px">
-		<input name="openid_url" id="openid_url" type="text" size="32" class="text" value="{repopenurl}" {disable_openurl}/>
+		<input name="openid_url" id="openid_url" type="text" size="32" class="text" value="{repopenurl}" {disable_openurl}>
 		<strong>{$lnc[314]}</strong>
 		</div>
           {if_openid_end}
         </div>
         <div class="formbox-comment-tool">
-          <input name="stat_html" id="stat_html" type="checkbox" value="1" {disable_html} /> {$lnc[242]}
-          <input name="stat_ubb" id="stat_ubb" type="checkbox" value="0" onclick="showhidediv('ubbid')"/> {$lnc[243]}
-          <input type="checkbox" value="0" onclick="showhidediv('emotid')" /> {$lnc[241]}
-          <input name="stat_emot" id="stat_emot" type="checkbox" value="1" {disable_emot}/>{$lnc[244]}
-          <input name="stat_property" id="stat_property" type="checkbox" value="1" onclick="promptreppsw();"/> {$lnc[245]}
+          <input name="stat_html" id="stat_html" type="checkbox" value="1" {disable_html}> {$lnc[242]}
+          <input name="stat_ubb" id="stat_ubb" type="checkbox" value="0" onclick="showhidediv('ubbid')"> {$lnc[243]}
+          <input type="checkbox" value="0" onclick="showhidediv('emotid')"> {$lnc[241]}
+          <input name="stat_emot" id="stat_emot" type="checkbox" value="1" {disable_emot}>{$lnc[244]}
+          <input name="stat_property" id="stat_property" type="checkbox" value="1" onclick="promptreppsw();"> {$lnc[245]}
           {if_neednopsw_begin}
-          <input name="stat_rememberme" id="stat_rememberme" type="checkbox" value="1" {checked_rememberme} onclick="quickremember();"/>  {$lnc[284]} {if_neednopsw_rawend}{additional}
+          <input name="stat_rememberme" id="stat_rememberme" type="checkbox" value="1" {checked_rememberme} onclick="quickremember();">  {$lnc[284]} {if_neednopsw_rawend}{additional}
           </div>
         <div id="ubbid" class="formbox-comment-ubb" style="display: none;">{ubbcode}</div>
         <div id="emotid" class="panel-smilies" style="display: none;">
@@ -392,14 +392,14 @@ $elements['form_reply']=<<<eot
         </div>
         {if_securitycode_begin}
         <script>
-        securitycodejs="{$lnc[249]} <span id='securityimagearea'><img src='inc/securitycode.php?rand={rand}' alt='' title='{$lnc[250]}' style='cursor: pointer;' onclick=\"refreshsecuritycode('securityimagearea', 'v_security');\"/></span> <input name='v_security' id='v_security' type='text' size='4' maxlength='4' class='text' style='ime-mode: disabled' /> ";
+        securitycodejs="{$lnc[249]} <span id='securityimagearea'><img src='inc/securitycode.php?rand={rand}' alt='' title='{$lnc[250]}' style='cursor: pointer;' onclick=\"refreshsecuritycode('securityimagearea', 'v_security');\"></span> <input name='v_security' id='v_security' type='text' size='4' maxlength='4' class='text' style='ime-mode: disabled'> ";
         </script>
         {if_securitycode_end}
-        <textarea name="v_content" id="v_content" cols="64" rows="10" onkeydown="ctrlenterkey(event);" onfocus="if (securitycodejs!=null) {document.getElementById('showsecuritycode').innerHTML=securitycodejs; securitycodejs=null;}"></textarea> <br/>  <span id="showsecuritycode"></span>
+        <textarea name="v_content" id="v_content" cols="64" rows="10" onkeydown="ctrlenterkey(event);" onfocus="if (securitycodejs!=null) {document.getElementById('showsecuritycode').innerHTML=securitycodejs; securitycodejs=null;}"></textarea> <br>  <span id="showsecuritycode"></span>
         <div style="padding-top:10px">
         {hidden_areas}
-        <input type="button" name="btnSubmit" id="btnSubmit" value="{$lnc[25]}" class="button" onclick="ajax_submit('{jobnow}'); return false;"/>&nbsp;
-        <input name="reset" id="reset" type="reset" value="{$lnc[252]}" class="button" />
+        <input type="button" name="btnSubmit" id="btnSubmit" value="{$lnc[25]}" class="button" onclick="ajax_submit('{jobnow}'); return false;">&nbsp;
+        <input name="reset" id="reset" type="reset" value="{$lnc[252]}" class="button">
         </div>
       </div>
     </div>
@@ -427,27 +427,27 @@ $elements['login']=<<<eot
   <tr><td class="formbox-title" colspan="2">{$lnc[253]} [<a href="login.php?job=register">{$lnc[254]}</a>]</td></tr>
   <tr>
     <td class="formbox-rowheader">{$lnc[132]}</td>
-    <td class="formbox-content"><input name="username" type="text" id="username" size="24" class="text" />
+    <td class="formbox-content"><input name="username" type="text" id="username" size="24" class="text">
   </tr>
   <tr>
     <td class="formbox-rowheader">{$lnc[133]}</td>
-    <td class="formbox-content"><input name="password" type="password" id="password" size="16" class="text" />
+    <td class="formbox-content"><input name="password" type="password" id="password" size="16" class="text">
   </tr>
   <tr>
     <td class="formbox-rowheader">{$lnc[255]}</td>
-    <td class="formbox-content"><input name="savecookie" type="radio" id="savecookie" value="0"/>{$lnc[256]} <input name="savecookie" type="radio" id="savecookie" value="3600"/>{$lnc[257]} <input name="savecookie" type="radio" id="savecookie" value="86400"/>{$lnc[258]}  <input name="savecookie" type="radio" id="savecookie" value="604800"/>{$lnc[259]}  <input name="savecookie" type="radio" id="savecookie" value="2592000"/>{$lnc[260]}   <input name="savecookie" type="radio" id="savecookie" value="31104000"/>{$lnc[261]}   
+    <td class="formbox-content"><input name="savecookie" type="radio" id="savecookie" value="0">{$lnc[256]} <input name="savecookie" type="radio" id="savecookie" value="3600">{$lnc[257]} <input name="savecookie" type="radio" id="savecookie" value="86400">{$lnc[258]}  <input name="savecookie" type="radio" id="savecookie" value="604800">{$lnc[259]}  <input name="savecookie" type="radio" id="savecookie" value="2592000">{$lnc[260]}   <input name="savecookie" type="radio" id="savecookie" value="31104000">{$lnc[261]}   
   </tr>
   {lvstart}
   <tr>
     <td class="formbox-rowheader">{$lnc[249]}</td>
-    <td class="formbox-content"><span id='securityimagearea'><img src="inc/securitycode.php?rand={rand}" alt="" title="{$lnc[250]}"/></span> <input name="securitycode" type="text" id="securitycode" size="16" class="text" /> {$lnc[251]}  [<a href="javascript: refreshsecuritycode('securityimagearea', 'securitycode');">{$lnc[283]}</a>]
+    <td class="formbox-content"><span id='securityimagearea'><img src="inc/securitycode.php?rand={rand}" alt="" title="{$lnc[250]}"></span> <input name="securitycode" type="text" id="securitycode" size="16" class="text"> {$lnc[251]}  [<a href="javascript: refreshsecuritycode('securityimagearea', 'securitycode');">{$lnc[283]}</a>]
   </tr>
   {lvend}
   <tr>
     <td class="formbox-content"></td>
     <td class="formbox-content">
-    <input name="Submit" type="submit" id="Submit" value="{$lnc[25]}" class="button" /> &nbsp;
-    <input name="Reset" type="reset" id="Reset" value="{$lnc[252]}" class="button" />
+    <input name="Submit" type="submit" id="Submit" value="{$lnc[25]}" class="button"> &nbsp;
+    <input name="Reset" type="reset" id="Reset" value="{$lnc[252]}" class="button">
     </td>
   </tr>
 </table>
@@ -467,7 +467,7 @@ $elements['taglist']=<<<eot
 <tr><td style="word-break: none; word-wrap: break-word;">{tagcontent}</td></tr>
 <tr><td>{tagextra}</td></tr>
 </table>
-<br/><br/>
+<br><br>
 eot;
 
 $elements['register']=<<<eot
@@ -475,7 +475,7 @@ $elements['register']=<<<eot
 <table cellspacing="1" width="678px" align="center" class="formbox">
   <tr><td class="formbox-title" colspan="2">{title} {$lnc[262]}</td></tr>
   {registerbody}
-  <tr><td colspan="2" align="center"><input type="submit" value="{$lnc[25]}" class="button"/> <input type="reset" value="{$lnc[252]}" class="button"/></td></tr>
+  <tr><td colspan="2" align="center"><input type="submit" value="{$lnc[25]}" class="button"> <input type="reset" value="{$lnc[252]}" class="button"></td></tr>
 </table>
 </form>
 eot;
@@ -503,7 +503,7 @@ eot;
 $elements['eachlink']=<<<eot
 <div class="linkbody">
 <div class="linkimg">{logo}</div>
-<div class="linktxt"><span class="linktitle">{title}</span><br/>
+<div class="linktxt"><span class="linktitle">{title}</span><br>
 <span class="linkdesc">{desc}</span></div>
 </div>
 eot;

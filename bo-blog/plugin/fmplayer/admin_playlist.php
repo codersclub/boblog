@@ -92,7 +92,7 @@ $plugin_return = <<<eot
     {$lanfp[75]}
     &nbsp;&nbsp;&nbsp;&nbsp;
     {$lanfp[77]}
-    <input type="button" value="{$lanfp[2]}" onclick="add_fpRow('0','','','','','','','')" />
+    <input type="button" value="{$lanfp[2]}" onclick="add_fpRow('0','','','','','','','')">
 </div>
 
 <div id="form_div">
@@ -100,13 +100,13 @@ $plugin_return = <<<eot
 </div>
 <div align="right" class="prefsection">
     {$lanfp[78]}
-    <input type="button" value="{$lanfp[2]}" onclick="add_fpRow('-1','','','','','','','','')" />
+    <input type="button" value="{$lanfp[2]}" onclick="add_fpRow('-1','','','','','','','','')">
 </div>
 <div align="right" class="prefsection">
     {$lanfp[79]}
-    <input id="inum" type="text" value="2" size="5"/>
+    <input id="inum" type="text" value="2" size="5">
     {$lanfp[80]}
-    <input type="button" value="{$lanfp[2]}" onclick="add_fpRow('inum','','','','','','','','')" />
+    <input type="button" value="{$lanfp[2]}" onclick="add_fpRow('inum','','','','','','','','')">
 </div>
 
 <script>

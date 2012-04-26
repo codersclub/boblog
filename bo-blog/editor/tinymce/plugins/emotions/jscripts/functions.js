@@ -14,7 +14,7 @@ function insertEmotion(file_name, title) {
 	title = title.replace(/</g, '&lt;');
 	title = title.replace(/>/g, '&gt;');
 
-	var html = '<img src="images/emot/' + file_name + '" mce_src="images/emot/' + file_name + '" border="0" alt="' + title + '" title="' + title + '" />';
+	var html = '<img src="images/emot/' + file_name + '" mce_src="images/emot/' + file_name + '" border="0" alt="' + title + '" title="' + title + '">';
 
 	tinyMCE.execCommand('mceInsertContent', false, html);
 	tinyMCEPopup.close();

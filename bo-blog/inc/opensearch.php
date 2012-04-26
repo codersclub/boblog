@@ -11,7 +11,7 @@ echo <<<eot
 <ShortName>{$config['blogname']}</ShortName>
 <Description>{$config['blogname']}</Description>
 <InputEncoding>UTF-8</InputEncoding>
-<Url type="text/html" template="{$config['blogurl']}/visit.php?job=search&amp;searchmethod=2&amp;keyword={searchTerms}"/>
+<Url type="text/html" template="{$config['blogurl']}/visit.php?job=search&amp;searchmethod=2&amp;keyword={searchTerms}">
 </OpenSearchDescription>
 eot;
 exit();

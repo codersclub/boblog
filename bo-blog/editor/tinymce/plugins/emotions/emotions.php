@@ -10,7 +10,7 @@ print<<<eot
 	<title>Emots</title>
 	<script src="../../tiny_mce_popup.js"></script>
 	<script src="jscripts/functions.js"></script>
-	<base target="_self" />
+	<base target="_self">
 </head>
 <body>
 <div align="center">
@@ -24,7 +24,7 @@ if (is_array($myemots)) {
 	foreach ($myemots as $emotcode => $emott) {
 		$emotthumb=$emott['thumb'];
 		$emotorigin=$emott['image'];
-		$selbody.="<td><a href=\"javascript:insertEmotion('{$emotorigin}','{$emotcode}');\"><img src=\"../../../../images/emot/{$emotthumb}\" border=\"0\" alt=\"{$emotcode}\" /></a></td>";
+		$selbody.="<td><a href=\"javascript:insertEmotion('{$emotorigin}','{$emotcode}');\"><img src=\"../../../../images/emot/{$emotthumb}\" border=\"0\" alt=\"{$emotcode}\"></a></td>";
 		$i+=1;
 		if ($i%$perline==0) $selbody.="</tr><tr>";
 		unset ($emotcode, $emotthumb);

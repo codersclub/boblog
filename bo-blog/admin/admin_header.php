@@ -41,7 +41,7 @@ $display_overall .= <<<eot
 <html>
 <head>
   <meta charset="UTF-8">
-  <meta name="robots" content="noindex, nofollow" />
+  <meta name="robots" content="noindex, nofollow">
   <link rel="stylesheet" href="{$csslocation}">
   <title>{$config['blogname']} - {$lna[0]} [Powered by Bo-Blog]</title>
   $initialjs
@@ -63,7 +63,7 @@ $editorjs
     <div id='adminoverall'>
         <div id="bloginfo">
             <div id="bloginfoimg">
-                <img src="admin/theme/{$themename}/logo.png" alt="Bo-Blog" />
+                <img src="admin/theme/{$themename}/logo.png" alt="Bo-Blog">
             </div>
             <div id="bloginfotext">
                 {$lna[1]} {$daytip}

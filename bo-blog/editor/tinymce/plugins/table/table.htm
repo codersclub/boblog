@@ -7,7 +7,7 @@
 	<script src="../../utils/form_utils.js"></script>
 	<script src="jscripts/table.js"></script>
 	<link href="css/table.css" rel="stylesheet">
-	<base target="_self" />
+	<base target="_self">
 </head>
 <body id="table" onload="tinyMCEPopup.executeOnLoad('init();');" style="display: none">
 	<form onsubmit="insertTable();return false;" action="#">
@@ -26,15 +26,15 @@
 					  <table border="0" cellpadding="4" cellspacing="0" width="100%">
 							  <tr>
 								<td><label id="colslabel" for="cols">{$lang_table_cols}</label></td>
-								<td><input id="cols" name="cols" type="text" value="" size="3" maxlength="3" /></td>
+								<td><input id="cols" name="cols" type="text" value="" size="3" maxlength="3"></td>
 								<td><label id="rowslabel" for="rows">{$lang_table_rows}</label></td>
-								<td><input id="rows" name="rows" type="text" value="" size="3" maxlength="3" /></td>
+								<td><input id="rows" name="rows" type="text" value="" size="3" maxlength="3"></td>
 							  </tr>
 							  <tr>
 								<td><label id="cellpaddinglabel" for="cellpadding">{$lang_table_cellpadding}</label></td>
-								<td><input id="cellpadding" name="cellpadding" type="text" value="" size="3" maxlength="3" /></td>
+								<td><input id="cellpadding" name="cellpadding" type="text" value="" size="3" maxlength="3"></td>
 								<td><label id="cellspacinglabel" for="cellspacing">{$lang_table_cellspacing}</label></td>
-								<td><input id="cellspacing" name="cellspacing" type="text" value="" size="3" maxlength="3" /></td>
+								<td><input id="cellspacing" name="cellspacing" type="text" value="" size="3" maxlength="3"></td>
 							  </tr>
 							  <tr>
 								<td><label id="alignlabel" for="align">{$lang_table_align}</label></td>
@@ -45,13 +45,13 @@
 									<option value="right">{$lang_table_align_right}</option>
 								  </select></td>
 								<td><label id="borderlabel" for="border">{$lang_table_border}</label></td>
-								<td><input id="border" name="border" type="text" value="" size="3" maxlength="3" onchange="changedBorder();" /></td>
+								<td><input id="border" name="border" type="text" value="" size="3" maxlength="3" onchange="changedBorder();"></td>
 							  </tr>
 							  <tr>
 								<td><label id="widthlabel" for="width">{$lang_table_width}</label></td>
-								<td><input name="width" type="text" id="width" value="" size="4" maxlength="4" onchange="changedSize();" /></td>
+								<td><input name="width" type="text" id="width" value="" size="4" maxlength="4" onchange="changedSize();"></td>
 								<td><label id="heightlabel" for="height">{$lang_table_height}</label></td>
-								<td><input name="height" type="text" id="height" value="" size="4" maxlength="4" onchange="changedSize();" /></td>
+								<td><input name="height" type="text" id="height" value="" size="4" maxlength="4" onchange="changedSize();"></td>
 							  </tr>
 							  <tr>
 								<td><label id="classlabel" for="class">{$lang_class_name}</label></td>
@@ -71,17 +71,17 @@
 					<table border="0" cellpadding="0" cellspacing="4">
 						<tr>
 							<td class="column1"><label for="id">{$lang_table_id}</label></td> 
-							<td><input id="id" name="id" type="text" value="" class="advfield" /></td> 
+							<td><input id="id" name="id" type="text" value="" class="advfield"></td> 
 						</tr>
 
 						<tr>
 							<td class="column1"><label for="summary">{$lang_table_summary}</label></td> 
-							<td><input id="summary" name="summary" type="text" value="" class="advfield" /></td> 
+							<td><input id="summary" name="summary" type="text" value="" class="advfield"></td> 
 						</tr>
 
 						<tr>
 							<td><label for="style">{$lang_table_style}</label></td>
-							<td><input type="text" id="style" name="style" value="" class="advfield" onchange="changedStyle();" /></td>
+							<td><input type="text" id="style" name="style" value="" class="advfield" onchange="changedStyle();"></td>
 						</tr>
 
 						<tr>
@@ -98,7 +98,7 @@
 						<tr>
 							<td class="column1"><label id="langlabel" for="lang">{$lang_table_langcode}</label></td> 
 							<td>
-								<input id="lang" name="lang" type="text" value="" class="advfield" />
+								<input id="lang" name="lang" type="text" value="" class="advfield">
 							</td> 
 						</tr>
 
@@ -107,7 +107,7 @@
 							<td>
 								<table border="0" cellpadding="0" cellspacing="0">
 									<tr>
-										<td><input id="backgroundimage" name="backgroundimage" type="text" value="" class="advfield" onchange="changedBackgroundImage();" /></td>
+										<td><input id="backgroundimage" name="backgroundimage" type="text" value="" class="advfield" onchange="changedBackgroundImage();"></td>
 										<td id="backgroundimagebrowsercontainer">&nbsp;</td>
 									</tr>
 								</table>
@@ -119,7 +119,7 @@
 							<td>
 								<table border="0" cellpadding="0" cellspacing="0">
 									<tr>
-										<td><input id="bordercolor" name="bordercolor" type="text" value="" size="9" onchange="updateColor('bordercolor_pick','bordercolor');changedColor();" /></td>
+										<td><input id="bordercolor" name="bordercolor" type="text" value="" size="9" onchange="updateColor('bordercolor_pick','bordercolor');changedColor();"></td>
 										<td id="bordercolor_pickcontainer">&nbsp;</td>
 									</tr>
 								</table>
@@ -131,7 +131,7 @@
 							<td>
 								<table border="0" cellpadding="0" cellspacing="0">
 									<tr>
-										<td><input id="bgcolor" name="bgcolor" type="text" value="" size="9" onchange="updateColor('bgcolor_pick','bgcolor');changedColor();" /></td>
+										<td><input id="bgcolor" name="bgcolor" type="text" value="" size="9" onchange="updateColor('bgcolor_pick','bgcolor');changedColor();"></td>
 										<td id="bgcolor_pickcontainer">&nbsp;</td>
 									</tr>
 								</table>
@@ -144,11 +144,11 @@
 
 		<div class="mceActionPanel">
 			<div style="float: left">
-				<input type="button" id="insert" name="insert" value="{$lang_insert}" onclick="insertTable();" />
+				<input type="button" id="insert" name="insert" value="{$lang_insert}" onclick="insertTable();">
 			</div>
 
 			<div style="float: right">
-				<input type="button" id="cancel" name="cancel" value="{$lang_cancel}" onclick="tinyMCEPopup.close();" />
+				<input type="button" id="cancel" name="cancel" value="{$lang_cancel}" onclick="tinyMCEPopup.close();">
 			</div>
 		</div>
 	</form>

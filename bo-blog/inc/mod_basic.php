@@ -75,13 +75,13 @@ if (in_array('category', $allopenmods)) {
 				$catecount='';
 			} else{
 				$cateurl=getlink_category($catearray['cateid']);
-				$rssurl=" <a href=\"feed.php?go=category_{$catearray['cateid']}\"><img src=\"{$mbcon['images']}/rss.png\" border=\"0\" alt=\"RSS\" title=\"{$lnc[95]}\" /></a>";
+				$rssurl=" <a href=\"feed.php?go=category_{$catearray['cateid']}\"><img src=\"{$mbcon['images']}/rss.png\" border=\"0\" alt=\"RSS\" title=\"{$lnc[95]}\"></a>";
 				$target='';
 				if ($mbcon['parentcatenum']=='2' && $catearray['subcates']!='') $catecount='';
 				else $catecount=($mbcon['showcateartnum']==1) ? " [".floor($catearray['catecount'])."]" : '';
 				
 			}
-			$cateicon=($catearray['cateicon']) ? "<img src=\"{$catearray['cateicon']}\" alt=\"\" style=\"margin:3px 1px -4px 0px;\"/> " : '';
+			$cateicon=($catearray['cateicon']) ? "<img src=\"{$catearray['cateicon']}\" alt=\"\" style=\"margin:3px 1px -4px 0px;\"> " : '';
 			if ($catearray['catemode']==0) {
 				$categoryshow.="<li>{$cateicon}<a href=\"{$cateurl}\" title=\"{$catearray['catedesc']}\"{$target}>{$catearray['catename']}</a>{$catecount}{$rssurl}</li>";
 				$categoryplainshow.="<li><a href=\"{$cateurl}\" title=\"{$catearray['catedesc']}\"{$target}>{$catearray['catename']}</a></li>";
@@ -127,14 +127,14 @@ if (in_array('link', $allopenmods)) {
 
 //[Start]statistics
 if (in_array('statistics', $allopenmods)) {
-/*vot*/	if (@$mbcon['stattotal']=='1') $statshow.="{$lnc[97]} {$statistics['total']}<br/>";
-/*vot*/	if (@$mbcon['stattoday']=='1') $statshow.="{$lnc[98]} {$statistics['today']}<br/>";
-/*vot*/	if (@$mbcon['statentries']=='1') $statshow.="{$lnc[99]} {$statistics['entries']}<br/>";
-/*vot*/	if (@$mbcon['statreplies']=='1') $statshow.="<a href=\"view.php?go=comment\">{$lnc[100]} {$statistics['replies']}</a><br/>";
-/*vot*/	if (@$mbcon['stattb']=='1') $statshow.="<a href=\"view.php?go=tb\">{$lnc[101]} {$statistics['tb']}</a><br/>";
-/*vot*/	if (@$flset['guestbook']!=1 && $mbcon['statmessages']=='1') $statshow.="<a href=\"guestbook.php\">{$lnc[102]} {$statistics['messages']}</a><br/>";
-/*vot*/	if (@$mbcon['statusers']=='1') $statshow.="<a href=\"view.php?go=userlist\">{$lnc[103]} {$statistics['users']}</a><br/>";
-/*vot*/	if (@$mbcon['statonline']=='1' && !defined('noCounter')) $statshow.="{$lnc[104]} {$statistics['nowusers']}<br/>";
+/*vot*/	if (@$mbcon['stattotal']=='1') $statshow.="{$lnc[97]} {$statistics['total']}<br>";
+/*vot*/	if (@$mbcon['stattoday']=='1') $statshow.="{$lnc[98]} {$statistics['today']}<br>";
+/*vot*/	if (@$mbcon['statentries']=='1') $statshow.="{$lnc[99]} {$statistics['entries']}<br>";
+/*vot*/	if (@$mbcon['statreplies']=='1') $statshow.="<a href=\"view.php?go=comment\">{$lnc[100]} {$statistics['replies']}</a><br>";
+/*vot*/	if (@$mbcon['stattb']=='1') $statshow.="<a href=\"view.php?go=tb\">{$lnc[101]} {$statistics['tb']}</a><br>";
+/*vot*/	if (@$flset['guestbook']!=1 && $mbcon['statmessages']=='1') $statshow.="<a href=\"guestbook.php\">{$lnc[102]} {$statistics['messages']}</a><br>";
+/*vot*/	if (@$mbcon['statusers']=='1') $statshow.="<a href=\"view.php?go=userlist\">{$lnc[103]} {$statistics['users']}</a><br>";
+/*vot*/	if (@$mbcon['statonline']=='1' && !defined('noCounter')) $statshow.="{$lnc[104]} {$statistics['nowusers']}<br>";
 	plugin_runphp('sidebarstatistics');
 	$blogitem['statistics']+=array(
 		'type'=>'block',
@@ -178,20 +178,20 @@ if (in_array('archive', $allopenmods)) {
 //[Start]Misc
 if (in_array('misc', $allopenmods)) {
 	if ($logstat==1) {
-		$misccontent="<a href='login.php?job=logout'>{$lnc[78]}</a><br/>";
-		$misccontent.="<a href='login.php?job=modpro'>{$lnc[90]}</a><br/>";
+		$misccontent="<a href='login.php?job=logout'>{$lnc[78]}</a><br>";
+		$misccontent.="<a href='login.php?job=modpro'>{$lnc[90]}</a><br>";
 	}
 	elseif ($openidloginstat==1) {
-		$misccontent="<a href='login.php?job=logout'>{$lnc[78]}</a><br/>";
+		$misccontent="<a href='login.php?job=logout'>{$lnc[78]}</a><br>";
 	}
 	else {
-		$misccontent="<a href='login.php'>{$lnc[89]}</a><br/>";
-		$misccontent.="<a href='login.php?job=register'>{$lnc[79]}</a><br/>";
+		$misccontent="<a href='login.php'>{$lnc[89]}</a><br>";
+		$misccontent.="<a href='login.php?job=register'>{$lnc[79]}</a><br>";
 	}
-	$misccontent.=($permission['CP']==1) ? "<a href='admin.php'>{$lnc[107]}</a><br/>" : '';
-	$misccontent.=($permission['AddEntry']==1) ? "<a href='admin.php?act=edit'>{$lnc[108]}</a><br/>" : '';
-	$misccontent.=($permission['ApplyLink']==1) ? "<a href='login.php?job=applylink'>{$lnc[109]}</a><br/>" : '';
-	$misccontent.="{$lnc[285]} <a href='feed.php'>{$lnc[286]}</a> | <a href='feed.php?go=comment'>{$lnc[287]}</a><br/>{$lnc[111]}UTF-8<br/>";
+	$misccontent.=($permission['CP']==1) ? "<a href='admin.php'>{$lnc[107]}</a><br>" : '';
+	$misccontent.=($permission['AddEntry']==1) ? "<a href='admin.php?act=edit'>{$lnc[108]}</a><br>" : '';
+	$misccontent.=($permission['ApplyLink']==1) ? "<a href='login.php?job=applylink'>{$lnc[109]}</a><br>" : '';
+	$misccontent.="{$lnc[285]} <a href='feed.php'>{$lnc[286]}</a> | <a href='feed.php?go=comment'>{$lnc[287]}</a><br>{$lnc[111]}UTF-8<br>";
 	$misccontent.="<a href=\"http://validator.w3.org/check?uri=referer\" target=\"_blank\">XHTML 1.0</a>";
 	plugin_runphp('sidebarmisc');
 	$blogitem['misc']+=array(
@@ -288,7 +288,7 @@ if (in_array('calendar', $allopenmods)) {
 /*vot*/		$month_calendar=(is_array(@$month_calendars['cday'])) ? array_unique($month_calendars['cday']) : array();
 		if ($mbcon['lunarcalendar']!=0) {
 			$lunarstream=lunarcalendar($cm, $cy);
-/*vot*/			$lunarym="<br/>".@$lunarstream['year'];
+/*vot*/			$lunarym="<br>".@$lunarstream['year'];
 		}
 		else $lunarstream='';
 		$calendarbody=makecalendar ($cm, $cy, $month_calendar, $lunarstream);
@@ -353,10 +353,10 @@ if ($mbcon['searchon']==1) {
 /*vot*/	$addtagsearch=(@$flset['tags']==0) ? '' : "<option value=\"5\">{$lnc[127]}</option>";
 	$searchbox=<<<eot
 	<form method="post" action="visit.php">
-	<input name="job" type="hidden" value="search"/>
-	<input name="keyword" class="search-field" type="text"/>
+	<input name="job" type="hidden" value="search">
+	<input name="keyword" class="search-field" type="text">
 	<select name="searchmethod"><option value="1">{$lnc[123]}</option><option value="2">{$lnc[124]}</option><option value="3">{$lnc[125]}</option><option value="4">{$lnc[126]}</option>{$addtagsearch}</select>
-	<input value="{$lnc[128]}" class="button" type="submit"/>
+	<input value="{$lnc[128]}" class="button" type="submit">
 	</form>
 eot;
 	$blogitem['search']+=array(
@@ -369,7 +369,7 @@ eot;
 }
 //[End]Search
 
-$blogitem['copyright']+=array('type'=>'html', 'code'=>" Powered by <a href=\"http://www.bo-blog.com\" target=\"_blank\">Bo-Blog {$blogversion}</a><span id=\"footer-security\"><a href=\"http://www.cnbct.org\" target=\"_blank\" title=\"Code detection by Bug.Center.Team\"><img src=\"images/others/detect.gif\" alt=\"Code detection by Bug.Center.Team\" border=\"0\" /></a></span>");
-$blogitem['mii']+=array('type'=>'link', 'url'=>'http://www.miibeian.gov.cn', 'text'=>'<br/>'.$mbcon['miinum'], 'target'=>'_blank');
+$blogitem['copyright']+=array('type'=>'html', 'code'=>" Powered by <a href=\"http://www.bo-blog.com\" target=\"_blank\">Bo-Blog {$blogversion}</a><span id=\"footer-security\"><a href=\"http://www.cnbct.org\" target=\"_blank\" title=\"Code detection by Bug.Center.Team\"><img src=\"images/others/detect.gif\" alt=\"Code detection by Bug.Center.Team\" border=\"0\"></a></span>");
+$blogitem['mii']+=array('type'=>'link', 'url'=>'http://www.miibeian.gov.cn', 'text'=>'<br>'.$mbcon['miinum'], 'target'=>'_blank');
 
 $blogitem['columnbreak']+=array('type'=>'block', 'name'=>'columnbreak', 'title'=>'1', 'content'=>'1', 'extend'=>1);

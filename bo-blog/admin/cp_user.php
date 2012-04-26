@@ -465,22 +465,22 @@ if ($job == 'add' || $job == 'edituser') {
             catcherror($lna[474]);
         }
         if ($edituser['usergroup'] == 2) {
-            $pluswarn = "<font color=red><b>{$lna[475]}</b></color><br/>";
+            $pluswarn = "<font color=red><b>{$lna[475]}</b></color><br>";
         }
         $jobs = "saveuser";
         $t = new template;
         $formbody .= $t->set('form_eachline', array(
             'text'        => $lna[464],
-            'formelement' => $edituser['username'] . "<input type='hidden'  name='p[userid]' value='$itemid'/>",
+            'formelement' => $edituser['username'] . "<input type='hidden'  name='p[userid]' value='$itemid'>",
         ));
         $formbody .= $t->set('form_eachline', array('text' => $lna[476], 'formelement' => $lna[477]));
         $formbody .= $t->set('form_eachline', array(
             'text'        => $lna[478],
-            'formelement' => "<input type='password'  class='text' size='16' name='p[newpsw]' /> {$lna[479]}",
+            'formelement' => "<input type='password'  class='text' size='16' name='p[newpsw]'> {$lna[479]}",
         ));
         $formbody .= $t->set('form_eachline', array(
             'text'        => $lna[480],
-            'formelement' => "<input type='password'  class='text' size='16' name='p[confirmpsw]' /> {$lna[479]}",
+            'formelement' => "<input type='password'  class='text' size='16' name='p[confirmpsw]'> {$lna[479]}",
         ));
         $light = 'users';
         $showword = $lna[481];
@@ -489,15 +489,15 @@ if ($job == 'add' || $job == 'edituser') {
         $t = new template;
         $formbody .= $t->set('form_eachline', array(
             'text'        => $lna[464],
-            'formelement' => "<input type='text' class='text' size='16' name='p[username]' />",
+            'formelement' => "<input type='text' class='text' size='16' name='p[username]'>",
         ));
         $formbody .= $t->set('form_eachline', array(
             'text'        => $lna[482],
-            'formelement' => "<input type='password'  class='text' size='16' name='p[password]' />",
+            'formelement' => "<input type='password'  class='text' size='16' name='p[password]'>",
         ));
         $formbody .= $t->set('form_eachline', array(
             'text'        => $lna[483],
-            'formelement' => "<input type='password' class='text' size='16' name='p[confirmpsw]' />",
+            'formelement' => "<input type='password' class='text' size='16' name='p[confirmpsw]'>",
         ));
         $light = 'add';
         $showword = $lna[484];
@@ -513,11 +513,11 @@ if ($job == 'add' || $job == 'edituser') {
         array('text' => $lna[463], 'formelement' => "<select name='p[usergroup]'>{$puttingcates}</select>"));
     $formbody .= $t->set('form_eachline', array(
         'text'        => $lna[485],
-        'formelement' => "<input type='text' class='text' size='16' name='p[email]' value='" . stripslashes(@$edituser['email']) . "'/>",
+        'formelement' => "<input type='text' class='text' size='16' name='p[email]' value='" . stripslashes(@$edituser['email']) . "'>",
     ));
     $formbody .= $t->set('form_eachline', array(
         'text'        => $lna[486],
-        'formelement' => "<input type='text' class='text' size='16' name='p[homepage]' value='" . stripslashes(@$edituser['homepage']) . "'/>",
+        'formelement' => "<input type='text' class='text' size='16' name='p[homepage]' value='" . stripslashes(@$edituser['homepage']) . "'>",
     ));
     $sex_sel = array('0' => $lna[487], '1' => $lna[488], '2' => $lna[489]);
     $sex_choice = array('0' => '', '1' => '', '2' => '');
@@ -525,23 +525,23 @@ if ($job == 'add' || $job == 'edituser') {
     $sex_choice[$tmp_gender] = "checked=checked";
     $formbody .= $t->set('form_eachline', array(
         'text'        => $lna[491],
-        'formelement' => "<input type='radio' name='p[gender]' value='0' {$sex_choice[0]}/>{$lna[487]} <input type='radio' name='p[gender]' value='1' {$sex_choice[1]}/>{$lna[488]} <input type='radio' name='gender' value='2' {$sex_choice[2]}/>{$lna[489]}",
+        'formelement' => "<input type='radio' name='p[gender]' value='0' {$sex_choice[0]}>{$lna[487]} <input type='radio' name='p[gender]' value='1' {$sex_choice[1]}>{$lna[488]} <input type='radio' name='gender' value='2' {$sex_choice[2]}>{$lna[489]}",
     ));
     $formbody .= $t->set('form_eachline', array(
         'text'        => $lna[490],
-        'formelement' => "<input type='text' class='text' size='16' name='p[qq]' value='" . stripslashes(@$edituser['qq']) . "'/>",
+        'formelement' => "<input type='text' class='text' size='16' name='p[qq]' value='" . stripslashes(@$edituser['qq']) . "'>",
     ));
     $formbody .= $t->set('form_eachline', array(
         'text'        => 'MSN',
-        'formelement' => "<input type='text' class='text' size='16' name='p[msn]' value='" . stripslashes(@$edituser['msn']) . "'/>",
+        'formelement' => "<input type='text' class='text' size='16' name='p[msn]' value='" . stripslashes(@$edituser['msn']) . "'>",
     ));
     $formbody .= $t->set('form_eachline', array(
         'text'        => 'Skype',
-        'formelement' => "<input type='text' class='text' size='16' name='p[skype]' value='" . stripslashes(@$edituser['skype']) . "'/>",
+        'formelement' => "<input type='text' class='text' size='16' name='p[skype]' value='" . stripslashes(@$edituser['skype']) . "'>",
     ));
     $formbody .= $t->set('form_eachline', array(
         'text'        => $lna[492],
-        'formelement' => "<input type='text' class='text' size='16' name='p[from]' value='" . stripslashes(@$edituser['fromplace']) . "'/>",
+        'formelement' => "<input type='text' class='text' size='16' name='p[from]' value='" . stripslashes(@$edituser['fromplace']) . "'>",
     ));
     $formbody .= $t->set('form_eachline', array(
         'text'        => $lna[493],

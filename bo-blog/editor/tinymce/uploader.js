@@ -277,7 +277,7 @@ function autoattachubb (attachid, filename) {
 			antileechurl=attachid.replace(/\[attach\]/g, '');
 			antileechurl=antileechurl.replace(/\[\/attach\]/g, '');
 			antileechurl="attachment.php?fid="+antileechurl;
-			 finalresult="<img src='"+antileechurl+"' alt='' border='0' class='insertimage' />";
+			 finalresult="<img src='"+antileechurl+"' alt='' border='0' class='insertimage'>";
 		}
 		else if (realext=="swf")  {
 			 finalresult="[swf=400,300]"+attachid+"[/swf]";
@@ -313,7 +313,7 @@ function doinsertimage(attachid) {
 	if (alignpro=='l') plusalign=' align="left"';
 	else if  (alignpro=='r') plusalign=' align="right"';
 	else plusalign='';
-	var finalresult="<img"+plusalign+" alt='' border='0' src='"+antileechurl+"' />";
+	var finalresult="<img"+plusalign+" alt='' border='0' src='"+antileechurl+"'>";
 	tinyMCE.execCommand('mceInsertContent', false, finalresult);
 	tinyMCEPopup.close();
 }

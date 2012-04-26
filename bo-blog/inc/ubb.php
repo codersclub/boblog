@@ -42,7 +42,7 @@ function convert_ubb ($str, $advanced=0, $inrss=0) {
 	$str=str_replace(array('{','}'), array('&#123;', '&#125;'), $str);
 	$str=plugin_walk('ubbanalyse', $str);
 	$basicubb_search=array('[hr]', '<br>');
-	$basicubb_replace=array('<hr/>', '<br/>');
+	$basicubb_replace=array('<hr>', '<br>');
 	$str=str_replace($basicubb_search, $basicubb_replace, $str);
 
 	//[IMG]
@@ -105,7 +105,7 @@ function convert_ubb ($str, $advanced=0, $inrss=0) {
 
 	//Multimedia Objects, dangerous, so visitors shall never be allowed to post such an object directly
 	if ($advanced==1) {
-/*vot*/		$str =(inrss()==0) ?  preg_replace("/\[(wmp|swf|real|flv)=([^\[\<]+?),([^\[\<]+?)\]\s*([^\[\<\r\n]+?)\s*\[\/(wmp|swf|real|flv)\]/is", "makemedia", $str) : preg_replace("/\[(wmp|swf|real|flv)=([^\[\<]+?),([^\[\<]+?)\]\s*([^\[\<\r\n]+?)\s*\[\/(wmp|swf|real|flv)\]/is", "<br/>{$lnc[267]}<br/>", $str);
+/*vot*/		$str =(inrss()==0) ?  preg_replace("/\[(wmp|swf|real|flv)=([^\[\<]+?),([^\[\<]+?)\]\s*([^\[\<\r\n]+?)\s*\[\/(wmp|swf|real|flv)\]/is", "makemedia", $str) : preg_replace("/\[(wmp|swf|real|flv)=([^\[\<]+?),([^\[\<]+?)\]\s*([^\[\<\r\n]+?)\s*\[\/(wmp|swf|real|flv)\]/is", "<br>{$lnc[267]}<br>", $str);
 		$str=plugin_walk('ubbanalyseadvance', $str);
 	}
 	return $str;
@@ -160,7 +160,7 @@ function convert_ubb ($str, $advanced=0, $inrss=0) {
 	$mediapic=array('wmp'=>'wmp.gif', 'swf'=>'swf.gif', 'real'=>'real.gif', 'flv'=>'swf.gif');
 	$url=($mediatype=='flv') ? urlconvert ($url, $config['blogurl'].'/') : $url;
 	$url=urlencode($url);
-	$str="<div class=\"quote mediabox\"><div class=\"quote-title\"><img src=\"{$template['images']}/{$mediapic[$mediatype]}\" alt=\"\"/>{$typedesc[$mediatype]}{$lnc[268]}</div><div class=\"quote-content\"><a href=\"javascript: playmedia('player{$id}', '{$mediatype}', '{$url}', '{$width}', '{$height}');\">{$lnc[269]}</a><div id='player{$id}' style='display:none;'></div></div></div>";
+	$str="<div class=\"quote mediabox\"><div class=\"quote-title\"><img src=\"{$template['images']}/{$mediapic[$mediatype]}\" alt=\"\">{$typedesc[$mediatype]}{$lnc[268]}</div><div class=\"quote-content\"><a href=\"javascript: playmedia('player{$id}', '{$mediatype}', '{$url}', '{$width}', '{$height}');\">{$lnc[269]}</a><div id='player{$id}' style='display:none;'></div></div></div>";
 	return $str;
 }
 
@@ -188,7 +188,7 @@ function convert_ubb ($str, $advanced=0, $inrss=0) {
 	if (!empty($height)) $show.=" height=\"{$height}\"";
 /*vot*/	if (inrss()==1) $src=(substr(strtolower($src), 0, 4) == 'http') ? $src : $config['blogurl'].'/'.$src;
 /*vot*/	$onloadact=(inrss()==0 && !empty($mbcon['autoresizeimg'])) ? " onload=\"if(this.width>{$mbcon['autoresizeimg']}) {this.resized=true; this.width={$mbcon['autoresizeimg']};}\"" : '';
-	$code="<a href=\"{$src}\" target=\"_blank\"><img src=\"{$src}\" class=\"insertimage\" alt=\"{$lnc[231]}\" title=\"{$lnc[231]}\" border=\"0\"{$onloadact}{$show}/></a>";
+	$code="<a href=\"{$src}\" target=\"_blank\"><img src=\"{$src}\" class=\"insertimage\" alt=\"{$lnc[231]}\" title=\"{$lnc[231]}\" border=\"0\"{$onloadact}{$show}></a>";
 	return $code;
 }
 
@@ -209,7 +209,7 @@ function convert_ubb ($str, $advanced=0, $inrss=0) {
 	if (!empty($height)) $show.=" height=\"{$height}\"";
 /*vot*/	if (inrss()==1) $src=(substr(strtolower($src), 0, 4) == 'http') ? $src : $config['blogurl'].'/'.$src;
 /*vot*/	$onloadact=(inrss()==0 && !empty($mbcon['autoresizeimg'])) ? " onload=\"if(this.width>{$mbcon['autoresizeimg']}) {this.resized=true; this.width={$mbcon['autoresizeimg']};}\"" : '';
-	$code="<a href=\"{$url}\" target=\"_blank\"><img src=\"{$src}\" class=\"insertimage\" alt=\"{$lnc[231]}\" title=\"{$lnc[231]}\" border=\"0\"{$onloadact}{$show}/></a>";
+	$code="<a href=\"{$url}\" target=\"_blank\"><img src=\"{$src}\" class=\"insertimage\" alt=\"{$lnc[231]}\" title=\"{$lnc[231]}\" border=\"0\"{$onloadact}{$show}></a>";
 	return $code;
 }
 
@@ -218,7 +218,7 @@ function convert_ubb ($str, $advanced=0, $inrss=0) {
 /*vot*/	$src = $match[4];
 	global $config, $lnc, $template;
 	$src=(substr(strtolower($src), 0, 4) == 'http') ? $src : $config['blogurl'].'/'.$src;
-	$str="<br/><img src=\"{$config['blogurl']}/{$template['images']}/viewimage.gif\" alt=\"\"/>{$lnc[231]}<br/>[url]{$src}[/url]<br/>";
+	$str="<br><img src=\"{$config['blogurl']}/{$template['images']}/viewimage.gif\" alt=\"\">{$lnc[231]}<br>[url]{$src}[/url]<br>";
 	return $str;
 }
 
@@ -253,8 +253,8 @@ function convert_ubb ($str, $advanced=0, $inrss=0) {
 		$url="attachment.php?fid={$url}";
 	}
 /*vot*/	if (inrss()==0) {
-		if (($logstat==1 || $openidloginstat==1) || $sfile!=1) $str="<div class=\"quote downloadbox\"><div class=\"quote-title\"><img src=\"{$template['images']}/download.gif\" alt=\"\"/>{$lnc[232]} {$downloadtime}</div><div class=\"quote-content\"><a href=\"{$url}\">{$lnc[233]}{$downloadtime2}</a></div></div>";
-		else  $str="<div class=\"quote\"><div class=\"quote-title\"><img src=\"{$template['images']}/download.gif\" alt=\"\"/>{$lnc[232]}{$downloadtime}</div><div class=\"quote-content\">{$lnc[234]} <a href=\"{$config['blogurl']}/login.php?job=register\">{$lnc[79]}</a> {$lnc[235]} <a href=\"{$config['blogurl']}/login.php\">{$lnc[89]}</a> </div></div>";
+		if (($logstat==1 || $openidloginstat==1) || $sfile!=1) $str="<div class=\"quote downloadbox\"><div class=\"quote-title\"><img src=\"{$template['images']}/download.gif\" alt=\"\">{$lnc[232]} {$downloadtime}</div><div class=\"quote-content\"><a href=\"{$url}\">{$lnc[233]}{$downloadtime2}</a></div></div>";
+		else  $str="<div class=\"quote\"><div class=\"quote-title\"><img src=\"{$template['images']}/download.gif\" alt=\"\">{$lnc[232]}{$downloadtime}</div><div class=\"quote-content\">{$lnc[234]} <a href=\"{$config['blogurl']}/login.php?job=register\">{$lnc[79]}</a> {$lnc[235]} <a href=\"{$config['blogurl']}/login.php\">{$lnc[89]}</a> </div></div>";
 	} else {
 		if ($sfile==1) $str="{$lnc[234]} <a href=\"{$config['blogurl']}/login.php?job=register\">{$lnc[79]}</a> {$lnc[235]} <a href=\"{$config['blogurl']}/login.php\">{$lnc[89]}</a>";
 		else $str="<a href=\"{$url}\">{$lnc[233]}</a>";
@@ -281,6 +281,7 @@ function convert_ubb ($str, $advanced=0, $inrss=0) {
 	$show.="<td bgcolor=\"{$bordercolor}\">\n";
 	$show.="<table width=\"100%\" cellpadding=\"5\" cellspacing=\"1\">\n<tr><td bgcolor=\"{$bgcolor}\">";
 	$tablebody=str_replace(',', "</td>\n<td bgcolor=\"{$bgcolor}\">", $tablebody);
+	$tablebody=str_replace('<br>', "</td></tr>\n<tr><td bgcolor=\"{$bgcolor}\">", $tablebody);
 	$tablebody=str_replace('<br/>', "</td></tr>\n<tr><td bgcolor=\"{$bgcolor}\">", $tablebody);
 	$tablebody=str_replace('<br />', "</td></tr>\n<tr><td bgcolor=\"{$bgcolor}\">", $tablebody);
 	$show.=$tablebody;

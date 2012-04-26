@@ -587,7 +587,7 @@ if ($job == 'importforbidden') {
     $filecontent = @file("{$db_tmpdir}/{$upload_filename}");
     $item = trim(@implode(",", $filecontent));
     $item = safe_convert($item);
-    $item = str_replace("<br/>", '', $item);
+    $item = str_replace("<br>", '', $item);
     extract_forbidden();
     $old = @implode(",", $forbidden[$destination]);
     $item .= ',' . $old;

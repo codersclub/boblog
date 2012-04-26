@@ -32,7 +32,7 @@ if (!$v) {
                 <option value='vn'>Vietnamese (Tiếng Việt)</option>
             </select>
         </div>
-        <br/>
+        <br>
         <div align='center'>
             <input type='submit' value='OK' class='inbut'>
         </div>
@@ -55,12 +55,12 @@ if ($v == 'setlang') {
 <form action='install.php?v=start' method='post'>
     <div class='mes'>
         <div align='left'>
-            <input type='radio' name='newinstall' value='1' checked='checked'/> {$lang[73]}
-            <br/>
-            <input type='radio' name='newinstall' value='0'/> {$lang[74]}
-            <br/>
+            <input type='radio' name='newinstall' value='1' checked='checked'> {$lang[73]}
+            <br>
+            <input type='radio' name='newinstall' value='0'> {$lang[74]}
+            <br>
         </div>
-        <br/>
+        <br>
         <div align='center'>
             <input type='submit' value='{$lang[21]}' class='inbut'>
         </div>
@@ -98,7 +98,7 @@ if ($v == 'start') {
   <div align='center'>
     <form action=\"install.php?v=1&newinstall={$newinstall}\" method='post'>
       <textarea style=\"width: 90%; height: 200px;\">{$copytxt}</textarea>
-      <br/>
+      <br>
       <input type='submit' value='{$lang[4]}' class='inbut'>
       <input type='button' value='{$lang[5]}' onclick='window.location=\"install.php?v=cancel\";' class='inbut'>
     </form>

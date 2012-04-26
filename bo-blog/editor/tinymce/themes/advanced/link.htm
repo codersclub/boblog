@@ -6,7 +6,7 @@
 	<script src="../../utils/mctabs.js"></script>
 	<script src="../../utils/form_utils.js"></script>
 	<script src="jscripts/link.js"></script>
-	<base target="_self" />
+	<base target="_self">
 </head>
 <body id="link" onload="tinyMCEPopup.executeOnLoad('init();');" style="display: none">
 <form onsubmit="insertLink();return false;" action="#">
@@ -24,7 +24,7 @@
             <td nowrap="nowrap"><label for="href">{$lang_insert_link_url}</label></td>
             <td><table border="0" cellspacing="0" cellpadding="0"> 
 				  <tr> 
-					<td><input id="href" name="href" type="text" value="" style="width: 200px" /></td> 
+					<td><input id="href" name="href" type="text" value="" style="width: 200px"></td> 
 					<td id="hrefbrowsercontainer">&nbsp;</td>
 				  </tr> 
 				</table></td>
@@ -89,11 +89,11 @@
 
 	<div class="mceActionPanel">
 		<div style="float: left">
-			<input type="button" id="insert" name="insert" value="{$lang_insert}" onclick="insertLink();" />
+			<input type="button" id="insert" name="insert" value="{$lang_insert}" onclick="insertLink();">
 		</div>
 
 		<div style="float: right">
-			<input type="button" id="cancel" name="cancel" value="{$lang_cancel}" onclick="tinyMCEPopup.close();" />
+			<input type="button" id="cancel" name="cancel" value="{$lang_cancel}" onclick="tinyMCEPopup.close();">
 		</div>
 	</div>
 </form>

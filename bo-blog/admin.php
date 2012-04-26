@@ -209,18 +209,40 @@ function addpref($pref_type, $pref_content)
 
     switch ($pref_type) {
         case 't': //text input
-            $output = "<tr><td class=\"prefleft\" valign=\"top\" width='$pref_leftchar'>{$prefs[1]}</td><td class=\"prefright\"><input type='text' name='prefconfig[{$prefs[0]}]' id='{$prefs[0]}' value=\"" . stripslashes($prefvalue[$prefs[0]]) . "\" size='40'>  {$prefs[2]}</td></tr>";
+            $output = "  <tr>
+    <td class=\"prefleft\" valign=\"top\" width='$pref_leftchar'>{$prefs[1]}</td>
+    <td class=\"prefright\">
+      <input type='text' name='prefconfig[{$prefs[0]}]' id='{$prefs[0]}' value=\"" . stripslashes($prefvalue[$prefs[0]]) . "\" size='40'>
+      {$prefs[2]}
+    </td>
+  </tr>\n";
             break;
         case 'ta': //textarea
-            $output = "<tr><td class=\"prefleft\" valign=\"top\" width='$pref_leftchar'>{$prefs[1]}</td><td class=\"prefright\"><textarea  name='prefconfig[{$prefs[0]}]' id='{$prefs[0]}' cols='90' rows='6'>" . stripslashes($prefvalue[$prefs[0]]) . "</textarea>  {$prefs[2]}</td></tr>";
+            $output = "  <tr>
+    <td class=\"prefleft\" valign=\"top\" width='$pref_leftchar'>{$prefs[1]}</td>
+    <td class=\"prefright\">
+      <textarea  name='prefconfig[{$prefs[0]}]' id='{$prefs[0]}' cols='90' rows='6'>" . stripslashes($prefvalue[$prefs[0]]) . "</textarea>
+      {$prefs[2]}
+    </td>
+  </tr>\n";
             break;
         case 'r': //radio button
             $check1 = ($prefvalue[$prefs[0]] == 1) ? " checked='checked' " : '';
             $check2 = ($prefvalue[$prefs[0]] == 1) ? '' : " checked='checked' ";
-            $output = "<tr><td class=\"prefleft\" valign=\"top\" width='$pref_leftchar'>{$prefs[1]}</td><td class=\"prefright\"><input type='radio' name='prefconfig[{$prefs[0]}]' id='{$prefs[0]}' value='1' {$check1}>{$prefs[3]} <input type='radio' name='prefconfig[{$prefs[0]}]' id='{$prefs[0]}' value='0' {$check2}>{$prefs[2]} {$prefs[4]}</td></tr>";
+            $output = "  <tr>
+    <td class=\"prefleft\" valign=\"top\" width='$pref_leftchar'>{$prefs[1]}</td>
+    <td class=\"prefright\">
+      <input type='radio' name='prefconfig[{$prefs[0]}]' id='{$prefs[0]}' value='1' {$check1}>{$prefs[3]}
+      <input type='radio' name='prefconfig[{$prefs[0]}]' id='{$prefs[0]}' value='0' {$check2}>{$prefs[2]} {$prefs[4]}
+    </td>
+  </tr>\n";
             break;
         case 'sel': //selection
-            $tmp_sel = "<tr><td class=\"prefleft\" valign=\"top\" width='$pref_leftchar'>{$prefs[1]}</td><td class=\"prefright\"><select name='prefconfig[{$prefs[0]}]' id='{$prefs[0]}'>";
+            $tmp_sel = "  <tr>
+    <td class=\"prefleft\" valign=\"top\" width='$pref_leftchar'>{$prefs[1]}</td>
+    <td class=\"prefright\">
+      <select name='prefconfig[{$prefs[0]}]' id='{$prefs[0]}'>\n";
+
             $current_sel_all = @explode("<<", $prefs[2]);
             for ($i = 0; $i < count($current_sel_all); $i++) {
                 $current_sel = @explode(">>", $current_sel_all[$i]);
@@ -229,20 +251,30 @@ function addpref($pref_type, $pref_content)
                 } else {
                     $seled = '';
                 }
-                $tmp_sel .= "<option value='{$current_sel[0]}' {$seled}>{$current_sel[1]}</option>";
+                $tmp_sel .= "        <option value='{$current_sel[0]}' {$seled}>{$current_sel[1]}</option>";
             }
             $tmp_sel .= "</select> {$prefs[3]}</td></tr>";
             $output = $tmp_sel;
             unset($tmp_sel, $current_sel_all);
             break;
         case 'sec': //A separator
-            $output = "<tr><td class=\"prefsection\" align=\"center\" colspan='2'><a name=\"pref{$prefseccounter}\"></a>{$prefs[0]} [<a href=\"#top\"><img src=\"images/arrows/singleup.gif\" alt=\"\" title=\"TOP\" align=\"absmiddle\" border=\"0\"/></a><a href=\"#bottom\"><img src=\"images/arrows/singledown.gif\" alt=\"\" title=\"BOTTOM\" align=\"absmiddle\" border=\"0\"/></a>]</td></tr>";
+            $output = "  <tr>
+    <td class=\"prefsection\" align=\"center\" colspan='2'>
+      <a name=\"pref{$prefseccounter}\"></a>{$prefs[0]}
+      [
+      <a href=\"#top\"><img src=\"images/arrows/singleup.gif\" alt=\"\" title=\"TOP\" align=\"absmiddle\" border=\"0\"></a>
+      <a href=\"#bottom\"><img src=\"images/arrows/singledown.gif\" alt=\"\" title=\"BOTTOM\" align=\"absmiddle\" border=\"0\"></a>
+      ]
+    </td>
+  </tr>\n";
             if ($prefseccounter % 5 == 0) {
                 $pref_quicksel .= "<tr align='left'>";
             }
-            $pref_quicksel .= "<td width=20%>[<a href=\"#pref{$prefseccounter}\">{$prefs[0]}</a>]</td>";
+            $pref_quicksel .= "    <td width=20%>
+      [<a href=\"#pref{$prefseccounter}\">{$prefs[0]}</a>]
+    </td>\n";
             if ($prefseccounter % 5 == 4) {
-                $pref_quicksel .= "</tr>";
+                $pref_quicksel .= "  </tr>\n";
             }
             $prefseccounter += 1;
             break;
@@ -332,9 +364,9 @@ function gen_page($page, $numperline, $returnurl, $totalvolume, $perpagevolume)
     $firstindexpage = floor($page / $numperline) * $numperline + 1;
     $lastindexpage = min(($firstindexpage + $numperline - 1), $total_pages);
     $pagebar .= " {$lnc[8]} {$page}/{$total_pages} ";
-    $pagebar .= " <a href=\"{$returnurl}{$conxer}page=1\"><img src=\"images/arrows/doubleleft.gif\" alt=\"{$lnc[9]}\" title=\"{$lnc[9]}\" border=\"0\"/></a> ";
+    $pagebar .= " <a href=\"{$returnurl}{$conxer}page=1\"><img src=\"images/arrows/doubleleft.gif\" alt=\"{$lnc[9]}\" title=\"{$lnc[9]}\" border=\"0\"></a> ";
     if ($page != 1) {
-        $pagebar .= " <a href=\"{$returnurl}{$conxer}page=" . ($page - 1) . "\"><img src=\"images/arrows/singleleft.gif\" alt=\"{$lnc[10]}\" title=\"{$lnc[10]}\" border=\"0\"/></a> ";
+        $pagebar .= " <a href=\"{$returnurl}{$conxer}page=" . ($page - 1) . "\"><img src=\"images/arrows/singleleft.gif\" alt=\"{$lnc[10]}\" title=\"{$lnc[10]}\" border=\"0\"></a> ";
     }
     for ($i = $firstindexpage; $i <= $lastindexpage; $i++) {
         if ($i != $page) {
@@ -344,9 +376,9 @@ function gen_page($page, $numperline, $returnurl, $totalvolume, $perpagevolume)
         }
     }
     if ($page != $total_pages) {
-        $pagebar .= " <a href=\"{$returnurl}{$conxer}page=" . ($page + 1) . "\"><img src=\"images/arrows/singleright.gif\" alt=\"{$lnc[11]}\" title=\"{$lnc[11]}\" border=\"0\"/></a> ";
+        $pagebar .= " <a href=\"{$returnurl}{$conxer}page=" . ($page + 1) . "\"><img src=\"images/arrows/singleright.gif\" alt=\"{$lnc[11]}\" title=\"{$lnc[11]}\" border=\"0\"></a> ";
     }
-    $pagebar .= " <a href=\"{$returnurl}{$conxer}page={$total_pages}\"><img src=\"images/arrows/doubleright.gif\" alt=\"{$lnc[12]}\" title=\"{$lnc[12]}\" border=\"0\"/></a> ";
+    $pagebar .= " <a href=\"{$returnurl}{$conxer}page={$total_pages}\"><img src=\"images/arrows/doubleright.gif\" alt=\"{$lnc[12]}\" title=\"{$lnc[12]}\" border=\"0\"></a> ";
     return $pagebar;
 }
 
