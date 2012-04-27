@@ -450,6 +450,7 @@ select {
 	width:45px;
 	height:49px;
 	float:left;
+	margin-right: 0.5em;
 	background:url('images/date-bg.gif') no-repeat left center;
 }
 .post-month{
@@ -483,10 +484,10 @@ select {
 	margin-left:0px;
 }
 .textbox-title{
-	float:left;
+*	float:left;
 	margin-left:10px;
 	margin-bottom:8px;
-	width:615px;
+*	width:615px;
 }
 .textbox-title h4{
 	color:#135E93;

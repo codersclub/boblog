@@ -177,10 +177,11 @@ $elements['excerpt']=<<<eot
 		<h4>{entrytitle}</h4>
 		<div class="textbox-label">
 			<span class="post-author">{entryauthor}</span>
-            <span class="post-tag" style="display: {iftags}">{alltags}</span>
-            <span class="add-comment">{entrycomment}</span>
-            <span class="entryviews">{entryviews}&nbsp;</span>
+            		<span class="add-comment">{entrycomment}</span>
+            		<span class="entryviews">{entryviews}&nbsp;</span>
 		</div>
+            <span class="post-tag" style="display: {iftags}">{alltags}</span>
+
 	</div>
 	<div class="textbox-content">
 	    {entrycontent}
