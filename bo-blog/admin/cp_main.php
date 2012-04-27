@@ -107,7 +107,12 @@ if ($job == 'default') {
 	    <li><a href="admin.php?go=addon_skin">{$lna[27]}</a></li>
 	    <li><a href="admin.php?go=addon_plugin">{$lna[28]}</a></li>
 	    <li><a href="admin.php?go=main_update">{$lna[16]}</a></li>
-	    <li>{$lna[874]} <select name=targetskin>{$admskinsel}</select> <input type='submit' value='$lna[64]' class='formbutton'> <input type='button' value='{$lna[875]}' onclick='window.location="admin.php?go=main_refreshadminskinlist";' class='formbutton'></li>
+	    <li>
+          {$lna[874]}
+          <select name=targetskin>{$admskinsel}</select>
+          <input type='submit' value='$lna[64]' class='formbutton'>
+          <input type='button' value='{$lna[875]}' onclick='window.location="admin.php?go=main_refreshadminskinlist";' class='formbutton'>
+        </li>
 	  </ul>
     </td>
   </tr>
@@ -631,8 +636,7 @@ if ($job == 'module') {
                     } else {
                         $selected["x_self"] = 'selected';
                     }
-                    $ddshow = "
-{$lna[71]}{$lna[94]}
+                    $ddshow = "{$lna[71]}{$lna[94]}
 <br>
 <br>
 <table width=95% class='sect'>
@@ -714,8 +718,7 @@ if ($job == 'module') {
 </table>\n";
                     break;
                 case 'prebody':
-                    $ddshow = "
-{$lna[111]}
+                    $ddshow = "{$lna[111]}
 <br>
 <br>
 <table width=95% class='sect'>
@@ -727,7 +730,7 @@ if ($job == 'module') {
       {$lna[110]}
     </td>
   </tr>
-</table>";
+</table>\n";
                     break;
                 default:
                     $ddshow = "{$lna[112]}";

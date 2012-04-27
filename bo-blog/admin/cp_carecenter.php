@@ -61,6 +61,7 @@ if ($job == 'recache') {
       </ul>
       
       <br>
+
       <table width=80% align=center cellpadding=4>
         <tr>
           <td width=25%><input type=checkbox name='selid[]' value='links'>{$lna[763]}</td>
@@ -152,9 +153,29 @@ if ($job == 'recache') {
   <tr class='sect'>
     <td colspan=2>
       <ul>
-        <li><b>{$lna[772]}</b> <a href="javascript: simulateFormSubmit('admin.php?go=carecenter_cleartmp')">[{$lna[896]}]</a><br>{$lna[897]}<br><br></li>
-        <li><b>{$lna[898]}</b> <a href="javascript: simulateFormSubmit('admin.php?go=carecenter_rebuildcalendar')">[{$lna[896]}]</a><br>{$lna[899]}<br><br></li>
-        <li><b>{$lna[1109]}</b> <a href="javascript: simulateFormSubmit('admin.php?go=carecenter_rebuildrewritefiles')">[{$lna[896]}]</a><br>{$lna[1110]}<br></li>
+        <li>
+          <b>{$lna[772]}</b>
+          <a href="javascript: simulateFormSubmit('admin.php?go=carecenter_cleartmp')">[{$lna[896]}]</a>
+          <br>
+          {$lna[897]}
+          <br>
+          <br>
+        </li>
+        <li>
+          <b>{$lna[898]}</b>
+          <a href="javascript: simulateFormSubmit('admin.php?go=carecenter_rebuildcalendar')">[{$lna[896]}]</a>
+          <br>
+          {$lna[899]}
+          <br>
+          <br>
+        </li>
+        <li>
+          <b>{$lna[1109]}</b>
+          <a href="javascript: simulateFormSubmit('admin.php?go=carecenter_rebuildrewritefiles')">[{$lna[896]}]</a>
+          <br>
+          {$lna[1110]}
+          <br>
+        </li>
       </ul>
     </td>
   </tr>
@@ -299,22 +320,27 @@ if ($job == 'adminattach') {
 
     $foryears = range(2001, 2050);
     $formonths = range(1, 12);
-    $showysel = "<select name=uploadyear><option value=0 selected>{$lna[291]}</option><option value={$nowtime['year']}>{$nowtime['year']}</option>";
-    $showmsel = "<select name=uploadmonth><option value=0>{$lna[292]}</option>";
-
+    $showysel = "<select name=uploadyear>
+  <option value=0 selected>{$lna[291]}</option>
+  <option value={$nowtime['year']}>{$nowtime['year']}</option>\n";
     foreach ($foryears as $y) {
-        $showysel .= "<option value=$y>$y</option>\n";
-    }
-    foreach ($formonths as $m) {
-        $showmsel .= "<option value=$m>$m</option>\n";
+        $showysel .= "  <option value=$y>$y</option>\n";
     }
     $showysel .= "</select>\n";
+
+    $showmsel = "<select name=uploadmonth>
+  <option value=0>{$lna[292]}</option>\n";
+
+    foreach ($formonths as $m) {
+        $showmsel .= "  <option value=$m>$m</option>\n";
+    }
     $showmsel .= "</select>\n";
 
-    $pagebar = gen_page($page, 5,
-        "admin.php?go=carecenter_adminattach&uploadyear={$uploadyear}&uploadmonth={$uploadmonth}", $numenries,
+    $pagebar = gen_page($page,
+        5,
+        "admin.php?go=carecenter_adminattach&uploadyear={$uploadyear}&uploadmonth={$uploadmonth}",
+        $numenries,
         $adminitemperpage);
-
 
     $display_overall .= highlightadminitems('adminattach', 'carecenter');
     $display_overall_plus = <<<eot
@@ -332,7 +358,18 @@ if ($job == 'adminattach') {
   <tr>
     <td colspan=7>
 <!--
-      {$lna[784]} <select name="specext2"><option value=''>{$lna[785]}</option><option value='gif jpg png bmp jpeg'>{$lna[786]}</option><option value='rar zip bz2 gz tar ace 7z'>{$lna[787]}</option><option value='txt doc htm html wps xsl ppt'>{$lna[788]}</option><option value='mp3 wma wmv rm ra rmvb wav asf swf'>{$lna[789]}</option></select> {$lna[790]} <input type=text name=specext size=9> {$lna[791]} <input type=submit value="{$lna[64]}" class='formbutton'>
+      {$lna[784]}
+      <select name="specext2">
+        <option value=''>{$lna[785]}</option>
+        <option value='gif jpg png bmp jpeg'>{$lna[786]}</option>
+        <option value='rar zip bz2 gz tar ace 7z'>{$lna[787]}</option>
+        <option value='txt doc htm html wps xsl ppt'>{$lna[788]}</option>
+        <option value='mp3 wma wmv rm ra rmvb wav asf swf'>{$lna[789]}</option>
+      </select>
+      {$lna[790]}
+      <input type=text name=specext size=9>
+      {$lna[791]}
+      <input type=submit value="{$lna[64]}" class='formbutton'>
 -->
       {$showysel} / {$showmsel} <input type=submit value='{$lna[244]}' class='formbutton'>
     </td>
@@ -444,7 +481,11 @@ if ($job == 'updateattachment') {
     $message .= "<table width=70% class=\"adminoption\"  align=center>
   <tr>
     <td width=15% valign=top><b>{$lna[792]}</b></td>
-    <td width=60%>{$dataoriginalname} &nbsp; [<a href=\"{$detail_array['filepath']}\" target=\"_blank\">{$lna[782]}</a>]</td>
+    <td width=60%>
+      {$dataoriginalname}
+      &nbsp;
+      [<a href=\"{$detail_array['filepath']}\" target=\"_blank\">{$lna[782]}</a>]
+    </td>
   </tr>
   <tr>
     <td width=15% valign=top><b>{$lna[408]}</b></td>
@@ -569,14 +610,14 @@ if ($job == 'mysql') {
         "{$db_prefix}pages",
         "{$db_prefix}upload",
     );
-    $tablebody .= "<tr>";
+    $tablebody .= "  <tr>\n";
     for ($i = 0; $i < count($all_tables); $i++) {
-        $tablebody .= "<td><input type=checkbox name='selid[]' value='{$all_tables[$i]}' checked> {$all_tables[$i]}</td>";
+        $tablebody .= "    <td><input type=checkbox name='selid[]' value='{$all_tables[$i]}' checked> {$all_tables[$i]}</td>\n";
         if ($i % 3 == 2) {
-            $tablebody .= "</tr><tr>";
+            $tablebody .= "  </tr>\n  <tr>\n";
         }
     }
-    $tablebody .= "</tr>";
+    $tablebody .= "  </tr>\n";
     $display_overall .= highlightadminitems('mysql', 'carecenter');
     $display_overall .= <<<eot
 <form action="admin.php?go=carecenter_mysqlquery" method='post'>
@@ -645,16 +686,24 @@ if ($job == 'mysqlquery') {
     $sqlinput = str_replace('[db]', $db_prefix, $sqlinput);
     $result = db_query($sqlinput);
     if (@db_num_rows($result) > 0) {
-        $table_infos .= "<table width=\"100%\"><tr><td><b>SQL: {$qinput[$i]}</b></td></tr></table><table width=\"100%\">";
+        $table_infos .= "<table width=\"100%\">
+  <tr>
+    <td>
+      <b>SQL: {$qinput[$i]}</b>
+    </td>
+  </tr>
+</table>
+<table width=\"100%\">";
         $columns = db_num_fields($result);
-        $table_infos .= "<tr class='admintitle'><td>";
+        $table_infos .= "  <tr class='admintitle'>\n    <td>\n";
         for ($s = 0; $s < $columns; $s++) {
-            $table_infos .= db_field_name($result, $s) . "</td><td>\n";
+            $table_infos .= db_field_name($result, $s) . "\n    </td>\n    <td>\n";
         }
-        $table_infos .= "</td></tr>";
+        $table_infos .= "    </td>\n  </tr>";
         while (false !== ($tmpline = db_fetch_array($result))) {
-            $table_infos .= "<tr><td class='visibleitem'>" . implode("</td><td class='visibleitem'>",
-                    $tmpline) . "</td></tr>";
+            $table_infos .= "<tr><td class='visibleitem'>"
+                         . implode("</td><td class='visibleitem'>", $tmpline)
+                         . "    </td>\n  </tr>\n";
         }
         $table_infos .= "</table>";
     }

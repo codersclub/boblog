@@ -1469,7 +1469,7 @@ function backtrace()
 {
     $raw = debug_backtrace();
 
-    echo '<div><b>BackTrace:</b>', "\n";
+    echo "<div>\n<b>BackTrace:</b>\n";
     echo '<table border="1" cellPadding="4">', "\n";
     echo '<tr>', "\n";
     echo '<th>File</th>', "\n";
@@ -1529,4 +1529,5 @@ function backtrace()
     }
 
     echo '</table>', "\n";
+    echo '</div>', "\n";
 }

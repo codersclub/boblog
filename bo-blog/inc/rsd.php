@@ -1,10 +1,14 @@
 <?php
-/*vot*/ error_reporting(E_ALL);
-//*vot*/ error_reporting(E_ALL & ~E_DEPRECATED & ~E_NOTICE);
-define ("allowCache", 1);
+
+error_reporting(E_ALL);
+// error_reporting(E_ALL & ~E_DEPRECATED & ~E_NOTICE);
+define("allowCache", 1);
 include("../data/config.php");
-$config['blogurl']=str_replace('{host}', $_SERVER['HTTP_HOST'], $config['blogurl']);
+
+$config['blogurl'] = str_replace('{host}', $_SERVER['HTTP_HOST'], $config['blogurl']);
+
 @header("Content-type:application/xml");
+
 echo <<<eot
 <?xml version="1.0" encoding="UTF-8"?>
 <rsd version="1.0" xmlns="http://archipelago.phrasewise.com/rsd" >

@@ -40,7 +40,23 @@ if ($job == 'skin') {
     $end_id = $start_id + $skinperpage - 1;
     include_once("data/cache_skinlist.php");
     include_once("data/mod_template.php");
-    $tablebody = "<tr class='sect'><td width=412 align=center class='sect'><img src='template/{$template['dirname']}/{$template['thumbnail']}' alt='' border=0></a></td><td class='visibleitem'><font color=red><b>{$lna[161]}</b> {$template['name']}</font><br><b>{$lna[162]}</b> {$template['author']}<br><b>{$lna[163]}</b> {$template['intro']}<br><br></td></tr>\n";
+    $tablebody = "
+  <tr class='sect'>
+    <td width=412 align=center class='sect'>
+      <img src='template/{$template['dirname']}/{$template['thumbnail']}' alt='' border=0>
+    </td>
+    <td class='visibleitem'>
+      <font color=red>
+        <b>{$lna[161]}</b> {$template['name']}
+      </font>
+      <br>
+      <b>{$lna[162]}</b> {$template['author']}
+      <br>
+      <b>{$lna[163]}</b> {$template['intro']}
+      <br>
+      <br>
+    </td>
+  </tr>\n";
     $count = -1;
     if (is_array($skinset)) {
         foreach ($skinset as $skin) {
@@ -55,29 +71,48 @@ if ($job == 'skin') {
             if ($skid == $template['id']) {
                 continue;
             }
-            $tablebody .= "<tr class='sect'><td width=412 align=center class='sect'><a href=\"javascript: simulateFormSubmit('admin.php?go=addon_setskin_{$skdir}')\" title='{$lna[164]}' class='visibleitem'><img src='template/{$skdir}/{$skthumbnail}' title='{$lna[164]}' alt='' border=0></a></td><td class='visibleitem'><b>{$lna[165]}</b> {$skname}<br><b>{$lna[162]}</b> {$skauthor}<br><b>{$lna[163]}</b> {$skintro}<br><br><a href=\"javascript: simulateFormSubmit('admin.php?go=addon_setskin_{$skdir}')\" title='{$lna[164]}'>{$lna[166]}</a> | <a href=\"javascript: redirectcomfirm('admin.php?go=addon_removeskin_{$skid}');\" title='{$lna[167]}'>{$lna[168]}</a></td></tr>\n";
+            $tablebody .= "<tr class='sect'>
+    <td width=412 align=center class='sect'>
+      <a href=\"javascript: simulateFormSubmit('admin.php?go=addon_setskin_{$skdir}')\" title='{$lna[164]}' class='visibleitem'>
+        <img src='template/{$skdir}/{$skthumbnail}' alt='{$lna[164]}' border=0>
+      </a>
+    </td>
+    <td class='visibleitem'>
+      <b>{$lna[165]}</b> {$skname}
+      <br>
+      <b>{$lna[162]}</b> {$skauthor}
+      <br>
+      <b>{$lna[163]}</b> {$skintro}
+      <br>
+      <br>
+      <a href=\"javascript: simulateFormSubmit('admin.php?go=addon_setskin_{$skdir}')\" title='{$lna[164]}'>{$lna[166]}</a>
+      |
+      <a href=\"javascript: redirectcomfirm('admin.php?go=addon_removeskin_{$skid}');\" title='{$lna[167]}'>{$lna[168]}</a>
+    </td>
+  </tr>\n";
         }
     }
     $pagebar = gen_page($page, 5, "admin.php?go=addon_skin", count($skinset), $skinperpage);
     $display_overall .= highlightadminitems('skin', 'addon');
     $display_overall_plus = <<<eot
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
-    <tr>
-        <td class="sectstart">
-            {$lna[169]}
-        </td>
-        <td class="sectend">{$lna[170]}</td>
-    </tr>
+  <tr>
+    <td class="sectstart">
+      {$lna[169]}
+    </td>
+    <td class="sectend">{$lna[170]}</td>
+  </tr>
 </table>
 
 <table align=center class='tablewidth'>
-{$tablebody}
-    <tr>
-        <td colspan=2 align=right>{$pagebar}</td>
-    </tr>
+  {$tablebody}
+  <tr>
+    <td colspan=2 align=right>{$pagebar}</td>
+  </tr>
 </table>
 
-<br><br>
+<br>
+<br>
 
 <form action="admin.php?go=addon_addskin" method="post" id="ajaxForm1">
     <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
@@ -131,13 +166,24 @@ if ($job == 'scanskin') {
     $handle = opendir("template/");
 
     if (!$handle) {
-        catcherror("{$lna[155]} template/ {$lna[156]}<ul><li>{$lna[157]}</li><li>{$lna[158]}</li><li>{$lna[159]}</li></ul>");
+        catcherror("{$lna[155]} template/ {$lna[156]}
+  <ul>
+    <li>{$lna[157]}</li>
+    <li>{$lna[158]}</li>
+    <li>{$lna[159]}</li>
+  </ul>\n");
     }
 
     while (false !== ($file = readdir($handle))) {
         if (!empty($file) && $file != "." && $file != ".." && file_exists("template/{$file}/info.php")) {
             include("template/{$file}/info.php");
-            $addline .= "\$skinset[\"{$template['id']}\"]=\"{$template['id']}|" . skin_convert($template['name']) . "|" . skin_convert($template['author']) . "|" . skin_convert($template['intro']) . "|" . skin_convert($template['dirname']) . "|" . skin_convert($template['thumbnail']) . "|\";\n";
+            $addline .= "\$skinset[\"{$template['id']}\"]=\"{$template['id']}"
+                     . "|" . skin_convert($template['name'])
+                     . "|" . skin_convert($template['author'])
+                     . "|" . skin_convert($template['intro'])
+                     . "|" . skin_convert($template['dirname'])
+                     . "|" . skin_convert($template['thumbnail'])
+                     . "|\";\n";
         }
     }
 
@@ -241,7 +287,12 @@ if ($job == 'removeskin') {
 }
 
 if ($job == 'plugin') {
-    $formbody = "<tr class='admintitle' ><td width=30 align=center>{$lna[904]}</td><td align=center width='80%'>{$lna[905]}</td><td align=center>{$lna[0]}</td><td align=center>{$lna[78]}</td></tr>\n";
+    $formbody = "  <tr class='admintitle'>
+    <td width=30 align=center>{$lna[904]}</td>
+    <td align=center width='80%'>{$lna[905]}</td>
+    <td align=center>{$lna[0]}</td>
+    <td align=center>{$lna[78]}</td>
+  </tr>\n";
     $mod_array = $blog->getgroupbyquery("SELECT * FROM `{$db_prefix}plugins` ORDER BY `plid` ASC");
 
     for ($i = 0; $i < count($mod_array); $i++) {
@@ -255,13 +306,45 @@ if ($job == 'plugin') {
         $linkdel = "javascript: redirectcomfirm (\"admin.php?go=addon_plugindel_{$mod_array[$i]['plid']}\");";
         $linkadmin = ($mod_array[$i]['pladmin'] == '0') ? "javascript: alert(\"{$lna[908]}\");" : "admin.php?act={$mod_array[$i]['plname']}";
         $class_distinct = ($i % 2 == 0) ? 'visibleitem' : 'hiddenitem';
-        $formbody .= "<tr class='$class_distinct'><td width=30 align=center><input type=checkbox name='selid[]' value='{$mod_array[$i]['plid']}' {$chex}></td><td width='80%'><b>{$mod_array[$i]['plname']}</b>$addwords<br>{$mod_array[$i]['plintro']}</td><td align=center width=30><a href='$linkadmin'><img src='admin/theme/{$themename}/edit.gif' alt='{$lna[0]}' title='{$lna[0]}' border='0'></a></td><td align=center width=30><a href='$linkdel'><img src='admin/theme/{$themename}/del.gif' alt='{$lna[78]}' title='{$lna[78]}' border='0'></a></td></tr>\n";
+        $formbody .= "  <tr class='$class_distinct'>
+  <td width=30 align=center>
+    <input type=checkbox name='selid[]' value='{$mod_array[$i]['plid']}' {$chex}></td>
+    <td width='80%'>
+      <b>{$mod_array[$i]['plname']}</b>$addwords
+      <br>
+      {$mod_array[$i]['plintro']}
+    </td>
+    <td align=center width=30>
+      <a href='$linkadmin' title='{$lna[0]}'>
+        <img src='admin/theme/{$themename}/edit.gif' alt='{$lna[0]}' border='0'>
+      </a>
+    </td>
+    <td align=center width=30>
+      <a href='$linkdel' title='{$lna[78]}'>
+        <img src='admin/theme/{$themename}/del.gif' alt='{$lna[78]}' border='0'>
+      </a>
+    </td>
+</tr>\n";
     }
 
     if (count($mod_array) == 0) {
-        $formbody .= "<tr class='sect' align=center><td colspan=4> <br> <br>{$lna[909]}<br><br></td></tr>";
+        $formbody .= "  <tr class='sect' align=center>
+    <td colspan=4>
+      <br>
+      <br>
+      {$lna[909]}
+      <br>
+      <br>
+    </td>
+  </tr>\n";
     } else {
-        $formbody .= "<tr class='sect' align=center><td colspan=4><input type=hidden name=section value='$section'><input type=button value=\"{$lna[82]}\" class='formbutton' onclick=\"adminSubmitAjax(1);\"> <input type=reset value=\"{$lna[65]}\" class='formbutton'> </td></tr>\n";
+        $formbody .= "  <tr class='sect' align=center>
+    <td colspan=4>
+      <input type=hidden name=section value='$section'>
+      <input type=button value=\"{$lna[82]}\" class='formbutton' onclick=\"adminSubmitAjax(1);\">
+      <input type=reset value=\"{$lna[65]}\" class='formbutton'>
+    </td>
+  </tr>\n";
         $formbody .= "<tr class='sect'><td colspan=4>{$lna[910]}</td></tr>\n";
     }
 
@@ -312,7 +395,8 @@ if ($job == 'plugin') {
                 <b><font color=red>{$lna[923]}</font></b>
             </div>
             <br>
-            {$lna[914]} plugin/<input type=text name=newplugindir size=20>/ <input type='submit' value='{$lna[64]}' class='formbutton'>
+            {$lna[914]} plugin/<input type=text name=newplugindir size=20>/
+            <input type='submit' value='{$lna[64]}' class='formbutton'>
             <br><br>
         </td>
     </tr>
@@ -374,7 +458,32 @@ if ($job == 'addplugin') {
         catcherror($lna[917]);
     }
 
-    $warn .= "<b>{$lna[918]}</b><br><table width=95% align=center><tr><td width=20%>{$lna[919]}</td><td>{$info['name']}</td></tr><tr><td width=20%>{$lna[132]}</td><td>{$info['author']}  &nbsp; [<a href=\"{$info['authorurl']}\" target=_blank>{$lna[920]}</a>]</td></tr><tr><td width=20%>{$lna[921]}</td><td>{$info['version']}</td></tr><tr><td width=20%>{$lna[134]}</td><td>{$info['intro']}</td></tr></table><br><input type='checkbox' name='activate' value='1' checked>{$lna[922]}";
+    $warn .= "<b>{$lna[918]}</b>
+<br>
+<table width=95% align=center>
+  <tr>
+    <td width=20%>{$lna[919]}</td>
+    <td>{$info['name']}</td>
+  </tr>
+  <tr>
+    <td width=20%>{$lna[132]}</td>
+    <td>
+      {$info['author']}
+      &nbsp;
+      [<a href=\"{$info['authorurl']}\" target=_blank>{$lna[920]}</a>]
+    </td>
+  </tr>
+  <tr>
+    <td width=20%>{$lna[921]}</td>
+    <td>{$info['version']}</td>
+  </tr>
+  <tr>
+    <td width=20%>{$lna[134]}</td>
+    <td>{$info['intro']}</td>
+  </tr>
+</table>
+<br>
+<input type='checkbox' name='activate' value='1' checked>{$lna[922]}\n";
     $display_overall .= highlightadminitems('plugin', 'addon');
     $display_overall .= <<<eot
 <form action="admin.php?go=addon_autoaddplugin" method="post">
@@ -517,7 +626,24 @@ if ($job == 'langspec') {
         if (is_array($lncoverwrite)) {
             foreach ($lncoverwrite as $key => $val) {
                 $val = htmlspecialchars($val);
-                $langexist .= "<div id='editline{$lni}'><table width=100% cellpadding=0 cellspacing=0><tr class=\"visibleitem\"><td width=15% align=center><input type=text size=4 maxlength=4 name='newlnum[]' id='newlnum{$lni}' onblur='changeldarea({$lni});' value='{$key}'></td><td width=40%><span id='ldarea{$lni}'>{$lnc[$key]}</span></td><td width=40%><input type=text size=52 name='newldesc[]' id='newldesc{$lni}' value=\"{$val}\"></td><td width=5% align=center><input type=button onclick='deleteeditline({$lni});' value='{$lna[1149]}' class='formbutton'></td></tr></table></div>";
+                $langexist .= "<div id='editline{$lni}'>
+<table width=100% cellpadding=0 cellspacing=0>
+  <tr class=\"visibleitem\">
+    <td width=15% align=center>
+      <input type=text size=4 maxlength=4 name='newlnum[]' id='newlnum{$lni}' onblur='changeldarea({$lni});' value='{$key}'>
+    </td>
+    <td width=40%>
+      <span id='ldarea{$lni}'>{$lnc[$key]}</span>
+    </td>
+    <td width=40%>
+      <input type=text size=52 name='newldesc[]' id='newldesc{$lni}' value=\"{$val}\">
+    </td>
+    <td width=5% align=center>
+      <input type=button onclick='deleteeditline({$lni});' value='{$lna[1149]}' class='formbutton'>
+    </td>
+  </tr>
+</table>
+</div>\n";
                 $lni += 1;
             }
         }
@@ -649,8 +775,11 @@ $langexist
     <tr>
         <td>
             <b>{$lna[1106]}</b>
-            <div style="width:100%; border: 1px solid #ccc; height: 210px; overflow: auto;">{$langstext}</div>
-            <br><br>
+            <div style="width:100%; border: 1px solid #ccc; height: 210px; overflow: auto;">
+                {$langstext}
+            </div>
+            <br>
+            <br>
             {$lna[1107]}
         </td>
     </tr>

@@ -65,10 +65,22 @@ if ($job == '' || $job == "default") {
     );
 
     $propertysel[$property] = 'selected="selected"';
-    $adminselection2 = "<select name=\"property\"><option value='10' {$propertysel[10]}>{$lna[1130]}</option><option value=0 {$propertysel[0]}>{$lna[269]}</option><option value=1 {$propertysel[1]}>{$lna[270]}</option><option value=2 {$propertysel[2]}>{$lna[271]}</option></select>";
+    $adminselection2 = "<select name=\"property\">
+  <option value='10' {$propertysel[10]}>{$lna[1130]}</option>
+  <option value=0 {$propertysel[0]}>{$lna[269]}</option>
+  <option value=1 {$propertysel[1]}>{$lna[270]}</option>
+  <option value=2 {$propertysel[2]}>{$lna[271]}</option>
+</select>\n";
 
     $timeperiodsel[$timeperiod] = "selected";
-    $adminselection4 = "<select name=\"timeperiod\"><option value='0' {$timeperiodsel[0]}>{$lna[1131]}</option><option value=7 {$timeperiodsel[7]}>{$lna[1132]}</option><option value=30 {$timeperiodsel[30]}>{$lna[1133]}</option><option value=90 {$timeperiodsel[90]}>{$lna[1134]}</option><option value=180 {$timeperiodsel[180]}>{$lna[1135]}</option><option value=365 {$timeperiodsel[365]}>{$lna[1136]}</option></select>";
+    $adminselection4 = "<select name=\"timeperiod\">
+  <option value='0' {$timeperiodsel[0]}>{$lna[1131]}</option>
+  <option value=7 {$timeperiodsel[7]}>{$lna[1132]}</option>
+  <option value=30 {$timeperiodsel[30]}>{$lna[1133]}</option>
+  <option value=90 {$timeperiodsel[90]}>{$lna[1134]}</option>
+  <option value=180 {$timeperiodsel[180]}>{$lna[1135]}</option>
+  <option value=365 {$timeperiodsel[365]}>{$lna[1136]}</option>
+</select>\n";
 
     $queryplus = ($property == 10 || $property === "") ? "`property`<3" : "`property`=" . floor($property);
     $queryplus .= ($category === "") ? '' : " AND `category`='" . floor($category) . "'";
@@ -95,7 +107,26 @@ if ($job == '' || $job == "default") {
         $hiddensign_s = array(0 => "openblog.gif", 1 => "lockblog.gif", 2 => "secretblog.gif", 3 => "draft.gif");
         $hiddensign_p = array(0 => $lna[269], 1 => $lna[270], 2 => $lna[271], 3 => $lna[272]);
         $hiddensign = "<img src='admin/theme/{$themename}/{$hiddensign_s[$tmp_st]}' alt='' title='{$hiddensign_p[$tmp_st]}'>";
-        $tablebody .= "<tr class='$addclass'><td align='center'><input type='checkbox' name='selid[]' id='selid[]' value='{$detail_array[$i]['blogid']}'></td><td align='center'>{$hiddensign}</td><td>{$detail_array[$i]['title']}</td><td>{$tmp_tm}</td><td align='center'>{$categories[$tmp_gp]['catename']}</td><td align='center'><a href='javascript: ensuredel(\"{$detail_array[$i]['blogid']}\", \"1\");'><img src='admin/theme/{$themename}/del.gif' alt='{$lna[78]}' title='{$lna[78]}' border='0'></a></td><td align='center'><a href='admin.php?go=edit_edit_{$detail_array[$i]['blogid']}'><img src='admin/theme/{$themename}/edit.gif' alt='{$lna[77]}' title='{$lna[77]}' border='0'></a></td></tr>";
+
+        $tablebody .= "  <tr class='$addclass'>
+    <td align='center'>
+      <input type='checkbox' name='selid[]' id='selid[]' value='{$detail_array[$i]['blogid']}'>
+    </td>
+    <td align='center'>{$hiddensign}</td>
+    <td>{$detail_array[$i]['title']}</td>
+    <td>{$tmp_tm}</td>
+    <td align='center'>{$categories[$tmp_gp]['catename']}</td>
+    <td align='center'>
+      <a href='javascript: ensuredel(\"{$detail_array[$i]['blogid']}\", \"1\");' title='{$lna[78]}'>
+        <img src='admin/theme/{$themename}/del.gif' alt='{$lna[78]}' border='0'>
+      </a>
+    </td>
+    <td align='center'>
+      <a href='admin.php?go=edit_edit_{$detail_array[$i]['blogid']}' title='{$lna[77]}'>
+        <img src='admin/theme/{$themename}/edit.gif' alt='{$lna[77]}' border='0'>
+      </a>
+    </td>
+  </tr>\n";
     }
     for ($i = 0; $i < sizeof($arrayvalue_categories); $i++) {
         $selected = ($arrayvalue_categories[$i] === $category) ? ' selected' : '';
@@ -229,8 +260,7 @@ if ($job == 'batch') {
   <input type=submit value='{$lna[64]}' class='formbutton'>
   <input type=button onclick='window.location=(\"admin.php?act=entry\");' value='{$lna[138]}' class='formbutton'>
 </div>
-";
-        $convery .= "</form>";
+</form>\n";
         $m_b = new template;
         $m_b->showtips($lna[336], $convey);
     }
@@ -424,7 +454,8 @@ eot;
   <tr>
     <td colspan=7>
       <a href="#unexist" onclick="checkallbox('f_s', 'checked');">{$lna[247]}</a>
-      | <a href="#unexist" onclick="checkallbox('f_s', '');">{$lna[248]}</a>
+      |
+      <a href="#unexist" onclick="checkallbox('f_s', '');">{$lna[248]}</a>
     </td>
   </tr>
   <tr>
@@ -442,8 +473,7 @@ eot;
 
     $display_overall_plus .= "
 </table>
-</form>
-";
+</form>\n";
     if ($ajax == 'on') {
         die($display_overall_plus);
     } else {
@@ -534,8 +564,32 @@ if ($job == "pagemanage") {
             $addclass = 'visibleitem';
         }
         $hiddensign = "<img src='admin/theme/{$themename}/openblog.gif' alt=''>";
-        $tablebody .= "<tr class='$addclass'><td align='center'><input type='checkbox' name='selid[]' id='selid[]' value='{$detail_array[$i]['pageid']}'></td><td align='center'>{$hiddensign}</td><td><a href=\"" . getlink_pages($detail_array[$i]['pageid'],
-                $detail_array[$i]['pagealias']) . "\">{$detail_array[$i]['pagetitle']}</a></td><td>{$tmp_tm}</td><td align='center'><a href='javascript: redirectcomfirm (\"admin.php?go=entry_deletepage_{$detail_array[$i]['pageid']}&opt=d\");'><img src='admin/theme/{$themename}/del.gif' alt='{$lna[78]}' title='{$lna[78]}' border='0'></a></td><td align='center'><a href='admin.php?go=page_editpage_{$detail_array[$i]['pageid']}'><img src='admin/theme/{$themename}/edit.gif' alt='{$lna[77]}' title='{$lna[77]}' border='0'></a></td></tr>";
+        $tablebody .= "  <tr class='$addclass'>
+    <td align='center'>
+      <input type='checkbox' name='selid[]' id='selid[]' value='{$detail_array[$i]['pageid']}'>
+    </td>
+    <td align='center'>
+      {$hiddensign}
+    </td>
+    <td>
+      <a href=\"" . getlink_pages($detail_array[$i]['pageid'], $detail_array[$i]['pagealias']) . "\">
+        {$detail_array[$i]['pagetitle']}
+      </a>
+    </td>
+    <td>
+      {$tmp_tm}
+    </td>
+    <td align='center'>
+      <a title='{$lna[78]}' href='javascript: redirectcomfirm (\"admin.php?go=entry_deletepage_{$detail_array[$i]['pageid']}&opt=d\");'>
+        <img src='admin/theme/{$themename}/del.gif' alt='{$lna[78]}' border='0'>
+      </a>
+    </td>
+    <td align='center'>
+      <a title='{$lna[77]}' href='admin.php?go=page_editpage_{$detail_array[$i]['pageid']}'>
+        <img src='admin/theme/{$themename}/edit.gif' alt='{$lna[77]}' border='0'>
+      </a>
+    </td>
+  </tr>\n";
     }
     $numenries = $blog->countbyquery("SELECT COUNT(*) FROM `{$db_prefix}pages`");
     $pagebar = gen_page($page, 5, "admin.php?go=entry_pagemanage", $numenries, $adminitemperpage);

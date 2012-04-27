@@ -23,7 +23,7 @@ function recache_links()
         foreach ($linkgp as $linkgpeachitem) {
             unset ($tmp_gp);
             $tmp_gp = $linkgpeachitem['linkgpid'];
-            $displaygp[$tmp_gp] = "<li><strong>{$linkgpeachitem['linkgpname']}</strong></li>";
+            $displaygp[$tmp_gp] = "<li><strong>{$linkgpeachitem['linkgpname']}</strong></li>\n";
             $visiblegp[] = $tmp_gp;
         }
     } else {
@@ -42,7 +42,7 @@ function recache_links()
             } else {
                 $tmp_displayitem = $linkeachitem['linkname'];
             }
-            $displaygp[$tmp_gp] .= "<li class=\"indent\"><a href=\"{$linkeachitem['linkurl']}\" target=\"_blank\" title=\"{$linkeachitem['linkname']} - {$linkeachitem['linkdesc']}\">{$tmp_displayitem}</a></li>";
+            $displaygp[$tmp_gp] .= "<li class=\"indent\"><a href=\"{$linkeachitem['linkurl']}\" target=\"_blank\" title=\"{$linkeachitem['linkname']} - {$linkeachitem['linkdesc']}\">{$tmp_displayitem}</a></li>\n";
         }
     }
     $linksshow = '<ul>' . @implode('', $displaygp) . '</ul>';
@@ -68,7 +68,7 @@ function recache_emotselection()
         $i = 0;
         foreach ($myemots as $emotcode => $emott) {
             $emotthumb = $emott['thumb'];
-            $selbody .= "<a href=\"javascript: insertemot('$emotcode');\"><img src=\"images/emot/{$emotthumb}\" alt='emot' border='0'></a>";
+            $selbody .= "<a href=\"javascript: insertemot('$emotcode');\"><img src=\"images/emot/{$emotthumb}\" alt='emot' border='0'></a>\n";
             $i += 1;
             if ($i % $perline == 0) {
                 $selbody .= "<br>";
@@ -271,26 +271,31 @@ function recache_currentmonthentries()
     $thisyearurl = "archive.php";
     $out = <<<eot
 <table id="calendar" cellspacing="1" width="100%">
-<tbody><tr><td colspan="7" class="calendar-top">
-<a href="{$lastyearurl}" rel="noindex,nofollow">&lt;</a>
-<a href="{$thisyearurl}" rel="noindex,nofollow"><span class="calendar-year">{$cy}</span></a>
-<a href="{$nextyearurl}" rel="noindex,nofollow">&gt;</a>
-	&nbsp;&nbsp;
-<a href="{$lastmonthurl}" rel="noindex,nofollow">&lt;</a>
-<a href="{$thismonthurl}" rel="noindex,nofollow"><span class="calendar-month">{$cm}</span></a>
-<a href="{$nextmonthurl}" rel="noindex,nofollow">&gt;</a>{$lunarym}
-</td></tr>
-<tr class="calendar-weekdays">
-	<td class="calendar-weekday-cell">{$lnc[115]}</td>
-	<td class="calendar-weekday-cell">{$lnc[116]}</td>
-	<td class="calendar-weekday-cell">{$lnc[117]}</td>
-	<td class="calendar-weekday-cell">{$lnc[118]}</td>
-	<td class="calendar-weekday-cell">{$lnc[119]}</td>
-	<td class="calendar-weekday-cell">{$lnc[120]}</td>
-	<td class="calendar-weekday-cell">{$lnc[121]}</td>
-</tr>
-{$calendarbody}
-</tbody></table>
+<tbody>
+  <tr>
+    <td colspan="7" class="calendar-top">
+      <a href="{$lastyearurl}" rel="noindex,nofollow">&lt;</a>
+      <a href="{$thisyearurl}" rel="noindex,nofollow"><span class="calendar-year">{$cy}</span></a>
+      <a href="{$nextyearurl}" rel="noindex,nofollow">&gt;</a>
+      &nbsp;&nbsp;
+      <a href="{$lastmonthurl}" rel="noindex,nofollow">&lt;</a>
+      <a href="{$thismonthurl}" rel="noindex,nofollow"><span class="calendar-month">{$cm}</span></a>
+      <a href="{$nextmonthurl}" rel="noindex,nofollow">&gt;</a>
+      {$lunarym}
+    </td>
+  </tr>
+  <tr class="calendar-weekdays">
+    <td class="calendar-weekday-cell">{$lnc[115]}</td>
+    <td class="calendar-weekday-cell">{$lnc[116]}</td>
+    <td class="calendar-weekday-cell">{$lnc[117]}</td>
+    <td class="calendar-weekday-cell">{$lnc[118]}</td>
+    <td class="calendar-weekday-cell">{$lnc[119]}</td>
+    <td class="calendar-weekday-cell">{$lnc[120]}</td>
+    <td class="calendar-weekday-cell">{$lnc[121]}</td>
+  </tr>
+  {$calendarbody}
+</tbody>
+</table>
 eot;
     //$out="<?php\n\$month_calendar=array(".@implode(',', $result_all).");";
     if (!writetofile("data/cache_currentmonth.php", $out)) {

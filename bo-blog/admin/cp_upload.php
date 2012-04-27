@@ -34,9 +34,11 @@ if (!$useeditor) {
 
 if (!$job || $job == "default") {
     $message = "<form enctype='multipart/form-data' action=\"admin.php?go=upload_doattach&useeditor={$useeditor}\" method=\"post\">";
-    $display_allowed = "<select><option>" . @str_replace(' ', "</option><option>",
-            $permission['AllowedTypes']) . "</option></select>";
-    $message .= "<table width=86% align=center class=\"adminoption\" >
+    $display_allowed = "<select>
+  <option>" . @str_replace(' ', "</option>
+  <option>" . $permission['AllowedTypes']) . "</option>
+</select>\n";
+    $message .= "<table width=86% align=center class=\"adminoption\">
   <tr>
     <td width=25% valign=top align=center>{$lna[408]}</td>
     <td width=60%>
@@ -153,7 +155,7 @@ if ($job == "doattach") {
 
     for ($i = 0; $i < count($upload_filename_list); $i++) {
         $upload_parts .= str_replace('*', '.',
-                $upload_filename_list[$i]) . " <input type='button' value='{$lna[424]}' onclick=\"generateUpload('{$upload_filename_list_insert[$i]}', '{$upload_filename_list[$i]}');\">{$upload_filename_watermark[$i]}<br>";
+                $upload_filename_list[$i]) . "<input type='button' value='{$lna[424]}' onclick=\"generateUpload('{$upload_filename_list_insert[$i]}', '{$upload_filename_list[$i]}');\">\n{$upload_filename_watermark[$i]}\n<br>\n";
     }
 
     print_upload("<div align=left>{$lna[422]}
@@ -203,24 +205,38 @@ if ($job == "filedir") {
   <option value=0 selected>{$lna[291]}</option>
   <option value={$nowtime['year']}>{$nowtime['year']}</option>\n";
 
+    foreach ($foryears as $y) {
+        $showysel .= "  <option value=$y>$y</option>\n";
+    }
+    $showysel .= "</select>\n";
+
     $showmsel = "<select name=uploadmonth>
   <option value=0>{$lna[292]}</option>\n";
 
-    foreach ($foryears as $y) {
-        $showysel .= "<option value=$y>$y</option>\n";
-    }
     foreach ($formonths as $m) {
-        $showmsel .= "<option value=$m>$m</option>\n";
+        $showmsel .= "  <option value=$m>$m</option>\n";
     }
-    $showysel .= "</select>\n";
     $showmsel .= "</select>\n";
 
     $pagebar = gen_page($page, 5,
         "admin.php?go=upload_filedir&useeditor={$useeditor}&uploadyear={$uploadyear}&uploadmonth={$uploadmonth}",
         $numenries, 51);
 
-    $message = "<form action='admin.php?go=upload_filedir&useeditor={$useeditor}' method=post><div align=left style=\"margin-left: 15px;\">{$showysel} / {$showmsel} <input type=submit value='{$lna[244]}'> &nbsp; &nbsp; {$pagebar}</div></form><div align=left style=\"margin-left: 15px;\"><b>{$lna[425]}</b> <input type='checkbox' id='ifautoaddubb' checked='checked'>{$lna[426]}</div><div id='uploadrow'><ul>" . @implode("\n",
-            $inserttext) . "</ul></div>";
+    $message = "<form action='admin.php?go=upload_filedir&useeditor={$useeditor}' method=post>
+  <div align=left style=\"margin-left: 15px;\">
+    {$showysel} / {$showmsel}
+    <input type=submit value='{$lna[244]}'>
+    &nbsp; &nbsp;
+    {$pagebar}
+  </div>
+</form>
+<div align=left style=\"margin-left: 15px;\">
+  <b>{$lna[425]}</b> 
+  <input type='checkbox' id='ifautoaddubb' checked='checked'>{$lna[426]}
+</div>
+<div id='uploadrow'>
+  <ul>" . @implode("\n", $inserttext) . "</ul>
+</div>\n";
     print_upload($message, "normal", "highlight", "normal");
 }
 
@@ -257,17 +273,16 @@ if ($job == "gallery") {
     $showysel = "<select name=uploadyear>
   <option value=0 selected>{$lna[291]}</option>
   <option value={$nowtime['year']}>{$nowtime['year']}</option>\n";
+    foreach ($foryears as $y) {
+        $showysel .= "  <option value=$y>$y</option>\n";
+    }
+    $showysel .= "</select>\n";
 
     $showmsel = "<select name=uploadmonth>
   <option value=0>{$lna[292]}</option>\n";
-
-    foreach ($foryears as $y) {
-        $showysel .= "<option value=$y>$y</option>\n";
-    }
     foreach ($formonths as $m) {
-        $showmsel .= "<option value=$m>$m</option>\n";
+        $showmsel .= "  <option value=$m>$m</option>\n";
     }
-    $showysel .= "</select>\n";
     $showmsel .= "</select>\n";
 
     $pagebar = gen_page($page, 3,

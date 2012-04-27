@@ -173,7 +173,7 @@ function highlightadminitems($itemhighlight, $itemsrow)
     $str = "<script>
 	function adminitemhover(hovername, obj) {
 		if (document.getElementById('dropmenudiv') && document.getElementById('hoveritem_'+hovername)) document.getElementById('dropmenudiv').innerHTML=document.getElementById('hoveritem_'+hovername).innerHTML;
-		if ((is_ie || is_ie4) && !is_ie8) document.getElementById('dropmenudiv').innerHTML+=\"<iframe src='javascript:false' style='position:absolute; visibility:inherit;   top:0px; left:0px; width:128px; height:200px; z-index:-1; filter=progid:DXImageTransform.Microsoft.Alpha(style=0,opacity=0);'></iframe>\";
+		if ((is_ie || is_ie4) && !is_ie8) document.getElementById('dropmenudiv').innerHTML+=\"<iframe src='javascript:false' style='position:absolute; visibility:inherit; top:0px; left:0px; width:128px; height:200px; z-index:-1; filter=progid:DXImageTransform.Microsoft.Alpha(style=0,opacity=0);'></iframe>\";
 		dropdownmenu(obj);
 	}
 	</script>";
@@ -253,7 +253,9 @@ function addpref($pref_type, $pref_content)
                 }
                 $tmp_sel .= "        <option value='{$current_sel[0]}' {$seled}>{$current_sel[1]}</option>";
             }
-            $tmp_sel .= "</select> {$prefs[3]}</td></tr>";
+            $tmp_sel .= "      </select> {$prefs[3]}
+    </td>
+  </tr>\n";
             $output = $tmp_sel;
             unset($tmp_sel, $current_sel_all);
             break;
@@ -262,13 +264,17 @@ function addpref($pref_type, $pref_content)
     <td class=\"prefsection\" align=\"center\" colspan='2'>
       <a name=\"pref{$prefseccounter}\"></a>{$prefs[0]}
       [
-      <a href=\"#top\"><img src=\"images/arrows/singleup.gif\" alt=\"\" title=\"TOP\" align=\"absmiddle\" border=\"0\"></a>
-      <a href=\"#bottom\"><img src=\"images/arrows/singledown.gif\" alt=\"\" title=\"BOTTOM\" align=\"absmiddle\" border=\"0\"></a>
+      <a href=\"#top\">
+        <img src=\"images/arrows/singleup.gif\" alt=\"\" title=\"TOP\" align=\"absmiddle\" border=\"0\">
+      </a>
+      <a href=\"#bottom\">
+        <img src=\"images/arrows/singledown.gif\" alt=\"\" title=\"BOTTOM\" align=\"absmiddle\" border=\"0\">
+      </a>
       ]
     </td>
   </tr>\n";
             if ($prefseccounter % 5 == 0) {
-                $pref_quicksel .= "<tr align='left'>";
+                $pref_quicksel .= "  <tr align='left'>\n";
             }
             $pref_quicksel .= "    <td width=20%>
       [<a href=\"#pref{$prefseccounter}\">{$prefs[0]}</a>]

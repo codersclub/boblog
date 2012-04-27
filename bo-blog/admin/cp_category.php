@@ -234,10 +234,16 @@ if ($job == 'edit') {
     acceptrequest('sourcecate');
     if ($categories[$sourcecate]['cateproperty'] == 0) {
         $sel1 = 'selected';
-        $alsochange = "{$lna[924]}<br><input type=radio name=alsochange value=1 checked>{$lna[239]} <input type=radio name=alsochange value=0>{$lna[240]} ";
+        $alsochange = "{$lna[924]}
+<br>
+<input type=radio name=alsochange value=1 checked>{$lna[239]}
+<input type=radio name=alsochange value=0>{$lna[240]}\n";
     } else {
         $sel2 = 'selected';
-        $alsochange = "{$lna[925]}<br><input type=radio name=alsochange value=2 checked>{$lna[239]} <input type=radio name=alsochange value=0>{$lna[240]} ";
+        $alsochange = "{$lna[925]}
+<br>
+<input type=radio name=alsochange value=2 checked>{$lna[239]}
+<input type=radio name=alsochange value=0>{$lna[240]}\n";
     }
     if ($categories[$sourcecate]['catemode'] == 0) {
         $sel3 = 'selected';
@@ -496,10 +502,15 @@ if ($job == 'tags') {
   <tr class='sect'>
     <td colspan=2 align=center class="sectbar">
       {$lna[211]}
-      <!--<input type=radio name='opt' value='combine'>{$lna[212]} <input type=text size=6 name='newtagname'> &nbsp;&nbsp;-->
+      <!--
+      <input type=radio name='opt' value='combine'>{$lna[212]}
+      <input type=text size=6 name='newtagname'>
+      &nbsp;&nbsp;
+      -->
       <input type=radio name='opt' value='del'>{$lna[78]}
       &nbsp;&nbsp;
-      <input type=radio name='opt' value='counttags'><acronym title="{$lna[1184]}">{$lna[1183]}</acronym></a>
+      <input type=radio name='opt' value='counttags'>
+      <acronym title="{$lna[1184]}">{$lna[1183]}</acronym>
       &nbsp;&nbsp;
       <input type=button value="{$lna[64]}" class='formbutton' onclick="adminSubmitAjax(1);">
     </td>

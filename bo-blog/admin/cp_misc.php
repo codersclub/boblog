@@ -841,7 +841,15 @@ eot;
 if ($job == 'urlrewritesave') {
     acceptrequest('urlrewritesta');
     $urlrewritesta = floor($urlrewritesta);
-    $savetext = "<?php\n\$db_server='{$db_server}';\n\$db_username='{$db_username}';\n\$db_password='{$db_password}';\n\$db_name='{$db_name}';\n\$db_prefix='{$db_prefix}';\n\$db_410='{$db_410}';\n\$db_tmpdir='{$db_tmpdir}';\n\$db_defaultsessdir='{$db_defaultsessdir}';\n";
+    $savetext = "<?php
+\$db_server='{$db_server}';
+\$db_username='{$db_username}';
+\$db_password='{$db_password}';
+\$db_name='{$db_name}';
+\$db_prefix='{$db_prefix}';
+\$db_410='{$db_410}';
+\$db_tmpdir='{$db_tmpdir}';
+\$db_defaultsessdir='{$db_defaultsessdir}';\n";
     foreach ($config as $key => $val) {
         if ($key == 'urlrewritemethod') {
             $savetext .= "\$config['{$key}']='{$urlrewritesta}';\n";

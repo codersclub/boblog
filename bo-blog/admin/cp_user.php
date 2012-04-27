@@ -34,8 +34,20 @@ if ($job == '' || $job == "usergroup") {
     if (is_array($usergp)) {
         foreach ($usergp as $key => $value) {
             $addclass = ($i % 2 == 0) ? 'visibleitem' : 'hiddenitem';
-            $delitornot = ($key == 0 || $key == 1 || $key == 2) ? "<a href='javascript: alert(\"{$lna[436]}\");'><img src='admin/theme/{$themename}/del.gif' alt='' title='{$lna[436]}' border='0'></a>" : "<a href='admin.php?go=user_delgp_{$key}'><img src='admin/theme/{$themename}/del.gif' alt='{$lna[78]}' title='{$lna[78]}' border='0'></a>";
-            $tablebody .= "<tr class='$addclass'><td align='center'>{$key}</td><td>{$value}</td><td align='center'>{$delitornot}</td><td align='center'><a href='admin.php?go=user_editgp_{$key}'><img src='admin/theme/{$themename}/edit.gif' alt='{$lna[77]}' title='{$lna[77]}' border='0'></a></td></tr>";
+            $delitornot = ($key == 0 || $key == 1 || $key == 2)
+                ? "<a href='javascript: alert(\"{$lna[436]}\");'><img src='admin/theme/{$themename}/del.gif' alt='' title='{$lna[436]}' border='0'></a>"
+                : "<a href='admin.php?go=user_delgp_{$key}'><img src='admin/theme/{$themename}/del.gif' alt='{$lna[78]}' title='{$lna[78]}' border='0'></a>";
+            $tablebody .= "
+  <tr class='$addclass'>
+    <td align='center'>{$key}</td>
+    <td>{$value}</td>
+    <td align='center'>{$delitornot}</td>
+    <td align='center'>
+      <a href='admin.php?go=user_editgp_{$key}' title='{$lna[77]}'>
+        <img src='admin/theme/{$themename}/edit.gif' alt='{$lna[77]}' border='0'>
+      </a>
+    </td>
+  </tr>\n";
             $i += 1;
         }
     }
@@ -298,8 +310,8 @@ if ($job == 'users') {
       </a>
     </td>
     <td align='center'>
-      <a href='admin.php?go=user_edituser_{$detail_array[$i]['userid']}'>
-        <img src='admin/theme/{$themename}/edit.gif' alt='{$lna[77]}' title='{$lna[77]}' border='0'>
+      <a href='admin.php?go=user_edituser_{$detail_array[$i]['userid']}' title='{$lna[77]}'>
+        <img src='admin/theme/{$themename}/edit.gif' alt='{$lna[77]}' border='0'>
       </a>
     </td>
   </tr>";
@@ -465,13 +477,13 @@ if ($job == 'add' || $job == 'edituser') {
             catcherror($lna[474]);
         }
         if ($edituser['usergroup'] == 2) {
-            $pluswarn = "<font color=red><b>{$lna[475]}</b></color><br>";
+            $pluswarn = "<font color=red><b>{$lna[475]}</b></color>\n<br>\n";
         }
         $jobs = "saveuser";
         $t = new template;
         $formbody .= $t->set('form_eachline', array(
             'text'        => $lna[464],
-            'formelement' => $edituser['username'] . "<input type='hidden'  name='p[userid]' value='$itemid'>",
+            'formelement' => $edituser['username'] . "<input type='hidden'  name='p[userid]' value='$itemid'>\n",
         ));
         $formbody .= $t->set('form_eachline', array('text' => $lna[476], 'formelement' => $lna[477]));
         $formbody .= $t->set('form_eachline', array(
@@ -507,10 +519,10 @@ if ($job == 'add' || $job == 'edituser') {
             continue;
         }
         $selected = ($i == @$edituser['usergroup']) ? ' selected' : '';
-        $puttingcates .= "<option value='{$i}'{$selected}>{$value}</option>";
+        $puttingcates .= "<option value='{$i}'{$selected}>{$value}</option>\n";
     }
     $formbody .= $t->set('form_eachline',
-        array('text' => $lna[463], 'formelement' => "<select name='p[usergroup]'>{$puttingcates}</select>"));
+        array('text' => $lna[463], 'formelement' => "<select name='p[usergroup]'>{$puttingcates}</select>\n"));
     $formbody .= $t->set('form_eachline', array(
         'text'        => $lna[485],
         'formelement' => "<input type='text' class='text' size='16' name='p[email]' value='" . stripslashes(@$edituser['email']) . "'>",
@@ -525,7 +537,10 @@ if ($job == 'add' || $job == 'edituser') {
     $sex_choice[$tmp_gender] = "checked=checked";
     $formbody .= $t->set('form_eachline', array(
         'text'        => $lna[491],
-        'formelement' => "<input type='radio' name='p[gender]' value='0' {$sex_choice[0]}>{$lna[487]} <input type='radio' name='p[gender]' value='1' {$sex_choice[1]}>{$lna[488]} <input type='radio' name='gender' value='2' {$sex_choice[2]}>{$lna[489]}",
+        'formelement' => "
+<input type='radio' name='p[gender]' value='0' {$sex_choice[0]}>{$lna[487]}
+<input type='radio' name='p[gender]' value='1' {$sex_choice[1]}>{$lna[488]}
+<input type='radio' name='gender' value='2' {$sex_choice[2]}>{$lna[489]}\n",
     ));
     $formbody .= $t->set('form_eachline', array(
         'text'        => $lna[490],

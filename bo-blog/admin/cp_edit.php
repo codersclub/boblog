@@ -78,7 +78,7 @@ if ($job == 'add' || $job == 'edit') { //Initialize public items
     if ($findautosaver['blogid'] == '-1' && $ignore != 1) {
         @header("Content-Type: text/html; charset=utf-8");
         $t = new template;
-        $t->showtips($lna[926], "<font color=red>{$lna[927]}</font><br>", array(
+        $t->showtips($lna[926], "<font color=red>{$lna[927]}</font>\n<br>\n", array(
             "{$lna[928]}|admin.php?go=edit_edit_-1&ignore=1",
             "{$lna[929]}|admin.php?" . $_SERVER['QUERY_STRING'] . "&ignore=1",
         ));
@@ -434,12 +434,18 @@ eot;
             <input type=checkbox id='changemytime' name='changemytime' value=1 onclick="timechanger();">{$lna[289]}
             $editwarntime
             <div style="clear:both; display: none;" id="changetime">
-              {$lna[290]} <input type='text' name='newyear' size='4' value="{$records['pub_year']}" maxlength='4'>{$lna[291]}
-              - <input type='text' name='newmonth' size='2' value="{$records['pub_month']}" maxlength='2'>{$lna[292]}
-              - <input type='text' name='newday' size='2' value="{$records['pub_day']}" maxlength='2'>{$lna[293]}
-              - <input type='text' name='newhour' size='2' value="{$records['pub_hour']}" maxlength='2'>{$lna[294]}
-              - <input type='text' name='newmin' size='2' value="{$records['pub_min']}" maxlength='2'>{$lna[295]}
-              - <input type='text' name='newsec' size='2' value="{$records['pub_sec']}" maxlength='2'>{$lna[296]}
+              {$lna[290]}
+              <input type='text' name='newyear' size='4' value="{$records['pub_year']}" maxlength='4'>{$lna[291]}
+              -
+              <input type='text' name='newmonth' size='2' value="{$records['pub_month']}" maxlength='2'>{$lna[292]}
+              -
+              <input type='text' name='newday' size='2' value="{$records['pub_day']}" maxlength='2'>{$lna[293]}
+              -
+              <input type='text' name='newhour' size='2' value="{$records['pub_hour']}" maxlength='2'>{$lna[294]}
+              -
+              <input type='text' name='newmin' size='2' value="{$records['pub_min']}" maxlength='2'>{$lna[295]}
+              -
+              <input type='text' name='newsec' size='2' value="{$records['pub_sec']}" maxlength='2'>{$lna[296]}
             </div>
           </td>
         </tr>
@@ -809,9 +815,17 @@ if ($job == 'store' || $job == 'restore') {
     <input type='button' value='{$lna[311]}' onclick='window.location=(\""
             . get_entry_url($currentid, $blogalias) . "\");' class='formbutton'>
   </form>
-</div>";
+</div>\n";
         $t = new template;
-        $t->showtips($lna[312], $lna[313] . $ping_url_show . "<br><br>{$lna[314]}<br><br>" . $form,
+        $t->showtips($lna[312],
+            $lna[313]
+            . $ping_url_show
+            . "<br>
+<br>
+{$lna[314]}
+<br>
+<br>\n"
+            . $form,
             "{$backtowhere}|" . get_entry_url($currentid, $blogalias));
     }
 }
@@ -828,7 +842,7 @@ if ($job == 'sendtb') {
     foreach ($pingurl as $durl) {
         $result = sendping($durl, $title, $excerpt, $url, $blog_name);
         if (!$result) {
-            $showp .= "<b>{$lna[316]}</b>{$durl} ; <b>{$lna[317]}</b>{$lna[318]}";
+            $showp .= "<b>{$lna[316]}</b>{$durl} ; <b>{$lna[317]}</b>{$lna[318]}<br>";
         } elseif ($result == 'ok') {
             $showp .= "<b>{$lna[316]}</b>{$durl} ; <b>{$lna[317]}</b>{$lna[319]}<br>";
         } elseif ($result == 'unknown') {
@@ -852,16 +866,16 @@ function autoselect($name, $arrayoption, $arrayvalue, $selectedid = 0, $disabled
     if ($disabled == 1) {
         $wdisabled = " disabled='disabled' ";
     }
-    $formcontent .= "<select name='{$name}' id='{$name}' class='formselect' {$wdisabled}>";
+    $formcontent .= "<select name='{$name}' id='{$name}' class='formselect' {$wdisabled}>\n";
     for ($i = 0; $i < count($arrayoption); $i++) {
         if ($selectedid == $i) {
             $wselected = "selected='selected'";
         } else {
             $wselected = '';
         }
-        $formcontent .= "<option value='{$arrayvalue[$i]}' {$wselected}>{$arrayoption[$i]}</option>";
+        $formcontent .= "  <option value='{$arrayvalue[$i]}' {$wselected}>{$arrayoption[$i]}</option>\n";
     }
-    $formcontent .= "</select>";
+    $formcontent .= "</select>\n";
     return $formcontent;
 }
 
@@ -885,7 +899,7 @@ function autoradio($type, $name, $arraylabel, $arrayvalue, $arraychecked = array
         if ($type == 'checkbox') {
             $disabled .= " id='{$name}' ";
         }
-        $formcontent .= "<label><input type='{$type}' name='{$name}' value='{$arrayvalue[$i]}' {$addcheck} class='formradiobox' {$disabled}>{$arraylabel[$i]}</label> ";
+        $formcontent .= "<label><input type='{$type}' name='{$name}' value='{$arrayvalue[$i]}' {$addcheck} class='formradiobox' {$disabled}>{$arraylabel[$i]}</label>\n";
     }
     return $formcontent;
 }

@@ -48,7 +48,7 @@ $pageitems = '';
 
 if ($config['blogopen'] != 1 && !defined('isLogin')) {
     if ($permission['CP'] == 1) {
-        $config['message_off'] .= "<br><ul><li><a href='admin.php'>{$lnc[107]}</a></li></ul>";
+        $config['message_off'] .= "<br>\n<ul><li><a href='admin.php'>{$lnc[107]}</a></li></ul>\n";
     }
     catcherror($config['message_off']);
 }

@@ -50,7 +50,7 @@ $backtopending = "{$lna[21]}|admin.php?go=link_pending";
 
 if ($job == '' || $job == "default") {
     $urlnew = "admin.php?go=link_ordergp_";
-    $puttinggp2 = $puttinggp . "<option value='removeall'>{$lna[215]}</option>";
+    $puttinggp2 = $puttinggp . "<option value='removeall'>{$lna[215]}</option>\n";
     $display_overall .= highlightadminitems('default', 'link');
     $display_overall_plus = <<<eot
 <form action="admin.php?go=link_newgp" method="post" id="ajaxForm1">
@@ -59,7 +59,9 @@ if ($job == '' || $job == "default") {
     <td class="sectstart">
       {$lna[216]}
     </td>
-    <td class="sectend">{$lna[217]}</td>
+    <td class="sectend">
+      {$lna[217]}
+    </td>
   </tr>
   <tr>
     <td colspan=2  class="sect">

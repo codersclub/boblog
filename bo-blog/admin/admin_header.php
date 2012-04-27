@@ -72,16 +72,52 @@ $editorjs
         <div id="adminheader">
             <div id="adminheaderbar">
                 <ul>
-                    <span class="ahb{$adminclassshow['main']}"><li class="firstitem" onmouseover="adminitemhover('main',this)"><a href="#">{$lna[2]}</a></li></span>
-                    <span class="ahb{$adminclassshow['entry']}"><li onmouseover="adminitemhover('entry',this)"><a href="#">{$lna[3]}</a></li></span>
-                    <span class="ahb{$adminclassshow['category']}"><li onmouseover="adminitemhover('category',this)"><a href="#">{$lna[4]}</a></li></span>
-                    <span class="ahb{$adminclassshow['link']}"><li onmouseover="adminitemhover('link',this)"><a href="#">{$lna[5]}</a></li></span>
-                    <span class="ahb{$adminclassshow['reply']}"><li onmouseover="adminitemhover('reply',this)"><a href="#">{$lna[6]}</a></li></span>
+                    <span class="ahb{$adminclassshow['main']}">
+                        <li class="firstitem" onmouseover="adminitemhover('main',this)">
+                            <a href="#">{$lna[2]}</a>
+                        </li>
+                    </span>
+                    <span class="ahb{$adminclassshow['entry']}">
+                        <li onmouseover="adminitemhover('entry',this)">
+                            <a href="#">{$lna[3]}</a>
+                        </li>
+                    </span>
+                    <span class="ahb{$adminclassshow['category']}">
+                        <li onmouseover="adminitemhover('category',this)">
+                            <a href="#">{$lna[4]}</a>
+                        </li>
+                    </span>
+                    <span class="ahb{$adminclassshow['link']}">
+                        <li onmouseover="adminitemhover('link',this)">
+                            <a href="#">{$lna[5]}</a>
+                        </li>
+                    </span>
+                    <span class="ahb{$adminclassshow['reply']}">
+                        <li onmouseover="adminitemhover('reply',this)">
+                            <a href="#">{$lna[6]}</a>
+                        </li>
+                    </span>
                     $messageblock
-                    <span class="ahb{$adminclassshow['user']}"><li onmouseover="adminitemhover('user',this)"><a href="#">{$lna[8]}</a></li></span>
-                    <span class="ahb{$adminclassshow['addon']}"><li onmouseover="adminitemhover('addon',this)"><a href="#">{$lna[9]}</a></li></span>
-                    <span class="ahb{$adminclassshow['misc']}"><li onmouseover="adminitemhover('misc',this)"><a href="#">{$lna[10]}</a></li></span>
-                    <span class="ahb{$adminclassshow['carecenter']}"><li onmouseover="adminitemhover('carecenter',this)"><a href="#">{$lna[11]}</a></li></span>
+                    <span class="ahb{$adminclassshow['user']}">
+                        <li onmouseover="adminitemhover('user',this)">
+                            <a href="#">{$lna[8]}</a>
+                        </li>
+                    </span>
+                    <span class="ahb{$adminclassshow['addon']}">
+                        <li onmouseover="adminitemhover('addon',this)">
+                            <a href="#">{$lna[9]}</a>
+                        </li>
+                    </span>
+                    <span class="ahb{$adminclassshow['misc']}">
+                        <li onmouseover="adminitemhover('misc',this)">
+                            <a href="#">{$lna[10]}</a>
+                        </li>
+                    </span>
+                    <span class="ahb{$adminclassshow['carecenter']}">
+                        <li onmouseover="adminitemhover('carecenter',this)">
+                            <a href="#">{$lna[11]}</a>
+                        </li>
+                    </span>
                 </ul>
             </div>
         </div>
@@ -89,7 +125,10 @@ $editorjs
             <div id="dropmenudiv" class="dropmenudiv" style="position:absolute;top:-15px;visibility:hidden;z-index:10000"></div>
         </div>
         <div id="adminalert" style="display:none;"></div>
-        <!-- div id='changeBox' class='adminbox-success'>"+ajaxMsg+"</div><div id='divMask' class='adminbox-success-mask'></div -->
+        <!--
+        <div id='changeBox' class='adminbox-success'>"+ajaxMsg+"</div>
+        <div id='divMask' class='adminbox-success-mask'></div>
+        -->
 eot;
 
 $admin_item["main"] = array(
@@ -152,10 +191,10 @@ $admin_item["carecenter"] = array(
 );
 
 foreach ($admin_item as $k => $v) {
-    $rollall = '<ul>';
+    $rollall = "<ul>\n";
     foreach ($v as $kk => $vv) {
-        $rollall .= "<li class=\"normal\"><a href=\"admin.php?go={$k}_{$kk}\">{$vv}</a></li>";
+        $rollall .= "<li class=\"normal\"><a href=\"admin.php?go={$k}_{$kk}\">{$vv}</a></li>\n";
     }
-    $rollall .= '</ul>';
+    $rollall .= "</ul>\n";
     $display_overall .= "<div id=\"hoveritem_{$k}\" style=\"display: none;\">{$rollall}</div>\n";
 }
