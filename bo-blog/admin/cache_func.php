@@ -244,6 +244,7 @@ function recache_latestreplies()
 function recache_currentmonthentries()
 {
     global $blog, $db_prefix, $nowtime, $lna, $lnc, $mbcon, $config;
+    global $lnlunarcalendar;
     $cm = $nowtime['month'];
     $cy = $nowtime['year'];
     $result = $blog->getarraybyquery("SELECT (cday) FROM `{$db_prefix}calendar` WHERE `cyearmonth`='{$nowtime['Ym']}'");
@@ -269,6 +270,7 @@ function recache_currentmonthentries()
     $lastyearurl = getlink_archive($cm, $lastyear);
     $thismonthurl = getlink_archive($cm, $cy);
     $thisyearurl = "archive.php";
+    $mnt = $lnlunarcalendar['month'][$cm];
     $out = <<<eot
 <table id="calendar" cellspacing="1" width="100%">
 <tbody>
@@ -279,7 +281,7 @@ function recache_currentmonthentries()
       <a href="{$nextyearurl}" rel="noindex,nofollow">&gt;</a>
       &nbsp;&nbsp;
       <a href="{$lastmonthurl}" rel="noindex,nofollow">&lt;</a>
-      <a href="{$thismonthurl}" rel="noindex,nofollow"><span class="calendar-month">{$cm}</span></a>
+      <a href="{$thismonthurl}" rel="noindex,nofollow"><span class="calendar-month">{$mnt}</span></a>
       <a href="{$nextmonthurl}" rel="noindex,nofollow">&gt;</a>
       {$lunarym}
     </td>
