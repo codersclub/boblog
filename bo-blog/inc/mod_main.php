@@ -229,7 +229,8 @@ if (!empty($m_b->total_rows)) {
         $section_body_main[] = $m_b->make_list(@implode('', $listbody));
     }
 } else {
-    $section_body_main[] = "<br>
+    $section_body_main[] = '<h1>' . trim($pagetitle, '- ') . "</h1>
+<br>
 <div align='center'>
   <span style='font-size: 14px;'>{$lnc[186]}</span>
 </div>

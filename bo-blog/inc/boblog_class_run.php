@@ -676,8 +676,12 @@ class getblogs extends boblog
         }
         $tags = $alltags = $previous = $next = $editby = $toolbar = $topid = '';
         $previousentrytitle = $previousentryurl = $nextentrytitle = $nextentryurl = '';
+if($way=='excerpt') {
         $entrytitle = "<a href=\"" . getlink_entry($entry['blogid'],
                 $entry['blogalias']) . "\">{$entry['title']}</a>\n";
+} else {
+        $entrytitle = $entry['title']. "\n";
+}
         if ($entry['sticky'] == 1 || $entry['sticky'] == 2) {
             $entrytitle = "[{$lnc[33]}] " . $entrytitle;
         }

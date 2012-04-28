@@ -485,10 +485,14 @@ select {
 	margin-left:0px;
 }
 .textbox-title{
-*	float:left;
 	margin-left:10px;
 	margin-bottom:8px;
-*	width:615px;
+}
+.textbox-title h1{
+	color:#135E93;
+	margin:0px 0px 2px;
+	font:normal 24px/150% Verdana,Tahoma,Arial;
+	padding-bottom:3px;
 }
 .textbox-title h4{
 	color:#135E93;

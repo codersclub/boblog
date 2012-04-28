@@ -232,9 +232,9 @@ $elements['viewentry']=<<<eot
 		<span class="post-year">{entrydatey}</span>
 	</div>
 	<div class="textbox-title">
-		<h4>
+		<h1>
 		{entrytitle}
-		</h4>
+		</h1>
 		<div class="textbox-label">
 			<span class="post-author">{entryauthor}</span>
             <span class="post-tag" style="display: {iftags}">{alltags}</span>
