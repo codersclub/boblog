@@ -266,6 +266,7 @@ select {
 .panel-content ul{
 	padding: 0px;
 	margin: 0px;
+	list-style: none;
 }
 .panel-content li{
 	padding:2px 0 2px 0px;
