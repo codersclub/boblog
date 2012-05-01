@@ -199,6 +199,9 @@ if ($job == 'addreply' || $job == 'addmessage' || $job == 'editreply' || $job ==
         if ($v_repurl) {
             $mbcon['susurlnum'] -= 1; //2010/9/5: If the user leaves a website URL, it will be counted as well.
         }
+        if (substr_count($v_content, 'https://') >= $mbcon['susurlnum']) {
+            $suspectspam = 1;
+        }
         if (substr_count($v_content, 'http://') >= $mbcon['susurlnum']) {
             $suspectspam = 1;
         }

@@ -17,7 +17,7 @@ function addfmp() {
 		txt=FxGetTxt ("[fmp]", "[/fmp]");
 		return;
 	} else {
-		txt=prompt(jslang[59],"http://");
+		txt=prompt(jslang[59],"https://");
 		if(txt!=null) {
 			AddTxt="[fmp]"+txt;
 			AddText(AddTxt);

@@ -779,7 +779,7 @@ if ($v == '4') {
 \$config['blogkeywords']='bo-blog';
 \$config['blogcreatetime']='$ts';
 \$config['blogurl']='$blogurlpath';
-\$config['bloglogo']='http://';
+\$config['bloglogo']='https://';
 \$config['blogopen']='1';
 \$config['message_off']='Sorry, the blog is temporarily closed for maintenance.';
 \$config['registeron']='1';
