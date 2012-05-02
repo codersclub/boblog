@@ -1,7 +1,3 @@
----
-Title: Bo-Blog
----
-
 # Bo-Blog
 
 Bo-Blog is a single-user blog (web log) engine based on PHP and MySQL.
