@@ -6,12 +6,13 @@ PHP+MySQL blog system.
 Offical site: http://www.bo-blog.com
 Copyright (c) Bob Shen, China - Shanghai
 In memory of my university life
+Modified by Valery Votintsev, http://www.sources.ru
 ------------------------------------------------------- */
 
 /* Version and Copyright Declaration
    You are not allowed to change anything in this part. */
-$blogversion = "2.1.2 beta 3";
-$codeversion = "2.1.2.0312.0";
+$blogversion = "2.2";
+$codeversion = "2.2.175";
 $codename = "swallow";
 //You can change anything below as you wish. Good Luck!
 
@@ -21,7 +22,7 @@ if (file_exists('install/install.php')) {
 }
 
 error_reporting(E_ALL);
-//*vot*/ error_reporting(E_ALL & ~E_DEPRECATED & ~E_NOTICE);
+//error_reporting(E_ALL & ~E_DEPRECATED & ~E_NOTICE);
 unregister_GLOBALS(); //When register_globals=On
 $mqgpc_status = 0;
 define("VALIDREQUEST", 1);
