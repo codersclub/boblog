@@ -486,6 +486,15 @@ function safe_convert($string, $html = 0, $filterslash = 0)
     return $string;
 }
 
+function code_callback($match=array()) {
+    return '[code]' . str_replace('&amp;', '&', $match[1]) . '[/code]';
+}
+
+function global_callback($match=array())
+{
+    return "\$globalvar['" . $match[1] . "']=@\$tptvalue['" . $match[1] . "']";
+}
+
 function safe_invert($string, $html = 0)
 { //Transfer the converted words into editable characters
     if ($html == 0) {
@@ -494,9 +503,7 @@ function safe_invert($string, $html = 0)
         $string = str_replace("<br>", "\n", $string);
         $string = str_replace("&nbsp;", " ", $string);
         $string = str_replace("&", "&amp;", $string);
-        $string = preg_replace_callback("/\[code\](.+?)\[\/code\]/is", function ($match) {
-            return '[code]' . str_replace('&amp;', '&', $match[1]) . '[/code]';
-        }, $string);
+        $string = preg_replace_callback("/\[code\](.+?)\[\/code\]/is", "code_callback", $string);
     }
     $string = str_replace("&nbsp;", " ", $string);
     return $string;

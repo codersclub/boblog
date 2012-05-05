@@ -147,9 +147,7 @@ class template
     {
         global $tptvalue;
         $globalvar = array();
-        preg_replace_callback("/<!--global:{(.+?)}-->/i", function ($match) {
-            return "\$globalvar['" . $match[1] . "']=@\$tptvalue['" . $match[1] . "']";
-        }, $contentstr);
+        preg_replace_callback("/<!--global:{(.+?)}-->/i", 'global_callback', $contentstr);
         foreach ($globalvar as $parser => $value) {
             $contentstr = str_replace("<!--global:{" . $parser . "}-->", $value, $contentstr);
         }
