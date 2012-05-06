@@ -21,11 +21,11 @@ body {
 	font-family: Verdana, Tahoma, Arial, sans-serif; 
 	background:#999999 url("images/bg.png") repeat-y 50% 0%;
 }
-body .404 {
+body.404 {
 	background: url(images/others/404.gif) no-repeat 50% 0;
 	background-color: #fff;
 }
-body .upload {
+body.upload {
 	margin: 0px;
 	padding: 0px;
 	overflow-y: auto;
