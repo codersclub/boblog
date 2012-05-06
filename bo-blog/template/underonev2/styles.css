@@ -15,6 +15,13 @@ body .404 {
 	background: url(images/others/404.gif) no-repeat 50% 0;
 	background-color: #fff;
 }
+body .upload {
+	margin: 0px;
+	padding: 0px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	height: 200px;
+}
 
 table {
 	color: #382E1F;

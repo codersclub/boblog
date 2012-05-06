@@ -324,7 +324,7 @@ function print_upload($message, $classup = "highlight", $classdown = "normal", $
 <script src="editor/{$useeditor}/uploader.js"></script>
 </head>
 
-<body style="margin: 0px; padding: 0px; overflow-y: auto; overflow-x: hidden; height: 200px;">
+<body class="upload">
 <div id="adminrow" style="width: 100%">
   <table width="100%" cellpadding="0" cellspacing="0">
     <tr>
