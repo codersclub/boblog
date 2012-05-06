@@ -51,7 +51,7 @@ if (!$job) {
         ));
     }
     plugin_runphp('loginform');
-    if ($config['loginvalidation'] == 1 && $_GET['adminlogin'] != 1) {
+    if ($config['loginvalidation'] == 1 && @$_GET['adminlogin'] != 1) {
         $rand = rand(0, 100000);
         $formbody .= $t->set('form_eachline', array(
             'text'        => "*{$lnc[249]}",
