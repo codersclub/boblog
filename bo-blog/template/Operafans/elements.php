@@ -451,7 +451,7 @@ $elements['tips']=<<<eot
 <title>{blogname} - {blogdesc}</title>
 <script src="images/js/common.js"></script>
 </head>
-<body style="border:0!important;border:0;">
+<body>
 <center>
 <div class="messagebox">
   <div class="messagebox-title">{title}</div>
