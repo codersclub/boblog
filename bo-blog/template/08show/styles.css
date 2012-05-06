@@ -16,6 +16,10 @@ body {
 	margin: 114px 0px 0px 0px;
 	padding: 0px;
 }
+body .404 {
+	background: url(images/others/404.gif) no-repeat 50% 0;
+	background-color: #fff;
+}
 
 table {
 	font-family: Tahoma, Arial;

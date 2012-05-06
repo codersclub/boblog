@@ -294,7 +294,7 @@ $elements['comment']=<<<eot
 	<div class="commentbox comment-{oddorcouplecss}">
 		<div class="commentbox-title">
     		<span class="commentbox-author">{replier}</span> {$lnc['said']}: {deladminreply} {delreply} {blockreply}
-    		</br>
+    		<br>
 	    	<span class="commentbox-label">{replytime}</span> {replierhomepage} {replierip} {addadminreply}
 		</div>
 		<div class="commentbox-content">
@@ -315,7 +315,7 @@ $elements['trackback']=<<<eot
 	<div class="trackbackbox">
 		<div class="trackbackbox-title">
 		{tbtitle}
-		</br>
+		<br>
 		[{tbtime}] {delreply}
 		</div>
 		<div class="trackbackbox-content">
@@ -454,10 +454,10 @@ eot;
 
 $elements['contentpage']=<<<eot
 <div class="textbox">
-	<div class="textbox-title"><h4>{title}</h4></div>
-	<div class="textbox-content">
-		{contentbody}
-	</div>
+  <div class="textbox-title"><h4>{title}</h4></div>
+    <div class="textbox-content">
+      {contentbody}
+    </div>
 </div>
 eot;
 
@@ -556,7 +556,7 @@ $elements['tips']=<<<eot
 <script src="images/js/common.js"></script>
 </head>
 
-<body style="border:0!important;border:0;">
+<body>
 <center>
 <div class="messagebox">
   <div class="messagebox-title">{title}</div>
@@ -570,7 +570,6 @@ $elements['tips']=<<<eot
   </div>
 </div>
 </center>
-</div>
 
 </body>
 </html>

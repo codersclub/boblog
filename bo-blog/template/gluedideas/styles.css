@@ -14,6 +14,10 @@ body {
 	background: #F3F3EB url('images/back_content.gif') repeat-y center;
 	text-align: center;
 }
+body .404 {
+	background: url(images/others/404.gif) no-repeat 50% 0;
+	background-color: #fff;
+}
 
 table {
 	color: #382E1F;

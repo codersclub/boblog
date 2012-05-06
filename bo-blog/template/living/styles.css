@@ -7,6 +7,7 @@ By Celin.Fox
 
 /****** General Styles ******/
 body {
+	border: 0;
 	font-size: 12px;
 	font-family: Tahoma, Arial;
 	background-color: #F5F6F9;
@@ -14,6 +15,10 @@ body {
 	padding: 0px;
 	margin-bottom: 10px;
 	text-align: center;
+}
+body .404 {
+	background: url(images/others/404.gif) no-repeat 50% 0;
+	background-color: #fff;
 }
 
 table {

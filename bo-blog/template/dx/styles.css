@@ -15,6 +15,10 @@ body {
 	text-align: center;
 	background:#ffb022 url(images/bg.jpg) repeat-x;
 }
+body .404 {
+	background: url(images/others/404.gif) no-repeat 50% 0;
+	background-color: #fff;
+}
 * html body{
 	width: auto;
 	overflow-x: hidden;

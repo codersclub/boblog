@@ -11,13 +11,16 @@ Last update:2008-02-04
 	box-sizing: border-box;
 }
 body {
+	border: 0;
 	font:12px/150% Verdana,Tahoma,Arial;
 	color:#333333;
 	background:#ffffff url('images/header_bg.gif') repeat-x;
 	margin:0px;
 	padding:0px;
 }
-
+body .404 {
+	background: url(images/others/404.gif) no-repeat 50% 0;
+}
 table {
 }
 

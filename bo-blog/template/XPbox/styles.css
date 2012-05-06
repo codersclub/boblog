@@ -7,6 +7,7 @@ By China_Y
 
 /****** General Styles ******/
 body {
+	border: 0;
 	font-size: 12px;
 	font-family: Tahoma, Arial, msyh;
 	background: #E5E5E5 url('images/bg.png') repeat-x top;
@@ -16,6 +17,10 @@ body {
 	width: 100%;
 	text-align: center;
 	line-height: 130%;
+}
+body .404 {
+	background: url(images/others/404.gif) no-repeat 50% 0;
+	background-color: #fff;
 }
 * html body{
 	width: 100%;

@@ -1,6 +1,6 @@
 /****** General Styles ******/
 body {
-
+	border: 0;
 	font-family:Verdana, Arial, Helvetica, sans-serif;
     font-size:12px;
     margin:0;
@@ -11,7 +11,10 @@ body {
     padding:0; 
     color:#999;
 }
-
+body .404 {
+	background: url(images/others/404.gif) no-repeat 50% 0;
+	background-color: #fff;
+}
 
 table {
 	color: #382E1F;

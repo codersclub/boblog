@@ -7,6 +7,7 @@ By SORIQ www.gacia.cn
 
 /****** General Styles ******/
 body {
+	border: 0;
 	font-size: 12px;
 	font-family: Verdana, Arial;
 	background:url("images/bg.gif") repeat-x #c9dbe5;
@@ -15,6 +16,10 @@ body {
 	padding: 0px;
 	margin-bottom: 10px;
 	text-align: center;
+}
+body .404 {
+	background: url(images/others/404.gif) no-repeat 50% 0;
+	background-color: #fff;
 }
 table {
 	font-family: Verdana, Arial;

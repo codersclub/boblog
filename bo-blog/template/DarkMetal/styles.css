@@ -8,6 +8,10 @@ font-size:12px;
 color:#ccc;
 text-align:center;
 }
+body .404 {
+	background: url(images/others/404.gif) no-repeat 50% 0;
+	background-color: #fff;
+}
 * html body{
 width:100%;
 overflow-x:hidden;
