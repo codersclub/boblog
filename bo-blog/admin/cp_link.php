@@ -722,7 +722,27 @@ if ($job == "pending") {
             foreach ($wlinks as $link) {
                 @list($unuse, $siteid, $sitename, $siteurl, $sitelogo, $siteintro) = @explode('<|>', trim($link));
                 $sitelogo = ($sitelogo) ? "<a href='$sitelogo' target='_blank' title='{$lna[255]}'><img src='admin/theme/{$themename}/view.gif' border='0'></a>" : "&nbsp;";
-                $tablebody .= "<tr class='visibleitem'><td width=35 align=center><input type=checkbox name='selid[]' value='{$siteid}'></td><td width=150>{$sitename}</td><td width=250><a href='{$siteurl}' target=_blank>{$siteurl}</a></td><td width=35 align=center>{$sitelogo}</td><td>{$siteintro}</td><td width=30 align=center><a href=\"admin.php?go=link_approve_{$siteid}\" title='{$lna[256]}'><img src='admin/theme/{$themename}/yes.gif' border='0'></a></td><td width=30 align=center><a href=\"javascript: simulateFormSubmit('admin.php?go=link_disapprove_{$siteid}')\" title='{$lna[257]}'><img src='admin/theme/{$themename}/del.gif' border='0'></a></td></tr>\n";
+                $tablebody .= "  <tr class='visibleitem'>
+    <td width=35 align=center>
+      <input type=checkbox name='selid[]' value='{$siteid}'>
+    </td>
+    <td width=150>{$sitename}</td>
+    <td width=250>
+      <a href='{$siteurl}' target=_blank>{$siteurl}</a>
+    </td>
+    <td width=35 align=center>{$sitelogo}</td>
+    <td>{$siteintro}</td>
+    <td width=30 align=center>
+      <a href=\"admin.php?go=link_approve_{$siteid}\" title='{$lna[256]}'>
+        <img src='admin/theme/{$themename}/yes.gif' border='0'>
+      </a>
+    </td>
+    <td width=30 align=center>
+      <a href=\"javascript: simulateFormSubmit('admin.php?go=link_disapprove_{$siteid}')\" title='{$lna[257]}'>
+        <img src='admin/theme/{$themename}/del.gif' border='0'>
+      </a>
+    </td>
+  </tr>\n";
             }
         }
     }
