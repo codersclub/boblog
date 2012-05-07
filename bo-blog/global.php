@@ -12,7 +12,7 @@ Modified by Valery Votintsev, http://www.sources.ru
 /* Version and Copyright Declaration
    You are not allowed to change anything in this part. */
 $blogversion = "2.2";
-$codeversion = "2.2.175";
+$codeversion = "2.2.185";
 $codename = "swallow";
 //You can change anything below as you wish. Good Luck!
 

@@ -270,22 +270,35 @@ if ($job == 'tb' || $job == 'tbcensor') {
     $sql = "SELECT * FROM `{$db_prefix}replies` WHERE `reproperty`={$tbproperty} ORDER BY `reptime` DESC  LIMIT $start_id, $adminitemperpage";
     $detail_array = $blog->getgroupbyquery($sql);
     for ($i = 0; $i < count($detail_array); $i++) {
-        $tmp_tm = gmdate('Y/m/d H:i', $detail_array[$i]['reptime'] + 3600 * $config['timezone']);
+        $tmp_tm = gmdate('Y-m-d H:i', $detail_array[$i]['reptime'] + 3600 * $config['timezone']);
         $detail_array[$i]['repcontent'] = mb_substr($detail_array[$i]['repcontent'], 0, 120);
+        $author = $detail_array[$i]['replier'];
+        if ($detail_array[$i]['repemail']) {
+            $author .= ' (' . $detail_array[$i]['repemail'] . ')';
+        }
+        if ($author) {
+            $author = '<br>' . $author;
+        }
         $tablebody .= "
 <tr class='visibleitem'>
   <td align='center'>
     <input type='checkbox' name='selid[]' id='selid[]' value='{$detail_array[$i]['repid']}-{$detail_array[$i]['blogid']}'>
   </td>
   <td>
-    <a href='{$detail_array[$i]['repurl']}' target='_blank' title='{$lna[358]}'>{$detail_array[$i]['replier']}</a>
-    <br>
-    {$detail_array[$i]['repip']}
+      {$detail_array[$i]['repip']}
+      {$author}
   </td>
   <td>{$tmp_tm}</td>
-  <td align='left' width=50%>
+  <td align='left'>
     <a href='" . getlink_entry($detail_array[$i]['blogid'], '') . "' target='_blank' title='{$lna[356]}'>
+      {$detail_array[$i]['repurl']}
+      <br>
       {$detail_array[$i]['repcontent']}
+    </a>
+  </td>
+  <td align='center'>
+    <a href='" . getlink_entry($detail_array[$i]['blogid'], '') . "' target='_blank' title='{$lna[356]}'>
+      ID={$detail_array[$i]['blogid']}
     </a>
   </td>
   <td align='center'>
@@ -340,6 +353,7 @@ if ($job == 'tb' || $job == 'tbcensor') {
     <td width=100>{$lna[357]}</td>
     <td width=120>{$lna[288]}</td>
     <td >{$lna[287]}</td>
+    <td >{$lna[629]}</td>
     <td width=35>{$lna[78]}</td>
     {$censorplus1}
   </tr>
