@@ -311,7 +311,7 @@ select {
 	padding-left:18px;
 }
 #sidebar_replies li{
-	background:url('images/recent-comments.png') no-repeat left center;
+	background:url('images/recent-comments.png') no-repeat left 5px;
 	padding-left:18px;
 }
 #sidebar_archive li{
