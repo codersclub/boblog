@@ -345,7 +345,7 @@ if ($job == 'plugin') {
       <input type=reset value=\"{$lna[65]}\" class='formbutton'>
     </td>
   </tr>\n";
-        $formbody .= "<tr class='sect'><td colspan=4>{$lna[910]}</td></tr>\n";
+        $formbody .= "  <tr class='sect'><td colspan=4>{$lna[910]}</td></tr>\n";
     }
 
     for ($i = 0; $i < sizeof($mod_array); $i++) {
@@ -668,7 +668,24 @@ function addneweditline() {
 			getnewlnum=(document.getElementById('newlnum'+i)) ? document.getElementById('newlnum'+i).value : '';
 			getnewldesc=(document.getElementById('newldesc'+i)) ? document.getElementById('newldesc'+i).value : '';
 			getldarea=(document.getElementById('ldarea'+i)) ? document.getElementById('ldarea'+i).innerHTML : '&nbsp;';
-			addnewareato=addnewareato+"<div id='editline"+i+"'><table width=100% cellpadding=0 cellspacing=0><tr class=visibleitem><td width=15% align=center><input type=text size=4 maxlength=4 name='newlnum[]' id='newlnum"+i+"' onblur='changeldarea("+i+");' value='"+getnewlnum+"'></td><td width=40%><span id='ldarea"+i+"'>"+getldarea+"</span></td><td width=40%><input type=text size=52 name='newldesc[]'  id='newldesc"+i+"' value='"+getnewldesc+"'></td><td width=5% align=center><input type=button onclick='deleteeditline("+i+");' value='{$lna[1149]}' class='formbutton'></td></tr></table></div>";
+			addnewareato=addnewareato+"<div id='editline"+i+"'>
+  <table width=100% cellpadding=0 cellspacing=0>
+    <tr class=visibleitem>
+      <td width=15% align=center>
+        <input type=text size=4 maxlength=4 name='newlnum[]' id='newlnum"+i+"' onblur='changeldarea("+i+");' value='"+getnewlnum+"'>
+      </td>
+      <td width=40%>
+        <span id='ldarea"+i+"'>"+getldarea+"</span>
+      </td>
+      <td width=40%>
+        <input type=text size=52 name='newldesc[]' id='newldesc"+i+"' value='"+getnewldesc+"'>
+      </td>
+      <td width=5% align=center>
+        <input type=button onclick='deleteeditline("+i+");' value='{$lna[1149]}' class='formbutton'>
+      </td>
+    </tr>
+  </table>
+</div>\n";
 		}
 	}
 	addnewarea.innerHTML=addnewareato;
