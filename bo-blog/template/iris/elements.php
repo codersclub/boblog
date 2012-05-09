@@ -398,7 +398,7 @@ eot;
 
 $elements['login']=<<<eot
 <form name="register" method="post" action="login.php?job=verify">
-<table cellspacing="1" width="500px" align="center" class="formbox">
+<table cellspacing="1" width="100%" align="center" class="formbox">
   <tr>
     <td class="formbox-title" colspan="2">
       {$lnc[253]}
@@ -479,7 +479,7 @@ eot;
 
 $elements['register']=<<<eot
 <form name="register" method="post" action="{job}">
-<table cellspacing="1" width="500px" align="center" class="formbox">
+<table cellspacing="1" width="100%" align="center" class="formbox">
   <tr>
     <td class="formbox-title" colspan="2">{title} {$lnc[262]}</td>
   </tr>
@@ -495,13 +495,13 @@ $elements['register']=<<<eot
 eot;
 
 $elements['normaltable']=<<<eot
-<table cellspacing="0" width="500px" align="center" class="formbox">
+<table cellspacing="0" width="100%" align="center" class="formbox">
   {tablebody}
 </table>
 eot;
 
 $elements['normaltablewithtitle']=<<<eot
-<table cellspacing="0" width="500px" align="center" class="formbox">
+<table cellspacing="0" width="100%" align="center" class="formbox">
   <tr>
     <td class="formbox-title" colspan="6">{title}</td>
   </tr>
