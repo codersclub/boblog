@@ -4,25 +4,33 @@ Bo-Blog is a single-user blog (web log) engine based on PHP and MySQL.
 
 ## Bo-Blog 2.0 main features:
 
-* Based on the template structure of XHTML+CSS+div layout, the changeable and gorgeous templates can make your blog unique;
-* Freely customizable page blocks (widgets), add code without modifying the program, and you can also add new module items through automatic file installation;
+* Based on the template structure of XHTML+CSS+div layout,
+  the changeable and gorgeous templates can make your blog unique;
+* Freely customizable page blocks (widgets), add code without modifying the program,
+  and you can also add new module items through automatic file installation;
 * Use Ajax-based message and comment addition and management methods;
 * Tags function;
 * Compared with the 1.x version, greatly improved customization and ease of use;
-* Recognize advertising/spam message/comment information using multiple conditions such as keywords, number of links, and number of words;
-* Fully support of batch operations for blog posts, users, links and other content in the background, saving your time and efforts;
+* Recognize advertising/spam message/comment information using multiple conditions
+  such as keywords, number of links, and number of words;
+* Fully support of batch operations for blog posts, users,
+  links and other content in the background, saving your time and efforts;
 * Customizable expression system, customizable weather system, customizable avatar system;
-* User group management system, which can set various use and management authority of each group of users in detail;
+* User group management system, which can set various use and management authority
+  of each group of users in detail;
 * It can automatically check whether there is an updated program;
 * Support XML-RPC interface;
 * Link grouping function, built-in link application and approval system;
-* Multi-language support, built-in five language packs: simplified and traditional Chinese, English, Russian and Vietnamese;
-* Supports the direct import of blog content via RSS, which can be converted in an emergency when there is no conversion program;
+* Multiple languages support, built-in five language packs:
+  simplified and traditional Chinese, English, Russian and Vietnamese;
+* Supports the direct import of blog content via RSS,
+  which can be converted in an emergency when there is no conversion program;
 * Compatible with PHP5, MySQL5;
 * Hidden categories can be set, hidden blogs can be written, drafts can be written;
 * Optional custom editor;
 * Two ways to top (pin) a blog post, you can lock a blog post, and add a star to the blog post;
-* Support Trackbacks and RSS 2.0 (all new blog posts, single post or a certain category can be tracked);
+* Support Trackbacks and RSS 2.0
+  (all new blog posts, single post or a certain category can be tracked);
 * Visual link and sort order adjustment method;
 * Two viewing methods of list or summary can be set freely;
 * Freely switch blogs, switch registration, and set reasons;
@@ -68,7 +76,8 @@ or ensure that the program can read and write files:
     temp/openid/nonces/
     temp/openid/temp/
 
-Warning: If you are using a Windows server, it is recommended not to install it in the root directory.
+**Warning:** If you are using a Windows server,
+it is recommended not to install it in the root directory.
 
 2.2. Execute install/install.php. Follow the instructions to complete the installation.
 
@@ -104,4 +113,5 @@ Copyrights of these parts belong to their perspective authors.
 * TinyMCE (http://tinymce.moxiecode.com)
 * Lunar Calendar original code by S&S Lab
 * Watermark and Anti-spam in Trackbacks original code/algorithm by 4ngel (http://sablog.net)
-* Enabling Javascript Copy and Paste in Firefox, Drop menu in Admin Center, UBB in Firefox (partial) original coders unknown
+* Enabling Javascript Copy and Paste in Firefox, Drop menu in Admin Center,
+  UBB in Firefox (partial) original coders unknown
