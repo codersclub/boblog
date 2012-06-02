@@ -18,7 +18,7 @@ require_once("inc/boblog_class_run.php");
 define('VALIDADMIN', 1);
 require_once("admin/cache_func.php");
 
-$validuploadfiletype = array('jpg', 'png', 'gif', 'zip', 'rar');
+$validuploadfiletype = ['jpg', 'png', 'gif', 'zip', 'rar'];
 
 $rawdata = get_http_raw_post_data();
 //writetofile ("text_".rand(0,500).".php", $rawdata); //For debug use
@@ -41,7 +41,7 @@ if (!$rawdata) {
 }
 
 
-$nameType = array(
+$nameType = [
     'blogger.newPost'           => array('appkey', 'blogid', 'username', 'password', 'content', 'publish'),
     'blogger.editPost'          => array('appkey', 'postid', 'username', 'password', 'content', 'publish'),
     'blogger.getUsersBlogs'     => array('appkey', 'username', 'password'),
@@ -54,8 +54,8 @@ $nameType = array(
     'metaWeblog.newMediaObject' => array('blogid', 'username', 'password', 'struct'),
     'metaWeblog.getCategories'  => array('blogid', 'username', 'password'),
     'metaWeblog.getRecentPosts' => array('blogid', 'username', 'password', 'numberOfPosts'),
-);
-$methodFamily = array(
+];
+$methodFamily = [
     'blogger.newPost',
     'blogger.editPost',
     'blogger.getUsersBlogs',
@@ -68,7 +68,7 @@ $methodFamily = array(
     'metaWeblog.newMediaObject',
     'metaWeblog.getCategories',
     'metaWeblog.getRecentPosts',
-);
+];
 
 
 function parse_get($whole_line, $parser, $single = false)
@@ -329,7 +329,7 @@ function blogger_getUsersBlogs($values)
 {
     global $config;
     $userdetail = check_user($values['username'], $values['password']);
-    $value_body = array('url' => $config['blogurl'], 'blogid' => $values['appkey'], 'blogName' => $config['blogname']);
+    $value_body = ['url' => $config['blogurl'], 'blogid' => $values['appkey'], 'blogName' => $config['blogname']];
     $array_body[0] = make_xml_piece("struct", $value_body);
     $xml_content = make_xml_piece("array", $array_body);
     $body_xml = xml_generate($xml_content);
@@ -471,7 +471,7 @@ function metaWeblog_getPost($values)
     } else {
         $record = $records[0];
         $time = get_time_unix($record['pubtime'], 'iso');
-        $value_body = array(
+        $value_body = [
             'dateCreated' => $time,
             'userid'      => $userdetail['userid'],
             'postid'      => $record['blogid'],
@@ -479,7 +479,7 @@ function metaWeblog_getPost($values)
             'title'       => htmlspecialchars($record['title']),
             'link'        => "{$config['blogurl']}/read.php?{$record['blogid']}",
             'categories'  => make_xml_piece('array', array("Category {$record['category']}")),
-        );
+        ];
         $body = make_xml_piece("struct", $value_body);
         $body_xml = xml_generate($body);
         send_response($body_xml);
@@ -499,7 +499,7 @@ function metaWeblog_getRecentPosts($values)
         for ($i = 0; $i < count($records); $i++) {
             $record = $records[$i];
             $time = get_time_unix($record['pubtime'], 'iso');
-            $value_body = array(
+            $value_body = [
                 'dateCreated' => $time,
                 'userid'      => $userdetail['userid'],
                 'postid'      => $record['blogid'],
@@ -507,7 +507,7 @@ function metaWeblog_getRecentPosts($values)
                 'title'       => htmlspecialchars($record['title']),
                 'link'        => "{$config['blogurl']}/read.php?{$record['blogid']}",
                 'categories'  => make_xml_piece('array', array("Category {$record['category']}")),
-            );
+            ];
             $value_bodys[] = make_xml_piece("struct", $value_body);
         }
         $body = make_xml_piece("array", $value_bodys);
@@ -523,11 +523,11 @@ function metaWeblog_getCategories($values)
     //Get Categories
     $result = db_query("SELECT * FROM `{$db_prefix}categories` ORDER BY `cateorder`");
     while ($row = db_fetch_array($result)) {
-        $struct_body[] = make_xml_piece("struct", array(
+        $struct_body[] = make_xml_piece("struct", [
             'description' => "{$row['catename']}",
             'htmlUrl'     => "{$config['blogurl']}/index.php?go=category_{$row['cateid']}",
             'rssUrl'      => "{$config['blogurl']}/feed.php?go=category_{$row['cateid']}",
-        ));
+        ]);
     }
     $xml_content .= make_xml_piece("array", $struct_body);
     $body_xml = xml_generate($xml_content);
@@ -538,12 +538,12 @@ function blogger_getUserInfo($values)
 {
     global $config, $db_prefix;
     $userdetail = check_user($values['username'], $values['password']);
-    $xml_content = make_xml_piece("struct", array(
+    $xml_content = make_xml_piece("struct", [
         'nickname' => $values['username'],
         'userid'   => $userdetail['userid'],
         'url'      => $config['blogurl'],
         'email'    => $userdetail['email'],
-    ));
+    ]);
     $body_xml = xml_generate($xml_content);
     send_response($body_xml);
 }
@@ -591,13 +591,13 @@ function metaWeblog_newMediaObject($values)
         $currentid = db_insert_id();
 
         if ($mbcon['wmenable'] == '1') {    //Add watermark
-            $imgext_watermark = array('jpg', 'gif', 'png');
+            $imgext_watermark = ['jpg', 'gif', 'png'];
             if (in_array($ext, $imgext_watermark)) {
                 create_watermark("attachment/{$targetfolder_ym}{$upload_filename}");
             }
         }
     }
-    $xml_content = make_xml_piece("struct", array('url' => "{$config['blogurl']}/attachment.php?fid={$currentid}"));
+    $xml_content = make_xml_piece("struct", ['url' => "{$config['blogurl']}/attachment.php?fid={$currentid}"]);
     $body_xml = xml_generate($xml_content);
     send_response($body_xml);
 }

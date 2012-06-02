@@ -60,14 +60,14 @@ if ($mbcon['antileech'] == '0' || $mbcon['antileech'] == '1') {
     $sfilename = basename($attachfind['originalname']);
     $browser = browserdetection();
 
-    if (in_array($browser, array('Firefox', 'Mozilla', 'Opera'))) {
+    if (in_array($browser, ['Firefox', 'Mozilla', 'Opera'])) {
         $sfilename = urldecode($sfilename);
     }
 
     $sfileext = strtolower(strrchr($sfilename, '.'));
     $sfileext = str_replace(".", '', $sfileext);
 
-    if (in_array($sfileext, array('gif', 'jpg', 'png', 'bmp', 'jpeg'))) {
+    if (in_array($sfileext, ['gif', 'jpg', 'png', 'bmp', 'jpeg'])) {
         $headerposition = 'inline';
     } else {
         $headerposition = 'attachment';

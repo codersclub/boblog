@@ -48,21 +48,21 @@ if ($job == '' || $job == "default") {
     }
     $adminselection .= "</select>";
 
-    $propertysel = array(
+    $propertysel = [
         0  => '',
         1  => '',
         2  => '',
         10 => '',
-    );
+    ];
 
-    $timeperiodsel = array(
+    $timeperiodsel = [
         0   => '',
         7   => '',
         30  => '',
         90  => '',
         180 => '',
         365 => '',
-    );
+    ];
 
     $propertysel[$property] = 'selected="selected"';
     $adminselection2 = "<select name=\"property\">
@@ -104,8 +104,18 @@ if ($job == '' || $job == "default") {
         } else {
             $addclass = 'visibleitem';
         }
-        $hiddensign_s = array(0 => "openblog.gif", 1 => "lockblog.gif", 2 => "secretblog.gif", 3 => "draft.gif");
-        $hiddensign_p = array(0 => $lna[269], 1 => $lna[270], 2 => $lna[271], 3 => $lna[272]);
+        $hiddensign_s = [
+		0 => "openblog.gif",
+		1 => "lockblog.gif",
+		2 => "secretblog.gif",
+		3 => "draft.gif"
+	];
+        $hiddensign_p = [
+		0 => $lna[269],
+		1 => $lna[270],
+		2 => $lna[271],
+		3 => $lna[272]
+	];
         $hiddensign = "<img src='admin/theme/{$themename}/{$hiddensign_s[$tmp_st]}' alt='' title='{$hiddensign_p[$tmp_st]}'>";
 
         $tablebody .= "  <tr class='$addclass'>
@@ -372,7 +382,7 @@ if ($job == 'deleteblog' || $job == 'deletedraft') {
         if ($ajax == 'on') {
             catchsuccessandfetch($finishok, $returnurl);
         } else {
-            catchsuccess($finishok, array($backtodefault, $backtodraft));
+            catchsuccess($finishok, [$backtodefault, $backtodraft]);
         }
     }
     catcherror($cancel);

@@ -50,7 +50,7 @@ $tagdisable = '';
 $callaftersubmit = '';
 
 // Init the blog record
-$records = array(
+$records = [
     'blogid'       => '0',
     'title'        => '',
     'pubtime'      => '0',
@@ -81,9 +81,9 @@ $records = array(
     'blogalias'    => '',
     'pagetitle'    => '',
     'pagealias'    => '',
-);
+];
 
-$adminclassshow = array(
+$adminclassshow = [
     'entry'      => '',
     'category'   => '',
     'link'       => '',
@@ -93,7 +93,7 @@ $adminclassshow = array(
     'misc'       => '',
     'main'       => '',
     'carecenter' => '',
-);
+];
 
 require_once("global.php");
 include_once("lang/{$langback}/backend.php");
@@ -394,7 +394,7 @@ function gen_page($page, $numperline, $returnurl, $totalvolume, $perpagevolume)
 
 function check_upload_file($filename)
 { //Check if the file contains dangerous characters
-    $danger = array('fopen', 'fsockopen', 'writetofile', 'unlink', 'exec', 'eval');
+    $danger = ['fopen', 'fsockopen', 'writetofile', 'unlink', 'exec', 'eval'];
     if (!file_exists($filename)) {
         return true;
     }
@@ -475,7 +475,7 @@ function confirmpsw()
 
 function checksafe($str)
 {
-    $array_searches = array(
+    $array_searches = [
         'fopen',
         'eval',
         'fsockopen',
@@ -499,7 +499,7 @@ function checksafe($str)
         'file_put_contents',
         'tmpfile',
         'copy',
-    );
+    ];
     return preg_search($str, $array_searches);
 }
 
@@ -519,10 +519,10 @@ function reArrayFiles($file_post)
 function blogalias_convert($str, $rewrite = 0)
 {
     if ($rewrite == 0) {
-        $str = str_replace(array(' ', "'", '"'), '', $str);
+        $str = str_replace([' ', "'", '"'], '', $str);
         $str = urlencode($str);
     } else {
-        $str = str_replace(array('_', '.'), array("\\_", "\\."), $str);
+        $str = str_replace(['_', '.'], ["\\_", "\\."], $str);
     }
     return $str;
 }

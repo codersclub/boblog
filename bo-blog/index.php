@@ -101,7 +101,7 @@ if (file_exists("inc/mod_{$act}.php")) {
         if ($plugin_closesidebar == 1) {
             $elements['mainpage'] = str_replace("class=\"content\"", "class=\"content-wide\"", $elements['mainpage']);
         }
-        $bodymenu = $t->set('mainpage', array(
+        $bodymenu = $t->set('mainpage', [
             'pagebar'            => '',
             'iftoppage'          => 'none',
             'ifbottompage'       => 'none',
@@ -110,7 +110,7 @@ if (file_exists("inc/mod_{$act}.php")) {
             'mainpart'           => $plugin_return,
             'previouspageexists' => '',
             'nextpageexists'     => '',
-        ));
+        ]);
     } else {
         include("inc/mod_main.php");
     }
@@ -141,7 +141,7 @@ $extraheader = $mbcon['extraheader'] . "\n" . @implode("\n", $section_prebody);
 if (!isset($pagetitle)) {
     $pagetitle = '';
 }
-$headerhtml = $t->set('header', array(
+$headerhtml = $t->set('header', [
     'blogname'     => $config['blogname'],
     'blogdesc'     => $config['blogdesc'],
     'csslocation'  => $csslocation,
@@ -152,18 +152,18 @@ $headerhtml = $t->set('header', array(
     'baseurl'      => $baseurl,
     'language'     => $langname['languagename'],
     'codeversion'  => $codeversion,
-));
+]);
 
 //Admin notification
 //$headerhtml.=$headerhtml_notifyadmin;
 
 //Section: Top
 $section_head_components = "<li>" . @implode("</li>\r\n<li>", $section_header) . "</li>";
-$headmenu = $t->set('displayheader', array(
+$headmenu = $t->set('displayheader', [
     'blogname'                => $config['blogname'],
     'blogdesc'                => $config['blogdesc'],
     'section_head_components' => $section_head_components,
-));
+]);
 
 //Where am I now?
 if (defined('whereAmI')) {
@@ -180,15 +180,15 @@ if (defined('whereAmI')) {
     $currentpagelocation = $spanid;
 }
 
-$headmenu_tmp = str_replace(array(
+$headmenu_tmp = str_replace([
     "<span id=\"nav_{$currentpagelocation}\">",
     "<span id=\"navitem_{$currentpagelocation}\">",
-), array(
+], [
     "<span id=\"nav_{$currentpagelocation}\" class=\"activepage\">",
     "<span id=\"navitem_{$currentpagelocation}\" class=\"activepageitem\">",
-), $headmenu);
-$headmenu = ($headmenu_tmp == $headmenu) ? str_replace(array("<span id=\"nav_index\">", "<span id=\"navitem_index\">"),
-    array("<span id=\"nav_index\" class=\"activepage\">", "<span id=\"navitem_index\" class=\"activepageitem\">"),
+], $headmenu);
+$headmenu = ($headmenu_tmp == $headmenu) ? str_replace(["<span id=\"nav_index\">", "<span id=\"navitem_index\">"],
+    ["<span id=\"nav_index\" class=\"activepage\">", "<span id=\"navitem_index\" class=\"activepageitem\">"],
     $headmenu) : $headmenu_tmp;
 //Assign an ID for current page
 $currentpage_cssid = 'pagelocation-' . $currentpagelocation;
@@ -213,12 +213,12 @@ if (@$plugin_closesidebar != 1) {
 
             $ifextend = @$blocker['extend'] ? 'block' : 'none';
             $decodedcontent = evalmycode(@$blocker['content']);
-            $section_side_column[$sidebarcolumn][] = $t->set($sideblock, array(
+            $section_side_column[$sidebarcolumn][] = $t->set($sideblock, [
                 'title'    => $blocker['title'],
                 'content'  => $decodedcontent,
                 'id'       => $blocker['name'],
                 'ifextend' => $ifextend,
-            ));
+            ]);
             $tptvalue["block_{$blocker['name']}"] = $decodedcontent;
             $siderbarcounter += 1;
             unset($decodedcontent);
@@ -227,31 +227,31 @@ if (@$plugin_closesidebar != 1) {
         $section_side_components_two = @implode('', $section_side_column[2]);
         $section_side_components = $section_side_components_one . $section_side_components_two;
     }
-    $sidemenu = $t->set('displayside', array(
+    $sidemenu = $t->set('displayside', [
         'section_side_components_one' => $section_side_components_one,
         'section_side_components_two' => $section_side_components_two,
         'section_side_components'     => $section_side_components,
         'siderbarcounter'             => $siderbarcounter,
-    ));
+    ]);
 } else {
     $sidemenu = '';
 }
 
 //Section: Bottom
 $section_foot_components = @implode('', $section_footer);
-$footmenu = $t->set('displayfooter', array('section_foot_components' => $section_foot_components));
+$footmenu = $t->set('displayfooter', ['section_foot_components' => $section_foot_components]);
 
 //Section: ..</body>
 $footerhtml = $t->set('footer', []);
 
-$displayall = array(
+$displayall = [
     'headerhtml' => $headerhtml,
     'headmenu'   => $headmenu,
     'footmenu'   => $footmenu,
     'bodymenu'   => $bodymenu,
     'sidemenu'   => $sidemenu,
     'footerhtml' => $footerhtml,
-);
+];
 $tt = $t->set('displayall', $displayall);
 
 //Supplementary elements

@@ -200,13 +200,13 @@ if ($job == 'refreshcounter') {
     if (!is_array($selid2)) {
         catcherror($lna[205]);
     }
-    $countsql = array(
+    $countsql = [
         'entries'  => "SELECT COUNT(*) FROM `{$db_prefix}blogs`",
         'replies'  => "SELECT COUNT(*) FROM `{$db_prefix}replies` WHERE `reproperty`<=1",
         'tb'       => "SELECT COUNT(*) FROM `{$db_prefix}replies` WHERE `reproperty`=4",
         'messages' => "SELECT COUNT(*) FROM `{$db_prefix}messages` WHERE `reproperty`<=1",
         'users'    => "SELECT COUNT(*) FROM `{$db_prefix}user`",
-    );
+    ];
     for ($i = 0; $i < count($selid2); $i++) {
         if ($selid2[$i] == 'max') {
             continue;
@@ -220,7 +220,7 @@ if ($job == 'refreshcounter') {
     }
 
     if (in_array('max', $selid2)) {
-        $maxsql = array(
+        $maxsql = [
             "SELECT MAX(blogid) FROM `{$db_prefix}blogs`",
             "SELECT MAX(userid) FROM `{$db_prefix}user`",
             "SELECT MAX(cateid) FROM `{$db_prefix}categories`",
@@ -228,8 +228,16 @@ if ($job == 'refreshcounter') {
             "SELECT MAX(repid) FROM `{$db_prefix}messages`",
             "SELECT MAX(linkgpid) FROM `{$db_prefix}linkgroup`",
             "SELECT MAX(linkid) FROM `{$db_prefix}links`",
-        );
-        $max2ar = array('maxblogid', 'maxuserid', 'maxcateid', 'maxrepid', 'maxmessagepid', 'maxlinkgpid', 'maxlinkid');
+        ];
+        $max2ar = [
+            'maxblogid',
+            'maxuserid',
+            'maxcateid',
+            'maxrepid',
+            'maxmessagepid',
+            'maxlinkgpid',
+            'maxlinkid'
+        ];
         for ($i = 0; $i < count($maxsql); $i++) {
             $resultmax = $blog->countbyquery($maxsql[$i]);
             if (empty($resultmax)) {
@@ -533,7 +541,7 @@ if ($job == 'replaceattachment') {
     }
 
     unset ($upload_filename_list, $upload_parts);
-    $imgext_watermark = array('jpg', 'gif', 'png');
+    $imgext_watermark = ['jpg', 'gif', 'png'];
     $lang_wm = explode('|', $lna[999]);
 
     $newupfile = $_FILES['newupfile'];
@@ -591,7 +599,7 @@ if ($job == 'replaceattachment') {
 
 
 if ($job == 'mysql') {
-    $all_tables = array(
+    $all_tables = [
         "{$db_prefix}blogs",
         "{$db_prefix}calendar",
         "{$db_prefix}categories",
@@ -609,7 +617,7 @@ if ($job == 'mysql') {
         "{$db_prefix}plugins",
         "{$db_prefix}pages",
         "{$db_prefix}upload",
-    );
+    ];
     $tablebody .= "  <tr>\n";
     for ($i = 0; $i < count($all_tables); $i++) {
         $tablebody .= "    <td><input type=checkbox name='selid[]' value='{$all_tables[$i]}' checked> {$all_tables[$i]}</td>\n";
@@ -748,7 +756,7 @@ if ($job == 'optimize') {
 }
 
 if ($job == 'export') {
-    $all_tables = array(
+    $all_tables = [
         "blogs"      => $lna[807],
         "categories" => $lna[809],
         "forbidden"  => $lna[810],
@@ -764,7 +772,7 @@ if ($job == 'export') {
         "pages"      => $lna[1164],
         "upload"     => $lna[1165],
         "textfile"   => $lna[1027],
-    );
+    ];
     $tablebody .= "<tr>";
     $i = 0;
     foreach ($all_tables as $key => $val) {
@@ -1006,13 +1014,13 @@ eot;
 
     $current_table = $all_tables[$currenttable];
     if ($current_table == 'textfile') {
-        $importantfiles = array(
+        $importantfiles = [
             'downloadcounter.php',
             'mod_config.php',
             'modules.php',
             'cache_emot.php',
             'cache_usergroup.php',
-        );
+        ];
         for ($i = 0; $i <= $maxrecord['maxgpid']; $i++) {
             $importantfiles[] = "usergroup{$i}.php";
         }
@@ -1428,7 +1436,7 @@ if ($job == 'rollback') {
     $all_files = @explode('//', $tmp);
     if ($endnumber >= count($all_files)) {
         //Auto refresh caches now
-        $selid = array(
+        $selid = [
             'links',
             'emotselection',
             'mods',
@@ -1437,19 +1445,19 @@ if ($job == 'rollback') {
             'latestentries',
             'taglist',
             'plugins',
-        );
+        ];
         for ($i = 0; $i < count($selid); $i++) {
             $func = "recache_{$selid[$i]}";
             call_user_func($func);
         }
 
-        $countsql = array(
+        $countsql = [
             'entries'  => "SELECT COUNT(*) FROM `{$db_prefix}blogs`",
             'replies'  => "SELECT COUNT(*) FROM `{$db_prefix}replies` WHERE `reproperty`<=1",
             'tb'       => "SELECT COUNT(*) FROM `{$db_prefix}replies` WHERE `reproperty`=4",
             'messages' => "SELECT COUNT(*) FROM `{$db_prefix}messages` WHERE `reproperty`<=1",
             'users'    => "SELECT COUNT(*) FROM `{$db_prefix}user`",
-        );
+        ];
         foreach ($countsql as $key => $value) {
             $result_num = $blog->countbyquery($value);
             if ($key == 'users') {
@@ -1462,7 +1470,7 @@ if ($job == 'rollback') {
             $blog->query("UPDATE `{$db_prefix}counter` SET `total`=`total`+{$result_num}");
         }
 
-        $maxsql = array(
+        $maxsql = [
             "SELECT MAX(blogid) FROM `{$db_prefix}blogs`",
             "SELECT MAX(userid) FROM `{$db_prefix}user`",
             "SELECT MAX(cateid) FROM `{$db_prefix}categories`",
@@ -1470,8 +1478,16 @@ if ($job == 'rollback') {
             "SELECT MAX(repid) FROM `{$db_prefix}messages`",
             "SELECT MAX(linkgpid) FROM `{$db_prefix}linkgroup`",
             "SELECT MAX(linkid) FROM `{$db_prefix}links`",
-        );
-        $max2ar = array('maxblogid', 'maxuserid', 'maxcateid', 'maxrepid', 'maxmessagepid', 'maxlinkgpid', 'maxlinkid');
+        ];
+        $max2ar = [
+		'maxblogid',
+		'maxuserid',
+		'maxcateid',
+		'maxrepid',
+		'maxmessagepid',
+		'maxlinkgpid',
+		'maxlinkid'
+	];
         for ($i = 0; $i < count($maxsql); $i++) {
             $resultmax = $blog->countbyquery($maxsql[$i]);
             if (empty($resultmax)) {
@@ -1802,7 +1818,11 @@ function parserss($xml)
             $content = addslashes($array_match[5]);
         }
     }
-    return array('title' => $title, 'time' => $time, 'content' => $content);
+    return [
+	'title' => $title,
+	'time' => $time,
+	'content' => $content
+    ];
 }
 
 function addbakfile($filename, $batchid)

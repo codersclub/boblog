@@ -33,12 +33,12 @@ for ($i = 0; $i < sizeof($linkgp); $i++) {
         $addclass = 'visibleitem';
     }
     $puttinggp .= "<option class='{$addclass}' value='{$tmp_id}'>{$linkgp[$i]['linkgpname']}</option>";
-    $linkgps[$tmp_id] = array(
+    $linkgps[$tmp_id] = [
         'linkgpid'    => $tmp_id,
         'linkgpname'  => $linkgp[$i]['linkgpname'],
         'linkgppt'    => $linkgp[$i]['linkgppt'],
         'linkgporder' => $linkgp[$i]['linkgporder'],
-    );
+    ];
 }
 
 //Define some senteces
@@ -343,12 +343,12 @@ if ($job == 'add' || $job == 'modify' || $job == 'approve') {
     $display_overall .= highlightadminitems('add', 'link');
 
     if (empty($linkvalue)) {
-        $linkvalue = array(
+        $linkvalue = [
             'linkname' => '',
             'linkurl'  => '',
             'linklogo' => '',
             'linkdesc' => '',
-        );
+        ];
     }
     $display_overall .= <<<eot
 <form action="admin.php" method="post" id="ajaxForm1">
@@ -478,7 +478,7 @@ if ($job == 'save') {
         if (!empty($alsodel)) {
             catchsuccess($finishok, $backtopending);
         } else {
-            catchsuccess($finishok, array($backtodetail, $backtoaddnew));
+            catchsuccess($finishok, [$backtodetail, $backtoaddnew]);
         }
     }
 }

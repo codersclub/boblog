@@ -49,7 +49,7 @@ if ($tbauthentic != $extra) {
 }
 
 acceptrequest('title,excerpt,url,blog_name');
-$sourceforcheck = array('title' => $title, 'excerpt' => $excerpt, 'url' => $url, 'blog_name' => $blog_name);
+$sourceforcheck = ['title' => $title, 'excerpt' => $excerpt, 'url' => $url, 'blog_name' => $blog_name];
 if ($url == '') {
     tb_xml_error("Invalid URL.");
 } else {

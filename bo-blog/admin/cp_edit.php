@@ -78,10 +78,10 @@ if ($job == 'add' || $job == 'edit') { //Initialize public items
     if ($findautosaver['blogid'] == '-1' && $ignore != 1) {
         @header("Content-Type: text/html; charset=utf-8");
         $t = new template;
-        $t->showtips($lna[926], "<font color=red>{$lna[927]}</font>\n<br>\n", array(
+        $t->showtips($lna[926], "<font color=red>{$lna[927]}</font>\n<br>\n", [
             "{$lna[928]}|admin.php?go=edit_edit_-1&ignore=1",
             "{$lna[929]}|admin.php?" . $_SERVER['QUERY_STRING'] . "&ignore=1",
-        ));
+        ]);
         exit();
     }
 
@@ -94,14 +94,36 @@ if ($job == 'add' || $job == 'edit') { //Initialize public items
             $arrayvalue_weather[] = $wkey;
         }
     }
-    $arrayoption_property = array($lna[269], $lna[270], $lna[271], $lna[272], $lna[1111]);
-    $arrayvalue_property = array(0, 1, 2, 3, 4);
-    $arrayoption_sticky = array($lna[273], $lna[274], $lna[275]);
-    $arrayvalue_sticky = array(0, 1, 2);
+    $arrayoption_property = [
+	$lna[269],
+	$lna[270],
+	$lna[271],
+	$lna[272],
+	$lna[1111]
+    ];
+    $arrayvalue_property = [0, 1, 2, 3, 4];
+    $arrayoption_sticky = [
+	$lna[273],
+	$lna[274],
+	$lna[275]
+    ];
+    $arrayvalue_sticky = [0, 1, 2];
     $usergp_1 = array_values($usergp);
     $usergp_2 = array_keys($usergp);
-    $arrayoption_editors = array('QuickTags', $lna[568], "FCKeditor {$lna[1017]}", "TinyMCE {$lna[1017]}", $lna[711]);
-    $arrayvalue_editors = array('quicktags', 'ubb', 'fckeditor', 'tinymce', 'custom');
+    $arrayoption_editors = [
+	'QuickTags',
+	$lna[568],
+	"FCKeditor {$lna[1017]}",
+	"TinyMCE {$lna[1017]}",
+	$lna[711]
+    ];
+    $arrayvalue_editors = [
+	'quicktags',
+	'ubb',
+	'fckeditor',
+	'tinymce',
+	'custom'
+    ];
 
     $ismoreon = 'none';
 
@@ -225,17 +247,32 @@ if ($job == 'add' || $job == 'edit') { //Initialize public items
         $lna[301] = $puttingweather = '';
     }
     $puttingsticky = autoselect('sticky', $arrayoption_sticky, $arrayvalue_sticky, $selectedid_sticky);
-    $puttinghtml = autoradio('checkbox', 'html', array($lna[280]), array(1), array($records['htmlstat']),
-        array($disablehtmlstatus));
-    $puttingubb = autoradio('checkbox', 'ubb', array($lna[281]), array(1), array($records['ubbstat']),
-        array($disableubbstatus));
-    $puttingemot = autoradio('checkbox', 'emot', array($lna[282]), array(1), array($records['emotstat']),
-        array($disableemotstatus));
+    $puttinghtml = autoradio('checkbox', 'html',
+	[$lna[280]],
+	[1],
+	[$records['htmlstat']]
+        [$disablehtmlstatus]
+    );
+    $puttingubb = autoradio('checkbox', 'ubb',
+	[$lna[281]],
+	[1],
+	[$records['ubbstat']],
+        [$disableubbstatus]
+    );
+    $puttingemot = autoradio('checkbox', 'emot',
+	[$lna[282]],
+	[1],
+	[$records['emotstat']],
+        [$disableemotstatus]
+    );
     $puttingpermitgp = autoradio('checkbox', 'permitgp[]', $usergp_1, $usergp_2, $arraychecked_permitgp);
 
     if (@$flset['star'] != 1) {
-        $puttingstarred = autoradio('checkbox', 'starred', array($lna[1020]), array(1),
-            array(@$records['starred'] % 2));
+        $puttingstarred = autoradio('checkbox', 'starred',
+		[$lna[1020]],
+		[1],
+		[@$records['starred'] % 2]
+        );
     } else {
         $puttingstarred = '';
     }
@@ -790,7 +827,9 @@ if ($job == 'store' || $job == 'restore') {
         catchsuccess('');
     }
     if (($job == 'store' && !$pinged) || ($job == 'restore' && $resend != 1) || ($job == 'restore' && !$pinged)) {
-        catchsuccess($finishok, array("{$backtowhere}|" . get_entry_url($currentid, $blogalias), $backtoaddnew));
+        catchsuccess($finishok, [
+		"{$backtowhere}|" . get_entry_url($currentid, $blogalias), $backtoaddnew]
+	);
     } else {
         if ($htmlstat == 1) {
             $excerpt = tb_convert($content);

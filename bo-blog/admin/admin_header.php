@@ -131,7 +131,7 @@ $editorjs
         -->
 eot;
 
-$admin_item["main"] = array(
+$admin_item["main"] = [
     "default"  => $lna[12],
     "config"   => $lna[13],
     "mbcon"    => $lna[14],
@@ -139,38 +139,53 @@ $admin_item["main"] = array(
     "module"   => $lna[15],
     "update"   => $lna[16],
     "langset"  => "Language",
-);
+];
 
-$admin_item["category"] = array("default" => $lna[4]);
+$admin_item["category"] = ["default" => $lna[4]];
 
 if (@$flset['tags'] != 1) {
     $admin_item["category"]["tags"] = $lna[17];
 }
 
-$admin_item["link"] = array(
+$admin_item["link"] = [
     "default"      => $lna[18],
     "detail"       => $lna[19],
     "groupsorting" => $lna[252],
     "add"          => $lna[20],
     "pending"      => $lna[21],
-);
+];
 
-$admin_item["entry"] = array(
+$admin_item["entry"] = [
     "default"    => $lna[3],
     "write"      => $lna[22],
     "draft"      => $lna[23],
     "pagewrite"  => $lna[1056],
     "pagemanage" => $lna[1057],
-);
+];
 
-$admin_item["reply"] = array("default" => $lna[6], "censor" => $lna[24], "tb" => $lna[25], "tbcensor" => $lna[947]);
+$admin_item["reply"] = [
+    "default" => $lna[6],
+    "censor" => $lna[24],
+    "tb" => $lna[25],
+    "tbcensor" => $lna[947]
+];
 
 if (@$flset['guestbook'] != 1) {
-    $admin_item["message"] = array("default" => $lna[813], "censor" => $lna[26]);
+    $admin_item["message"] = [
+        "default" => $lna[813],
+        "censor" => $lna[26]
+    ];
 }
 
-$admin_item["addon"] = array("skin" => $lna[27], "plugin" => $lna[28], "langspec" => $lna[1101]);
-$admin_item["misc"] = array("forbidden" => $lna[30], "emot" => $lna[29]);
+$admin_item["addon"] = [
+    "skin" => $lna[27],
+    "plugin" => $lna[28],
+    "langspec" => $lna[1101]
+];
+$admin_item["misc"] = [
+    "forbidden" => $lna[30],
+    "emot" => $lna[29]
+];
 
 if (@$flset['weather'] != 1) {
     $admin_item["misc"]["weatherset"] = $lna[31];
@@ -180,15 +195,22 @@ if (@$flset['avatar'] != 1) {
     $admin_item["misc"]["avatar"] = $lna[32];
 }
 
-$admin_item["misc"] += array("sessiondir" => $lna[935], "urlrewrite" => $lna[527]);
-$admin_item["user"] = array("usergroup" => $lna[33], "users" => $lna[8], "add" => $lna[34]);
-$admin_item["carecenter"] = array(
+$admin_item["misc"] += [
+    "sessiondir" => $lna[935],
+    "urlrewrite" => $lna[527]
+];
+$admin_item["user"] = [
+    "usergroup" => $lna[33],
+    "users" => $lna[8],
+    "add" => $lna[34]
+];
+$admin_item["carecenter"] = [
     "recache"     => $lna[35],
     "adminattach" => $lna[36],
     "mysql"       => 'MySQL',
     "export"      => $lna[37],
     "import"      => $lna[38],
-);
+];
 
 foreach ($admin_item as $k => $v) {
     $rollall = "<ul>\n";

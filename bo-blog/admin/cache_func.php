@@ -100,7 +100,7 @@ function recache_mods()
     if (is_array($section_out)) {
         foreach ($section_out as $key => $valuearray) {
             $body_sec = @implode(', ', $valuearray);
-            $writeout .= "addbar('{$key}', array({$body_sec}));\n";
+            $writeout .= "addbar('{$key}', [{$body_sec}]);\n";
         }
     }
     if (!writetofile("data/mods.php", "<?php\nif (!defined('VALIDREQUEST')) die ('Access Denied.');\n{$writeout}")) {
@@ -108,7 +108,7 @@ function recache_mods()
     }
 
     unset ($writeout);
-    $writeout = "<?php\n\$allopenmods=array(" . @implode(', ', $section_all) . ");\n?>";
+    $writeout = "<?php\n\$allopenmods=[" . @implode(', ', $section_all) . "];\n?>";
     if (!writetofile("data/allmods.php", $writeout)) {
         catcherror($lna[66] . "data/allmods.php");
     }
@@ -134,7 +134,7 @@ function recache_adminlist()
                 $out[] = "'{$all_admins['userid'][$i]}'=>'{$all_admins['username'][$i]}'";
             }
             $outout = @implode(',', $out);
-            $writeout = "<?php\n\$adminlist=array({$outout});\n";
+            $writeout = "<?php\n\$adminlist=[{$outout}];\n";
             if (!writetofile("data/cache_adminlist.php", $writeout)) {
                 catcherror($lna[66] . "data/cache_adminlist.php");
             }
@@ -185,7 +185,7 @@ function recache_latestentries()
             if ($title != $result_limit_detail['title']) {
                 $title .= '...';
             }
-            $outcache_limit .= "\$cache_latest_limit[]=array(\"blogid\"=>{$result_limit_detail['blogid']}, \"title\"=>'{$title}', \"category\"=>{$result_limit_detail['category']}, \"fulltitle\"=>'{$result_limit_detail['title']}', \"blogalias\"=>'{$result_limit_detail['blogalias']}');\n";
+            $outcache_limit .= "\$cache_latest_limit[]=[\"blogid\"=>{$result_limit_detail['blogid']}, \"title\"=>'{$title}', \"category\"=>{$result_limit_detail['category']}, \"fulltitle\"=>'{$result_limit_detail['title']}', \"blogalias\"=>'{$result_limit_detail['blogalias']}'];\n";
         }
     }
     if (is_array($result_all)) {
@@ -194,7 +194,7 @@ function recache_latestentries()
             if ($title != $result_all_detail['title']) {
                 $title .= '...';
             }
-            $outcache_limit .= "\$cache_latest_all[]=array(\"blogid\"=>{$result_all_detail['blogid']}, \"title\"=>'{$title}', \"category\"=>{$result_all_detail['category']}, \"fulltitle\"=>'{$result_all_detail['title']}', \"blogalias\"=>'{$result_all_detail['blogalias']}');\n";
+            $outcache_limit .= "\$cache_latest_all[]=[\"blogid\"=>{$result_all_detail['blogid']}, \"title\"=>'{$title}', \"category\"=>{$result_all_detail['category']}, \"fulltitle\"=>'{$result_all_detail['title']}', \"blogalias\"=>'{$result_all_detail['blogalias']}'];\n";
         }
     }
     if (!writetofile("data/cache_latest.php", "<?php\n" . $outcache_limit . "?>")) {
@@ -219,7 +219,7 @@ function recache_latestreplies()
                 $title .= '...';
             }
             $outcache_limit .= "<?php die();?><|>limit<|>{$result_limit_detail['blogid']}<|>{$title}<|>{$result_limit_detail['replier']}<|>{$result_limit_detail['repid']}<|>{$result_limit_detail['title']}<|>{$result_limit_detail['blogalias']}<||>";
-            //$outcache_limit.="\$cache_replies_limit[]=array(\"blogid\"=>{$result_limit_detail['blogid']}, \"repcontent\"=>\"{$title}\", \"replier\"=>\"{$result_limit_detail['replier']}\",  \"repid\"=>'{$result_limit_detail['repid']}', \"title\"=>\"{$result_limit_detail['title']}\", \"blogalias\"=>'{$result_limit_detail['blogalias']}');\n";
+            //$outcache_limit.="\$cache_replies_limit[]=[\"blogid\"=>{$result_limit_detail['blogid']}, \"repcontent\"=>\"{$title}\", \"replier\"=>\"{$result_limit_detail['replier']}\",  \"repid\"=>'{$result_limit_detail['repid']}', \"title\"=>\"{$result_limit_detail['title']}\", \"blogalias\"=>'{$result_limit_detail['blogalias']}'];\n";
         }
     }
     if (is_array($result_all)) {
@@ -233,7 +233,7 @@ function recache_latestreplies()
                 $title .= '...';
             }
             $outcache_limit .= "<?php die();?><|>all<|>{$result_all_detail['blogid']}<|>{$title}<|>{$result_all_detail['replier']}<|>{$result_all_detail['repid']}<|>{$result_all_detail['title']}<|>{$result_all_detail['blogalias']}<||>";
-            //$outcache_limit.="\$cache_replies_all[]=array(\"blogid\"=>{$result_all_detail['blogid']}, \"repcontent\"=>\"{$title}\", \"replier\"=>\"{$result_all_detail['replier']}\",  \"repid\"=>'{$result_all_detail['repid']}', \"title\"=>\"{$result_all_detail['title']}\", \"blogalias\"=>'{$result_all_detail['blogalias']}');\n";
+            //$outcache_limit.="\$cache_replies_all[]=[\"blogid\"=>{$result_all_detail['blogid']}, \"repcontent\"=>\"{$title}\", \"replier\"=>\"{$result_all_detail['replier']}\",  \"repid\"=>'{$result_all_detail['repid']}', \"title\"=>\"{$result_all_detail['title']}\", \"blogalias\"=>'{$result_all_detail['blogalias']}'];\n";
         }
     }
     if (!writetofile("data/cache_replies.php", $outcache_limit)) {
@@ -299,7 +299,7 @@ function recache_currentmonthentries()
 </tbody>
 </table>
 eot;
-    //$out="<?php\n\$month_calendar=array(".@implode(',', $result_all).");";
+    //$out="<?php\n\$month_calendar=[".@implode(',', $result_all)."];";
     if (!writetofile("data/cache_currentmonth.php", $out)) {
         catcherror($lna[66] . "data/cache_currentmonth.php");
     }

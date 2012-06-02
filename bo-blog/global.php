@@ -120,13 +120,13 @@ $blog = new boblog;
 
 //Initialize Time Info
 $nowtime['timestamp'] = time();
-$nowtime += array(
+$nowtime += [
     'year'  => gmdate('Y', $nowtime['timestamp'] + 3600 * $config['timezone']),
     'month' => gmdate('n', $nowtime['timestamp'] + 3600 * $config['timezone']),
     'day'   => gmdate('j', $nowtime['timestamp'] + 3600 * $config['timezone']),
     'Ymd'   => gmdate('Ymd', $nowtime['timestamp'] + 3600 * $config['timezone']),
     'Ym'    => gmdate('Ym', $nowtime['timestamp'] + 3600 * $config['timezone']),
-);
+];
 
 //Sessions and Cookies
 $userdetail = [];
@@ -206,31 +206,31 @@ if (!defined('noCounter')) { //trackback, rss, sitemap are not regarded as norma
         $onlinetime = $nowtime['timestamp'] - $oldip[2];
         if ($oldip[1] != $userdetail['ip'] && $onlinetime <= $config['onlinetime']) {
             $nowonline[] = $online_all[$i];
-            $onlineusers[] = array(
+            $onlineusers[] = [
                 'userid'     => $oldip[3],
                 'username'   => $oldip[4],
                 'activetime' => $oldip[2],
                 'ip'         => $oldip[1],
-            );
+            ];
         } elseif ($oldip[1] == $userdetail['ip']) {
             $nowonline[] = "<?php exit;?>|{$userdetail['ip']}|{$nowtime['timestamp']}|{$userdetail['userid']}|{$userdetail['username']}|\n";
-            $onlineusers[] = array(
+            $onlineusers[] = [
                 'userid'     => $oldip[3],
                 'username'   => $oldip[4],
                 'activetime' => $nowtime['timestamp'],
                 'ip'         => $oldip[1],
-            );
+            ];
             $tmp_checked_current = 1;
         }
     }
     if ($tmp_checked_current != 1) {
         $nowonline[] = "<?php exit;?>|{$userdetail['ip']}|{$nowtime['timestamp']}|{$userdetail['userid']}|{$userdetail['username']}|\n";
-        $onlineusers[] = array(
+        $onlineusers[] = [
             'userid'     => $userdetail['userid'],
             'username'   => $userdetail['username'],
             'activetime' => $nowtime['timestamp'],
             'ip'         => $userdetail['ip'],
-        );
+        ];
         $blog->query("UPDATE `{$db_prefix}counter` SET `today`={$statistics['today']}+1");
         $statistics['today'] += 1;
     }
@@ -255,7 +255,7 @@ if (file_exists('data/cache_categories.php')) {
     }
     foreach ((array)$result as $row) {
         $catid = $row['cateid'];
-        $categories[$catid] = array(
+        $categories[$catid] = [
             "catename"     => stripslashes($row['catename']),
             "catedesc"     => stripslashes($row['catedesc']),
             "cateproperty" => $row['cateproperty'],
@@ -267,7 +267,7 @@ if (file_exists('data/cache_categories.php')) {
             "catecount"    => $row['catecount'],
             "parentcate"   => $row['parentcate'],
             "cateurlname"  => $row['cateurlname'],
-        );
+        ];
         if ($row['catemode'] == 1) { //Sub-category
             $row['catename'] = '|- ' . $row['catename'];
             $categories[$row['parentcate']]['subcates'][] = $catid; //Parent category get its sub-categories
@@ -550,7 +550,7 @@ function urlconvert($url, $defaultprefix = "http://")
     if (trim($url) == '') {
         return $url;
     } //Do not convert an empty value
-    $validurlprefix = array('http', 'https', 'ftp', 'tencent', 'news', 'ed2k');
+    $validurlprefix = ['http', 'https', 'ftp', 'tencent', 'news', 'ed2k'];
     $url_parts = @explode('://', $url);
     if (!@in_array($url_parts[0], $validurlprefix)) {
         $url = $defaultprefix . $url;
@@ -696,7 +696,7 @@ function lunarcalendar($month, $year)
     // [1] to [13] are the number of days per month for 12 or 13 months each year;
     // [14] is the order of the sun's rays in the current year;
     // [15] is the order of the earthly branches of the year
-    $everymonth = array(
+    $everymonth = [
         0   => array(8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 29, 30, 7, 1),
         1   => array(0, 29, 30, 29, 29, 30, 29, 30, 29, 30, 30, 30, 29, 0, 8, 2),
         2   => array(0, 30, 29, 30, 29, 29, 30, 29, 30, 29, 30, 30, 30, 0, 9, 3),
@@ -830,7 +830,7 @@ function lunarcalendar($month, $year)
         129 => array(3, 29, 30, 29, 30, 29, 30, 29, 30, 29, 30, 29, 30, 30, 6, 10),
         130 => array(0, 29, 30, 29, 30, 29, 30, 29, 30, 29, 30, 29, 30, 0, 7, 11),
         131 => array(0, 29, 30, 29, 30, 29, 30, 29, 30, 29, 30, 29, 30, 0, 8, 12),
-    );
+    ];
 /*vot*/    $maxyear = 2031; //2020;
 /*vot*/    $maxyearind = $maxyear - 1900;
 
@@ -1086,13 +1086,13 @@ function zhgmdate($timeformat, $timestamp)
         $timeformat = str_replace('custom', $mbcon['customtimeformat'], $timeformat);
     }
     // Digits: '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'
-    $zh_numbers = array('零', '一', '二', '三', '四', '五', '六', '七', '八', '九', '十');
+    $zh_numbers = ['零', '一', '二', '三', '四', '五', '六', '七', '八', '九', '十'];
     //Year, Month, Day
-    $zh_sybols = array('年', '月', '日');
+    $zh_sybols = ['年', '月', '日'];
     //zh-cn: 'Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'
-    $zh_weeks = array('星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六');
+    $zh_weeks = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
     //zh-tw: 'Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'
-    $ja_weeks = array('日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日');
+    $ja_weeks = ['日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日'];
     $result = gmdate($timeformat, $timestamp);
     $fact = getdate($timestamp);
     $factyear = (string)$fact['year'];
@@ -1108,7 +1108,7 @@ function zhgmdate($timeformat, $timestamp)
     $sfact[2] = str_replace($zh_numbers[10] . $zh_numbers[0], $zh_numbers[10], $sfact[2]);
     $sfact[3] = $zh_weeks[$factweek];
     $sfact[4] = $ja_weeks[$factweek];
-    $rfact = array('@', '^', '%', '!', '~');
+    $rfact = ['@', '^', '%', '!', '~'];
     $result = str_replace($rfact, $sfact, $result);
     return $result;
 }
@@ -1236,7 +1236,7 @@ function unregister_GLOBALS()
         return;
     }
     // Variables that shouldn't be unset
-    $noUnset = array('_GET', '_POST', '_COOKIE', '_REQUEST', '_SERVER', '_ENV', '_FILES');
+    $noUnset = ['_GET', '_POST', '_COOKIE', '_REQUEST', '_SERVER', '_ENV', '_FILES'];
     $input = array_merge($_GET, $_POST, $_COOKIE, $_SERVER, $_ENV, $_FILES,
         isset($_SESSION) && is_array($_SESSION) ? $_SESSION : []);
     foreach ($input as $k => $v) {
@@ -1397,12 +1397,12 @@ function completeOpenID()
                 $sreg = $response->extensionResponse('sreg');
 
                 //Format openid
-                $openid = str_replace(array('http://', 'https://'), array('', ''), $openid);
+                $openid = str_replace(['http://', 'https://'], ['', ''], $openid);
                 if (substr($openid, -1, 1) == '/') {
                     $openid = substr($openid, 0, strlen($openid) - 1);
                 }
 
-                return array('openidurl' => $openid, 'sreg' => $sreg);
+                return ['openidurl' => $openid, 'sreg' => $sreg];
             } else {
                 catcherror($lnc[315] . 'OpenID Unknown Error.', false);
             }

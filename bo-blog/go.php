@@ -35,15 +35,15 @@ $RewriteRules[] = "/component\/id\/([0-9]+)\/?/e";
 $RewriteRules[] = "/component\/([a-z|A-Z|0-9|_|-]+)\/?/e";
 $RewriteRules[] = "/tags\/([a-z|A-Z|0-9|_|-|%]+)\/?([0-9]+)?\/?([0-9]+)?\/?/e";
 
-$RedirectTo[] = "loadURL('index.php', array('mode'=>'\\1', 'page'=>'\\2'));";
-$RedirectTo[] = "loadURL('star.php', array('mode'=>'\\1', 'page'=>'\\2'));";
-$RedirectTo[] = "loadURL('index.php', array('go'=>'category_\\1', 'mode'=>'\\2', 'page'=>'\\3'));";
-$RedirectTo[] = "loadURL('index.php', array('go'=>'archive', 'cm'=>'\\1', 'cy'=>'\\2', 'mode'=>'\\3', 'page'=>'\\4'));";
-$RedirectTo[] = "loadURL('index.php', array('go'=>'showday_\\1-\\2-\\3', 'mode'=>'\\4', 'page'=>'\\5'));";
-$RedirectTo[] = "loadURL('view.php', array('go'=>'user_\\1'));";
-$RedirectTo[] = "loadURL('page.php', array('pageid'=>'\\1'));";
-$RedirectTo[] = "loadURL('page.php', array('pagealias'=>'\\1'));";
-$RedirectTo[] = "loadURL('tag.php', array('tag'=>'\\1', 'mode'=>'\\2', 'page'=>'\\3'));";
+$RedirectTo[] = "loadURL('index.php', ['mode'=>'\\1', 'page'=>'\\2']);";
+$RedirectTo[] = "loadURL('star.php', ['mode'=>'\\1', 'page'=>'\\2']);";
+$RedirectTo[] = "loadURL('index.php', ['go'=>'category_\\1', 'mode'=>'\\2', 'page'=>'\\3']);";
+$RedirectTo[] = "loadURL('index.php', ['go'=>'archive', 'cm'=>'\\1', 'cy'=>'\\2', 'mode'=>'\\3', 'page'=>'\\4']);";
+$RedirectTo[] = "loadURL('index.php', ['go'=>'showday_\\1-\\2-\\3', 'mode'=>'\\4', 'page'=>'\\5']);";
+$RedirectTo[] = "loadURL('view.php', ['go'=>'user_\\1']);";
+$RedirectTo[] = "loadURL('page.php', ['pageid'=>'\\1']);";
+$RedirectTo[] = "loadURL('page.php', ['pagealias'=>'\\1']);";
+$RedirectTo[] = "loadURL('tag.php', ['tag'=>'\\1', 'mode'=>'\\2', 'page'=>'\\3']);";
 
 function loadURL($url, $pref)
 {
