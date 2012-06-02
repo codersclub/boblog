@@ -23,7 +23,7 @@ $q_url = $_SERVER["REQUEST_URI"];
 $rewritedURL = false;
 $includeFile = '';
 
-$RewriteRules = $RedirectTo = array();
+$RewriteRules = $RedirectTo = [];
 
 $RewriteRules[] = "/page\/([0-9]+)\/([0-9]+)\/?/e";
 $RewriteRules[] = "/starred\/([0-9]+)\/?([0-9]+)?\/?/e";

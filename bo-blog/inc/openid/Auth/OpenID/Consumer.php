@@ -455,7 +455,7 @@ class Auth_OpenID_PlainTextConsumerSession {
 
     function getRequest()
     {
-        return array();
+        return [];
     }
 
     function extractSecret($response)
@@ -685,7 +685,7 @@ class Auth_OpenID_GenericConsumer {
 
         $signed = array_merge(explode(",", $signed), $whitelist);
 
-        $check_args = array();
+        $check_args = [];
 
         foreach ($query as $key => $value) {
             if (in_array(substr($key, 7), $signed)) {
@@ -726,7 +726,7 @@ class Auth_OpenID_GenericConsumer {
     {
         $mode = $args['openid.mode'];
 
-        $pairs = array();
+        $pairs = [];
         foreach ($args as $k => $v) {
             $v = urlencode($v);
             $pairs[] = "$k=$v";
@@ -758,7 +758,7 @@ class Auth_OpenID_GenericConsumer {
     {
         $parsed_url = parse_url($response->getReturnTo());
         $query_str = @$parsed_url['query'];
-        $query = array();
+        $query = [];
         parse_str($query_str, $query);
 
         $found = false;
@@ -946,8 +946,8 @@ class Auth_OpenID_AuthRequest {
     {
         $this->assoc = $assoc;
         $this->endpoint = $endpoint;
-        $this->extra_args = array();
-        $this->return_to_args = array();
+        $this->extra_args = [];
+        $this->return_to_args = [];
     }
 
     /**
@@ -1057,7 +1057,7 @@ class Auth_OpenID_SuccessResponse extends Auth_OpenID_ConsumerResponse {
      */
     function fromQuery($endpoint, $query, $signed)
     {
-        $signed_args = array();
+        $signed_args = [];
         foreach (explode(",", $signed) as $field_name) {
             $field_name = 'openid.' . $field_name;
             $signed_args[$field_name] = Auth_OpenID::arrayGet($query,
@@ -1074,7 +1074,7 @@ class Auth_OpenID_SuccessResponse extends Auth_OpenID_ConsumerResponse {
      */
     function extensionResponse($prefix)
     {
-        $response = array();
+        $response = [];
         $prefix = sprintf('openid.%s.', $prefix);
         $prefix_len = strlen($prefix);
         foreach ($this->signed_args as $k => $v) {

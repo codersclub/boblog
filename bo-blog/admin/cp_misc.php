@@ -718,7 +718,7 @@ eot;
 if ($job == 'changesessiondir') {
     acceptrequest('modpassword,newdirname,usedefaultsess');
     $checkmodp = md5($modpassword);
-    $checkmodp_try = array();
+    $checkmodp_try = [];
     $checkmodp_try = $blog->getbyquery("SELECT * FROM `{$db_prefix}user` WHERE `userid`='{$userdetail['userid']}' AND `userpsw`='{$checkmodp}'");
 
     if ($checkmodp_try['userid'] != $userdetail['userid']) {

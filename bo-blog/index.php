@@ -12,7 +12,7 @@ In memory of my university life
 
 define('isIndex', 1);
 $begintime = getmicrotime();
-$blogplugin = $section_header = $section_footer = $section_sidebar = $section_prebody = $dlstat = $blogitem = $flset = array();
+$blogplugin = $section_header = $section_footer = $section_sidebar = $section_prebody = $dlstat = $blogitem = $flset = [];
 
 require_once("global.php");
 include_once("data/allmods.php");
@@ -242,7 +242,7 @@ $section_foot_components = @implode('', $section_footer);
 $footmenu = $t->set('displayfooter', array('section_foot_components' => $section_foot_components));
 
 //Section: ..</body>
-$footerhtml = $t->set('footer', array());
+$footerhtml = $t->set('footer', []);
 
 $displayall = array(
     'headerhtml' => $headerhtml,

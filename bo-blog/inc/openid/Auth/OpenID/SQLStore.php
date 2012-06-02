@@ -136,7 +136,7 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
         $this->connection->autoCommit(false);
 
         // Create an empty SQL strings array.
-        $this->sql = array();
+        $this->sql = [];
 
         // Call this method (which should be overridden by subclasses)
         // to populate the $this->sql array with SQL strings.
@@ -225,8 +225,8 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
      */
     function _verifySQL()
     {
-        $missing = array();
-        $empty = array();
+        $missing = [];
+        $empty = [];
 
         $required_sql_keys = array(
                                    'nonce_table',
@@ -451,7 +451,7 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
                                             array($server_url));
 
         if ($this->isError($result)) {
-            return array();
+            return [];
         } else {
             return $result;
         }
@@ -479,7 +479,7 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
         if ($handle !== null) {
             $assoc = $this->_get_assoc($server_url, $handle);
 
-            $assocs = array();
+            $assocs = [];
             if ($assoc) {
                 $assocs[] = $assoc;
             }
@@ -490,7 +490,7 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
         if (!$assocs || (count($assocs) == 0)) {
             return null;
         } else {
-            $associations = array();
+            $associations = [];
 
             foreach ($assocs as $assoc_row) {
                 $assoc = new Auth_OpenID_Association($assoc_row['handle'],
@@ -509,8 +509,8 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
             }
 
             if ($associations) {
-                $issued = array();
-                $assocs = array();
+                $issued = [];
+                $assocs = [];
                 foreach ($associations as $key => $assoc) {
                     $issued[$key] = $assoc[0];
                     $assocs[$key] = $assoc[1];

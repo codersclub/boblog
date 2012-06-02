@@ -89,7 +89,7 @@ for ($i = 0; $i < $thesedays; $i++) {
 }
 
 $afilename = "data/online.php";
-$onlineusers = $nowonline = array();
+$onlineusers = $nowonline = [];
 $online_all = @file($afilename);
 $nowonline = $online_all;
 $nowonline = array_slice($nowonline, 0, 50);

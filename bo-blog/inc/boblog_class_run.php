@@ -45,7 +45,7 @@ class boblog
     function getgroupbyquery($query)
     {
         $result = db_query($query);
-        $fetchresult = array();
+        $fetchresult = [];
         $i = 0;
         while ($row = db_fetch_array($result)) {
             foreach ($row as $key => $val) {
@@ -60,7 +60,7 @@ class boblog
     function getarraybyquery($query)
     {
         $result = db_query($query);
-        $fetchresult = array();
+        $fetchresult = [];
         $i = 0;
         while ($row = db_fetch_array($result)) {
             foreach ($row as $key => $val) {
@@ -114,7 +114,7 @@ class template
                 global $csslocation;
                 $csslocation .= "<link rel=\"stylesheet\" href=\"inc/tpltune/{$template['sysver']}.css\">\n";
             }
-            $tptvalue = array();
+            $tptvalue = [];
         }
     }
 
@@ -146,7 +146,7 @@ class template
     function publish($contentstr, $screen = false)
     {
         global $tptvalue;
-        $globalvar = array();
+        $globalvar = [];
         preg_replace_callback("/<!--global:{(.+?)}-->/i", 'global_callback', $contentstr);
         foreach ($globalvar as $parser => $value) {
             $contentstr = str_replace("<!--global:{" . $parser . "}-->", $value, $contentstr);
@@ -247,7 +247,7 @@ class getblogs extends boblog
         $result = db_query("SELECT * FROM `{$db_prefix}blogs` {$partialquery} LIMIT $start_id, $perpagevolume");
         $this->total_rows = db_num_rows($result);
         $i = 0;
-        $fetchresult = array();
+        $fetchresult = [];
         while ($row = db_fetch_array($result)) {
             foreach ($row as $key => $val) {
                 $fetchresult[$i][$key] = $val;
@@ -1453,7 +1453,7 @@ if($way=='excerpt') {
             'tbody' => 0,
             'table' => 0,
         );
-        $htmltagend = array();
+        $htmltagend = [];
         $allowsingle = array('br', 'hr', 'img', 'param');
         $str = preg_split("/(<[^>]+?>)/si", $str, -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
         foreach ($str as $singlestr) {

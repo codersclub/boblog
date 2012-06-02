@@ -85,7 +85,7 @@ if ($is_preview) {
     }
 
 
-    $records = array();
+    $records = [];
     $records[0] = array(
         'blogid'       => $blogid,
         'title'        => $title,

@@ -26,7 +26,7 @@ function Services_Yadis_getXRIAuthorities()
 
 function Services_Yadis_getEscapeRE()
 {
-    $parts = array();
+    $parts = [];
     foreach (array_merge(Services_Yadis_getUCSChars(),
                          Services_Yadis_getIPrivateChars()) as $pair) {
         list($m, $n) = $pair;
@@ -112,7 +112,7 @@ function Services_Yadis_XRIAppendArgs($url, $args)
     } else {
         $keys = array_keys($args);
         sort($keys);
-        $new_args = array();
+        $new_args = [];
         foreach ($keys as $key) {
             $new_args[] = array($key, $args[$key]);
         }
@@ -166,7 +166,7 @@ function Services_Yadis_rootAuthority($xri)
     } else {
         // IRI reference.
         $_segments = explode("!", $authority);
-        $segments = array();
+        $segments = [];
         foreach ($_segments as $s) {
             $segments = array_merge($segments, explode("*", $s));
         }
@@ -208,7 +208,7 @@ function Services_Yadis_getCanonicalID($iname, $xrds)
         $xrd = $xrd_list[$i];
 
         $parent_sought = substr($childID, 0, strrpos($childID, '!'));
-        $parent_list = array();
+        $parent_list = [];
 
         foreach ($parser->evalXPath('xrd:CanonicalID', $xrd) as $c) {
             $parent_list[] = Services_Yadis_XRI($parser->content($c));

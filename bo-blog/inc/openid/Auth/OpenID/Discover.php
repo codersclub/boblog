@@ -23,7 +23,7 @@ class Auth_OpenID_ServiceEndpoint {
     {
         $this->identity_url = null;
         $this->server_url = null;
-        $this->type_uris = array();
+        $this->type_uris = [];
         $this->delegate = null;
         $this->canonicalID = null;
         $this->used_yadis = false; // whether this came from an XRDS
@@ -119,7 +119,7 @@ function filter_MatchesAnyOpenIDType(&$service)
 
 function Auth_OpenID_makeOpenIDEndpoints($uri, $endpoints)
 {
-    $s = array();
+    $s = [];
 
     if (!$endpoints) {
         return $s;
@@ -158,7 +158,7 @@ function Auth_OpenID_discoverWithYadis($uri, &$fetcher)
     // came back for that URI at all.  I don't think falling back to
     // OpenID 1.0 discovery on the same URL will help, so don't bother
     // to catch it.
-    $openid_services = array();
+    $openid_services = [];
 
     $http_response = null;
     $response = Services_Yadis_Yadis::discover($uri, $http_response,
@@ -214,7 +214,7 @@ function Auth_OpenID_discoverWithoutYadis($uri, &$fetcher)
     $http_resp = @$fetcher->get($uri);
 
     if ($http_resp->status != 200) {
-        return array(null, array(), $http_resp);
+        return array(null, [], $http_resp);
     }
 
     $identity_url = $http_resp->final_url;
@@ -224,7 +224,7 @@ function Auth_OpenID_discoverWithoutYadis($uri, &$fetcher)
     $endpoint =& new Auth_OpenID_ServiceEndpoint();
     $service = $endpoint->fromHTML($identity_url, $http_resp->body);
     if ($service === null) {
-        $openid_services = array();
+        $openid_services = [];
     } else {
         $openid_services = array($service);
     }

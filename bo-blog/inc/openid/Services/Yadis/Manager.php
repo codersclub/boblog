@@ -127,7 +127,7 @@ class Services_Yadis_SessionLoader {
      */
     function prepareForLoad($data)
     {
-        return array();
+        return [];
     }
 
     /**
@@ -149,7 +149,7 @@ class Services_Yadis_SessionLoader {
      */
     function toSession($obj)
     {
-        $data = array();
+        $data = [];
         foreach ($obj as $k => $v) {
             $data[$k] = $v;
         }
@@ -170,7 +170,7 @@ class Services_Yadis_SessionLoader {
      */
     function prepareForSave($obj)
     {
-        return array();
+        return [];
     }
 }
 
@@ -183,7 +183,7 @@ class Auth_OpenID_ServiceEndpointLoader extends Services_Yadis_SessionLoader {
     function requiredKeys()
     {
         $obj = new Auth_OpenID_ServiceEndpoint();
-        $data = array();
+        $data = [];
         foreach ($obj as $k => $v) {
             $data[] = $k;
         }
@@ -223,7 +223,7 @@ class Services_Yadis_ManagerLoader extends Services_Yadis_SessionLoader {
     function prepareForLoad($data)
     {
         $loader = new Auth_OpenID_ServiceEndpointLoader();
-        $services = array();
+        $services = [];
         foreach ($data['services'] as $s) {
             $services[] = $loader->fromSession($s);
         }
@@ -233,7 +233,7 @@ class Services_Yadis_ManagerLoader extends Services_Yadis_SessionLoader {
     function prepareForSave($obj)
     {
         $loader = new Auth_OpenID_ServiceEndpointLoader();
-        $services = array();
+        $services = [];
         foreach ($obj->services as $s) {
             $services[] = $loader->toSession($s);
         }
@@ -386,7 +386,7 @@ class Services_Yadis_Discovery {
         $manager = $this->getManager();
         if (!$manager || (!$manager->services)) {
             $this->destroyManager();
-            $http_response = array();
+            $http_response = [];
 
             $services = call_user_func($discover_cb, $this->url,
                                        $fetcher);

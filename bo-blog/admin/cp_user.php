@@ -19,7 +19,7 @@ checkpermission('CP');
 confirmpsw(); //Re-check password
 
 $tablebody = '';
-$edituser = array();
+$edituser = [];
 $pluswarn = '';
 
 //Define some senteces

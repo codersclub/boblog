@@ -38,7 +38,7 @@ class Auth_OpenID_KVForm {
             }
         }
 
-        $values = array();
+        $values = [];
 
         for ($lineno = 0; $lineno < count($lines); $lineno++) {
             $line = $lines[$lineno];

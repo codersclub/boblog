@@ -129,7 +129,7 @@ $nowtime += array(
 );
 
 //Sessions and Cookies
-$userdetail = array();
+$userdetail = [];
 if (empty($userid) || empty($userpsw)) {
     $userdetail['usergroup'] = 0;
     $userdetail['userid'] = -1;
@@ -156,7 +156,7 @@ if (@$mbcon['enableopenid'] == '1') {
 
 
 //Load User Group Permission Cache
-$permission = array();
+$permission = [];
 if (file_exists("data/usergroup{$userdetail['usergroup']}.php")) {
     @include_once("data/usergroup{$userdetail['usergroup']}.php");
 } else {
@@ -191,7 +191,7 @@ $statistics = $blog->getsinglevalue("{$db_prefix}counter");
 if (!defined('noCounter')) { //trackback, rss, sitemap are not regarded as normal visits
     $tmp_checked_current = 0;
     $afilename = "data/online.php";
-    $onlineusers = $nowonline = array(); //2006-11-22 Security fix, 2006-11-25 modified
+    $onlineusers = $nowonline = []; //2006-11-22 Security fix, 2006-11-25 modified
     $online_all = @file($afilename);
     for ($i = 0; $i < count($online_all); $i++) {
         $oldip = explode("|", $online_all[$i]);
@@ -241,7 +241,7 @@ if (!defined('noCounter')) { //trackback, rss, sitemap are not regarded as norma
 
 //Get Categories
 if (file_exists('data/cache_categories.php')) {
-    $categories = $categorynames = array();
+    $categories = $categorynames = [];
     $cates_lines = @file('data/cache_categories.php');
     for ($i = 0; $i < count($cates_lines); $i++) {
         @list($unuse, $tmp_result['cateid'], $tmp_result['catename'], $tmp_result['catedesc'], $tmp_result['cateproperty'], $tmp_result['cateorder'], $tmp_result['catemode'], $tmp_result['cateurl'], $tmp_result['cateicon'], $tmp_result['catecount'], $tmp_result['parentcate'], $tmp_result['cateurlname']) = @explode('<|>',
@@ -487,11 +487,11 @@ function safe_convert($string, $html = 0, $filterslash = 0)
     return $string;
 }
 
-function code_callback($match=array()) {
+function code_callback($match=[]) {
     return '[code]' . str_replace('&amp;', '&', $match[1]) . '[/code]';
 }
 
-function global_callback($match=array())
+function global_callback($match=[])
 {
     return "\$globalvar['" . $match[1] . "']=@\$tptvalue['" . $match[1] . "']";
 }
@@ -1238,7 +1238,7 @@ function unregister_GLOBALS()
     // Variables that shouldn't be unset
     $noUnset = array('_GET', '_POST', '_COOKIE', '_REQUEST', '_SERVER', '_ENV', '_FILES');
     $input = array_merge($_GET, $_POST, $_COOKIE, $_SERVER, $_ENV, $_FILES,
-        isset($_SESSION) && is_array($_SESSION) ? $_SESSION : array());
+        isset($_SESSION) && is_array($_SESSION) ? $_SESSION : []);
     foreach ($input as $k => $v) {
         if ($k == 'GLOBALS') {
             global $kgr;

@@ -347,7 +347,7 @@ if ($job == 'search') {
     if ($searchmethod != 1 && $searchmethod != 5 && $permission['FulltextSearch'] != 1) {
         catcherror($lnc[222]);
     }
-    $sqlconditions = array();
+    $sqlconditions = [];
     switch ($searchmethod) {
         case 1:
             $target_table = "{$db_prefix}blogs";
@@ -434,7 +434,7 @@ if ($job == 'search') {
         ));
         $pagetitle = "{$lnc[225]} - ";
     } else {
-        $pinch = array();
+        $pinch = [];
         foreach ($result as $item) {
             $pinch[] = "{$item}";
         }

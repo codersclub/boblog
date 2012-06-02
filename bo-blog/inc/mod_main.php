@@ -151,7 +151,7 @@ switch ($job) {
         $cyearmonth = ($cm < 10) ? "{$year}0{$month}" : "{$year}{$month}";
         $all_datas = $blog->getarraybyquery("SELECT `cid` FROM `{$db_prefix}calendar` WHERE `cyearmonth`='{$cyearmonth}'");
         if (!is_array(@$all_datas['cid'])) {
-            $all_datas['cid'] = array();
+            $all_datas['cid'] = [];
         }
         $counter_now = count($all_datas['cid']);
         $jointstr = @implode(',', $all_datas['cid']);

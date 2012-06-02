@@ -319,7 +319,7 @@ class Auth_OpenID_CheckAuthRequest extends Auth_OpenID_Request {
         $signed_list = $query[$_Auth_OpenID_OpenID_Prefix . 'signed'];
 
         $signed_list = explode(",", $signed_list);
-        $signed_pairs = array();
+        $signed_pairs = [];
 
         foreach ($signed_list as $field) {
             if ($field == 'mode') {
@@ -610,7 +610,7 @@ class Auth_OpenID_CheckIDRequest extends Auth_OpenID_Request {
         $optional = array('trust_root',
                           'assoc_handle');
 
-        $values = array();
+        $values = [];
 
         foreach ($required as $field) {
             if (array_key_exists($_Auth_OpenID_OpenID_Prefix . $field,
@@ -691,7 +691,7 @@ class Auth_OpenID_CheckIDRequest extends Auth_OpenID_Request {
                                                           $this->trust_root);
             }
         } else {
-            $response->signed = array();
+            $response->signed = [];
             if ($this->immediate) {
                 if (!$server_url) {
                     return new Auth_OpenID_ServerError(null,
@@ -736,7 +736,7 @@ class Auth_OpenID_CheckIDRequest extends Auth_OpenID_Request {
             $q['assoc_handle'] = $this->assoc_handle;
         }
 
-        $_q = array();
+        $_q = [];
 
         foreach ($q as $k => $v) {
             $_q[$_Auth_OpenID_OpenID_Prefix . $k] = $v;
@@ -773,7 +773,7 @@ class Auth_OpenID_ServerResponse {
     function Auth_OpenID_ServerResponse($request)
     {
         $this->request = $request;
-        $this->fields = array();
+        $this->fields = [];
     }
 
     function whichEncoding()
@@ -793,7 +793,7 @@ class Auth_OpenID_ServerResponse {
     {
         global $_Auth_OpenID_OpenID_Prefix;
 
-        $fields = array();
+        $fields = [];
 
         foreach ($this->fields as $k => $v) {
             $fields[$_Auth_OpenID_OpenID_Prefix . $k] = $v;
@@ -820,7 +820,7 @@ class Auth_OpenID_CheckIDResponse extends Auth_OpenID_ServerResponse {
     {
         parent::Auth_OpenID_ServerResponse($request);
         $this->fields['mode'] = $mode;
-        $this->signed = array();
+        $this->signed = [];
 
         if ($mode == 'id_res') {
             array_push($this->signed, 'mode', 'identity', 'return_to');
@@ -847,7 +847,7 @@ class Auth_OpenID_CheckIDResponse extends Auth_OpenID_ServerResponse {
 
     function update($namespace, $other)
     {
-        $namespaced_fields = array();
+        $namespaced_fields = [];
 
         foreach ($other->fields as $k => $v) {
             $name = sprintf('%s.%s', $namespace, $k);
@@ -880,7 +880,7 @@ class Auth_OpenID_WebResponse {
         if ($headers !== null) {
             $this->headers = $headers;
         } else {
-            $this->headers = array();
+            $this->headers = [];
         }
 
         if ($body !== null) {
@@ -1141,7 +1141,7 @@ class Auth_OpenID_Decoder {
             return null;
         }
 
-        $myquery = array();
+        $myquery = [];
 
         foreach ($query as $k => $v) {
             if (strpos($k, $this->prefix) === 0) {

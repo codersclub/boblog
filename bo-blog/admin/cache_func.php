@@ -249,7 +249,7 @@ function recache_currentmonthentries()
     $cy = $nowtime['year'];
     $result = $blog->getarraybyquery("SELECT (cday) FROM `{$db_prefix}calendar` WHERE `cyearmonth`='{$nowtime['Ym']}'");
 
-    $month_calendar = (is_array(@$result['cday'])) ? array_unique($result['cday']) : array();
+    $month_calendar = (is_array(@$result['cday'])) ? array_unique($result['cday']) : [];
     if ($mbcon['lunarcalendar'] != 0) {
         $lunarstream = lunarcalendar($cm, $cy);
         $lunarym = "<br>" . @$lunarstream['year'];

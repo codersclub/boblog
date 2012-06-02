@@ -201,7 +201,7 @@ class Auth_OpenID {
      */
     function httpBuildQuery($data)
     {
-        $pairs = array();
+        $pairs = [];
         foreach ($data as $key => $value) {
             if (is_array($value)) {
                 $pairs[] = urlencode($value[0])."=".urlencode($value[1]);
@@ -240,7 +240,7 @@ class Auth_OpenID {
         } else {
             $keys = array_keys($args);
             sort($keys);
-            $new_args = array();
+            $new_args = [];
             foreach ($keys as $key) {
                 $new_args[] = array($key, $args[$key]);
             }
@@ -272,7 +272,7 @@ class Auth_OpenID {
      */
     function quoteMinimal($s)
     {
-        $res = array();
+        $res = [];
         for ($i = 0; $i < strlen($s); $i++) {
             $c = $s[$i];
             if ($c >= "\x80") {

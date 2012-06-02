@@ -200,8 +200,8 @@ class Auth_OpenID_Association {
     function deserialize($class_name, $assoc_s)
     {
         $pairs = Auth_OpenID_KVForm::toArray($assoc_s, $strict = true);
-        $keys = array();
-        $values = array();
+        $keys = [];
+        $values = [];
         foreach ($pairs as $key => $value) {
             if (is_array($value)) {
                 list($key, $value) = $value;
@@ -269,7 +269,7 @@ class Auth_OpenID_Association {
      */
     function signDict($fields, $data, $prefix = 'openid.')
     {
-        $pairs = array();
+        $pairs = [];
         foreach ($fields as $field) {
             $pairs[] = array($field, $data[$prefix . $field]);
         }

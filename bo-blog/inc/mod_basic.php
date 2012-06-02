@@ -40,7 +40,7 @@ $defineditems = array_keys($blogitem);
 $undefineditems = array_diff($systemitems, $defineditems);
 if (count($undefineditems) > 0) {
     foreach ($undefineditems as $undefineditem) {
-        $blogitem[$undefineditem] = array();
+        $blogitem[$undefineditem] = [];
     }
 }
 
@@ -332,7 +332,7 @@ if (in_array('replies', $allopenmods)) {
     if (file_exists("data/cache_replies.php")) {
         $tmpreplies = @explode('<||>', file_get_contents("data/cache_replies.php"));
     }
-    $tmpreplyarray = $cache_replies_all = $cache_replies_limit = array();
+    $tmpreplyarray = $cache_replies_all = $cache_replies_limit = [];
     if ($tmpreplies[0]) {
         foreach ($tmpreplies as $tmpsinglereply) {
             $tmpsinglereplyarray = @explode('<|>', $tmpsinglereply);
@@ -387,7 +387,7 @@ if (in_array('calendar', $allopenmods)) {
     $cy = floor($cy);
     $cm = ($cm <= 0 || $cm > 12) ? ($nowtime['month']) : $cm;
     $cy = ($cy <= 1970 || $cy > 2100) ? ($nowtime['year']) : $cy;
-    $month_calendar = array();
+    $month_calendar = [];
     if ($cy == $nowtime['year'] && $cm == $nowtime['month']) {
         $cal_body = @file_get_contents("data/cache_currentmonth.php");
         if (!strstr($cal_body, "<span class=\"calendar-month\">{$cm}</span>")) { //Cache auto refresh once a month
@@ -411,7 +411,7 @@ if (in_array('calendar', $allopenmods)) {
     } else {
         $cm_s = ($cm < 10) ? ('0' . $cm) : $cm;
         $month_calendars = $blog->getarraybyquery("SELECT cday FROM `{$db_prefix}calendar` WHERE `cyearmonth`='{$cy}{$cm_s}'");
-        $month_calendar = (is_array(@$month_calendars['cday'])) ? array_unique($month_calendars['cday']) : array();
+        $month_calendar = (is_array(@$month_calendars['cday'])) ? array_unique($month_calendars['cday']) : [];
         if ($mbcon['lunarcalendar'] != 0) {
             $lunarstream = lunarcalendar($cm, $cy);
             $lunarym = "<br>" . @$lunarstream['year'];

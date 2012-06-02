@@ -1,7 +1,7 @@
 <?php 
 // Variety diagram code, copyright belongs to http://blog.nzye.com/index.php!
 $url='pic'; 
-$files=array(); 
+$files=[]; 
 if ($handle=opendir("$url")) { 
   while(false !== ($file = readdir($handle))) { 
       if ($file != "." && $file != "..") { 

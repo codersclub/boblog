@@ -71,7 +71,7 @@ if ($job == 'links') {
     if ($links && is_array($links)) {
         $mbcon['linkperpage'] = ($mbcon['linkperpage'] > 0) ? floor($mbcon['linkperpage']) : 2;
         $linkeachcloumn = floor(100 / $mbcon['linkperpage']) . '%';
-        $rowcount = array();
+        $rowcount = [];
         foreach ($links as $linkeachitem) {
             unset ($tmp_gp, $tmp_displayitem);
             $tmp_gp = $linkeachitem['linkgptoid'];
@@ -297,7 +297,7 @@ if ($job == 'userlist') {
 if ($job == 'archivelist') {
     $allvaliddates = $blog->getarraybyquery("SELECT `pubtime` FROM `{$db_prefix}blogs` ORDER BY `pubtime` DESC");
     $allvaliddates = $allvaliddates['pubtime'];
-    $resultdates = array();
+    $resultdates = [];
     $result = "<table width=\"100%\">\n";
     if (is_array($allvaliddates)) {
         foreach ($allvaliddates as $time) {

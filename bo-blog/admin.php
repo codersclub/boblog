@@ -30,7 +30,7 @@ $entrysummary = '';
 $entrysummaryplus0 = '';
 $entrysummaryplus1 = '';
 $entrysummaryplus2 = '';
-$flset = array();
+$flset = [];
 $formbody = '';
 $initialjs = '';
 $onloadjs = '';
@@ -505,7 +505,7 @@ function checksafe($str)
 
 function reArrayFiles($file_post)
 {
-    $file_ary = array();
+    $file_ary = [];
     $file_count = count($file_post['name']);
     $file_keys = array_keys($file_post);
     for ($i = 0; $i < $file_count; $i++) {

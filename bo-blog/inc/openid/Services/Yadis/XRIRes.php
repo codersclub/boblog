@@ -33,9 +33,9 @@ class Services_Yadis_ProxyResolver {
         return $query;
     }
 
-    function query($xri, $service_types, $filters = array())
+    function query($xri, $service_types, $filters = [])
     {
-        $services = array();
+        $services = [];
         $canonicalID = null;
         foreach ($service_types as $service_type) {
             $url = $this->queryURL($xri, $service_type);

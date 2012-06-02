@@ -35,7 +35,7 @@ class Services_Yadis_ParanoidHTTPFetcher extends Services_Yadis_HTTPFetcher {
 
     function reset()
     {
-        $this->headers = array();
+        $this->headers = [];
         $this->data = "";
     }
 
@@ -107,7 +107,7 @@ class Services_Yadis_ParanoidHTTPFetcher extends Services_Yadis_HTTPFetcher {
                 $redir = false;
                 curl_close($c);
 
-                $new_headers = array();
+                $new_headers = [];
 
                 foreach ($headers as $header) {
                     if (preg_match("/:/", $header)) {
@@ -162,7 +162,7 @@ class Services_Yadis_ParanoidHTTPFetcher extends Services_Yadis_HTTPFetcher {
 
         curl_close($c);
 
-        $new_headers = array();
+        $new_headers = [];
 
         foreach ($this->headers as $header) {
             if (preg_match("/:/", $header)) {

@@ -879,7 +879,7 @@ function autoselect($name, $arrayoption, $arrayvalue, $selectedid = 0, $disabled
     return $formcontent;
 }
 
-function autoradio($type, $name, $arraylabel, $arrayvalue, $arraychecked = array(), $arraydisabled = array())
+function autoradio($type, $name, $arraylabel, $arrayvalue, $arraychecked = [], $arraydisabled = [])
 {
     $formcontent = '';
     if ($type != 'checkbox' && $type != 'radio') {

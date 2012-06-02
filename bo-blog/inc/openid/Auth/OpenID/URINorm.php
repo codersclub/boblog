@@ -30,7 +30,7 @@ function Auth_OpenID_getEncodedPattern()
 
 function Auth_OpenID_getUnreserved()
 {
-    $_unreserved = array();
+    $_unreserved = [];
     for ($i = 0; $i < 256; $i++) {
         $_unreserved[$i] = false;
     }
@@ -57,7 +57,7 @@ function Auth_OpenID_getUnreserved()
 
 function Auth_OpenID_getEscapeRE()
 {
-    $parts = array();
+    $parts = [];
     foreach (array_merge(Services_Yadis_getUCSChars(),
                          Services_Yadis_getIPrivateChars()) as $pair) {
         list($m, $n) = $pair;
@@ -88,7 +88,7 @@ function Auth_OpenID_pct_encoded_replace($mo)
 
 function Auth_OpenID_remove_dot_segments($path)
 {
-    $result_segments = array();
+    $result_segments = [];
     
     while ($path) {
         if (Services_Yadis_startswith($path, '../')) {
@@ -131,7 +131,7 @@ function Auth_OpenID_remove_dot_segments($path)
 
 function Auth_OpenID_urinorm($uri)
 {
-    $uri_matches = array();
+    $uri_matches = [];
     preg_match(Auth_OpenID_getURIPattern(), $uri, $uri_matches);
 
     if (count($uri_matches) < 9) {
@@ -163,7 +163,7 @@ function Auth_OpenID_urinorm($uri)
         return null;
     }
 
-    $authority_matches = array();
+    $authority_matches = [];
     preg_match(Auth_OpenID_getAuthorityPattern(),
                $authority, $authority_matches);
     if (count($authority_matches) === 0) {

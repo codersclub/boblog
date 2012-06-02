@@ -61,7 +61,7 @@ class Auth_OpenID_TrustRoot {
             return false;
         }
 
-        if (array_intersect($keys, $forbidden_parts) != array()) {
+        if (array_intersect($keys, $forbidden_parts) != []) {
             return false;
         }
 

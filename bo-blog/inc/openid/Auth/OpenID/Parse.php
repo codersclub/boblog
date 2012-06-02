@@ -169,7 +169,7 @@ class Auth_OpenID_Parse {
 
     function removeQuotes($str)
     {
-        $matches = array();
+        $matches = [];
         $double = '/^"(.*)"$/';
         $single = "/^\'(.*)\'$/";
 
@@ -198,30 +198,30 @@ class Auth_OpenID_Parse {
 
         // Try to find the <HTML> tag.
         $html_re = $this->htmlFind();
-        $html_matches = array();
+        $html_matches = [];
         if (!preg_match($html_re, $stripped, $html_matches)) {
-            return array();
+            return [];
         }
 
         // Try to find the <HEAD> tag.
         $head_re = $this->headFind();
-        $head_matches = array();
+        $head_matches = [];
         if (!preg_match($head_re, $html_matches[0], $head_matches)) {
-            return array();
+            return [];
         }
 
-        $link_data = array();
-        $link_matches = array();
+        $link_data = [];
+        $link_matches = [];
 
         if (!preg_match_all($this->_link_find, $head_matches[0],
                             $link_matches)) {
-            return array();
+            return [];
         }
 
         foreach ($link_matches[0] as $link) {
-            $attr_matches = array();
+            $attr_matches = [];
             preg_match_all($this->_attr_find, $link, $attr_matches);
-            $link_attrs = array();
+            $link_attrs = [];
             foreach ($attr_matches[0] as $index => $full_match) {
                 $name = $attr_matches[1][$index];
                 $value = $this->replaceEntities(
@@ -264,7 +264,7 @@ class Auth_OpenID_Parse {
         // Filter the list of link attributes on whether it has
         // target_rel as a relationship.
         // XXX: TESTME
-        $result = array();
+        $result = [];
         foreach ($link_attrs_list as $attr) {
             if ($this->linkHasRel($attr, $target_rel)) {
                 $result[] = $attr;

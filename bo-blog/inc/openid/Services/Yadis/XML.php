@@ -139,7 +139,7 @@ class Services_Yadis_domxml extends Services_Yadis_XMLParser {
         $this->xml = null;
         $this->doc = null;
         $this->xpath = null;
-        $this->errors = array();
+        $this->errors = [];
     }
 
     function setXML($xml_string)
@@ -171,7 +171,7 @@ class Services_Yadis_domxml extends Services_Yadis_XMLParser {
         }
 
         if (!$result->nodeset) {
-            $n = array();
+            $n = [];
             return $n;
         }
 
@@ -189,7 +189,7 @@ class Services_Yadis_domxml extends Services_Yadis_XMLParser {
     {
         if ($node) {
             $arr = $node->attributes();
-            $result = array();
+            $result = [];
 
             if ($arr) {
                 foreach ($arr as $attrnode) {
@@ -217,7 +217,7 @@ class Services_Yadis_dom extends Services_Yadis_XMLParser {
         $this->xml = null;
         $this->doc = null;
         $this->xpath = null;
-        $this->errors = array();
+        $this->errors = [];
     }
 
     function setXML($xml_string)
@@ -255,7 +255,7 @@ class Services_Yadis_dom extends Services_Yadis_XMLParser {
             $result = @$this->xpath->query($xpath);
         }
 
-        $n = array();
+        $n = [];
 
         for ($i = 0; $i < $result->length; $i++) {
             $n[] = $result->item($i);
@@ -275,7 +275,7 @@ class Services_Yadis_dom extends Services_Yadis_XMLParser {
     {
         if ($node) {
             $arr = $node->attributes;
-            $result = array();
+            $result = [];
 
             if ($arr) {
                 for ($i = 0; $i < $arr->length; $i++) {

@@ -189,7 +189,7 @@ if ($job == "filedir") {
     $detail_array = $blog->getgroupbyquery("SELECT * FROM `{$db_prefix}upload` {$queryplus} ORDER BY `uploadtime` DESC LIMIT {$start_id}, 51");
     $numenries = $blog->countbyquery("SELECT COUNT(*) FROM `{$db_prefix}upload` {$queryplus}");
 
-    $inserttext = array();
+    $inserttext = [];
 
     for ($i = 0; $i < count($detail_array); $i++) {
         $file = $detail_array[$i]['originalname'];
@@ -260,7 +260,7 @@ if ($job == "gallery") {
     $detail_array = $blog->getgroupbyquery("SELECT * FROM `{$db_prefix}upload` WHERE {$constr} {$queryplus} ORDER BY `uploadtime` DESC LIMIT {$start_id}, 51");
     $numenries = $blog->countbyquery("SELECT COUNT(*) FROM `{$db_prefix}upload` WHERE {$constr} {$queryplus}");
 
-    $inserttext = array();
+    $inserttext = [];
 
     for ($i = 0; $i < count($detail_array); $i++) {
         $file = $detail_array[$i]['originalname'];

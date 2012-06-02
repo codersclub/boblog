@@ -448,7 +448,7 @@ if ($job == 'delupload') {
     if (!is_array($selid)) {
         catcherror($lna[797]);
     } else {
-        $files = array();
+        $files = [];
         foreach ($selid as $filename) {
             $files[] = floor($filename);
         }

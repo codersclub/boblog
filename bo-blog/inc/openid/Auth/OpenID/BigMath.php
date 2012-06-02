@@ -52,7 +52,7 @@ class Auth_OpenID_MathLibrary {
             return "\x00";
         }
 
-        $bytes = array();
+        $bytes = [];
 
         while ($this->cmp($long, 0) > 0) {
             array_unshift($bytes, $this->mod($long, 256));
@@ -138,7 +138,7 @@ class Auth_OpenID_MathLibrary {
      */
     function rand($stop)
     {
-        static $duplicate_cache = array();
+        static $duplicate_cache = [];
 
         // Used as the key for the duplicate cache
         $rbytes = $this->longToBinary($stop);
@@ -159,7 +159,7 @@ class Auth_OpenID_MathLibrary {
             $duplicate = $this->mod($mxrand, $stop);
 
             if (count($duplicate_cache) > 10) {
-                $duplicate_cache = array();
+                $duplicate_cache = [];
             }
 
             $duplicate_cache[$rbytes] = array($duplicate, $nbytes);
@@ -426,7 +426,7 @@ function &Auth_OpenID_getMathLib()
     global $_Auth_OpenID_math_extensions;
     $ext = Auth_OpenID_detectMathLibrary($_Auth_OpenID_math_extensions);
     if ($ext === false) {
-        $tried = array();
+        $tried = [];
         foreach ($_Auth_OpenID_math_extensions as $extinfo) {
             $tried[] = $extinfo['extension'];
         }

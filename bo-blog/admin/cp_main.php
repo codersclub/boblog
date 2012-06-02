@@ -1049,7 +1049,7 @@ if ($job == 'moduledel') {
 if ($job == 'automod') {
     acceptrequest('modpassword');
     $checkmodp = md5($modpassword);
-    $checkmodp_try = array();
+    $checkmodp_try = [];
     $checkmodp_try = $blog->getbyquery("SELECT * FROM `{$db_prefix}user` WHERE `userid`='{$userdetail['userid']}' AND `userpsw`='{$checkmodp}'");
     if ($checkmodp_try['userid'] != $userdetail['userid']) {
         catcherror($lna[965]);
@@ -1271,7 +1271,7 @@ if ($job == 'langset') {
     $display_overall .= highlightadminitems('langset', 'main');
     $lnc_tmp = $lnc;
     $langname_tmp = $langname;
-    $alllanglist = array();
+    $alllanglist = [];
 
     $handle = opendir("lang/");
     while (false !== ($file = readdir($handle))) {
@@ -1449,7 +1449,7 @@ if ($job == 'funclocksave') {
     }
 
     $relatedmods = array('tags' => 'alltags', 'star' => 'starred', 'guestbook' => 'guestbook');
-    $tosetinvisiblearray = $tosetvisiblearray = array();
+    $tosetinvisiblearray = $tosetvisiblearray = [];
 
     foreach ($save_config as $key => $val) {
         $savetext .= "\$flset['{$key}']='" . admin_convert($val) . "';\n";

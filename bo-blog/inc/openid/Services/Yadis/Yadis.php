@@ -43,7 +43,7 @@ require_once $base_path .  "Services/Yadis/XRDS.php";
  * To perform Yadis discovery, first call the "discover" method
  * statically with a URI parameter:
  *
- * <pre>  $http_response = array();
+ * <pre>  $http_response = [];
  *  $fetcher = Services_Yadis_Yadis::getHTTPFetcher();
  *  $yadis_object = Services_Yadis_Yadis::discover($uri,
  *                                    $http_response, $fetcher);</pre>

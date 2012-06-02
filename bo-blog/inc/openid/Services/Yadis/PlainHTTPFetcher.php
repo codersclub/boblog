@@ -125,7 +125,7 @@ class Services_Yadis_PlainHTTPFetcher extends Services_Yadis_HTTPFetcher {
             $off = $stop - time();
         }
 
-        $new_headers = array();
+        $new_headers = [];
 
         foreach ($headers as $header) {
             if (preg_match("/:/", $header)) {
@@ -148,7 +148,7 @@ class Services_Yadis_PlainHTTPFetcher extends Services_Yadis_HTTPFetcher {
 
         $parts = parse_url($url);
 
-        $headers = array();
+        $headers = [];
 
         $post_path = $parts['path'];
         if (isset($parts['query'])) {
@@ -230,7 +230,7 @@ class Services_Yadis_PlainHTTPFetcher extends Services_Yadis_HTTPFetcher {
         $http_code = explode(" ", $headers[0]);
         $code = $http_code[1];
 
-        $new_headers = array();
+        $new_headers = [];
 
         foreach ($headers as $header) {
             if (preg_match("/:/", $header)) {

@@ -325,7 +325,7 @@ class Auth_OpenID_FileStore extends Auth_OpenID_OpenIDStore {
         } else {
             $association_files =
                 Auth_OpenID_FileStore::_listdir($this->association_dir);
-            $matching_files = array();
+            $matching_files = [];
 
             // strip off the path to do the comparison
             $name = basename($filename);
@@ -335,7 +335,7 @@ class Auth_OpenID_FileStore extends Auth_OpenID_OpenIDStore {
                 }
             }
 
-            $matching_associations = array();
+            $matching_associations = [];
             // read the matching files and sort by time issued
             foreach ($matching_files as $name) {
                 $full_name = $this->association_dir . DIRECTORY_SEPARATOR .
@@ -347,8 +347,8 @@ class Auth_OpenID_FileStore extends Auth_OpenID_OpenIDStore {
                 }
             }
 
-            $issued = array();
-            $assocs = array();
+            $issued = [];
+            $assocs = [];
             foreach ($matching_associations as $key => $assoc) {
                 $issued[$key] = $assoc[0];
                 $assocs[$key] = $assoc[1];
@@ -614,7 +614,7 @@ class Auth_OpenID_FileStore extends Auth_OpenID_OpenIDStore {
     function _listdir($dir)
     {
         $handle = opendir($dir);
-        $files = array();
+        $files = [];
         while (false !== ($filename = readdir($handle))) {
             $files[] = $filename;
         }
