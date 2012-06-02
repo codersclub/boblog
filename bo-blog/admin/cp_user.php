@@ -279,7 +279,13 @@ if ($job == 'users') {
     acceptrequest('usergroup,ordered');
     $queryplus = ($usergroup === "") ? '' : "WHERE `usergroup`='{$usergroup}'";
     if ($ordered !== '') {
-        $allorder = array('`username` ASC', '`username` ASC', '`username` DESC', '`regtime` DESC', '`regtime` ASC');
+        $allorder = [
+		'`username` ASC',
+		'`username` ASC',
+		'`username` DESC',
+		'`regtime` DESC',
+		'`regtime` ASC'
+	];
         $ordernow = $allorder[$ordered];
     } else {
         $ordernow = '`username` ASC';
@@ -481,36 +487,39 @@ if ($job == 'add' || $job == 'edituser') {
         }
         $jobs = "saveuser";
         $t = new template;
-        $formbody .= $t->set('form_eachline', array(
+        $formbody .= $t->set('form_eachline', [
             'text'        => $lna[464],
             'formelement' => $edituser['username'] . "<input type='hidden'  name='p[userid]' value='$itemid'>\n",
-        ));
-        $formbody .= $t->set('form_eachline', array('text' => $lna[476], 'formelement' => $lna[477]));
-        $formbody .= $t->set('form_eachline', array(
+        ]);
+        $formbody .= $t->set('form_eachline', [
+		'text' => $lna[476],
+		'formelement' => $lna[477]
+	]);
+        $formbody .= $t->set('form_eachline', [
             'text'        => $lna[478],
             'formelement' => "<input type='password'  class='text' size='16' name='p[newpsw]'> {$lna[479]}",
-        ));
-        $formbody .= $t->set('form_eachline', array(
+        ]);
+        $formbody .= $t->set('form_eachline', [
             'text'        => $lna[480],
             'formelement' => "<input type='password'  class='text' size='16' name='p[confirmpsw]'> {$lna[479]}",
-        ));
+        ]);
         $light = 'users';
         $showword = $lna[481];
     } else {
         $jobs = "savenewuser";
         $t = new template;
-        $formbody .= $t->set('form_eachline', array(
+        $formbody .= $t->set('form_eachline', [
             'text'        => $lna[464],
             'formelement' => "<input type='text' class='text' size='16' name='p[username]'>",
-        ));
-        $formbody .= $t->set('form_eachline', array(
+        ]);
+        $formbody .= $t->set('form_eachline', [
             'text'        => $lna[482],
             'formelement' => "<input type='password'  class='text' size='16' name='p[password]'>",
-        ));
-        $formbody .= $t->set('form_eachline', array(
+        ]);
+        $formbody .= $t->set('form_eachline', [
             'text'        => $lna[483],
             'formelement' => "<input type='password' class='text' size='16' name='p[confirmpsw]'>",
-        ));
+        ]);
         $light = 'add';
         $showword = $lna[484];
     }
@@ -521,47 +530,53 @@ if ($job == 'add' || $job == 'edituser') {
         $selected = ($i == @$edituser['usergroup']) ? ' selected' : '';
         $puttingcates .= "<option value='{$i}'{$selected}>{$value}</option>\n";
     }
-    $formbody .= $t->set('form_eachline',
-        array('text' => $lna[463], 'formelement' => "<select name='p[usergroup]'>{$puttingcates}</select>\n"));
-    $formbody .= $t->set('form_eachline', array(
+    $formbody .= $t->set('form_eachline', [
+        'text' => $lna[463],
+	'formelement' => "<select name='p[usergroup]'>{$puttingcates}</select>\n"
+    ]);
+    $formbody .= $t->set('form_eachline', [
         'text'        => $lna[485],
         'formelement' => "<input type='text' class='text' size='16' name='p[email]' value='" . stripslashes(@$edituser['email']) . "'>",
-    ));
-    $formbody .= $t->set('form_eachline', array(
+    ]);
+    $formbody .= $t->set('form_eachline', [
         'text'        => $lna[486],
         'formelement' => "<input type='text' class='text' size='16' name='p[homepage]' value='" . stripslashes(@$edituser['homepage']) . "'>",
-    ));
-    $sex_sel = array('0' => $lna[487], '1' => $lna[488], '2' => $lna[489]);
-    $sex_choice = array('0' => '', '1' => '', '2' => '');
+    ]);
+    $sex_sel = [
+	'0' => $lna[487],
+	'1' => $lna[488],
+	'2' => $lna[489]
+    ];
+    $sex_choice = ['0' => '', '1' => '', '2' => ''];
     $tmp_gender = @$edituser['gender'];
     $sex_choice[$tmp_gender] = "checked=checked";
-    $formbody .= $t->set('form_eachline', array(
+    $formbody .= $t->set('form_eachline', [
         'text'        => $lna[491],
         'formelement' => "
 <input type='radio' name='p[gender]' value='0' {$sex_choice[0]}>{$lna[487]}
 <input type='radio' name='p[gender]' value='1' {$sex_choice[1]}>{$lna[488]}
 <input type='radio' name='gender' value='2' {$sex_choice[2]}>{$lna[489]}\n",
-    ));
-    $formbody .= $t->set('form_eachline', array(
+    ]);
+    $formbody .= $t->set('form_eachline', [
         'text'        => $lna[490],
         'formelement' => "<input type='text' class='text' size='16' name='p[qq]' value='" . stripslashes(@$edituser['qq']) . "'>",
-    ));
-    $formbody .= $t->set('form_eachline', array(
+    ]);
+    $formbody .= $t->set('form_eachline', [
         'text'        => 'MSN',
         'formelement' => "<input type='text' class='text' size='16' name='p[msn]' value='" . stripslashes(@$edituser['msn']) . "'>",
-    ));
-    $formbody .= $t->set('form_eachline', array(
+    ]);
+    $formbody .= $t->set('form_eachline', [
         'text'        => 'Skype',
         'formelement' => "<input type='text' class='text' size='16' name='p[skype]' value='" . stripslashes(@$edituser['skype']) . "'>",
-    ));
-    $formbody .= $t->set('form_eachline', array(
+    ]);
+    $formbody .= $t->set('form_eachline', [
         'text'        => $lna[492],
         'formelement' => "<input type='text' class='text' size='16' name='p[from]' value='" . stripslashes(@$edituser['fromplace']) . "'>",
-    ));
-    $formbody .= $t->set('form_eachline', array(
+    ]);
+    $formbody .= $t->set('form_eachline', [
         'text'        => $lna[493],
         'formelement' => "<textarea cols='30' rows='3' name='p[intro]'>" . stripslashes(@$edituser['intro']) . "</textarea>",
-    ));
+    ]);
     $display_overall .= highlightadminitems($light, 'user');
     $display_overall .= <<<eot
 <table class='tablewidth' align=center cellpadding=4 cellspacing=0>
@@ -647,7 +662,7 @@ if ($job == 'savenewuser' || $job == 'saveuser') {
         $fetchURL = 'admin.php?go=user_users';
         catchsuccessandfetch($finishok2, $fetchURL);
     } else {
-        catchsuccess($finishok2, array($backtouseradmin, $backtoaddnew));
+        catchsuccess($finishok2, [$backtouseradmin, $backtoaddnew]);
     }
 }
 
@@ -669,7 +684,7 @@ if ($job == 'deluser') {
         $fetchURL = 'admin.php?go=user_users';
         catchsuccessandfetch($finishok2, $fetchURL);
     } else {
-        catchsuccess($finishok2, array($backtouseradmin, $backtoaddnew));
+        catchsuccess($finishok2, [$backtouseradmin, $backtoaddnew]);
     }
 }
 
@@ -695,6 +710,6 @@ if ($job == 'batchusers') {
         $fetchURL = 'admin.php?go=user_users';
         catchsuccessandfetch($finishok2, $fetchURL);
     } else {
-        catchsuccess($finishok2, array($backtouseradmin, $backtoaddnew));
+        catchsuccess($finishok2, [$backtouseradmin, $backtoaddnew]);
     }
 }

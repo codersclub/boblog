@@ -14,7 +14,7 @@ if (!defined('VALIDREQUEST')) {
     die ('Access Denied.');
 }
 
-$systemitems = array(
+$systemitems = [
     'index',
     'customrss',
     'login',
@@ -35,7 +35,7 @@ $systemitems = array(
     'copyright',
     'mii',
     'columnbreak',
-);
+];
 $defineditems = array_keys($blogitem);
 $undefineditems = array_diff($systemitems, $defineditems);
 if (count($undefineditems) > 0) {
@@ -44,20 +44,20 @@ if (count($undefineditems) > 0) {
     }
 }
 
-$blogitem['index'] += array(
+$blogitem['index'] += [
     'type' => 'link',
     'url'  => 'index.php',
     'text' => $lnc[88],
-);
+];
 
-$blogitem['customrss'] += array(
+$blogitem['customrss'] += [
     'type'   => 'link',
     'url'    => 'feed.php',
     'text'   => 'RSS',
     'target' => '_blank',
-);
+];
 
-$blogitem['login'] += array('type' => 'link');
+$blogitem['login'] += ['type' => 'link'];
 
 if ($logstat == 1 || $openidloginstat == 1) {
     $blogitem['login']['text'] = $lnc[78];
@@ -81,42 +81,42 @@ if ($logstat == 1) {
 }
 
 if (@$flset['tags'] != 1) {
-    $blogitem['alltags'] += array(
+    $blogitem['alltags'] += [
         'type' => 'link',
         'url'  => 'tag.php',
         'text' => $lnc[288],
-    );
+    ];
 }
 
 if (@$flset['guestbook'] != 1) {
-    $blogitem['guestbook'] += array(
+    $blogitem['guestbook'] += [
         'type' => 'link',
         'url'  => 'guestbook.php',
         'text' => $lnc[91],
-    );
+    ];
 }
 
 if (@$plugin_closesidebar != 1) {
-    $blogitem['togglesidebar'] += array(
+    $blogitem['togglesidebar'] += [
         'type' => 'link',
         'url'  => 'javascript:showHideSidebar();',
         'text' => $lnc[92],
-    );
+    ];
 }
 
 if (@$flset['star'] != 1) {
-    $blogitem['starred'] += array(
+    $blogitem['starred'] += [
         'type' => 'link',
         'url'  => 'star.php',
         'text' => $lnc[93],
-    );
+    ];
 }
 
-$blogitem['viewlinks'] += array(
+$blogitem['viewlinks'] += [
     'type' => 'link',
     'url'  => 'links.php',
     'text' => $lnc[94],
-);
+];
 
 //[Start]category
 if (in_array('category', $allopenmods)) {
@@ -164,12 +164,12 @@ if (in_array('category', $allopenmods)) {
         $categoryshow .= "None</ul>\n";
     }
     plugin_runphp('sidebarcategory');
-    $blogitem['category'] += array(
+    $blogitem['category'] += [
         'type'    => 'block',
         'name'    => 'category',
         'title'   => $lnc[96],
         'content' => $categoryshow,
-    );
+    ];
     if ($mbcon['extend_category'] == 1) {
         $blogitem['category']['extend'] = 1;
     }
@@ -181,12 +181,12 @@ if (in_array('link', $allopenmods)) {
     if (file_exists("data/cache_links.php")) {
         include_once("data/cache_links.php");
     }
-    $blogitem['link'] += array(
+    $blogitem['link'] += [
         'type'    => 'block',
         'name'    => 'link',
         'title'   => $lnc[94],
         'content' => $linksshow,
-    );
+    ];
     if ($mbcon['extend_link'] == 1) {
         $blogitem['link']['extend'] = 1;
     }
@@ -229,12 +229,12 @@ if (in_array('statistics', $allopenmods)) {
         $statshow .= "{$lnc[104]} {$statistics['nowusers']}\n<br>\n";
     }
     plugin_runphp('sidebarstatistics');
-    $blogitem['statistics'] += array(
+    $blogitem['statistics'] += [
         'type'    => 'block',
         'name'    => 'statistics',
         'title'   => $lnc[105],
         'content' => $statshow,
-    );
+    ];
     if ($mbcon['extend_statistics'] == 1) {
         $blogitem['statistics']['extend'] = 1;
     }
@@ -260,12 +260,12 @@ if (in_array('archive', $allopenmods)) {
         $archiveshow = "<ul>\n" . implode("\n", $archive1) . "</ul>\n";
     }
     plugin_runphp('sidebararchive');
-    $blogitem['archive'] += array(
+    $blogitem['archive'] += [
         'type'    => 'block',
         'name'    => 'archive',
         'title'   => $lnc[106],
         'content' => $archiveshow,
-    );
+    ];
     if ($mbcon['extend_archive'] == 1) {
         $blogitem['archive']['extend'] = 1;
     }
@@ -289,13 +289,13 @@ if (in_array('misc', $allopenmods)) {
     $misccontent .= "{$lnc[285]} <a href='feed.php'>{$lnc[286]}</a> | <a href='feed.php?go=comment'>{$lnc[287]}</a>\n<br>\n{$lnc[111]}UTF-8\n<br>\n";
     $misccontent .= "<a href=\"http://validator.w3.org/check?uri=referer\" target=\"_blank\">XHTML 1.0</a>";
     plugin_runphp('sidebarmisc');
-    $blogitem['misc'] += array(
+    $blogitem['misc'] += [
         'type'    => 'block',
         'name'    => 'misc',
         'title'   => $lnc[112],
         'content' => $misccontent,
         'extend'  => 1,
-    );
+    ];
 }
 //[End]Misc
 
@@ -317,13 +317,13 @@ if (in_array('entries', $allopenmods)) {
     }
     $entries_list .= "</ul>\n";
     plugin_runphp('sidebarentries');
-    $blogitem['entries'] += array(
+    $blogitem['entries'] += [
         'type'    => 'block',
         'name'    => 'entries',
         'title'   => $lnc[113],
         'content' => $entries_list,
         'extend'  => 1,
-    );
+    ];
 }
 //[End]entries
 
@@ -339,14 +339,14 @@ if (in_array('replies', $allopenmods)) {
             if (!@$tmpsinglereplyarray[1]) {
                 break;
             }
-            $replyarrayasigned = array(
+            $replyarrayasigned = [
                 'blogid'     => $tmpsinglereplyarray[2],
                 'repcontent' => stripslashes($tmpsinglereplyarray[3]),
                 'replier'    => $tmpsinglereplyarray[4],
                 'repid'      => $tmpsinglereplyarray[5],
                 'title'      => $tmpsinglereplyarray[6],
                 'blogalias'  => $tmpsinglereplyarray[7],
-            );
+            ];
             if ($tmpsinglereplyarray[1] == 'limit') {
                 $cache_replies_limit[] = $replyarrayasigned;
             } elseif ($tmpsinglereplyarray[1] == 'all') {
@@ -367,13 +367,13 @@ if (in_array('replies', $allopenmods)) {
         $replies_list .= "</ul>";
     }
     plugin_runphp('sidebarreplies');
-    $blogitem['replies'] += array(
+    $blogitem['replies'] += [
         'type'    => 'block',
         'name'    => 'replies',
         'title'   => $lnc[114],
         'content' => $replies_list,
         'extend'  => 1,
-    );
+    ];
 }
 //[End]replies
 
@@ -397,16 +397,16 @@ if (in_array('calendar', $allopenmods)) {
             $cal_body = @file_get_contents("data/cache_currentmonth.php");
         }
         $currentdate = gmdate('j', $nowtime['timestamp'] + 3600 * $config['timezone']);
-        $cal_search = array(
+        $cal_search = [
             "<td id=\"cal{$currentdate}\" class=\"calendar-sunday\">",
             "<td id=\"cal{$currentdate}\" class=\"calendar-saturday\">",
             "<td id=\"cal{$currentdate}\" class=\"calendar-day\">",
-        );
-        $cal_replace = array(
+        ];
+        $cal_replace = [
             "<td id=\"cal{$currentdate}\" class=\"calendar-today\">",
             "<td id=\"cal{$currentdate}\" class=\"calendar-today\">",
             "<td id=\"cal{$currentdate}\" class=\"calendar-today\">",
-        );
+        ];
         $cal_body = str_replace($cal_search, $cal_replace, $cal_body);
     } else {
         $cm_s = ($cm < 10) ? ('0' . $cm) : $cm;
@@ -465,13 +465,13 @@ if (in_array('calendar', $allopenmods)) {
 </table>
 eot;
     }
-    $blogitem['calendar'] += array(
+    $blogitem['calendar'] += [
         'type'    => 'block',
         'name'    => 'calendar',
         'title'   => $lnc[122],
         'content' => $cal_body,
         'extend'  => 1,
-    );
+    ];
 }
 //[End]calendar
 
@@ -492,17 +492,17 @@ if ($mbcon['searchon'] == 1) {
 	<input value="{$lnc[128]}" class="button" type="submit">
 	</form>
 eot;
-    $blogitem['search'] += array(
+    $blogitem['search'] += [
         'type'    => 'block',
         'name'    => 'search',
         'title'   => $lnc[128],
         'content' => $searchbox,
         'extend'  => 1,
-    );
+    ];
 }
 //[End]Search
 
-$blogitem['copyright'] += array(
+$blogitem['copyright'] += [
     'type' => 'html',
     'code' => " Powered by <a href=\"http://www.bo-blog.com\" target=\"_blank\">Bo-Blog {$blogversion}</a>
  <span id=\"footer-security\">
@@ -510,18 +510,18 @@ $blogitem['copyright'] += array(
      <img src=\"images/others/detect.gif\" alt=\"Code detection by Bug.Center.Team\" border=\"0\">
    </a>
  </span>\n",
-);
-$blogitem['mii'] += array(
+];
+$blogitem['mii'] += [
     'type'   => 'link',
     'url'    => 'http://www.miibeian.gov.cn',
     'text'   => '<br>' . $mbcon['miinum'],
     'target' => '_blank',
-);
+];
 
-$blogitem['columnbreak'] += array(
+$blogitem['columnbreak'] += [
     'type'    => 'block',
     'name'    => 'columnbreak',
     'title'   => '1',
     'content' => '1',
     'extend'  => 1,
-);
+];

@@ -126,11 +126,11 @@ function db_query($sql, $silence = 0)
         $errmess = mysql_error();
     }
     $querynum++;
-    $log = array( //For Debug Use Only
+    $log = [ //For Debug Use Only
         'sql'         => $sql,
         'err_code'    => $errno,
         'err_message' => $errmess,
-    );
+    ];
     $allqueries[] = $log;
 
     if (!$query && !$silence && !$ignore_db_errors) {

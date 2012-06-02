@@ -220,7 +220,7 @@ class template
         for ($i = 0; $i < count($template['css']); $i++) {
             $csslocation .= "<link rel=\"stylesheet\" href=\"{$template['css'][$i]}\">\n";
         }
-        $tipsin = $this->set('tips', array(
+        $tipsin = $this->set('tips', [
                 'tips'        => $tips,
                 'title'       => $title,
                 'csslocation' => $csslocation,
@@ -228,7 +228,7 @@ class template
                 'blogdesc'    => $config['blogdesc'],
                 'admin_plus'  => $admin_plus,
                 'language'    => $langname['languagename'],
-            )
+            ]
         );
         echo $tipsin;
         exit();
@@ -463,7 +463,7 @@ class getblogs extends boblog
             }
 //vot			$oddorcouplecss=($i%2==0) ? 'couple' : 'odd'; //added on 2006-11-14
             //Starting Template
-            $output_single = $t->set('comment', array(
+            $output_single = $t->set('comment', [
                 'replier'           => $replier,
                 'replierip'         => $replierip,
                 'replytime'         => $replytime,
@@ -481,7 +481,7 @@ class getblogs extends boblog
                 'replieremail'      => $replieremail,
                 'replierhomepage'   => $replierhomepage,
                 'oddorcouplecss'    => $oddorcouplecss,
-            ));
+            ]);
             $output_single = plugin_get('eachcommentbegin') . $output_single . plugin_get('eachcommentend'); //Added on 2008/10/2
             $output_single = "<div id=\"blogcomment{$eachreply['repid']}\">" . $output_single . "</div>";
         } elseif ($eachreply['reproperty'] == 4) {//A Trackback
@@ -498,7 +498,7 @@ class getblogs extends boblog
             if ($permission['ReplyReply'] == 1) {
                 $delreply = "<a href=\"javascript: comfirmurl('admin.php?go=reply_deltb_{$eachreply['repid']}-{$eachreply['blogid']}');\">[{$lnc[31]}]</a>\n";
             }
-            $output_single = $t->set('trackback', array(
+            $output_single = $t->set('trackback', [
                     'tbtitle'        => $tbtitle,
                     'tbtime'         => $tbtime,
                     'tburl'          => $tburl,
@@ -507,7 +507,7 @@ class getblogs extends boblog
                     'repip'          => $repip,
                     'delreply'       => $delreply,
                     'oddorcouplecss' => $oddorcouplecss,
-                )
+                ]
             );
             $output_single = plugin_get('eachtbbegin') . $output_single . plugin_get('eachtbend'); //Added on 2008/10/2
         }
@@ -642,7 +642,7 @@ class getblogs extends boblog
         }
         $oddorcouplecss = ($i % 2 == 0) ? 'couple' : 'odd'; //added on 2006-11-14
         //Starting Template
-        $output_single = $t->set('comment', array(
+        $output_single = $t->set('comment', [
             'replier'           => $replier,
             'replierip'         => $replierip,
             'replytime'         => $replytime,
@@ -660,7 +660,7 @@ class getblogs extends boblog
             'replieremail'      => $replieremail,
             'replierhomepage'   => $replierhomepage,
             'oddorcouplecss'    => $oddorcouplecss,
-        ));
+        ]);
         $output_single = plugin_get('eachcommentbegin') . $output_single . plugin_get('eachcommentend'); //Added on 2008/10/2
         $output_single = "<div id=\"blogcomment{$eachreply['repid']}\">" . $output_single . "</div>\n";
         return $output_single;
@@ -843,7 +843,7 @@ if($way=='excerpt') {
                         $outurl = getlink_entry($entry['blogid'], $entry['blogalias'], $page, '%s');
                         $pageway = 1;
                         $innerpage = $this->make_innerpagebar($part, $outurl, $totalvolume, $pageway);
-                        $entry['content'] .= $t->set('entryadditional', array('readmore' => $innerpage));
+                        $entry['content'] .= $t->set('entryadditional', ['readmore' => $innerpage]);
                     } else {
                         checkPageValidity($part, 1);
                     }
@@ -865,10 +865,10 @@ if($way=='excerpt') {
                 $entry['emotstat'], 1);
             $entrycontent = $this->keep_htmlcode_matches($entrycontent);
             if (@$notfinish == 1) {
-                $entrycontent .= $t->set('entryadditional', array(
+                $entrycontent .= $t->set('entryadditional', [
                         'readmore' => "<a href=\"" . get_entry_url($entry['blogid'],
                                 $entry['blogalias']) . "#entrymore\" title=\"{$lnc[67]}\">{$lnc[68]}</a>",
-                    )
+                    ]
                 );
             }
             if ($way == 'viewentry') { //Load plugin: entryend
@@ -920,7 +920,7 @@ if($way=='excerpt') {
         }
 
         //Start Template
-        $section_bodys[] = $t->set($way, array(
+        $section_bodys[] = $t->set($way, [
                 'entryid'             => $entry['blogid'],
                 'entryicon'           => $entryicon,
                 'entrytitle'          => $entrytitle,
@@ -968,7 +968,7 @@ if($way=='excerpt') {
                 'entrysource'         => $entry['comefrom'],
                 'entrysourcelink'     => $entry['originsrc'],
                 'adminlink'           => $adminlink,
-            )
+            ]
         );
     }
 
@@ -991,11 +991,11 @@ if($way=='excerpt') {
             $entry['content'] = preg_replace("/\[hide\](.+?)\[\/hide\]/is",
                 "<br>{$lnc[312]}  {$lnc[79]} {$lnc[235]} {$lnc[89]}<br>", $entry['content']);
         } else {
-            $entry['content'] = str_replace(array('[hide]', '[/hide]'), '', $entry['content']);
+            $entry['content'] = str_replace(['[hide]', '[/hide]'], '', $entry['content']);
         }
         $entrycontent = $this->getrsscontent($entry['content'], 0, $entry['ubbstat'], 0);
-        $entrycontent = str_replace(array('<br>', '</p>', '</div>', '&#123;', '&#125;', '&nbsp;'),
-            array("\r\n", "\r\n", "\r\n", '{', '}', ' '), $entrycontent);
+        $entrycontent = str_replace(['<br>', '</p>', '</div>', '&#123;', '&#125;', '&nbsp;'],
+            ["\r\n", "\r\n", "\r\n", '{', '}', ' '], $entrycontent);
         $entrycontent = strip_tags($entrycontent);
         $entrycontent = html_entity_decode($entrycontent, ENT_QUOTES);
         $entryurl = "{$config['blogurl']}/" . getlink_entry($entry['blogid'], $entry['blogalias']);
@@ -1060,7 +1060,7 @@ if($way=='excerpt') {
         $entrycontent .= $tags;
         $entryurl = "{$config['blogurl']}/" . getlink_entry($entry['blogid'], $entry['blogalias']);
         //Start Template
-        $section = $t->set('rss', array(
+        $section = $t->set('rss', [
             'entrytitle'   => $entrytitle,
             'entrytime'    => $entrytime,
             'entryauthor'  => $entryauthor,
@@ -1069,7 +1069,7 @@ if($way=='excerpt') {
             'entrycate'    => $entrycate,
             'entryid'      => $entry['blogid'],
             'entryemail'   => $entryemail,
-        ));
+        ]);
         return $section;
     }
 
@@ -1091,7 +1091,7 @@ if($way=='excerpt') {
         $entryurl = "{$config['blogurl']}/" . getlink_entry($entry['blogid'],
                 $entry['blogalias']) . "#blogcomment{$entry['repid']}";
         //Start Template
-        $section = $t->set('rss', array(
+        $section = $t->set('rss', [
             'entrytitle'   => $entrytitle,
             'entrytime'    => $entrytime,
             'entryauthor'  => $entryauthor,
@@ -1100,7 +1100,7 @@ if($way=='excerpt') {
             'entrycate'    => $entrycate,
             'entryid'      => 'reply' . $entry['repid'],
             'entryemail'   => $entryemail,
-        ));
+        ]);
         return $section;
     }
 
@@ -1110,13 +1110,13 @@ if($way=='excerpt') {
         if (!@is_a($t, 'template')) {
             $t = new template;
         }
-        $section = $t->set('rssbody', array(
+        $section = $t->set('rssbody', [
             'blogname'     => $pagetitle . $config['blogname'],
             'blogurl'      => $config['blogurl'],
             'blogdesc'     => $config['blogdesc'],
             'rssbody'      => $rssbody,
             'bloglanguage' => $langname['languagename'],
-        ));
+        ]);
         return $section;
     }
 
@@ -1126,7 +1126,7 @@ if($way=='excerpt') {
         if (!@is_a($t, 'template')) {
             $t = new template;
         }
-        return $t->set('listbody', array('listbody' => $listbody));
+        return $t->set('listbody', ['listbody' => $listbody]);
     }
 
     function make_visit_form($formtitle, $id, $actionurl)
@@ -1230,7 +1230,7 @@ if($way=='excerpt') {
   </a>
 </div>\n";
         $emots = generate_emots_panel($emots);
-        $out = $t->set("form_reply", array(
+        $out = $t->set("form_reply", [
             'actionurl'             => $actionurl,
             'formtitle'             => $formtitle,
             'emots'                 => $emots,
@@ -1257,7 +1257,7 @@ if($way=='excerpt') {
             'if_openid_begin'       => $if_openid_begin,
             'if_openid_end'         => $if_openid_end,
             'rand'                  => rand(1000, 9999),
-        ));
+        ]);
         return $out;
     }
 
@@ -1346,7 +1346,7 @@ if($way=='excerpt') {
         }
         $pagebar .= " <a href=\"" . sprintf($urlpattern, ($this->total_pages)) . "\" title=\"{$lnc[12]}\">
    <img src=\"{$template['moreimages']}/arrows/doubleright.gif\" alt=\"{$lnc[12]}\" border=\"0\"></a>\n";
-        $pageitems = array(
+        $pageitems = [
             'currentpage'        => $page,
             'previouspageurl'    => $previouspageurl,
             'nextpageurl'        => $nextpageurl,
@@ -1354,7 +1354,7 @@ if($way=='excerpt') {
             'totalpages'         => ($this->total_pages),
             'previouspageexists' => $previouspageexists,
             'nextpageexists'     => $nextpageexists,
-        );
+        ];
         $pagebar = "<span class=\"pagebar-mainbody\">\n{$pagebar}</span>\n";
         $pagebar .= plugin_get('afterpagebar');
         return $pagebar;
@@ -1389,7 +1389,7 @@ if($way=='excerpt') {
         } else {
             $rand = rand(0, 500);
         }
-        return $t->set('login', array('lvstart' => $lvstart, 'lvend' => $lvend, 'rand' => $rand));
+        return $t->set('login', ['lvstart' => $lvstart, 'lvend' => $lvend, 'rand' => $rand]);
     }
 
 
@@ -1416,7 +1416,7 @@ if($way=='excerpt') {
         $entrycontent = $this->keep_htmlcode_matches($entrycontent);
 
         //Start Template
-        $section_bodys[] = $t->set('viewpage', array(
+        $section_bodys[] = $t->set('viewpage', [
             'entrytitle'     => $entrytitle,
             'entrydate'      => $entrydate,
             'entrytime'      => $entrytime,
@@ -1426,7 +1426,7 @@ if($way=='excerpt') {
             'entrydatey'     => $entrydatey,
             'entrydatem'     => $entrydatem,
             'entrydated'     => $entrydated,
-        ));
+        ]);
         return $section_bodys;
     }
 
@@ -1441,7 +1441,7 @@ if($way=='excerpt') {
             return $str;
         }
         $outhtml = '';
-        $htmltagstart = array(
+        $htmltagstart = [
             'li'    => 0,
             'ul'    => 0,
             'ol'    => 0,
@@ -1452,16 +1452,16 @@ if($way=='excerpt') {
             'tr'    => 0,
             'tbody' => 0,
             'table' => 0,
-        );
+        ];
         $htmltagend = [];
-        $allowsingle = array('br', 'hr', 'img', 'param');
+        $allowsingle = ['br', 'hr', 'img', 'param'];
         $str = preg_split("/(<[^>]+?>)/si", $str, -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
         foreach ($str as $singlestr) {
             if ($singlestr == '' || strstr($singlestr, '<!--')) {
                 $outhtml .= $singlestr;
             } elseif (strstr($singlestr, '<')) {
                 //if (substr_count($singlestr, '<')!=substr_count($singlestr, '>') || substr_count($singlestr, '"')%2==1 || substr_count($singlestr, "'")%2==1) continue;
-                $tmp = str_replace(array('/>', '<', '>'), array(' />', '', ''), mb_strtolower($singlestr));
+                $tmp = str_replace(['/>', '<', '>'], [' />', '', ''], mb_strtolower($singlestr));
                 @list($currenttag) = @explode(' ', $tmp);
                 if (!in_array($currenttag, $allowsingle)) {
                     if ($currenttag[0] == '/') {

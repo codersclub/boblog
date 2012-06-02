@@ -26,49 +26,52 @@ if (!$job) {
     $jobs = (@$_GET['adminlogin'] == 1) ? "login.php?job=verifyadmin" : "login.php?job=verify";
     $actionnow = (@$_GET['adminlogin'] == 1) ? "{$lnc[273]}" : "{$lnc[253]} [<a href=\"login.php?job=register\">{$lnc[254]}</a>]";
     $plusadminname = (@$_GET['adminlogin'] == 1) ? $userdetail['username'] : '';
-    $formbody .= $t->set('form_eachline', array(
+    $formbody .= $t->set('form_eachline', [
         'text'        => "*{$lnc[132]}",
         'formelement' => "<input name='username' type='text' id='username' size='24' class='text' value='{$plusadminname}'>
             <input type='hidden' name='urlreturn' value='{$urlreturn}'>",
-    ));
-    $formbody .= $t->set('form_eachline', array(
+    ]);
+    $formbody .= $t->set('form_eachline', [
         'text'        => "*{$lnc[133]}",
         'formelement' => "<input type='password'  class='text' size='24' name='password' id='password'>",
-    ));
+    ]);
 
     if (@$mbcon['enableopenid'] == '1' && $_GET['adminlogin'] != 1) {
-        $formbody .= $t->set('form_eachline', array('text' => "", 'formelement' => "{$lnc[314]}:"));
-        $formbody .= $t->set('form_eachline', array(
+        $formbody .= $t->set('form_eachline', [
+		'text' => "",
+		'formelement' => "{$lnc[314]}:"
+	]);
+        $formbody .= $t->set('form_eachline', [
             'text'        => "OpenID",
             'formelement' => "<input name='openid_url' type='text' id='openid_url' size='32' class='text'>",
-        ));
+        ]);
     }
 
     if (@$_GET['adminlogin'] != 1) {
-        $formbody .= $t->set('form_eachline', array(
+        $formbody .= $t->set('form_eachline', [
             'text'        => '&nbsp;',
             'formelement' => "<input name=\"savecookie\" type=\"checkbox\" id=\"savecookie\" value=\"1\" checked='checked'>{$lnc[284]}",
-        ));
+        ]);
     }
     plugin_runphp('loginform');
     if ($config['loginvalidation'] == 1 && @$_GET['adminlogin'] != 1) {
         $rand = rand(0, 100000);
-        $formbody .= $t->set('form_eachline', array(
+        $formbody .= $t->set('form_eachline', [
             'text'        => "*{$lnc[249]}",
             'formelement' => "<span id='securityimagearea'>
   <img src='inc/securitycode.php?rand={$rand}' alt='' title='{$lnc[250]}'>
 </span> 
 <input name='securitycode' type='text' id='securitycode' size='16' class='text'> {$lnc[251]} 
 [<a href=\"javascript: refreshsecuritycode('securityimagearea', 'securitycode');\">{$lnc[283]}</a>]",
-        ));
+        ]);
     }
-    $section_body_main = $t->set('register', array(
+    $section_body_main = $t->set('register', [
         'title'        => $actionnow,
         'job'          => $jobs,
         'registerbody' => $formbody,
-    ));
+    ]);
     announcebar();
-    $bodymenu = $t->set('mainpage', array(
+    $bodymenu = $t->set('mainpage', [
         'pagebar'            => '',
         'iftoppage'          => 'none',
         'ifbottompage'       => 'none',
@@ -82,7 +85,7 @@ if (!$job) {
         'totalpages'         => '',
         'previouspageexists' => '',
         'nextpageexists'     => '',
-    ));
+    ]);
 }
 
 if ($job == 'adminlog') {

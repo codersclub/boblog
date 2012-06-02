@@ -1,6 +1,6 @@
 <?php
 
-$MIMETypes = array(
+$MIMETypes = [
     '323'     => 'text/h323',
     'acx'     => 'application/internet-property-stream',
     'ai'      => 'application/postscript',
@@ -188,4 +188,4 @@ $MIMETypes = array(
     'xwd'     => 'image/x-xwindowdump',
     'z'       => 'application/x-compress',
     'zip'     => 'application/zip',
-);
+];

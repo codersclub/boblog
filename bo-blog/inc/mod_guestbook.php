@@ -41,7 +41,7 @@ if ($page == 1) {
 } else {
     $ifannouncement = 'none';
 }
-$bodymenu = $t->set('mainpage', array(
+$bodymenu = $t->set('mainpage', [
     'pagebar'            => $innerpages,
     'iftoppage'          => 'none',
     'ifbottompage'       => 'display',
@@ -55,7 +55,7 @@ $bodymenu = $t->set('mainpage', array(
     'totalpages'         => $pageitems['totalpages'],
     'previouspageexists' => $pageitems['previouspageexists'],
     'nextpageexists'     => $pageitems['nextpageexists'],
-));
+]);
 
 $pagetitle = "{$lnc[91]} - ";
 
