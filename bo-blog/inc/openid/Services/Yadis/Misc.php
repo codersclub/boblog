@@ -11,7 +11,7 @@
 
 function Services_Yadis_getUCSChars()
 {
-    return array(
+    return [
                  array(0xA0, 0xD7FF),
                  array(0xF900, 0xFDCF),
                  array(0xFDF0, 0xFFEF),
@@ -29,16 +29,16 @@ function Services_Yadis_getUCSChars()
                  array(0xC0000, 0xCFFFD),
                  array(0xD0000, 0xDFFFD),
                  array(0xE1000, 0xEFFFD)
-                 );
+           ];
 }
 
 function Services_Yadis_getIPrivateChars()
 {
-    return array(
+    return [
                  array(0xE000, 0xF8FF),
                  array(0xF0000, 0xFFFFD),
                  array(0x100000, 0x10FFFD)
-                 );
+           ];
 }
 
 function Services_Yadis_pct_escape_unicode($char_match)

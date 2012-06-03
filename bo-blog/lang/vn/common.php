@@ -352,13 +352,82 @@ $lnc=array (
 );
 
 //nhân vật Trung Quốc 
-$lnlunarcalendar=array(
-'tiangan'=>array("không rõ","Năm Giáp ","Năm Ất ","Năm Bính ","Năm Đinh ","Năm Mậu ","Năm Kỷ ","Năm Canh ","Năm Tân ","Năm Nhâm ","Năm Quý "),
-'dizhi'=>array("không rõ","Tý（Chuột）","Sửu（Trâu）","Dần（Hổ）","Mão（Mèo）","Thìn（Rồng）",
-			   "Tỵ（Rắn）","Ngọ（Ngựa）","Mùi（Dê）","Thân（Khỉ）","Dậu（Gà）","Tuất（Chó）","Hợi（Lợn）"),
-'month'=>array("Nhuận","Giêng","2","3","4","5","6",
-			  "7","8","9","10","11","12","Tháng "),
-'day'=>array("không rõ","mồng 1","mồng 2","mồng 3","mồng 4","mồng 5","mồng 6","mồng 7","mồng 8","mồng 9","mồng 10",
-			"11","12","13","14","15","16","17","18","19","20",
-			"21","22","23","24","25","26","27","28","29","30")
-);
+$lnlunarcalendar=[
+	'tiangan'=>[
+		"không rõ",
+		"Năm Giáp ",
+		"Năm Ất ",
+		"Năm Bính ",
+		"Năm Đinh ",
+		"Năm Mậu ",
+		"Năm Kỷ ",
+		"Năm Canh ",
+		"Năm Tân ",
+		"Năm Nhâm ",
+		"Năm Quý "
+	],
+	'dizhi'=>[
+		"không rõ",
+		"Tý（Chuột）",
+		"Sửu（Trâu）",
+		"Dần（Hổ）",
+		"Mão（Mèo）",
+		"Thìn（Rồng）",
+		"Tỵ（Rắn）",
+		"Ngọ（Ngựa）",
+		"Mùi（Dê）",
+		"Thân（Khỉ）",
+		"Dậu（Gà）",
+		"Tuất（Chó）",
+		"Hợi（Lợn）"
+	],
+	'month'=>[
+		"Nhuận",
+		"Giêng",
+		"2",
+		"3",
+		"4",
+		"5",
+		"6",
+		"7",
+		"8",
+		"9",
+		"10",
+		"11",
+		"12",
+		"Tháng "
+	],
+	'day'=>[
+		"không rõ",
+		"mồng 1",
+		"mồng 2",
+		"mồng 3",
+		"mồng 4",
+		"mồng 5",
+		"mồng 6",
+		"mồng 7",
+		"mồng 8",
+		"mồng 9",
+		"mồng 10",
+		"11",
+		"12",
+		"13",
+		"14",
+		"15",
+		"16",
+		"17",
+		"18",
+		"19",
+		"20",
+		"21",
+		"22",
+		"23",
+		"24",
+		"25",
+		"26",
+		"27",
+		"28",
+		"29",
+		"30"
+	]
+];

@@ -40,8 +40,10 @@ define('SERVICES_YADIS_MAX_PRIORITY', pow(2, 30));
 
 function Services_Yadis_getNSMap()
 {
-    return array('xrds' => 'xri://$xrds',
-                 'xrd' => 'xri://$xrd*($v*2.0)');
+    return [
+	'xrds' => 'xri://$xrds',
+        'xrd' => 'xri://$xrd*($v*2.0)'
+    ];
 }
 
 /**
@@ -360,8 +362,8 @@ class Services_Yadis_XRDS {
         }
 
         // If a bad filter mode is specified, return null.
-        if (!in_array($filter_mode, array(SERVICES_YADIS_MATCH_ANY,
-                                          SERVICES_YADIS_MATCH_ALL))) {
+        if (!in_array($filter_mode, [SERVICES_YADIS_MATCH_ANY,
+                                     SERVICES_YADIS_MATCH_ALL])) {
             return null;
         }
 
@@ -377,7 +379,7 @@ class Services_Yadis_XRDS {
                 $matches = 0;
 
                 foreach ($filters as $filter) {
-                    if (call_user_func_array($filter, array($service))) {
+                    if (call_user_func_array($filter, [$service])) {
                         $matches++;
 
                         if ($filter_mode == SERVICES_YADIS_MATCH_ANY) {

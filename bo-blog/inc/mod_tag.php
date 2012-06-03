@@ -66,20 +66,20 @@ if ($job == 'default') {
     $pagebar = $m_b->make_pagebar($page, $mbcon['pagebaritems'], $returnurl, $alltagcounter, $tagperpage, 1);
 
     $t = new template;
-    $section_tag = $t->set('taglist', array(
+    $section_tag = $t->set('taglist', [
         'tagcategory' => $lnc[190],
         'tagcontent'  => $tagshow,
         'tagextra'    => "<div align='right'>{$lnc[191]}</div>",
-    ));
-    $section_body_main = $t->set('contentpage', array(
+    ]);
+    $section_body_main = $t->set('contentpage', [
         'title'       => 'Tags',
         'contentbody' => $section_tag,
-    ));
+    ]);
     announcebar();
     $iftoppage = ($mbcon['pagebarposition'] == 'down') ? 'none' : 'block';
     $ifbottompage = ($mbcon['pagebarposition'] == 'up') ? 'none' : 'block';
 
-    $bodymenu = $t->set('mainpage', array(
+    $bodymenu = $t->set('mainpage', [
         'pagebar'            => $pagebar,
         'iftoppage'          => $iftoppage,
         'ifbottompage'       => $ifbottompage,
@@ -93,7 +93,7 @@ if ($job == 'default') {
         'totalpages'         => $pageitems['totalpages'],
         'previouspageexists' => $pageitems['previouspageexists'],
         'nextpageexists'     => $pageitems['nextpageexists'],
-    ));
+    ]);
     $pagetitle = "Tags - ";
 }
 
@@ -147,14 +147,16 @@ if ($job == 'show') {
         $allentries[0]['tagname'] = str_replace('_', ' ', $allentries[0]['tagname']);
     }
     if ($mbcon['tag_list'] == 1) {
-        $mainbody = $t->set('contentpage',
-            array('title' => "Tags: {$allentries[0]['tagname']}", 'contentbody' => @implode('', $section_body_main)));
+        $mainbody = $t->set('contentpage', [
+		'title'       => "Tags: {$allentries[0]['tagname']}",
+		'contentbody' => @implode('', $section_body_main)
+	]);
     } else {
         $mainbody = @implode('', $section_body_main);
     }
     $pagetitle = "Tags: {$allentries[0]['tagname']} - ";
     announcebar();
-    $bodymenu = $t->set('mainpage', array(
+    $bodymenu = $t->set('mainpage', [
         'pagebar'            => $pagebar,
         'iftoppage'          => $iftoppage,
         'ifbottompage'       => $ifbottompage,
@@ -168,5 +170,5 @@ if ($job == 'show') {
         'totalpages'         => $pageitems['totalpages'],
         'previouspageexists' => '',
         'nextpageexists'     => '',
-    ));
+    ]);
 }

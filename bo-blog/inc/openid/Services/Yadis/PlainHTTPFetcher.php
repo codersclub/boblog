@@ -72,7 +72,7 @@ class Services_Yadis_PlainHTTPFetcher extends Services_Yadis_HTTPFetcher {
 
             $user_agent = "PHP Yadis Library Fetcher";
 
-            $headers = array(
+            $headers = [
                              "GET ".$parts['path'].
                              (array_key_exists('query', $parts) ?
                               "?".$parts['query'] : "").
@@ -80,7 +80,8 @@ class Services_Yadis_PlainHTTPFetcher extends Services_Yadis_HTTPFetcher {
                              "User-Agent: $user_agent",
                              "Host: ".$parts['host'].
                                 ($specify_port ? ":".$parts['port'] : ""),
-                             "Port: ".$parts['port']);
+                             "Port: ".$parts['port']
+			];
 
             $errno = 0;
             $errstr = '';
@@ -115,7 +116,7 @@ class Services_Yadis_PlainHTTPFetcher extends Services_Yadis_HTTPFetcher {
             $http_code = explode(" ", $headers[0]);
             $code = $http_code[1];
 
-            if (in_array($code, array('301', '302'))) {
+            if (in_array($code, ['301', '302'])) {
                 $url = $this->_findRedirect($headers);
                 $redir = true;
             } else {

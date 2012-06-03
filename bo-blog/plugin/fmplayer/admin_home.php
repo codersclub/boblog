@@ -38,7 +38,7 @@ if ($configjob == 'save_config') {
     if (!writetofile($file['dcfg'], $savetext)) {
         catcherror("{$lna[66]}" . $file['dcfg']);
     } else {
-        catchsuccess($finishok, array($backtofmp_cfg, $backtofmp_list, $backtoplugin));
+        catchsuccess($finishok, [$backtofmp_cfg, $backtofmp_list, $backtoplugin]);
     }
 }
 
@@ -54,8 +54,8 @@ eot;
 $pref_leftchar = "200";
 $pref_variable = "fmp_cfg";
 include($file['dcfg']);
-$ow = array("?", "=", "&");
-$cw = array("%3F", "%3D", "%26");
+$ow = ["?", "=", "&"];
+$cw = ["%3F", "%3D", "%26"];
 $fmp_cfg['file'] = str_replace($ow, $cw, $fmp_cfg['file']);
 //$fmp_cfg['file'] = urlencode($fmp_cfg['file']);
 include("{$plugin_address}/fmp_pref.php");

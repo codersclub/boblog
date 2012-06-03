@@ -63,8 +63,9 @@ require_once $base_path .  "Services/Yadis/XRDS.php";
  * write one or more filter functions and pass those to services():
  *
  * <pre>  $service_list = $yadis_object->services(
- *                               array("filterByURI",
- *                                     "filterByExtension"));</pre>
+ *                               ["filterByURI",
+ *                                "filterByExtension"]);
+ * </pre>
  *
  * The filter functions (whose names appear in the array passed to
  * services()) take the following form:
@@ -98,8 +99,9 @@ require_once $base_path .  "Services/Yadis/XRDS.php";
  * be returned ONLY if it matches ALL specified filters by changing
  * the match mode of services():
  *
- * <pre>  $yadis_object->services(array("filter1", "filter2"),
- *                          SERVICES_YADIS_MATCH_ALL);</pre>
+ * <pre>  $yadis_object->services(["filter1", "filter2"],
+ *                          SERVICES_YADIS_MATCH_ALL);
+ * </pre>
  *
  * See {@link SERVICES_YADIS_MATCH_ALL} and {@link
  * SERVICES_YADIS_MATCH_ANY}.
@@ -194,7 +196,7 @@ class Services_Yadis_Yadis {
         }
 
         $request_uri = $uri;
-        $headers = array("Accept: application/xrds+xml");
+        $headers = ["Accept: application/xrds+xml"];
 
         if (!$fetcher) {
             $fetcher = Services_Yadis_Yadis::getHTTPFetcher($timeout);
@@ -216,12 +218,14 @@ class Services_Yadis_Yadis {
         $body = $response->body;
 
         $xrds_header_uri = Services_Yadis_Yadis::_getHeader(
-                                                    $response->headers,
-                                                    array('x-xrds-location',
-                                                          'x-yadis-location'));
+                                $response->headers,
+                                ['x-xrds-location', 'x-yadis-location']
+	);
 
-        $content_type = Services_Yadis_Yadis::_getHeader($response->headers,
-                                                         array('content-type'));
+        $content_type = Services_Yadis_Yadis::_getHeader(
+				$response->headers,
+                                ['content-type']
+	);
 
         if ($xrds_header_uri) {
             $xrds_uri = $xrds_header_uri;
@@ -232,8 +236,10 @@ class Services_Yadis_Yadis {
             } else {
                 $body = $response->body;
                 $headers = $response->headers;
-                $content_type = Services_Yadis_Yadis::_getHeader($headers,
-                                                       array('content-type'));
+                $content_type = Services_Yadis_Yadis::_getHeader(
+					$headers,
+                                        ['content-type']
+		);
             }
         }
 
@@ -252,8 +258,9 @@ class Services_Yadis_Yadis {
                 $body = $response->body;
                 $xrds_uri = $new_uri;
                 $content_type = Services_Yadis_Yadis::_getHeader(
-                                                         $response->headers,
-                                                         array('content-type'));
+					$response->headers,
+                                        ['content-type']
+		);
             }
         }
 

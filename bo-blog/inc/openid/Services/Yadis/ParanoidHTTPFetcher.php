@@ -78,10 +78,8 @@ class Services_Yadis_ParanoidHTTPFetcher extends Services_Yadis_HTTPFetcher {
                 return null;
             }
 
-            curl_setopt($c, CURLOPT_WRITEFUNCTION,
-                        array(&$this, "_writeData"));
-            curl_setopt($c, CURLOPT_HEADERFUNCTION,
-                        array(&$this, "_writeHeader"));
+            curl_setopt($c, CURLOPT_WRITEFUNCTION, [&$this, "_writeData"]);
+            curl_setopt($c, CURLOPT_HEADERFUNCTION, [&$this, "_writeHeader"]);
 
             if ($extra_headers) {
                 curl_setopt($c, CURLOPT_HTTPHEADER, $extra_headers);
@@ -100,7 +98,7 @@ class Services_Yadis_ParanoidHTTPFetcher extends Services_Yadis_HTTPFetcher {
                 return null;
             }
 
-            if (in_array($code, array(301, 302, 303, 307))) {
+            if (in_array($code, [301, 302, 303, 307])) {
                 $url = $this->_findRedirect($headers);
                 $redir = true;
             } else {
@@ -146,8 +144,7 @@ class Services_Yadis_ParanoidHTTPFetcher extends Services_Yadis_HTTPFetcher {
         curl_setopt($c, CURLOPT_POSTFIELDS, $body);
         curl_setopt($c, CURLOPT_TIMEOUT, $this->timeout);
         curl_setopt($c, CURLOPT_URL, $url);
-        curl_setopt($c, CURLOPT_WRITEFUNCTION,
-                    array(&$this, "_writeData"));
+        curl_setopt($c, CURLOPT_WRITEFUNCTION, [&$this, "_writeData"]);
 
         curl_exec($c);
 

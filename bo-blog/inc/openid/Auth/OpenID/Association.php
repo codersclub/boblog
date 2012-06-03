@@ -52,14 +52,14 @@ class Auth_OpenID_Association {
      *
      * @access private
      */
-    var $assoc_keys = array(
+    var $assoc_keys = [
                             'version',
                             'handle',
                             'secret',
                             'issued',
                             'lifetime',
                             'assoc_type'
-                            );
+                      ];
 
     /**
      * This is an alternate constructor (factory method) used by the
@@ -176,14 +176,14 @@ class Auth_OpenID_Association {
      */
     function serialize()
     {
-        $data = array(
+        $data = [
                      'version' => '2',
                      'handle' => $this->handle,
                      'secret' => base64_encode($this->secret),
                      'issued' => strval(intval($this->issued)),
                      'lifetime' => strval(intval($this->lifetime)),
                      'assoc_type' => $this->assoc_type
-                     );
+                ];
 
         assert(array_keys($data) == $this->assoc_keys);
 
@@ -271,7 +271,7 @@ class Auth_OpenID_Association {
     {
         $pairs = [];
         foreach ($fields as $field) {
-            $pairs[] = array($field, $data[$prefix . $field]);
+            $pairs[] = [$field, $data[$prefix . $field]];
         }
 
         return base64_encode($this->sign($pairs));

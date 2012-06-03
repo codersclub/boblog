@@ -387,8 +387,7 @@ class Auth_OpenID_Consumer {
             $this->session->del($this->_token_key);
         }
 
-        if (in_array($response->status, array(Auth_OpenID_SUCCESS,
-                                              Auth_OpenID_CANCEL))) {
+        if (in_array($response->status, [Auth_OpenID_SUCCESS, Auth_OpenID_CANCEL])) {
             if ($response->identity_url !== null) {
                 $disco = new Services_Yadis_Discovery($this->session,
                                                   $response->identity_url,
@@ -419,14 +418,13 @@ class Auth_OpenID_DiffieHellmanConsumerSession {
 
         $cpub = $math->longToBase64($this->dh->public);
 
-        $args = array('openid.dh_consumer_public' => $cpub);
+        $args = ['openid.dh_consumer_public' => $cpub];
 
         if (!$this->dh->usingDefaultValues()) {
-            $args = array_merge($args, array(
-                'openid.dh_modulus' =>
-                     $math->longToBase64($this->dh->mod),
-                'openid.dh_gen' =>
-                $math->longToBase64($this->dh->gen)));
+            $args = array_merge($args, [
+                'openid.dh_modulus' => $math->longToBase64($this->dh->mod),
+                'openid.dh_gen' => $math->longToBase64($this->dh->gen)
+	    ]);
         }
 
         return $args;
@@ -680,8 +678,12 @@ class Auth_OpenID_GenericConsumer {
             return null;
         }
 
-        $whitelist = array('assoc_handle', 'sig',
-                           'signed', 'invalidate_handle');
+        $whitelist = [
+		'assoc_handle',
+		'sig',
+                'signed',
+		'invalidate_handle'
+	];
 
         $signed = array_merge(explode(",", $signed), $whitelist);
 
@@ -863,16 +865,17 @@ class Auth_OpenID_GenericConsumer {
             $assoc_session = new Auth_OpenID_DiffieHellmanConsumerSession();
         }
 
-        $args = array(
+        $args = [
             'openid.mode' => 'associate',
-            'openid.assoc_type' => 'HMAC-SHA1');
+            'openid.assoc_type' => 'HMAC-SHA1'
+	];
 
         if ($assoc_session->session_type !== null) {
             $args['openid.session_type'] = $assoc_session->session_type;
         }
 
         $args = array_merge($args, $assoc_session->getRequest());
-        return array($assoc_session, $args);
+        return [$assoc_session, $args];
     }
 
     /**
@@ -880,8 +883,11 @@ class Auth_OpenID_GenericConsumer {
      */
     function _parseAssociation($results, $assoc_session, $server_url)
     {
-        $required_keys = array('assoc_type', 'assoc_handle',
-                               'expires_in');
+        $required_keys = [
+		'assoc_type',
+		'assoc_handle',
+                'expires_in'
+	];
 
         foreach ($required_keys as $key) {
             if (!array_key_exists($key, $results)) {
@@ -971,7 +977,7 @@ class Auth_OpenID_AuthRequest {
      */
     function addExtensionArg($namespace, $key, $value)
     {
-        $arg_name = implode('.', array('openid', $namespace, $key));
+        $arg_name = implode('.', ['openid', $namespace, $key]);
         $this->extra_args[$arg_name] = $value;
     }
 
@@ -998,11 +1004,12 @@ class Auth_OpenID_AuthRequest {
 
         $return_to = Auth_OpenID::appendArgs($return_to, $this->return_to_args);
 
-        $redir_args = array(
+        $redir_args = [
             'openid.mode' => $mode,
             'openid.identity' => $this->endpoint->getServerID(),
             'openid.return_to' => $return_to,
-            'openid.trust_root' => $trust_root);
+            'openid.trust_root' => $trust_root
+	];
 
         if ($this->assoc) {
             $redir_args['openid.assoc_handle'] = $this->assoc->handle;
@@ -1010,8 +1017,7 @@ class Auth_OpenID_AuthRequest {
 
         $redir_args = array_merge($redir_args, $this->extra_args);
 
-        return Auth_OpenID::appendArgs($this->endpoint->server_url,
-                                       $redir_args);
+        return Auth_OpenID::appendArgs($this->endpoint->server_url, $redir_args);
     }
 }
 

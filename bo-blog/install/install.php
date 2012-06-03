@@ -821,24 +821,24 @@ if ($v == '4') {
     }
 
 
-    writetofile('../data/cache_adminlist.php', "<?php\n\$adminlist=array('1'=>'{$username}');");
+    writetofile('../data/cache_adminlist.php', "<?php\n\$adminlist=['1'=>'{$username}'];");
 
     writetofile('../data/modules.php',
         "<?php
 /*--PREPENDAREA--*/
 /*--APPENDAREA--*/
-\$blogitem['announcement']=array(
+\$blogitem['announcement']=[
 	'type'=>'block',
 	'name'=>'announcement',
 	'title'=>'{$lang[59]}',
 	'content'=>'{$lang[60]}',
 	'extend'=>1,
-);
-\$blogitem['archivelink']=array(
+];
+\$blogitem['archivelink']=[
 	'type'=>'link',
 	'url'=>'archive.php',
 	'text'=>'{$lang[49]}',
-);
+];
 ");
 
     writetofile('../data/cache_categories.php',
@@ -859,25 +859,25 @@ if ($v == '4') {
 
     writetofile('../data/cache_latest.php',
         "<?php
-\$cache_latest_limit[]=array(
+\$cache_latest_limit[]=[
 	\"blogid\"=>0,
 	\"title\"=>\"{$lang[30]}\",
 	\"category\"=>0,
 	\"fulltitle\"=>\"{$lang[30]}\",
-);
-\$cache_latest_all[]=array(
+];
+\$cache_latest_all[]=[
 	\"blogid\"=>0,
 	\"title\"=>\"{$lang[30]}\",
 	\"category\"=>0,
 	\"fulltitle\"=>\"{$lang[30]}\",
-);
+];
 ");
 
     writetofile('../data/cache_replies.php', "");
 
     writetofile('../data/plugin_enabled.php', "<?php\n");
 
-    $copylangorigin = array(
+    $copylangorigin = [
         '{langcopy0}',
         '{langcopy1}',
         '{langcopy2}',
@@ -895,7 +895,7 @@ if ($v == '4') {
         '{langcopy14}',
         '{langcopy15}',
         '{langcopy16}',
-    );
+    ];
     $linkfrom = @parse_url($blogurlpath);
     $langcopy[16] = $linkfrom['host'];
     $file_list = @file('filelist.txt');

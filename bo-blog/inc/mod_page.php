@@ -37,7 +37,7 @@ if ($plugin_closesidebar == 1) {
 }
 
 $ifannouncement = "none";
-$bodymenu = $t->set('mainpage', array(
+$bodymenu = $t->set('mainpage', [
     'pagebar'            => '',
     'iftoppage'          => 'none',
     'ifbottompage'       => 'none',
@@ -46,6 +46,6 @@ $bodymenu = $t->set('mainpage', array(
     'mainpart'           => @implode('', $section_body_main),
     'previouspageexists' => '',
     'nextpageexists'     => '',
-));
+]);
 
 $pagetitle = "{$records[0]['pagetitle']} - ";

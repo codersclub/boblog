@@ -96,7 +96,7 @@ class Auth_OpenID_ServiceEndpoint {
         $service->identity_url = $uri;
         $service->delegate = $delegate_url;
         $service->server_url = $server_url;
-        $service->type_uris = array(_OPENID_1_0_TYPE);
+        $service->type_uris = [_OPENID_1_0_TYPE];
         return $service;
     }
 }
@@ -106,10 +106,10 @@ function filter_MatchesAnyOpenIDType(&$service)
     $uris = $service->getTypes();
 
     foreach ($uris as $uri) {
-        if (in_array($uri,
-                     array(_OPENID_1_0_TYPE,
-                           _OPENID_1_1_TYPE,
-                           _OPENID_1_2_TYPE))) {
+        if (in_array($uri, [
+                     _OPENID_1_0_TYPE,
+                     _OPENID_1_1_TYPE,
+                     _OPENID_1_2_TYPE])) {
             return true;
         }
     }
@@ -167,7 +167,7 @@ function Auth_OpenID_discoverWithYadis($uri, &$fetcher)
     if ($response) {
         $identity_url = $response->uri;
         $openid_services =
-            $response->xrds->services(array('filter_MatchesAnyOpenIDType'));
+            $response->xrds->services(['filter_MatchesAnyOpenIDType']);
     }
 
     if (!$openid_services) {
@@ -184,14 +184,14 @@ function Auth_OpenID_discoverWithYadis($uri, &$fetcher)
                                                          $body);
 
         if ($service !== null) {
-            $openid_services = array($service);
+            $openid_services = [$service];
         }
     } else {
         $openid_services = Auth_OpenID_makeOpenIDEndpoints($response->uri,
                                                            $openid_services);
     }
 
-    return array($identity_url, $openid_services, $http_response);
+    return [$identity_url, $openid_services, $http_response];
 }
 
 function _Auth_OpenID_discoverServiceList($uri, &$fetcher)
@@ -214,7 +214,7 @@ function Auth_OpenID_discoverWithoutYadis($uri, &$fetcher)
     $http_resp = @$fetcher->get($uri);
 
     if ($http_resp->status != 200) {
-        return array(null, [], $http_resp);
+        return [null, [], $http_resp];
     }
 
     $identity_url = $http_resp->final_url;
@@ -226,20 +226,19 @@ function Auth_OpenID_discoverWithoutYadis($uri, &$fetcher)
     if ($service === null) {
         $openid_services = [];
     } else {
-        $openid_services = array($service);
+        $openid_services = [$service];
     }
 
-    return array($identity_url, $openid_services, $http_resp);
+    return [$identity_url, $openid_services, $http_resp];
 }
 
 function _Auth_OpenID_discoverXRI($iname, &$fetcher)
 {
     $services = new Services_Yadis_ProxyResolver($fetcher);
     list($canonicalID, $service_list) = $services->query($iname,
-                                                  array(_OPENID_1_0_TYPE,
-                                                        _OPENID_1_1_TYPE,
-                                                        _OPENID_1_2_TYPE),
-                                     array('filter_MatchesAnyOpenIDType'));
+		[_OPENID_1_0_TYPE, _OPENID_1_1_TYPE, _OPENID_1_2_TYPE],
+                ['filter_MatchesAnyOpenIDType']
+    );
 
     $endpoints = Auth_OpenID_makeOpenIDEndpoints($iname, $service_list);
 
@@ -248,7 +247,7 @@ function _Auth_OpenID_discoverXRI($iname, &$fetcher)
     }
 
     // FIXME: returned xri should probably be in some normal form
-    return array($iname, $endpoints, null);
+    return [$iname, $endpoints, null];
 }
 
 function Auth_OpenID_discover($uri, &$fetcher)

@@ -116,8 +116,10 @@ class Auth_OpenID {
      */
     function getOpenIDNamespaces()
     {
-        return array('openid',
-                     'sreg');
+        return [
+		'openid',
+		'sreg'
+	];
     }
 
     /**
@@ -242,7 +244,7 @@ class Auth_OpenID {
             sort($keys);
             $new_args = [];
             foreach ($keys as $key) {
-                $new_args[] = array($key, $args[$key]);
+                $new_args[] = [$key, $args[$key]];
             }
             $args = $new_args;
         }
@@ -368,14 +370,14 @@ class Auth_OpenID {
             return null;
         }
 
-        $defaults = array(
+        $defaults = [
                           'scheme' => '',
                           'host' => '',
                           'path' => '',
                           'query' => '',
                           'fragment' => '',
                           'port' => ''
-                          );
+                    ];
 
         $parsed = array_merge($defaults, $parsed);
 
@@ -393,10 +395,12 @@ class Auth_OpenID {
             $parsed = array_merge($defaults, $parsed);
         }
 
-        $tail = array_map(array('Auth_OpenID', 'quoteMinimal'),
-                          array($parsed['path'],
+        $tail = array_map(['Auth_OpenID', 'quoteMinimal'],
+                          [
+				$parsed['path'],
                                 $parsed['query'],
-                                $parsed['fragment']));
+                                $parsed['fragment']
+			  ]);
         if ($tail[0] == '') {
             $tail[0] = '/';
         }

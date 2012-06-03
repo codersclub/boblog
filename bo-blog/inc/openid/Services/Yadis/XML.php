@@ -309,12 +309,16 @@ function Services_Yadis_setDefaultParser(&$parser)
 
 function Services_Yadis_getSupportedExtensions()
 {
-    return array(
-                 'dom' => array('classname' => 'Services_Yadis_dom',
-                                'libname' => array('dom.so', 'dom.dll')),
-                 'domxml' => array('classname' => 'Services_Yadis_domxml',
-                                   'libname' => array('domxml.so', 'php_domxml.dll')),
-                 );
+    return [
+                'dom' => [
+			'classname' => 'Services_Yadis_dom',
+                        'libname' => ['dom.so', 'dom.dll']
+		],
+                'domxml' => [
+			'classname' => 'Services_Yadis_domxml',
+                        'libname' => ['domxml.so', 'php_domxml.dll']
+		],
+           ];
 }
 
 /**

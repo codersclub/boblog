@@ -289,11 +289,11 @@ if ($job == 'addreply' || $job == 'addmessage' || $job == 'editreply' || $job ==
     $returnurl = ($job == 'addmessage') ? "{$lnc[91]}|guestbook.php" : "{$lnc[5]}|" . getlink_entry($v_id,
             $originblog['blogalias']) . '#topreply';
     if ($ajax != 'on') {
-        catchsuccess("{$lnc[216]}{$tipsplus}", array($returnurl, "{$lnc[163]}|index.php"));
+        catchsuccess("{$lnc[216]}{$tipsplus}", [$returnurl, "{$lnc[163]}|index.php"]);
     } else { //Deal with ajax
         $m_b = new getblogs;
         if ($job == 'addreply' || $job == 'addmessage') {
-            $eachreply = array(
+            $eachreply = [
                 'repid'      => $currentmaxid,
                 'reproperty' => $reproperty,
                 'blogid'     => $v_id,
@@ -309,7 +309,7 @@ if ($job == 'addreply' || $job == 'addmessage' || $job == 'editreply' || $job ==
                 'emot'       => $emot,
                 'avatar'     => $userdetail['avatar'],
                 'reppsw'     => $v_reppsw,
-            );
+            ];
         } else {
             $eachreply = $try;
         }
@@ -412,12 +412,12 @@ if ($job == 'search') {
   <span style='font-size: 14px;'>{$lnc[223]}</span>
 </div>
 <br>\n";
-        $mainpart = $t->set('contentpage', array(
+        $mainpart = $t->set('contentpage', [
             'title'       => "{$lnc[224]} {$keyword}",
             'contentbody' => $showresult,
-        ));
+        ]);
         announcebar();
-        $bodymenu = $t->set('mainpage', array(
+        $bodymenu = $t->set('mainpage', [
             'pagebar'            => '',
             'iftoppage'          => 'none',
             'ifbottompage'       => 'none',
@@ -431,7 +431,7 @@ if ($job == 'search') {
             'totalpages'         => '',
             'previouspageexists' => '',
             'nextpageexists'     => '',
-        ));
+        ]);
         $pagetitle = "{$lnc[225]} - ";
     } else {
         $pinch = [];
@@ -513,22 +513,22 @@ if ($job == 'viewresult') {
             $tagshow = $lnc[189];
         }
         $t = new template;
-        $section_body_main[] = $t->set('taglist', array(
+        $section_body_main[] = $t->set('taglist', [
             'tagcategory' => $lnc[230],
             'tagcontent'  => $tagshow,
             'tagextra'    => '',
-        ));
+        ]);
     }
 
     $iftoppage = ($mbcon['pagebarposition'] == 'down') ? 'none' : 'block';
     $ifbottompage = ($mbcon['pagebarposition'] == 'up') ? 'none' : 'block';
     $pagetitle = "{$lnc[225]} - ";
-    $mainpart = $t->set('contentpage', array(
+    $mainpart = $t->set('contentpage', [
         'title'       => "{$lnc[224]} {$keyword}",
         'contentbody' => @implode('', $section_body_main),
-    ));
+    ]);
     announcebar();
-    $bodymenu = $t->set('mainpage', array(
+    $bodymenu = $t->set('mainpage', [
         'pagebar'            => $pagebar,
         'iftoppage'          => $iftoppage,
         'ifbottompage'       => $ifbottompage,
@@ -542,7 +542,7 @@ if ($job == 'viewresult') {
         'totalpages'         => $pageitems['totalpages'],
         'previouspageexists' => $pageitems['previouspageexists'],
         'nextpageexists'     => $pageitems['nextpageexists'],
-    ));
+    ]);
 }
 
 if ($job == 'getcontentonly') {

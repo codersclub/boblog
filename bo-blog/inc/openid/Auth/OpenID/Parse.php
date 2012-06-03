@@ -109,15 +109,14 @@ class Auth_OpenID_Parse {
 
     function Auth_OpenID_Parse()
     {
-        $this->_link_find = sprintf("/<link\b(?!:)([^>]*)(?!<)>/%s",
-                                    $this->_re_flags);
+        $this->_link_find = sprintf("/<link\b(?!:)([^>]*)(?!<)>/%s", $this->_re_flags);
 
-        $this->_entity_replacements = array(
+        $this->_entity_replacements = [
                                             'amp' => '&',
                                             'lt' => '<',
                                             'gt' => '>',
                                             'quot' => '"'
-                                            );
+                                      ];
 
         $this->_attr_find = sprintf("/%s/%s",
                                     $this->_attr_find,
@@ -139,7 +138,7 @@ class Auth_OpenID_Parse {
     function tagMatcher($tag_name, $close_tags = null)
     {
         if ($close_tags) {
-            $options = implode("|", array_merge(array($tag_name), $close_tags));
+            $options = implode("|", array_merge([$tag_name], $close_tags));
             $closer = sprintf("(?:%s)", $options);
         } else {
             $closer = $tag_name;
@@ -156,7 +155,7 @@ class Auth_OpenID_Parse {
 
     function headFind()
     {
-        return $this->tagMatcher('head', array('body'));
+        return $this->tagMatcher('head', ['body']);
     }
 
     function replaceEntities($str)
@@ -303,6 +302,6 @@ function Auth_OpenID_legacy_discover($html_text)
     } else {
         $delegate_url = $p->findFirstHref($link_attrs,
                                           'openid.delegate');
-        return array($delegate_url, $server_url);
+        return [$delegate_url, $server_url];
     }
 }

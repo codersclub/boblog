@@ -115,7 +115,7 @@ class Auth_OpenID_FileStore extends Auth_OpenID_OpenIDStore {
         $name = Auth_OpenID_FileStore::_mkstemp($dir = $this->temp_dir);
         $file_obj = @fopen($name, 'wb');
         if ($file_obj !== false) {
-            return array($file_obj, $name);
+            return [$file_obj, $name];
         } else {
             Auth_OpenID_FileStore::_removeIfPresent($name);
         }
@@ -342,8 +342,10 @@ class Auth_OpenID_FileStore extends Auth_OpenID_OpenIDStore {
                     $name;
                 $association = $this->_getAssociation($full_name);
                 if ($association !== null) {
-                    $matching_associations[] = array($association->issued,
-                                                     $association);
+                    $matching_associations[] = [
+			$association->issued,
+                        $association
+		    ];
                 }
             }
 
@@ -549,7 +551,7 @@ class Auth_OpenID_FileStore extends Auth_OpenID_OpenIDStore {
 
         if ($handle = opendir($dir)) {
             while ($item = readdir($handle)) {
-                if (!in_array($item, array('.', '..'))) {
+                if (!in_array($item, ['.', '..'])) {
                     if (is_dir($dir . $item)) {
 
                         if (!Auth_OpenID_FileStore::_rmtree($dir . $item)) {

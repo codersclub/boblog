@@ -97,10 +97,10 @@ class Auth_OpenID_DiffieHellman {
     function getAssocArgs()
     {
         $cpub = $this->lib->longToBase64($this->getPublicKey());
-        $args = array(
+        $args = [
                       'openid.dh_consumer_public' => $cpub,
                       'openid.session_type' => 'DH-SHA1'
-                      );
+                ];
 
         if ($this->lib->cmp($this->mod, Auth_OpenID_getDefaultMod()) ||
             $this->lib->cmp($this->gen, Auth_OpenID_getDefaultGen())) {
@@ -147,11 +147,11 @@ class Auth_OpenID_DiffieHellman {
         $enc_mac_key = base64_encode($mac_key);
         $spub64 = $lib->longToBase64($dh->getPublicKey());
 
-        $server_args = array(
+        $server_args = [
                              'session_type' => 'DH-SHA1',
                              'dh_server_public' => $spub64,
                              'enc_mac_key' => $enc_mac_key
-                             );
+                       ];
 
         return $server_args;
     }

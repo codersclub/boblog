@@ -32,22 +32,56 @@ if ($job == 'user') {
     $nowuser['homepage'] = (trim($nowuser['homepage']) == '') ? $lnc[141] : "<a href=\"{$nowuser['homepage']}\" target=\"_blank\">{$lnc[19]}</a>";
 
     $t = new template;
-    $formbody .= $t->set('form_eachline',
-        array('text' => $lnc[132], 'formelement' => $nowuser['username'] . " &nbsp; [" . $usergp[$usergp_tmp] . "]"));
-    $formbody .= $t->set('form_eachline', array('text' => $lnc[139], 'formelement' => $nowuser['email']));
-    $formbody .= $t->set('form_eachline', array('text' => $lnc[140], 'formelement' => $nowuser['homepage']));
-    $sex_sel = array('0' => $lnc[141], '1' => $lnc[142], '2' => $lnc[143]);
-    $formbody .= $t->set('form_eachline', array('text' => $lnc[144], 'formelement' => $sex_sel[$tmp_gender]));
-    $formbody .= $t->set('form_eachline', array('text' => $lnc[145], 'formelement' => stripslashes($nowuser['qq'])));
-    $formbody .= $t->set('form_eachline', array('text' => 'MSN', 'formelement' => stripslashes($nowuser['msn'])));
-    $formbody .= $t->set('form_eachline', array('text' => 'Skype', 'formelement' => stripslashes($nowuser['skype'])));
-    $formbody .= $t->set('form_eachline',
-        array('text' => $lnc[146], 'formelement' => stripslashes($nowuser['fromplace'])));
-    $formbody .= $t->set('form_eachline', array('text' => $lnc[147], 'formelement' => stripslashes($nowuser['intro'])));
-    $section_table = $t->set('normaltable', array('tablebody' => $formbody));
-    $section_body_main = $t->set('contentpage', array('title' => $lnc[194], 'contentbody' => $section_table));
+    $formbody .= $t->set('form_eachline', [
+        'text' => $lnc[132],
+	'formelement' => $nowuser['username'] . " &nbsp; [" . $usergp[$usergp_tmp] . "]"
+    ]);
+    $formbody .= $t->set('form_eachline', [
+	'text' => $lnc[139],
+	'formelement' => $nowuser['email']
+    ]);
+    $formbody .= $t->set('form_eachline', [
+	'text' => $lnc[140],
+	'formelement' => $nowuser['homepage']
+    ]);
+    $sex_sel = [
+	'0' => $lnc[141],
+	'1' => $lnc[142],
+	'2' => $lnc[143]
+    ];
+    $formbody .= $t->set('form_eachline', [
+	'text' => $lnc[144],
+	'formelement' => $sex_sel[$tmp_gender]
+    ]);
+    $formbody .= $t->set('form_eachline', [
+	'text' => $lnc[145],
+	'formelement' => stripslashes($nowuser['qq'])
+    ]);
+    $formbody .= $t->set('form_eachline', [
+	'text' => 'MSN',
+	'formelement' => stripslashes($nowuser['msn'])
+    ]);
+    $formbody .= $t->set('form_eachline', [
+	'text' => 'Skype',
+	'formelement' => stripslashes($nowuser['skype'])
+	]);
+    $formbody .= $t->set('form_eachline', [
+        'text' => $lnc[146],
+	'formelement' => stripslashes($nowuser['fromplace'])
+    ]);
+    $formbody .= $t->set('form_eachline', [
+	'text' => $lnc[147],
+	'formelement' => stripslashes($nowuser['intro'])
+    ]);
+    $section_table = $t->set('normaltable', [
+	'tablebody' => $formbody
+    ]);
+    $section_body_main = $t->set('contentpage', [
+	'title' => $lnc[194],
+	'contentbody' => $section_table
+    ]);
     announcebar();
-    $bodymenu = $t->set('mainpage', array(
+    $bodymenu = $t->set('mainpage', [
         'pagebar'            => '',
         'iftoppage'          => 'none',
         'ifbottompage'       => 'none',
@@ -61,7 +95,7 @@ if ($job == 'user') {
         'totalpages'         => '',
         'previouspageexists' => '',
         'nextpageexists'     => '',
-    ));
+    ]);
 }
 
 if ($job == 'links') {
@@ -89,11 +123,11 @@ if ($job == 'links') {
                 $alllinks[$tmp_gp] .= "  <tr valign=\"top\">\n";
             }
             $alllinks[$tmp_gp] .= "    <td width=\"{$linkeachcloumn}\">\n";
-            $alllinks[$tmp_gp] .= $t->set('eachlink', array(
+            $alllinks[$tmp_gp] .= $t->set('eachlink', [
                 'logo'  => $displayitemlogo,
                 'title' => "<a href=\"{$linkeachitem['linkurl']}\" target=\"_blank\">{$linkeachitem['linkname']}</a>",
                 'desc'  => $linkeachitem['linkdesc'],
-            ));
+            ]);
             $alllinks[$tmp_gp] .= "    </td>\n";
             if ($rowcount[$tmp_gp] % $mbcon['linkperpage'] == 0) {
                 $alllinks[$tmp_gp] .= "  </tr>\n";
@@ -107,16 +141,21 @@ if ($job == 'links') {
             unset ($tmp_gp);
             $tmp_gp = $linkgpeachitem['linkgpid'];
             $alllinks[$tmp_gp] .= ($alllinks[$tmp_gp]) ? '</table>' : '';
-            $displaygp[$tmp_gp] = $t->set('linkdiv',
-                array('title' => $linkgpeachitem['linkgpname'], 'tablebody' => $alllinks[$tmp_gp]));
+            $displaygp[$tmp_gp] = $t->set('linkdiv', [
+                'title' => $linkgpeachitem['linkgpname'],
+		'tablebody' => $alllinks[$tmp_gp]
+	    ]);
         }
     } else {
         $displaygp[] = $lnc[195];
     }
     $section_table = @implode('', $displaygp);
-    $section_body_main = $t->set('contentpage', array('title' => $lnc[94], 'contentbody' => $section_table));
+    $section_body_main = $t->set('contentpage', [
+	'title' => $lnc[94],
+	'contentbody' => $section_table
+    ]);
     announcebar();
-    $bodymenu = $t->set('mainpage', array(
+    $bodymenu = $t->set('mainpage', [
         'pagebar'            => '',
         'iftoppage'          => 'none',
         'ifbottompage'       => 'none',
@@ -130,7 +169,7 @@ if ($job == 'links') {
         'totalpages'         => '',
         'previouspageexists' => '',
         'nextpageexists'     => '',
-    ));
+    ]);
 }
 
 if ($job == 'comment') {
@@ -153,7 +192,7 @@ if ($job == 'comment') {
     $ifbottompage = ($mbcon['pagebarposition'] == 'up') ? 'none' : 'block';
 
     announcebar();
-    $bodymenu = $t->set('mainpage', array(
+    $bodymenu = $t->set('mainpage', [
         'pagebar'            => $innerpages,
         'iftoppage'          => $iftoppage,
         'ifbottompage'       => $ifbottompage,
@@ -167,7 +206,7 @@ if ($job == 'comment') {
         'totalpages'         => $pageitems['totalpages'],
         'previouspageexists' => $pageitems['previouspageexists'],
         'nextpageexists'     => $pageitems['nextpageexists'],
-    ));
+    ]);
     $pagetitle = "{$lnc[196]} - ";
 }
 
@@ -189,7 +228,7 @@ if ($job == 'tb') {
     $ifbottompage = ($mbcon['pagebarposition'] == 'up') ? 'none' : 'block';
 
     announcebar();
-    $bodymenu = $t->set('mainpage', array(
+    $bodymenu = $t->set('mainpage', [
         'pagebar'            => $innerpages,
         'iftoppage'          => $iftoppage,
         'ifbottompage'       => $ifbottompage,
@@ -203,7 +242,7 @@ if ($job == 'tb') {
         'totalpages'         => $pageitems['totalpages'],
         'previouspageexists' => $pageitems['previouspageexists'],
         'nextpageexists'     => $pageitems['nextpageexists'],
-    ));
+    ]);
     $pagetitle = "{$lnc[198]} - ";
 }
 
@@ -213,7 +252,13 @@ if ($job == 'userlist') {
     include_once("data/cache_usergroup.php");
     $queryplus = ($usergroup === "") ? '' : "WHERE `usergroup`='{$usergroup}'";
     if ($ordered !== '') {
-        $allorder = array('`username` ASC', '`username` ASC', '`username` DESC', '`regtime` DESC', '`regtime` ASC');
+        $allorder = [
+		'`username` ASC',
+		'`username` ASC',
+		'`username` DESC',
+		'`regtime` DESC',
+		'`regtime` ASC'
+	];
         $ordernow = $allorder[$ordered];
     } else {
         $ordernow = '`username` ASC';
@@ -273,10 +318,13 @@ if ($job == 'userlist') {
     $iftoppage = ($mbcon['pagebarposition'] == 'down') ? 'none' : 'block';
     $ifbottompage = ($mbcon['pagebarposition'] == 'up') ? 'none' : 'block';
 
-    $section_table = $t->set('normaltable', array('tablebody' => $tablelist));
-    $section_body_main = $t->set('contentpage', array('title' => $lnc[208], 'contentbody' => $section_table));
+    $section_table = $t->set('normaltable', ['tablebody' => $tablelist]);
+    $section_body_main = $t->set('contentpage', [
+	'title' => $lnc[208],
+	'contentbody' => $section_table
+    ]);
     announcebar();
-    $bodymenu = $t->set('mainpage', array(
+    $bodymenu = $t->set('mainpage', [
         'pagebar'            => $innerpages,
         'iftoppage'          => $iftoppage,
         'ifbottompage'       => $ifbottompage,
@@ -290,7 +338,7 @@ if ($job == 'userlist') {
         'totalpages'         => $pageitems['totalpages'],
         'previouspageexists' => $pageitems['previouspageexists'],
         'nextpageexists'     => $pageitems['nextpageexists'],
-    ));
+    ]);
     $pagetitle = "{$lnc[208]} - ";
 }
 
@@ -336,12 +384,12 @@ if ($job == 'archivelist') {
         }
     }
     $result .= "</table>\n";
-    $section_body_main = $t->set('contentpage', array(
+    $section_body_main = $t->set('contentpage', [
         'title'       => $lnc[106],
         'contentbody' => $result,
-    ));
+    ]);
     announcebar();
-    $bodymenu = $t->set('mainpage', array(
+    $bodymenu = $t->set('mainpage', [
         'pagebar'            => '',
         'iftoppage'          => 'none',
         'ifbottompage'       => 'none',
@@ -355,5 +403,5 @@ if ($job == 'archivelist') {
         'totalpages'         => '',
         'previouspageexists' => '',
         'nextpageexists'     => '',
-    ));
+    ]);
 }

@@ -18,9 +18,9 @@ class Services_Yadis_ProxyResolver {
         // trim off the xri:// prefix
         $qxri = substr(Services_Yadis_toURINormal($xri), 6);
         $hxri = $this->proxy_url . $qxri;
-        $args = array(
+        $args = [
                       '_xrd_r' => 'application/xrds+xml'
-                      );
+                ];
 
         if ($service_type) {
             $args['_xrd_t'] = $service_type;
@@ -61,6 +61,6 @@ class Services_Yadis_ProxyResolver {
             //    almost certainly going to have duplicated service
             //    entries and broken priority ordering.
         }
-        return array($canonicalID, $services);
+        return [$canonicalID, $services];
     }
 }

@@ -21,7 +21,7 @@ function Services_Yadis_getDefaultProxy()
 
 function Services_Yadis_getXRIAuthorities()
 {
-    return array('!', '=', '@', '+', '$', '(');
+    return ['!', '=', '@', '+', '$', '('];
 }
 
 function Services_Yadis_getEscapeRE()
@@ -114,7 +114,7 @@ function Services_Yadis_XRIAppendArgs($url, $args)
         sort($keys);
         $new_args = [];
         foreach ($keys as $key) {
-            $new_args[] = array($key, $args[$key]);
+            $new_args[] = [$key, $args[$key]];
         }
         $args = $new_args;
     }

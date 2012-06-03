@@ -43,12 +43,12 @@ class Services_Yadis_ParseHTML {
                                     $this->_attr_find,
                                     $this->_re_flags);
 
-        $this->_entity_replacements = array(
+        $this->_entity_replacements = [
                                             'amp' => '&',
                                             'lt' => '<',
                                             'gt' => '>',
                                             'quot' => '"'
-                                            );
+                                      ];
 
         $this->_ent_replace =
             sprintf("&(%s);", implode("|",
@@ -146,13 +146,17 @@ class Services_Yadis_ParseHTML {
      */
     function getMetaTags($html_string)
     {
-        $key_tags = array($this->tagPattern('html', false, false),
+        $key_tags = [
+			  $this->tagPattern('html', false, false),
                           $this->tagPattern('head', false, false),
                           $this->tagPattern('head', true, false),
                           $this->tagPattern('html', true, false),
-                          $this->tagPattern(array(
-                          'body', 'frameset', 'frame', 'p', 'div',
-                          'table','span','a'), 'maybe', 'maybe'));
+                          $this->tagPattern([
+	                          'body', 'frameset', 'frame', 'p', 'div',
+        	                  'table','span','a'
+				],
+				'maybe', 'maybe')
+	];
         $key_tags_pos = [];
         foreach ($key_tags as $pat) {
             $matches = [];
@@ -171,7 +175,7 @@ class Services_Yadis_ParseHTML {
         if (is_null($key_tags_pos[2])) {
             $key_tags_pos[2] = strlen($html_string);
         }
-        foreach (array($key_tags_pos[3], $key_tags_pos[4]) as $pos) {
+        foreach ([$key_tags_pos[3], $key_tags_pos[4]] as $pos) {
             if (!is_null($pos) && $pos < $key_tags_pos[2]) {
                 $key_tags_pos[2] = $pos;
             }
@@ -230,7 +234,7 @@ class Services_Yadis_ParseHTML {
             foreach ($meta_tags as $tag) {
                 if (array_key_exists('http-equiv', $tag) &&
                     (in_array(strtolower($tag['http-equiv']),
-                              array('x-xrds-location', 'x-yadis-location'))) &&
+                              ['x-xrds-location', 'x-yadis-location'])) &&
                     array_key_exists('content', $tag)) {
                     return $tag['content'];
                 }

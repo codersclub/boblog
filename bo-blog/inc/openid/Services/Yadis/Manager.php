@@ -199,12 +199,14 @@ class Auth_OpenID_ServiceEndpointLoader extends Services_Yadis_SessionLoader {
 class Services_Yadis_ManagerLoader extends Services_Yadis_SessionLoader {
     function requiredKeys()
     {
-        return array('starting_url',
+        return [
+		     'starting_url',
                      'yadis_url',
                      'services',
                      'session_key',
                      '_current',
-                     'stale');
+                     'stale'
+	];
     }
 
     function newObject($data)
@@ -227,7 +229,7 @@ class Services_Yadis_ManagerLoader extends Services_Yadis_SessionLoader {
         foreach ($data['services'] as $s) {
             $services[] = $loader->fromSession($s);
         }
-        return array('services' => $services);
+        return ['services' => $services];
     }
 
     function prepareForSave($obj)
@@ -237,7 +239,7 @@ class Services_Yadis_ManagerLoader extends Services_Yadis_SessionLoader {
         foreach ($obj->services as $s) {
             $services[] = $loader->toSession($s);
         }
-        return array('services' => $services);
+        return ['services' => $services];
     }
 }
 
@@ -319,7 +321,7 @@ class Services_Yadis_Manager {
      */
     function forURL($url)
     {
-        return in_array($url, array($this->starting_url, $this->yadis_url));
+        return in_array($url, [$this->starting_url, $this->yadis_url]);
     }
 
     /**

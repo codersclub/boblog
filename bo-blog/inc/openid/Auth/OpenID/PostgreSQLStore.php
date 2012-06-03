@@ -47,15 +47,14 @@ class Auth_OpenID_PostgreSQLStore extends Auth_OpenID_SQLStore {
         $this->sql['get_auth'] =
             "SELECT value FROM %s WHERE setting = 'auth_key'";
 
-        $this->sql['set_assoc'] =
-            array(
+        $this->sql['set_assoc'] = [
                   'insert_assoc' => "INSERT INTO %s (server_url, handle, ".
                   "secret, issued, lifetime, assoc_type) VALUES ".
                   "(?, ?, '!', ?, ?, ?)",
                   'update_assoc' => "UPDATE %s SET secret = '!', issued = ?, ".
                   "lifetime = ?, assoc_type = ? WHERE server_url = ? AND ".
                   "handle = ?"
-                  );
+	];
 
         $this->sql['get_assocs'] =
             "SELECT handle, secret, issued, lifetime, assoc_type FROM %s ".
@@ -68,12 +67,11 @@ class Auth_OpenID_PostgreSQLStore extends Auth_OpenID_SQLStore {
         $this->sql['remove_assoc'] =
             "DELETE FROM %s WHERE server_url = ? AND handle = ?";
 
-        $this->sql['add_nonce'] =
-            array(
+        $this->sql['add_nonce'] = [
                   'insert_nonce' => "INSERT INTO %s (nonce, expires) VALUES ".
                   "(?, ?)",
                   'update_nonce' => "UPDATE %s SET expires = ? WHERE nonce = ?"
-                  );
+	];
 
         $this->sql['get_nonce'] =
             "SELECT * FROM %s WHERE nonce = ?";
@@ -91,15 +89,25 @@ class Auth_OpenID_PostgreSQLStore extends Auth_OpenID_SQLStore {
         $result = $this->_get_assoc($server_url, $handle);
         if ($result) {
             // Update the table since this associations already exists.
-            $this->connection->query($this->sql['set_assoc']['update_assoc'],
-                                     array($secret, $issued, $lifetime,
-                                           $assoc_type, $server_url, $handle));
+            $this->connection->query($this->sql['set_assoc']['update_assoc'], [
+                                $secret,
+				$issued,
+				$lifetime,
+                                $assoc_type,
+				$server_url,
+				$handle
+	    ]);
         } else {
             // Insert a new record because this association wasn't
             // found.
-            $this->connection->query($this->sql['set_assoc']['insert_assoc'],
-                                     array($server_url, $handle, $secret,
-                                           $issued, $lifetime, $assoc_type));
+            $this->connection->query($this->sql['set_assoc']['insert_assoc'], [
+                                $server_url,
+				$handle,
+				$secret,
+                                $issued,
+				$lifetime,
+				$assoc_type
+	    ]);
         }
     }
 
@@ -111,11 +119,13 @@ class Auth_OpenID_PostgreSQLStore extends Auth_OpenID_SQLStore {
         if ($this->_get_nonce($nonce)) {
             return $this->resultToBool($this->connection->query(
                                       $this->sql['add_nonce']['update_nonce'],
-                                      array($expires, $nonce)));
+                                      [$expires, $nonce]
+	    ));
         } else {
             return $this->resultToBool($this->connection->query(
                                       $this->sql['add_nonce']['insert_nonce'],
-                                      array($nonce, $expires)));
+                                      [$nonce, $expires]
+	    ));
         }
     }
 

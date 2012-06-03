@@ -1,6 +1,6 @@
 <?php
 
-$lanfp = array(
+$lanfp = [
     0  => 'Flash MediaPlayer',
     1  => 'Setting',
     2  => 'Add',
@@ -78,4 +78,4 @@ $lanfp = array(
     74 => 'Playback ',
     75 => '<b>The items with <font color=yellow>*</font> are necessary</b>',
     76 => 'This plugin only for Bo-blog,others system do not transfer was not authorized,copyright: <a href="http://mesak.wablog.info" target="_blank">Mesak</a>',
-);
+];

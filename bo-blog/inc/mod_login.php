@@ -92,21 +92,25 @@ if ($job == 'adminlog') {
     $t = new template;
     $jobs = "login.php?job=adminverify";
     $actionnow = $lnc[273];
-    $formbody .= $t->set('form_eachline', array(
+    $formbody .= $t->set('form_eachline', [
         'text'        => $lnc[274],
         'formelement' => $lnc[275],
-    ));
-    $formbody .= $t->set('form_eachline', array(
+    ]);
+    $formbody .= $t->set('form_eachline', [
         'text'        => "*{$lnc[132]}",
         'formelement' => "<input type='text' class='text' size='16' name='username' value='{$userdetail['username']}' disabled='disabled'>",
-    ));
-    $formbody .= $t->set('form_eachline', array(
+    ]);
+    $formbody .= $t->set('form_eachline', [
         'text'        => "*{$lnc[133]}",
         'formelement' => "<input type='password'  class='text' size='16' name='ipassword'>",
-    ));
-    $section_body_main = $t->set('register', array('title' => $actionnow, 'job' => $jobs, 'registerbody' => $formbody));
+    ]);
+    $section_body_main = $t->set('register', [
+	'title' => $actionnow,
+	'job' => $jobs,
+	'registerbody' => $formbody
+    ]);
     announcebar();
-    $bodymenu = $t->set('mainpage', array(
+    $bodymenu = $t->set('mainpage', [
         'pagebar'            => $pagebar,
         'iftoppage'          => 'none',
         'ifbottompage'       => 'none',
@@ -120,7 +124,7 @@ if ($job == 'adminlog') {
         'totalpages'         => '',
         'previouspageexists' => '',
         'nextpageexists'     => '',
-    ));
+    ]);
 }
 
 if ($job == 'adminverify') {
@@ -159,74 +163,82 @@ if ($job == 'register' || $job == 'modpro') {
     if ($job == 'register') {
         $actionnow = $lnc[79];
         $jobs = "login.php?job=doregister";
-        $formbody .= $t->set('form_eachline', array(
+        $formbody .= $t->set('form_eachline', [
             'text'        => "*{$lnc[132]}",
             'formelement' => "<input type='text' class='text' size='16' name='username'>",
-        ));
-        $formbody .= $t->set('form_eachline', array(
+        ]);
+        $formbody .= $t->set('form_eachline', [
             'text'        => "*{$lnc[133]}",
             'formelement' => "<input type='password'  class='text' size='16' name='password'>",
-        ));
-        $formbody .= $t->set('form_eachline', array(
+        ]);
+        $formbody .= $t->set('form_eachline', [
             'text'        => "*{$lnc[134]}",
             'formelement' => "<input type='password' class='text' size='16' name='confirmpsw'>",
-        ));
+        ]);
     }
     if ($job == 'modpro') {
         $jobs = "login.php?job=domodpro";
         $actionnow = $lnc[90];
-        $formbody .= $t->set('form_eachline', array(
+        $formbody .= $t->set('form_eachline', [
             'text'        => "*{$lnc[135]}",
             'formelement' => "<input type='password'  class='text' size='16' name='password'> {$lnc[137]}",
-        ));
-        $formbody .= $t->set('form_eachline', array(
+        ]);
+        $formbody .= $t->set('form_eachline', [
             'text'        => "*{$lnc[136]}",
             'formelement' => "<input type='password'  class='text' size='16' name='newpsw'> {$lnc[137]}",
-        ));
-        $formbody .= $t->set('form_eachline', array(
+        ]);
+        $formbody .= $t->set('form_eachline', [
             'text'        => "*{$lnc[138]}",
             'formelement' => "<input type='password'  class='text' size='16' name='confirmpsw'> {$lnc[137]}",
-        ));
+        ]);
     }
-    $formbody .= $t->set('form_eachline', array(
+    $formbody .= $t->set('form_eachline', [
         'text'        => $lnc[139],
         'formelement' => "<input type='text' class='text' size='16' name='email' value='" . stripslashes($userdetail['email']) . "'>",
-    ));
+    ]);
     if (($job == 'register' && $mbcon['regadvance'] == '1') || $job == 'modpro') {
-        $formbody .= $t->set('form_eachline', array(
+        $formbody .= $t->set('form_eachline', [
             'text'        => $lnc[140],
             'formelement' => "<input type='text' class='text' size='16' name='homepage' value='" . stripslashes($userdetail['homepage']) . "'>",
-        ));
-        $sex_sel = array('0' => $lnc[141], '1' => $lnc[142], '2' => $lnc[143]);
-        $sex_choice = array('0' => '', '1' => '', '2' => '');
+        ]);
+        $sex_sel = [
+		'0' => $lnc[141],
+		'1' => $lnc[142],
+		'2' => $lnc[143]
+	];
+        $sex_choice = [
+		'0' => '',
+		'1' => '',
+		'2' => ''
+	];
         $tmp_gender = $userdetail['gender'];
         $sex_choice[$tmp_gender] = "checked=checked";
-        $formbody .= $t->set('form_eachline', array(
+        $formbody .= $t->set('form_eachline', [
             'text'        => $lnc[144],
             'formelement' => "<input type='radio' name='gender' value='0' {$sex_choice[0]}>{$lnc[141]} 
 <input type='radio' name='gender' value='1' {$sex_choice[1]}>{$lnc[142]} 
 <input type='radio' name='gender' value='2' {$sex_choice[2]}>{$lnc[143]} ",
-        ));
-        $formbody .= $t->set('form_eachline', array(
+        ]);
+        $formbody .= $t->set('form_eachline', [
             'text'        => $lnc[145],
             'formelement' => "<input type='text' class='text' size='16' name='qq' value='" . stripslashes($userdetail['qq']) . "'>",
-        ));
-        $formbody .= $t->set('form_eachline', array(
+        ]);
+        $formbody .= $t->set('form_eachline', [
             'text'        => 'MSN',
             'formelement' => "<input type='text' class='text' size='16' name='msn' value='" . stripslashes($userdetail['msn']) . "'>",
-        ));
-        $formbody .= $t->set('form_eachline', array(
+        ]);
+        $formbody .= $t->set('form_eachline', [
             'text'        => 'Skype',
             'formelement' => "<input type='text' class='text' size='16' name='skype' value='" . stripslashes($userdetail['skype']) . "'>",
-        ));
-        $formbody .= $t->set('form_eachline', array(
+        ]);
+        $formbody .= $t->set('form_eachline', [
             'text'        => $lnc[146],
             'formelement' => "<input type='text' class='text' size='16' name='from' value='" . stripslashes($userdetail['fromplace']) . "'>",
-        ));
-        $formbody .= $t->set('form_eachline', array(
+        ]);
+        $formbody .= $t->set('form_eachline', [
             'text'        => $lnc[147],
             'formelement' => "<textarea cols='30' rows='3' name='intro'>" . stripslashes($userdetail['intro']) . "</textarea>",
-        ));
+        ]);
         if ($mbcon['avatar'] == '1') {
             if (file_exists('data/cache_avatars.php')) {
                 @require_once('data/cache_avatars.php');
@@ -245,14 +257,14 @@ if ($job == 'register' || $job == 'modpro') {
             } else {
                 $avatararea = $lnc[148];
             }
-            $formbody .= $t->set('form_eachline', array(
+            $formbody .= $t->set('form_eachline', [
                 'text'        => $lnc[149],
                 'formelement' => "<select name='avatartype'>
   <option value='0' {$avatarstatus[0]}>{$lnc[150]}</option>
   <option value='1' {$avatarstatus[1]}>{$lnc[151]}</option>
 </select>\n",
-            ));
-            $formbody .= $t->set('form_eachline', array(
+            ]);
+            $formbody .= $t->set('form_eachline', [
                 'text'        => $lnc[152],
                 'formelement' => "<select name='avatarvalue' id='avatarvalue' onchange=\"changeavatar('avatarvalue', 'avatararea');\">
   <option value='$avatarvalue'>{$lnc[153]}</option>{
@@ -260,28 +272,28 @@ if ($job == 'register' || $job == 'modpro') {
 </select>
 <br>
 <span id='avatararea'>{$avatararea}</span>\n",
-            ));
+            ]);
         }
     }
     plugin_runphp('registerform');
     if ($job == 'register' && $config['registervalidation'] == 1) {
         $rand = rand(0, 100000);
-        $formbody .= $t->set('form_eachline', array(
+        $formbody .= $t->set('form_eachline', [
             'text'        => $lnc[249],
             'formelement' => "<span id='securityimagearea'>
   <img src='inc/securitycode.php?rand={$rand}' alt='' title='{$lnc[250]}'>
 </span> 
 <input name='securitycode' type='text' id='securitycode' size='16' class='text'> {$lnc[251]} 
 [<a href=\"javascript: refreshsecuritycode('securityimagearea', 'securitycode');\">{$lnc[283]}</a>]",
-        ));
+        ]);
     }
-    $section_body_main = $t->set('register', array(
+    $section_body_main = $t->set('register', [
         'title'        => $actionnow,
         'job'          => $jobs,
         'registerbody' => $formbody,
-    ));
+    ]);
     announcebar();
-    $bodymenu = $t->set('mainpage', array(
+    $bodymenu = $t->set('mainpage', [
         'pagebar'            => $pagebar,
         'iftoppage'          => 'none',
         'ifbottompage'       => 'none',
@@ -295,7 +307,7 @@ if ($job == 'register' || $job == 'modpro') {
         'totalpages'         => '',
         'previouspageexists' => '',
         'nextpageexists'     => '',
-    ));
+    ]);
 }
 
 if ($job == 'doregister' || $job == 'domodpro') {
@@ -423,7 +435,10 @@ if ($job == 'verify') {
             setcookie('userid', $userid, time() + $savecookielong);
             setcookie('userpsw', $password, time() + $savecookielong);
         }
-        $redirection = array("{$lnc[309]}|{$urlreturn}", "{$lnc[163]}|index.php");
+        $redirection = [
+		"{$lnc[309]}|{$urlreturn}",
+		"{$lnc[163]}|index.php"
+	];
         if ($try['usergroup'] == '2') {
             $redirection[] = "{$lnc[107]}|admin.php";
             $redirection[] = "{$lnc[108]}|admin.php?act=edit";
@@ -443,7 +458,10 @@ if ($job == 'verifyadmin') {
         if ($try['userid'] == $userdetail['userid'] && $try['userpsw'] == $userdetail['userpsw']) {
             setcookie('adminuserid', $userid);
             setcookie('adminuserpsw', $password);
-            $redirection = array("{$lnc[309]}|{$urlreturn}", "{$lnc[163]}|index.php");
+            $redirection = [
+		"{$lnc[309]}|{$urlreturn}",
+		"{$lnc[163]}|index.php"
+            ];
             if ($try['usergroup'] == '2') {
                 $redirection[] = "{$lnc[107]}|admin.php";
                 $redirection[] = "{$lnc[108]}|admin.php?act=edit";
@@ -478,7 +496,10 @@ if ($job == 'openidverify') {
         $savecookielong = 3600 * 24 * 30;
         setcookie('openid_url_id', $openidresult['openidurl'], time() + $savecookielong);
     }
-    $redirection = array("{$lnc[309]}|{$urlreturn}", "{$lnc[163]}|index.php");
+    $redirection = [
+	"{$lnc[309]}|{$urlreturn}",
+	"{$lnc[163]}|index.php"
+    ];
     catchsuccess("{$lnc[317]} " . $openidresult['openidurl'], $redirection);
 }
 
@@ -506,23 +527,23 @@ if ($job == 'applylink') {
     $t = new template;
     $actionnow = $lnc[109];
     $jobs = "login.php?job=doapplylink";
-    $formbody .= $t->set('form_eachline', array(
+    $formbody .= $t->set('form_eachline', [
         'text'        => "*{$lnc[169]}",
         'formelement' => "<input type='text' class='text' size='20' name='sitename'>",
-    ));
-    $formbody .= $t->set('form_eachline', array(
+    ]);
+    $formbody .= $t->set('form_eachline', [
         'text'        => "*{$lnc[170]}",
         'formelement' => "<input type='text'  class='text' size='30' name='siteurl'>",
-    ));
-    $formbody .= $t->set('form_eachline', array(
+    ]);
+    $formbody .= $t->set('form_eachline', [
         'text'        => $lnc[171],
         'formelement' => "<input type='text'  class='text' size='30' name='sitelogo'> {$lnc[172]}",
-    ));
-    $formbody .= $t->set('form_eachline', array(
+    ]);
+    $formbody .= $t->set('form_eachline', [
         'text'        => $lnc[173],
         'formelement' => "<input type='text'  class='text' size='30' name='siteintro'> {$lnc[174]}",
-    ));
-    $formbody .= $t->set('form_eachline', array(
+    ]);
+    $formbody .= $t->set('form_eachline', [
         'text'        => $lnc[175],
         'formelement' => "{$lnc[176]}
 <br>
@@ -538,10 +559,10 @@ if ($job == 'applylink') {
     <textarea class='text' cols='60' rows='4' name='sitemycode2'>{$mycode2}</textarea>
   </li>
 </ul>\n",
-    ));
+    ]);
     if ($config['applylinkvalidation'] == 1) {
         $rand = rand(0, 100000);
-        $formbody .= $t->set('form_eachline', array(
+        $formbody .= $t->set('form_eachline', [
             'text'        => $lnc[249],
             'formelement' => "<span id='securityimagearea'>
   <img src='inc/securitycode.php?rand={$rand}' alt='' title='{$lnc[250]}'>
@@ -549,11 +570,15 @@ if ($job == 'applylink') {
 <input name='securitycode' type='text' id='securitycode' size='16' class='text'> 
 {$lnc[251]} 
 [<a href=\"javascript: refreshsecuritycode('securityimagearea', 'securitycode');\">{$lnc[283]}</a>]\n",
-        ));
+        ]);
     }
-    $section_body_main = $t->set('register', array('title' => $actionnow, 'job' => $jobs, 'registerbody' => $formbody));
+    $section_body_main = $t->set('register', [
+		'title' => $actionnow,
+		'job' => $jobs,
+		'registerbody' => $formbody
+    ]);
     announcebar();
-    $bodymenu = $t->set('mainpage', array(
+    $bodymenu = $t->set('mainpage', [
         'pagebar'            => $pagebar,
         'iftoppage'          => 'none',
         'ifbottompage'       => 'none',
@@ -567,7 +592,7 @@ if ($job == 'applylink') {
         'totalpages'         => '',
         'previouspageexists' => '',
         'nextpageexists'     => '',
-    ));
+    ]);
 }
 
 if ($job == 'doapplylink') {
@@ -637,7 +662,10 @@ if ($job == 'ajaxverify') {
 
 if ($job == 'ajaxloginsuccess') {
     if ($permission['CP'] == 1) {
-        $destine = array("{$lnc[163]}|index.php", "{$lnc[107]}|admin.php");
+        $destine = [
+		"{$lnc[163]}|index.php",
+		"{$lnc[107]}|admin.php"
+	];
     } else {
         $destine = "{$lnc[163]}|index.php";
     }

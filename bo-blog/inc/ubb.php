@@ -52,12 +52,12 @@ function convert_ubb($str, $advanced = 0, $inrss = 0)
 </div>\n",
             $str);
     } else {
-        $str = str_replace(array('[hide]', '[/hide]'), '', $str);
+        $str = str_replace(['[hide]', '[/hide]'], '', $str);
     }
-    $str = str_replace(array('{', '}'), array('&#123;', '&#125;'), $str);
+    $str = str_replace(['{', '}'], ['&#123;', '&#125;'], $str);
     $str = plugin_walk('ubbanalyse', $str);
-    $basicubb_search = array('[hr]', '<br>');
-    $basicubb_replace = array('<hr>', '<br>');
+    $basicubb_search = ['[hr]', '<br>'];
+    $basicubb_replace = ['<hr>', '<br>'];
     $str = str_replace($basicubb_search, $basicubb_replace, $str);
 
     //[IMG]
@@ -85,7 +85,7 @@ function convert_ubb($str, $advanced = 0, $inrss = 0)
     }
 
 
-    $regubb_search = array(
+    $regubb_search = [
         "/\s*\[quote\][\n\r]*(.+?)[\n\r]*\[\/quote\]\s*/is",
         "/\s*\[quote=(.+?)\][\n\r]*(.+?)[\n\r]*\[\/quote\]\s*/is",
         "/\[email\]([^\[]*)\[\/email\]/is",
@@ -99,8 +99,8 @@ function convert_ubb($str, $advanced = 0, $inrss = 0)
         "/\[strike\](.+?)\[\/strike\]/i",
         "/\[sup\](.+?)\[\/sup\]/i",
         "/\[sub\](.+?)\[\/sub\]/i",
-    );
-    $regubb_replace = array(
+    ];
+    $regubb_replace = [
         "<div class=\"quote\"><div class=\"quote-title\">{$lnc[265]}</div><div class=\"quote-content\">\\1</div></div>",
         "<div class=\"quote\"><div class=\"quote-title\">{$lnc[266]} \\1</div><div class=\"quote-content\">\\2</div></div>",
         "<a href=\"mailto:\\1\">\\1</a>",
@@ -114,7 +114,7 @@ function convert_ubb($str, $advanced = 0, $inrss = 0)
         "<del>\\1</del>",
         "<sup>\\1</sup>",
         "<sub>\\1</sub>",
-    );
+    ];
     $str = preg_replace($regubb_search, $regubb_replace, $str);
 
     $str = preg_replace_callback("/\[size=([^\[\<]+?)\](.+?)\[\/size\]/i", "makefontsize", $str);
@@ -170,7 +170,7 @@ function makefontsize($match)
     $size = $match[1];
     $word = $match[2];
     $word = stripslashes($word);
-    $sizeitem = array(0, 8, 10, 12, 14, 18, 24, 36);
+    $sizeitem = [0, 8, 10, 12, 14, 18, 24, 36];
     $size = $sizeitem[$size];
     return "<span style=\"font-size: {$size}px;\">{$word}</span>";
 }
@@ -184,13 +184,18 @@ function makemedia($match)
     global $template, $lnc, $config;
     $mediatype = strtolower($mediatype);
     $id = rand(1000, 99999);
-    $typedesc = array(
+    $typedesc = [
         'wmp'  => 'Windows Media Player',
         'swf'  => 'Flash Player',
         'real' => 'Real Player',
         'flv'  => 'Flash Video Player',
-    );
-    $mediapic = array('wmp' => 'wmp.gif', 'swf' => 'swf.gif', 'real' => 'real.gif', 'flv' => 'swf.gif');
+    ];
+    $mediapic = [
+	'wmp' => 'wmp.gif',
+	'swf' => 'swf.gif',
+	'real' => 'real.gif',
+	'flv' => 'swf.gif'
+    ];
     $url = ($mediatype == 'flv') ? urlconvert($url, $config['blogurl'] . '/') : $url;
     $url = urlencode($url);
     $str = "<div class=\"quote mediabox\">
@@ -309,7 +314,7 @@ function xhtmlHighlightString($watch)
     if (PHP_VERSION > '5') {
         return "<div class=\"code\" style=\"overflow: auto;\">$hlt</div>";
     }
-    $fon = str_replace(array('<font ', '</font>'), array('<span ', '</span>'), $hlt);
+    $fon = str_replace(['<font ', '</font>'], ['<span ', '</span>'], $hlt);
     $ret = preg_replace('#color="(.*?)"#', 'style="color: \\1"', $fon);
     return "<div class=\"code\" style=\"overflow: auto;\">$ret</div>\n";
 }

@@ -5,7 +5,7 @@ $info['time']="2008/11/04";
 $info['newitemposition']="sidebar";
 $info['newitemactive']="1";
 $info['content']=<<<ENDMODULE
-\$blogitem['music']=array(
+\$blogitem['music']=[
 	'type'=>'block',
 	'name'=>'music',
 	'title'=>'Music video',
@@ -18,7 +18,7 @@ if (window == top) {
   document.write (\"<a href=\" + window.location.href + \" target='_top'><img src='template/YeYo-Skin06/images/stop.gif' alt='Close the audio-video player' title='Close the audio-video player' border='0'/></a>\");
 }
 </script>",
-);
+];
 
 ENDMODULE;
 

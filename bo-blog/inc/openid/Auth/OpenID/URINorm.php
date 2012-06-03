@@ -152,7 +152,7 @@ function Auth_OpenID_urinorm($uri)
     }
 
     $scheme = strtolower($scheme);
-    if (!in_array($scheme, array('http', 'https'))) {
+    if (!in_array($scheme, ['http', 'https'])) {
         // Not an absolute HTTP or HTTPS URI
         return null;
     }

@@ -240,7 +240,7 @@ if (!empty($m_b->total_rows)) {
 $iftoppage = ($mbcon['pagebarposition'] == 'down') ? 'none' : 'block';
 $ifbottompage = ($mbcon['pagebarposition'] == 'up') ? 'none' : 'block';
 
-$bodymenu = $t->set('mainpage', array(
+$bodymenu = $t->set('mainpage', [
     'pagebar'            => $pagebar,
     'iftoppage'          => $iftoppage,
     'ifbottompage'       => $ifbottompage,
@@ -254,4 +254,4 @@ $bodymenu = $t->set('mainpage', array(
     'totalpages'         => @$pageitems['totalpages'],
     'previouspageexists' => @$pageitems['previouspageexists'],
     'nextpageexists'     => @$pageitems['nextpageexists'],
-));
+]);

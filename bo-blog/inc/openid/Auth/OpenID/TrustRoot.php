@@ -54,8 +54,8 @@ class Auth_OpenID_TrustRoot {
         if ($parts === false) {
             return false;
         }
-        $required_parts = array('scheme', 'host');
-        $forbidden_parts = array('user', 'pass', 'fragment');
+        $required_parts = ['scheme', 'host'];
+        $forbidden_parts = ['user', 'pass', 'fragment'];
         $keys = array_keys($parts);
         if (array_intersect($keys, $required_parts) != $required_parts) {
             return false;
@@ -72,7 +72,7 @@ class Auth_OpenID_TrustRoot {
         }
 
         $scheme = strtolower($parts['scheme']);
-        $allowed_schemes = array('http', 'https');
+        $allowed_schemes = ['http', 'https'];
         if (!in_array($scheme, $allowed_schemes)) {
             return false;
         }

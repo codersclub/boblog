@@ -1,6 +1,6 @@
 <?php
 
-$lanfp = array(
+$lanfp = [
     0  => 'Flash Media Player',
     1  => '设定',
     2  => '添加',
@@ -101,4 +101,4 @@ $lanfp = array(
     97 => '透明效果',
     98 => '开启透明效果可让js特效的图层高于flash，但可能让全屏钮失效，详细效果参见 <a href="http://www.adobe.com/cn/support/flash/ts/documents/wmode.htm" target="_blank">此链接</a>',
     99 => '对于设定项有问题，可参阅 JW Media Player <a href="http://www.jeroenwijering.com/extras/readme.htm" target="_blank">ReadMe</a>',
-);
+];

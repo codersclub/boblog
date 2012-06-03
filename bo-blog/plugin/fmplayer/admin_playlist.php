@@ -40,7 +40,7 @@ if ($configjob == 'save_list') {
     if (!writetofile($file['dlist'], $savetext)) {
         catcherror("{$lna[66]}" . $file['dlist']);
     } else {
-        catchsuccess($finishok, array($backtofmp_list, $backtofmp_cfg, $backtoplugin));
+        catchsuccess($finishok, [$backtofmp_list, $backtofmp_cfg, $backtoplugin]);
     }
 }
 include($file['dlist']);
@@ -49,7 +49,7 @@ foreach ($fmp_list as $fp_id => $fp_song) {
     //$fmp_list_show .= "add_fpRow('{$fp_id}','{$fmp_list[$fp_id][title]}','{$fmp_list[$fp_id][creator]}','{$fmp_list[$fp_id][location]}','{$fmp_list[$fp_id][info]}','{$fmp_list[$fp_id][image]}','{$fmp_list[$fp_id][album]}','{$fmp_list[$fp_id][meta]}')\n";
     //$fmp_list_show .= "add_fpRow('{$fp_id}','".htmlspecialchars($fmp_list[$fp_id][title]). "','" .htmlspecialchars($fmp_list[$fp_id][creator]). "','" .htmlspecialchars($fmp_list[$fp_id][location]). "','" .htmlspecialchars($fmp_list[$fp_id][info]). "','" .htmlspecialchars($fmp_list[$fp_id][image]). "','" .htmlspecialchars($fmp_list[$fp_id][album]). "','" .htmlspecialchars($fmp_list[$fp_id][meta])."')\n";
     $fmp_list_show .= "\n add_fpRow('-1','{$fp_id}'";
-    $list_arr = array('title', 'creator', 'location', 'info', 'image', 'album', 'meta');
+    $list_arr = ['title', 'creator', 'location', 'info', 'image', 'album', 'meta'];
     foreach ($list_arr as $value) {
         if (!empty($fmp_list[$fp_id][$value])) {
             $fmp_list_show .= ",'" . htmlspecialchars($fmp_list[$fp_id][$value], ENT_QUOTES) . "'";

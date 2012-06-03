@@ -86,7 +86,7 @@ if ($is_preview) {
 
 
     $records = [];
-    $records[0] = array(
+    $records[0] = [
         'blogid'       => $blogid,
         'title'        => $title,
         'pubtime'      => $finaltime,
@@ -115,7 +115,7 @@ if ($is_preview) {
         'comefrom'     => $comefrom,
         'originsrc'    => $originsrc,
         'blogalias'    => $blogalias,
-    );
+    ];
 } else {
     $order = ($mbcon['replyorder'] == '0') ? "DESC" : "ASC";
     $start_id = ($page - 1) * $mbcon['replyperpage'];
@@ -171,7 +171,10 @@ if ($records[0]['property'] != '1' && $permission['Reply'] == 1) {
     $form_reply = $m_b->make_visit_form($lnc[187], $records[0]['blogid'], "visit.php?job=addreply");
 }
 
-$section_body_main[] = $t->set('endviewentry', array('form_reply' => $form_reply, 'innerpages' => $innerpages));
+$section_body_main[] = $t->set('endviewentry', [
+	'form_reply' => $form_reply,
+	'innerpages' => $innerpages
+]);
 
 if (!$is_preview) {
     //Read counter
@@ -186,7 +189,7 @@ if (!$is_preview) {
 
 //announcebar();
 $ifannouncement = "none";
-$bodymenu = $t->set('mainpage', array(
+$bodymenu = $t->set('mainpage', [
     'pagebar'            => '',
     'iftoppage'          => 'none',
     'ifbottompage'       => 'none',
@@ -200,6 +203,6 @@ $bodymenu = $t->set('mainpage', array(
     'totalpages'         => '',
     'previouspageexists' => '',
     'nextpageexists'     => '',
-));
+]);
 
 $pagetitle = "{$records[0]['title']} - ";
